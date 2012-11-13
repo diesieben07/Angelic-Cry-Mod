@@ -1,0 +1,8 @@
+MCP/CHANGELOG
+*.class
+*.zip
+
+# Package Files #
+*.jar
+*.war
+*.ear
