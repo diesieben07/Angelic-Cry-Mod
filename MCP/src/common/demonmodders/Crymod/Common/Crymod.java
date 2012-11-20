@@ -30,7 +30,7 @@ public class Crymod {
 		logger.setParent(FMLLog.getLogger());
 		logger.setUseParentHandlers(true);
 		
-		// Just a test comment
+		// Just a test comment 2
 		
 		logger.info("Crymod Version " + evt.getModMetadata().version + " preInitializing...");
 		
