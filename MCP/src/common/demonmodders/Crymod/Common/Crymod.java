@@ -1,4 +1,5 @@
 //trolololololol my god its works
+// yes it does :D
 package demonmodders.Crymod.Common;
 
 import java.util.logging.Logger;
@@ -31,7 +32,6 @@ public class Crymod {
 		logger.setParent(FMLLog.getLogger());
 		logger.setUseParentHandlers(true);
 		
-		// Just a test comment 3
 		
 		logger.info("Crymod Version " + evt.getModMetadata().version + " preInitializing...");
 		
