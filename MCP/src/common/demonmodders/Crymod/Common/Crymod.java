@@ -4,6 +4,7 @@ package demonmodders.Crymod.Common;
 
 import java.util.logging.Logger;
 
+import net.minecraft.src.StringTranslate;
 import net.minecraftforge.common.Configuration;
 
 import cpw.mods.fml.common.FMLLog;
@@ -36,6 +37,9 @@ public class Crymod {
 		logger.info("Crymod Version " + evt.getModMetadata().version + " preInitializing...");
 		
 		conf = new Configuration(evt.getSuggestedConfigurationFile());
+		conf.load();
+		
+		LanguageLoader.loadLanguages();
 		
 		proxy.preInit();
 	}
@@ -46,8 +50,9 @@ public class Crymod {
 	}
 	
 	@PostInit
-	public void PostInit(FMLPostInitializationEvent evt) {
+	public void postInit(FMLPostInitializationEvent evt) {
 		proxy.postInit();
+		conf.save();
 	}
 	
 	public static final String TEXTURE_FILE = "/crymodResource/tex/textures.png";
