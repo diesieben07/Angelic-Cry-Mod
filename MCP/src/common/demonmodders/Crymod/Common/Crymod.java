@@ -49,4 +49,6 @@ public class Crymod {
 	public void PostInit(FMLPostInitializationEvent evt) {
 		proxy.postInit();
 	}
+	
+	public static final String TEXTURE_FILE = "/crymodResource/tex/textures.png";
 }
