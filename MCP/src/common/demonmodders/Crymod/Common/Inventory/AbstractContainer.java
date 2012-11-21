@@ -3,9 +3,15 @@ package demonmodders.Crymod.Common.Inventory;
 import net.minecraft.src.Container;
 import net.minecraft.src.EntityPlayer;
 import net.minecraft.src.IInventory;
+import net.minecraft.src.ItemStack;
 import net.minecraft.src.Slot;
 
 public abstract class AbstractContainer extends Container {
+
+	@Override
+	public ItemStack transferStackInSlot(EntityPlayer par1EntityPlayer, int par2) {
+		return null;
+	}
 
 	private final IInventory inventory;
 	
