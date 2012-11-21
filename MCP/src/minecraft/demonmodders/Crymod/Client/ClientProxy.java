@@ -15,7 +15,9 @@ public class ClientProxy extends CommonProxy {
 	public Object getClientGuiElement(Container container, int id, EntityPlayer player, World world, int x, int y, int z) {
 		switch (GuiType.fromGuiId(id)) {
 		case SUMMONING_BOOK:
-			return new GuiSummoningBook(container);
+			return new GuiSummoningBook("/crymodResource/tex/summoningBook.png", container);
+		case EVIL_TABLET:
+			return new GuiSummoningBook("/crymodResource/tex/evilTablet.png", container);
 		default:
 			return null;
 		}

@@ -16,6 +16,7 @@ public class CrymodGuiHandler implements IGuiHandler {
 	public Object getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
 		switch (GuiType.fromGuiId(ID)) {
 		case SUMMONING_BOOK:
+		case EVIL_TABLET:
 			return new ContainerSummoningBook(new InventorySummoningBook(player.getCurrentEquippedItem(), player), player.inventory);
 		default:
 			return null;
