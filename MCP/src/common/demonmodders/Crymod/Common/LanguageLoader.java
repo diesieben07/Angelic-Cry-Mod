@@ -38,6 +38,7 @@ public class LanguageLoader {
 					String key = line.substring(0, colonIndex);
 					String value = line.substring(colonIndex + COMMENT.length());
 					LanguageRegistry.instance().addStringLocalization(key, value);
+					System.out.println(key + ": " + value);
 				}
 			}
 		} catch (Exception e) {
