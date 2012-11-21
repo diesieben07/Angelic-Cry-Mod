@@ -8,11 +8,11 @@ import net.minecraft.src.World;
 
 public class ItemSummoningBook extends ItemCryMod {
 
-	public ItemSummoningBook(int itemId) {
+	private final GuiType guiType;
+	
+	public ItemSummoningBook(GuiType guiType, int itemId) {
 		super(itemId);
-		setIconIndex(0);
-		setItemName("summoningBook");
-		System.out.println(getLocalItemName(null));
+		this.guiType = guiType;
 	}
 
 	@Override
@@ -24,7 +24,7 @@ public class ItemSummoningBook extends ItemCryMod {
 	@Override
 	public ItemStack onItemRightClick(ItemStack itemStack, World world, EntityPlayer player) {
 		if (!world.isRemote) {
-			player.openGui(Crymod.instance, GuiType.SUMMONING_BOOK.getGuiId(), world, 0, 0, 0);
+			player.openGui(Crymod.instance, guiType.getGuiId(), world, 0, 0, 0);
 		}
 		return itemStack;
 	}
