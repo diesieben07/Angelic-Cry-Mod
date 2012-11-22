@@ -16,7 +16,7 @@ public class ItemSummoner extends ItemCryMod {
 	private static final int ICON_SUMMONING_BOOK = 0;
 	private static final int ICON_EVIL_TABLET = 1;
 	
-	public ItemSummoner(GuiType guiType, int itemId) {
+	public ItemSummoner(int itemId) {
 		super(itemId);
 	}
 
