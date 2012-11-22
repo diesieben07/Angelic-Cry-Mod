@@ -1,6 +1,6 @@
 item.summoningBook.name:Holy Summoning Book
 item.evilTablet.name:Evil Tablet
-item.crystalYellow.name:Gold Crystal
-item.crystalRed.name:Core Crystal
-item.crystalLightBlue.name:Sky Crystal
-item.crystalPurple.name:Magic Crystal
+item.crystal.yellow.name:Gold Crystal
+item.crystal.red.name:Core Crystal
+item.crystal.lightBlue.name:Sky Crystal
+item.crystal.purple.name:Magic Crystal

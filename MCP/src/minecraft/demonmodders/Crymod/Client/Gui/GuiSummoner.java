@@ -6,7 +6,7 @@ import net.minecraft.src.Container;
 import net.minecraft.src.GuiButton;
 import net.minecraft.src.GuiContainer;
 
-public class GuiSummoningBook extends GuiContainer {
+public class GuiSummoner extends GuiContainer {
 
 	private static final int EFFECTIVE_HEIGHT = 256;
 	private static final int EFFECTIVE_WIDTH = 176;
@@ -20,9 +20,11 @@ public class GuiSummoningBook extends GuiContainer {
 	
 	private final String texture;
 	
-	public GuiSummoningBook(String texture, Container container) {
+	public GuiSummoner(String texture, Container container) {
 		super(container);
 		this.texture = texture;
+		xSize = EFFECTIVE_WIDTH;
+		ySize = EFFECTIVE_HEIGHT;
 	}
 
 	@Override

@@ -3,9 +3,9 @@ package demonmodders.Crymod.Common.Inventory;
 import net.minecraft.src.EntityPlayer;
 import net.minecraft.src.ItemStack;
 
-public class InventorySummoningBook extends InventoryItemStack {
+public class InventorySummoner extends InventoryItemStack {
 
-	public InventorySummoningBook(ItemStack theStack, EntityPlayer player) {
+	public InventorySummoner(ItemStack theStack, EntityPlayer player) {
 		super(theStack, player);
 	}
 
@@ -16,6 +16,6 @@ public class InventorySummoningBook extends InventoryItemStack {
 
 	@Override
 	public String getInvName() {
-		return "summoningBook";
+		return "";
 	}
 }
