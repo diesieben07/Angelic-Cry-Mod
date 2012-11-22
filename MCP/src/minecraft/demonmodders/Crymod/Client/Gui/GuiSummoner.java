@@ -2,9 +2,13 @@ package demonmodders.Crymod.Client.Gui;
 
 import org.lwjgl.opengl.GL11;
 
+import demonmodders.Crymod.Common.Inventory.ContainerSummoner;
+import demonmodders.Crymod.Common.Recipes.SummoningRecipeRegistry;
+
 import net.minecraft.src.Container;
 import net.minecraft.src.GuiButton;
 import net.minecraft.src.GuiContainer;
+import net.minecraft.src.Slot;
 
 public class GuiSummoner extends GuiContainer {
 
@@ -14,6 +18,9 @@ public class GuiSummoner extends GuiContainer {
 	private static final int BOOK_HEIGHT = 163;
 	private static final int ARROW_HEIGHT = 10;
 	private static final int ARROW_WIDTH = 18;
+
+	private static final int HEADING_TEXT_FIELD_X_POSITION = 39;
+	private static final int HEADING_TEXT_FIELD_Y_POSITION = 17;
 	
 	private static final int BUTTON_NEXT = 0;
 	private static final int BUTTON_PREV = 1;
@@ -43,8 +50,10 @@ public class GuiSummoner extends GuiContainer {
 	protected void actionPerformed(GuiButton button) {
 		switch (button.id) {
 		case BUTTON_NEXT:
+			((ContainerSummoner)inventorySlots).nextPage();
 			break;
 		case BUTTON_PREV:
+			((ContainerSummoner)inventorySlots).prevPage();
 			break;
 		}
 	}
@@ -57,4 +66,10 @@ public class GuiSummoner extends GuiContainer {
         drawTexturedModalRect(width / 2 - EFFECTIVE_WIDTH / 2, height / 2 - EFFECTIVE_HEIGHT / 2, 0, 0, EFFECTIVE_WIDTH, EFFECTIVE_HEIGHT);
 	}
 
+	@Override
+	protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
+		String demonName = SummoningRecipeRegistry.getRecipes().get(((ContainerSummoner)inventorySlots).page()).getDemon();
+		int demonNameWidth = fontRenderer.getStringWidth(demonName);
+		fontRenderer.drawString(demonName, HEADING_TEXT_FIELD_X_POSITION, HEADING_TEXT_FIELD_Y_POSITION, 0xffffff);
+	}
 }

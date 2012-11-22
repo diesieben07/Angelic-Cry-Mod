@@ -19,10 +19,11 @@ import cpw.mods.fml.common.network.NetworkMod;
 import cpw.mods.fml.common.network.NetworkRegistry;
 import demonmodders.Crymod.Common.Gui.CrymodGuiHandler;
 import demonmodders.Crymod.Common.Items.ItemCryMod;
+import demonmodders.Crymod.Common.Network.CrymodPacket;
 import demonmodders.Crymod.Common.Network.CrymodPacketHandler;
 
 @Mod(modid = "crymod", name = "Angelic Cry Mod [WIP]", version = "0.1")
-@NetworkMod(channels = {"crymod"}, packetHandler = CrymodPacketHandler.class, clientSideRequired = true, serverSideRequired = false)
+@NetworkMod(channels = {CrymodPacket.CHANNEL}, packetHandler = CrymodPacketHandler.class, clientSideRequired = true, serverSideRequired = false)
 public class Crymod {
 	
 	@SidedProxy(clientSide = "demonmodders.Crymod.Client.ClientProxy", serverSide = "demonmodders.Crymod.Common.CommonProxy")

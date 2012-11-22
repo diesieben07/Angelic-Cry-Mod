@@ -13,7 +13,7 @@ public abstract class AbstractContainer extends Container {
 		return null;
 	}
 
-	private final IInventory inventory;
+	final IInventory inventory;
 	
 	public AbstractContainer(IInventory inventory) {
 		this.inventory = inventory;
