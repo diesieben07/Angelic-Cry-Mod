@@ -1,5 +1,3 @@
-//trolololololol my god its works
-// yes it does :D
 package demonmodders.Crymod.Common;
 
 import java.util.logging.Logger;
@@ -21,9 +19,10 @@ import cpw.mods.fml.common.network.NetworkMod;
 import cpw.mods.fml.common.network.NetworkRegistry;
 import demonmodders.Crymod.Common.Gui.CrymodGuiHandler;
 import demonmodders.Crymod.Common.Items.ItemCryMod;
+import demonmodders.Crymod.Common.Network.CrymodPacketHandler;
 
 @Mod(modid = "crymod", name = "Angelic Cry Mod [WIP]", version = "0.1")
-@NetworkMod(channels = {"crymod"}, clientSideRequired = true, serverSideRequired = false)
+@NetworkMod(channels = {"crymod"}, packetHandler = CrymodPacketHandler.class, clientSideRequired = true, serverSideRequired = false)
 public class Crymod {
 	
 	@SidedProxy(clientSide = "demonmodders.Crymod.Client.ClientProxy", serverSide = "demonmodders.Crymod.Common.CommonProxy")
