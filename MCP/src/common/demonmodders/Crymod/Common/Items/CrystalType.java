@@ -67,4 +67,7 @@ public class CrystalType {
 	public static final CrystalType PURPLE = new CrystalType(1).setIconIndex(5).setName("purple");
 	public static final CrystalType RED = new CrystalType(2).setIconIndex(3).setName("red");
 	public static final CrystalType YELLOW = new CrystalType(3).setIconIndex(2).setName("yellow");
+	public static final CrystalType GREEN = new CrystalType(4).setIconIndex(18).setName("green");
+	public static final CrystalType ORANGE = new CrystalType(5).setIconIndex(19).setName("orange");
+	public static final CrystalType BLUE = new CrystalType(6).setIconIndex(20).setName("blue");
 }
