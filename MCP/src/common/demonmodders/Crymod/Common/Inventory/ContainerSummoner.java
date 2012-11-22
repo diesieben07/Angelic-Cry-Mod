@@ -50,14 +50,14 @@ public class ContainerSummoner extends AbstractContainer {
 		if (page >= SummoningRecipeRegistry.getNumRecipes() || page < 0) {
 			return;
 		}
-		System.out.println("setting page " + page + " on " + FMLCommonHandler.instance().getEffectiveSide());
 		
 		currentPage = page;
 		
 		// move all slots out of the screen
 		for (Slot slot : (List<Slot>)inventorySlots) {
-			if (!(slot.inventory instanceof InventoryPlayer))
-			slot.xDisplayPosition = Integer.MIN_VALUE;
+			if (!(slot.inventory instanceof InventoryPlayer)) {
+				slot.xDisplayPosition = Integer.MIN_VALUE;
+			}
 		}
 		
 		// "reactivate" the ones for the current page
