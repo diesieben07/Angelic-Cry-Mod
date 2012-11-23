@@ -1,5 +1,6 @@
 package demonmodders.Crymod.Common.Inventory;
 
+import demonmodders.Crymod.Common.Recipes.SummoningRecipeRegistry;
 import net.minecraft.src.EntityPlayer;
 import net.minecraft.src.ItemStack;
 
@@ -11,7 +12,7 @@ public class InventorySummoner extends InventoryItemStack {
 
 	@Override
 	public int getSizeInventory() {
-		return 10;
+		return SummoningRecipeRegistry.getNumRecipes() * 10;
 	}
 
 	@Override

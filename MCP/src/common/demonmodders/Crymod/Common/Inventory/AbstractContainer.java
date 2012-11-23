@@ -17,6 +17,7 @@ public abstract class AbstractContainer extends Container {
 	
 	public AbstractContainer(IInventory inventory) {
 		this.inventory = inventory;
+		inventory.openChest();
 	}
 	
 	@Override
@@ -29,5 +30,10 @@ public abstract class AbstractContainer extends Container {
 		// make it public, for InventoryHelper
 		return super.addSlotToContainer(par1Slot);
 	}
-
+	
+	@Override
+	public void onCraftGuiClosed(EntityPlayer par1EntityPlayer) {
+		super.onCraftGuiClosed(par1EntityPlayer);
+		inventory.closeChest();
+	}
 }

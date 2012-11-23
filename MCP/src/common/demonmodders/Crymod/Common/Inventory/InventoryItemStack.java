@@ -1,12 +1,16 @@
 package demonmodders.Crymod.Common.Inventory;
 
+import cpw.mods.fml.common.FMLCommonHandler;
 import net.minecraft.src.EntityPlayer;
 import net.minecraft.src.IInventory;
 import net.minecraft.src.ItemStack;
 import net.minecraft.src.NBTTagCompound;
+import net.minecraft.src.NBTTagList;
 
 public abstract class InventoryItemStack implements IInventory {
 
+	ItemStack[] stacks = new ItemStack[getSizeInventory()];
+	
 	@Override
 	public int getInventoryStackLimit() {
 		return 64;
@@ -18,9 +22,6 @@ public abstract class InventoryItemStack implements IInventory {
 	public InventoryItemStack(ItemStack theStack, EntityPlayer player) {
 		this.theStack = theStack;
 		this.player = player;
-		if (theStack.stackTagCompound == null) {
-			theStack.stackTagCompound = new NBTTagCompound();
-		}
 	}
 	
 	public InventoryItemStack(ItemStack theStack) {
@@ -29,7 +30,7 @@ public abstract class InventoryItemStack implements IInventory {
 
 	@Override
 	public ItemStack getStackInSlot(int slot) {
-		return ItemStack.loadItemStackFromNBT(theStack.stackTagCompound.getCompoundTag("slot" + slot));
+		return stacks[slot];
 	}
 
 	@Override
@@ -49,7 +50,7 @@ public abstract class InventoryItemStack implements IInventory {
                 if (stack.stackSize == 0) {
                     setInventorySlotContents(slot, null);
                 }
-
+                
                 return returnStack;
             }
         } else {
@@ -64,20 +65,12 @@ public abstract class InventoryItemStack implements IInventory {
 
 	@Override
 	public void setInventorySlotContents(int slot, ItemStack stack) {
-		NBTTagCompound compound = new NBTTagCompound();
-		if (stack != null) {
-			stack.writeToNBT(compound);
-		}
-		theStack.stackTagCompound.setCompoundTag("slot" + slot, compound);
+		stacks[slot] = stack;
 		onInventoryChanged();
 	}
 	
 	@Override
-	public void onInventoryChanged() {
-		if (player != null) {
-			player.inventory.setInventorySlotContents(player.inventory.currentItem, theStack);
-		}
-	}
+	public void onInventoryChanged() {	}
 
 	@Override
 	public boolean isUseableByPlayer(EntityPlayer player) {
@@ -91,8 +84,37 @@ public abstract class InventoryItemStack implements IInventory {
 	}
 
 	@Override
-	public void openChest() { }
+	public void openChest() {
+		if (theStack.stackTagCompound == null) {
+			theStack.stackTagCompound = new NBTTagCompound();
+		}
+		
+		NBTTagList slotList = theStack.stackTagCompound.getTagList("slots");
+		for (int i = 0; i < slotList.tagCount(); i++) {
+			NBTTagCompound slotCompound = (NBTTagCompound)slotList.tagAt(i);
+			int slot = slotCompound.getInteger("slot");
+			stacks[slot] = ItemStack.loadItemStackFromNBT(slotCompound);
+		}
+	}
 
 	@Override
-	public void closeChest() { }
+	public void closeChest() {
+		NBTTagList slotList = new NBTTagList();
+		for (int i = 0; i < stacks.length; i++) {
+			if (stacks[i] != null) {
+				NBTTagCompound slotCompound = new NBTTagCompound();
+				slotCompound.setInteger("slot", i);
+				stacks[i].writeToNBT(slotCompound);
+				slotList.appendTag(slotCompound);
+			}
+		}
+		theStack.stackTagCompound.setTag("slots", slotList);
+		saveItemStack();
+	}
+	
+	void saveItemStack() {
+		if (player != null) {
+			player.inventory.setInventorySlotContents(player.inventory.currentItem, theStack);
+		}
+	}
 }
