@@ -4,8 +4,8 @@ import net.minecraft.src.Container;
 import net.minecraft.src.EntityPlayer;
 import net.minecraft.src.World;
 import cpw.mods.fml.common.network.IGuiHandler;
-import demonmodders.Crymod.Common.Inventory.ContainerSummoningBook;
-import demonmodders.Crymod.Common.Inventory.InventorySummoningBook;
+import demonmodders.Crymod.Common.Inventory.ContainerSummoner;
+import demonmodders.Crymod.Common.Inventory.InventorySummoner;
 import demonmodders.Crymod.Common.Inventory.AbstractContainer;
 
 import static demonmodders.Crymod.Common.Crymod.proxy;
@@ -17,7 +17,7 @@ public class CrymodGuiHandler implements IGuiHandler {
 		switch (GuiType.fromGuiId(ID)) {
 		case SUMMONING_BOOK:
 		case EVIL_TABLET:
-			return new ContainerSummoningBook(new InventorySummoningBook(player.getCurrentEquippedItem(), player), player.inventory);
+			return new ContainerSummoner(new InventorySummoner(player.getCurrentEquippedItem(), player), player.inventory);
 		default:
 			return null;
 		}
