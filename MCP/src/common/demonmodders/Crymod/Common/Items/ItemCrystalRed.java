@@ -10,9 +10,10 @@ public class ItemCrystalRed extends ItemCryMod {
 
 	public ItemCrystalRed(int itemId) {
 		super(itemId);
-		setIconIndex(4);
+		setIconIndex(3);
 		setItemName("crystalRed");
 		System.out.println(getLocalItemName(null));
+		this.setMaxStackSize(1);
 	}
 
 	

@@ -13,6 +13,7 @@ public class ItemCrystalLightBlue extends ItemCryMod {
 		setIconIndex(4);
 		setItemName("crystalLightBlue");
 		System.out.println(getLocalItemName(null));
+		this.setMaxStackSize(1);
 	}
 
 	

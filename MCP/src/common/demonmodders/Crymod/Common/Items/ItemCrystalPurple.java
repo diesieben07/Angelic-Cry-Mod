@@ -13,6 +13,7 @@ public class ItemCrystalPurple extends ItemCryMod {
 		setIconIndex(5);
 		setItemName("crystalPurple");
 		System.out.println(getLocalItemName(null));
+		this.setMaxStackSize(1);
 	}
 
 	
