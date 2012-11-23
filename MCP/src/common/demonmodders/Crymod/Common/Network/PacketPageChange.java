@@ -36,8 +36,8 @@ public class PacketPageChange extends CrymodPacket {
 
 	@Override
 	void execute(EntityPlayer player) {
-		if (player.craftingInventory.windowId == windowId && player.craftingInventory instanceof ContainerSummoner) {
-			((ContainerSummoner)player.craftingInventory).setCurrentPage(page);
+		if (player.openContainer.windowId == windowId && player.openContainer instanceof ContainerSummoner) {
+			((ContainerSummoner)player.openContainer).setCurrentPage(page);
 		}
 	}
 
