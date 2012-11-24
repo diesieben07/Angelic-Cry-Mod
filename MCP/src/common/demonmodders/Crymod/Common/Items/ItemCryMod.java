@@ -23,7 +23,7 @@ public class ItemCryMod extends Item {
 	}
 	
 	public static void createItems() {
-		summoner = new ItemSummoner(Crymod.conf.getItem("summonerId", 4765).getInt()).setHasSubtypes(true);
+		summoner = new ItemSummoner(Crymod.conf.getItem("summonerId", 4765).getInt()).setHasSubtypes(true).setMaxStackSize(1);
 		crystal = new ItemCrystal(Crymod.conf.getItem("crystalId", 4766).getInt()).setHasSubtypes(true).setItemName("crystal");
 	}
 
