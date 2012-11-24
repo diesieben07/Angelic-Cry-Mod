@@ -1,5 +1,7 @@
 package demonmodders.Crymod.Client;
 
+import cpw.mods.fml.common.Side;
+import cpw.mods.fml.common.registry.TickRegistry;
 import net.minecraft.src.Container;
 import net.minecraft.src.EntityPlayer;
 import net.minecraft.src.World;
@@ -26,6 +28,7 @@ public class ClientProxy extends CommonProxy {
 	@Override
 	public void preInit() {
 		MinecraftForgeClient.preloadTexture(Crymod.TEXTURE_FILE);
+		TickRegistry.registerTickHandler(new ClientTickHandler(), Side.CLIENT);
 	}
 
 	@Override

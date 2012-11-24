@@ -1,9 +1,11 @@
 package demonmodders.Crymod.Common;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.Charset;
+import java.util.Map.Entry;
 
 import cpw.mods.fml.common.registry.LanguageRegistry;
 
@@ -27,25 +29,14 @@ public class LanguageLoader {
 			stream = LanguageLoader.class.getResourceAsStream("/crymodResource/lang/" + DEFAULT_LANGUAGE + ".lang");
 		}
 		
-		BufferedReader reader = null;
-		
+		PropertyReader reader = new PropertyReader(stream);
 		try {
-			reader = new BufferedReader(new InputStreamReader(stream));
-			String line;
-			while ((line = reader.readLine()) != null) {
-				int colonIndex = line.indexOf(SEPARATOR);
-				if (colonIndex > 0 && !line.startsWith(COMMENT)) {
-					String key = line.substring(0, colonIndex);
-					String value = line.substring(colonIndex + COMMENT.length());
-					LanguageRegistry.instance().addStringLocalization(key, value);
-				}
+			reader.read();
+			for (Entry<String, String> entry : reader.getProperties().entrySet()) {
+				LanguageRegistry.instance().addStringLocalization(entry.getKey(), entry.getValue());
 			}
-		} catch (Exception e) {
+		} catch (IOException e) {
 			logger.warning("Failed to load any language.");
-		} finally {
-			try {
-				reader.close();
-			} catch (Exception e) {}
 		}
 	}
 }

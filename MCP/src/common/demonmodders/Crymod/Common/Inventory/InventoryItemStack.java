@@ -113,7 +113,7 @@ public abstract class InventoryItemStack implements IInventory {
 	}
 	
 	void saveItemStack() {
-		if (player != null) {
+		if (player != null && isUseableByPlayer(player)) {
 			player.inventory.setInventorySlotContents(player.inventory.currentItem, theStack);
 		}
 	}
