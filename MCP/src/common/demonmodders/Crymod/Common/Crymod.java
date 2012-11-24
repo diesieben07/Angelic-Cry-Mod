@@ -1,11 +1,15 @@
 package demonmodders.Crymod.Common;
 
+import java.io.File;
+import java.net.URL;
 import java.util.Arrays;
 import java.util.logging.Logger;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.src.StringTranslate;
 import net.minecraftforge.common.Configuration;
 
+import cpw.mods.fml.client.FMLClientHandler;
 import cpw.mods.fml.common.FMLLog;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.Init;
@@ -28,6 +32,12 @@ import demonmodders.Crymod.Common.Network.CrymodPacketHandler;
 @NetworkMod(channels = {CrymodPacket.CHANNEL}, packetHandler = CrymodPacketHandler.class, clientSideRequired = true, serverSideRequired = false)
 public class Crymod {
 	
+	// TODO
+	public static final String UPDATE_URL_PATTERN = "http://www.example.com/crymod/download/Crymod%s.zip";
+	public static final URL UPDATE_URL = Crymod.class.getResource("/crymodResource/updateinfodummy.dat");
+	
+	public static String VERSION;
+	
 	@SidedProxy(clientSide = "demonmodders.Crymod.Client.ClientProxy", serverSide = "demonmodders.Crymod.Common.CommonProxy")
 	public static CommonProxy proxy;
 	
@@ -49,6 +59,8 @@ public class Crymod {
 		metadata.authorList = Arrays.asList("Resinresin", "diesieben07");
 		metadata.description = "This Mod is Work in Progress.";		
 		
+		VERSION = metadata.version;
+		
 		logger.info("Crymod Version " + metadata.version + " preInitializing...");
 		
 		conf = new Configuration(evt.getSuggestedConfigurationFile());
@@ -59,6 +71,11 @@ public class Crymod {
 		NetworkRegistry.instance().registerGuiHandler(this, new CrymodGuiHandler());
 		
 		proxy.preInit();
+		
+		String targetFilePattern = new File(Minecraft.getMinecraftDir(), "mods/SummoningMod%s.zip").getAbsolutePath();
+		
+
+		UpdateChecker.startCheck();
 	}
 	
 	@Init
@@ -71,6 +88,8 @@ public class Crymod {
 	@PostInit
 	public void postInit(FMLPostInitializationEvent evt) {
 		proxy.postInit();
+		
+			
 		conf.save();
 	}
 	
