@@ -6,6 +6,7 @@ import cpw.mods.fml.common.FMLCommonHandler;
 
 import demonmodders.Crymod.Common.Network.PacketPageChange;
 import demonmodders.Crymod.Common.Recipes.SummoningRecipeRegistry;
+import net.minecraft.src.EntityPlayer;
 import net.minecraft.src.IInventory;
 import net.minecraft.src.InventoryPlayer;
 import net.minecraft.src.Slot;
@@ -25,8 +26,10 @@ public class ContainerSummoner extends AbstractContainer {
 		}		
 		
 		InventoryHelper.addPlayerInventoryToContainer(this, inventoryPlayer, 8, 174);
+		
+		setCurrentPage(0);
 	}
-	
+
 	private void addSlotsForPage(int page) {
 		int slotNumStart = page * 10;
 		System.out.println("adding slots for page " + page);
