@@ -14,7 +14,6 @@ public class ItemCrystal extends ItemCryMod {
 
 	public ItemCrystal(int itemId) {
 		super(itemId);
-		this.setMaxStackSize(1);
 	}
 
 	@Override

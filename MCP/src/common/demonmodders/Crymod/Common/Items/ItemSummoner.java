@@ -18,7 +18,6 @@ public class ItemSummoner extends ItemCryMod {
 	
 	public ItemSummoner(int itemId) {
 		super(itemId);
-		this.setMaxStackSize(1);
 	}
 
 	@Override
@@ -52,8 +51,5 @@ public class ItemSummoner extends ItemCryMod {
 	public void getSubItems(int itemId, CreativeTabs creativeTab, List itemList) {
 		itemList.add(new ItemStack(this, 1, 0));
 		itemList.add(new ItemStack(this, 1, 1));
-	}
-	
-	
-		
+	}		
 }
