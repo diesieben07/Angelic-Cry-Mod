@@ -1,4 +1,3 @@
-
 package demonmodders.Crymod.Common.WorldGen;
 
 import java.io.File;
