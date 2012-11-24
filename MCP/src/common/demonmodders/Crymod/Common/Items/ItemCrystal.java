@@ -3,6 +3,8 @@ package demonmodders.Crymod.Common.Items;
 import java.util.List;
 
 import net.minecraft.src.CreativeTabs;
+import net.minecraft.src.Entity;
+import net.minecraft.src.EntityPlayer;
 import net.minecraft.src.ItemStack;
 import net.minecraft.src.StringTranslate;
 import cpw.mods.fml.common.Side;
@@ -12,6 +14,7 @@ public class ItemCrystal extends ItemCryMod {
 
 	public ItemCrystal(int itemId) {
 		super(itemId);
+		this.setMaxStackSize(1);
 	}
 
 	@Override
@@ -34,5 +37,8 @@ public class ItemCrystal extends ItemCryMod {
 			}
 		}
 	}
+	
+	
+	
 
 }

@@ -18,6 +18,7 @@ public class ItemSummoner extends ItemCryMod {
 	
 	public ItemSummoner(int itemId) {
 		super(itemId);
+		this.setMaxStackSize(1);
 	}
 
 	@Override
