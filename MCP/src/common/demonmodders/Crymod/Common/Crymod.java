@@ -74,6 +74,8 @@ public class Crymod {
 		
 		String targetFilePattern = new File(Minecraft.getMinecraftDir(), "mods/SummoningMod%s.zip").getAbsolutePath();
 
+		PlayerKarmaManager.init();
+		
 		UpdateChecker.startCheck();
 	}
 	

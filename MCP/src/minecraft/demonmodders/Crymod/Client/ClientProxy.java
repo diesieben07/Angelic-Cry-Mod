@@ -9,9 +9,15 @@ import net.minecraftforge.client.MinecraftForgeClient;
 import demonmodders.Crymod.Client.Gui.GuiSummoner;
 import demonmodders.Crymod.Common.CommonProxy;
 import demonmodders.Crymod.Common.Crymod;
+import demonmodders.Crymod.Common.PlayerKarma;
 import demonmodders.Crymod.Common.Gui.GuiType;
 
 public class ClientProxy extends CommonProxy {
+	
+	@Override
+	public void setClientKarma(PlayerKarma karma) {
+		ClientTickHandler.instance().setClientKarma(karma);
+	}
 
 	@Override
 	public Object getClientGuiElement(Container container, int id, EntityPlayer player, World world, int x, int y, int z) {
@@ -28,7 +34,7 @@ public class ClientProxy extends CommonProxy {
 	@Override
 	public void preInit() {
 		MinecraftForgeClient.preloadTexture(Crymod.TEXTURE_FILE);
-		TickRegistry.registerTickHandler(new ClientTickHandler(), Side.CLIENT);
+		TickRegistry.registerTickHandler(ClientTickHandler.instance(), Side.CLIENT);
 	}
 
 	@Override

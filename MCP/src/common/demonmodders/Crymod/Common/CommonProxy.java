@@ -21,4 +21,8 @@ public class CommonProxy {
 		// NO OP on server
 		return null;
 	}
+	
+	public void setClientKarma(PlayerKarma karma) {
+		// NO OP on server
+	}
 }
