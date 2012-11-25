@@ -50,7 +50,7 @@ public abstract class CrymodPacket {
 		PacketDispatcher.sendPacketToServer(generatePacket());
 	}
 	
-	public final void sentToPlayer(EntityPlayer player) {
+	public final void sendToPlayer(EntityPlayer player) {
 		PacketDispatcher.sendPacketToPlayer(generatePacket(), (Player)player);
 	}
 	
