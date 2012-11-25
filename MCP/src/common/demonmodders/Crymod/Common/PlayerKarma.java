@@ -8,7 +8,7 @@ import net.minecraft.src.EntityPlayer;
 
 public class PlayerKarma {
 	
-	private int karma = 0;
+	private int karma = 50;
 	private final EntityPlayer player;
 	
 	public PlayerKarma(EntityPlayer player) {

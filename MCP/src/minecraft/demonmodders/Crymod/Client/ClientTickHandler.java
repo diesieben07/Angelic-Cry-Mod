@@ -54,6 +54,9 @@ public class ClientTickHandler extends Gui implements ITickHandler {
 			// the bar itself
 			if (karma != 0) {
 				int rescaledKarmaWidth = (int)(Math.abs(clientKarma.getKarma()) / (float)PlayerKarmaManager.MAX_KARMA_VALUE * (float)182);
+				if (rescaledKarmaWidth > 91) {
+					rescaledKarmaWidth = 91;
+				}
 				
 				int barTextureXStart = karma > 0 ? 91 : 91 - rescaledKarmaWidth;
 				
