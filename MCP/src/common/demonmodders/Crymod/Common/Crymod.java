@@ -1,15 +1,11 @@
 package demonmodders.Crymod.Common;
 
 import java.io.File;
-import java.net.URL;
 import java.util.Arrays;
 import java.util.logging.Logger;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.src.StringTranslate;
 import net.minecraftforge.common.Configuration;
-
-import cpw.mods.fml.client.FMLClientHandler;
 import cpw.mods.fml.common.FMLLog;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.Init;
@@ -30,12 +26,8 @@ import demonmodders.Crymod.Common.Network.CrymodPacket;
 import demonmodders.Crymod.Common.Network.CrymodPacketHandler;
 
 @Mod(modid = "crymod", name = "Angelic Cry Mod [WIP]", version = "0.1")
-@NetworkMod(channels = {CrymodPacket.CHANNEL}, packetHandler = CrymodPacketHandler.class, clientSideRequired = true, serverSideRequired = false)
+@NetworkMod(channels = {CrymodPacket.CHANNEL}, packetHandler = CrymodPacketHandler.class, tinyPacketHandler = CrymodPacketHandler.class, clientSideRequired = true, serverSideRequired = false)
 public class Crymod {
-	
-	// TODO
-	public static final String UPDATE_URL_PATTERN = "http://www.example.com/crymod/download/Crymod%s.zip";
-	public static final URL UPDATE_URL = Crymod.class.getResource("/crymodResource/updateinfodummy.dat");
 	
 	public static String VERSION;
 	
@@ -76,8 +68,6 @@ public class Crymod {
 		String targetFilePattern = new File(Minecraft.getMinecraftDir(), "mods/SummoningMod%s.zip").getAbsolutePath();
 
 		PlayerKarmaManager.init();
-		
-		UpdateChecker.startCheck();
 	}
 	
 	@Init

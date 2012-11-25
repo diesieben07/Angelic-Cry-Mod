@@ -1,6 +1,5 @@
 package demonmodders.Crymod.Common.Inventory;
 
-import cpw.mods.fml.common.FMLCommonHandler;
 import net.minecraft.src.EntityPlayer;
 import net.minecraft.src.IInventory;
 import net.minecraft.src.ItemStack;

@@ -1,8 +1,8 @@
 package demonmodders.Crymod.Common.Inventory;
 
-import demonmodders.Crymod.Common.Recipes.SummoningRecipeRegistry;
 import net.minecraft.src.EntityPlayer;
 import net.minecraft.src.ItemStack;
+import demonmodders.Crymod.Common.Recipes.SummoningRecipeRegistry;
 
 public class InventorySummoner extends InventoryItemStack {
 

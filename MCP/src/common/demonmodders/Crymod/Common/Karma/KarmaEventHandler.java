@@ -2,16 +2,10 @@ package demonmodders.Crymod.Common.Karma;
 
 import java.util.EnumSet;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.Set;
 
-import cpw.mods.fml.common.ITickHandler;
-import cpw.mods.fml.common.Side;
-import cpw.mods.fml.common.TickType;
-import cpw.mods.fml.common.registry.TickRegistry;
 import net.minecraft.src.EntityAnimal;
 import net.minecraft.src.EntityCreeper;
 import net.minecraft.src.EntityDamageSource;
@@ -21,8 +15,11 @@ import net.minecraft.src.EntityVillager;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.ForgeSubscribe;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
-import net.minecraftforge.event.entity.player.AttackEntityEvent;
 import net.minecraftforge.event.entity.player.EntityInteractEvent;
+import cpw.mods.fml.common.ITickHandler;
+import cpw.mods.fml.common.Side;
+import cpw.mods.fml.common.TickType;
+import cpw.mods.fml.common.registry.TickRegistry;
 
 public class KarmaEventHandler implements ITickHandler {
 	
@@ -80,14 +77,13 @@ public class KarmaEventHandler implements ITickHandler {
 
 	@Override
 	public void tickStart(EnumSet<TickType> type, Object... tickData) {
-		Set<EntityAnimal> remove = new HashSet<EntityAnimal>();
 		Iterator<Entry<EntityPlayer,BreedingInfo>> it = breedingInfo.entrySet().iterator();
 		
 		while (it.hasNext()) {
 			Entry<EntityPlayer,BreedingInfo> entry = it.next();
 			
 			entry.getValue().ticks--;
-			if (entry.getValue().ticks == 0) {
+			if (entry.getValue().ticks == 0 || entry.getKey().isDead) {
 				it.remove();
 			}
 		}

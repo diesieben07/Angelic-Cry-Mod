@@ -1,19 +1,14 @@
 package demonmodders.Crymod.Common;
 
-import java.io.BufferedReader;
+import static demonmodders.Crymod.Common.Crymod.conf;
+import static demonmodders.Crymod.Common.Crymod.logger;
+import static net.minecraftforge.common.Configuration.CATEGORY_GENERAL;
+
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.nio.charset.Charset;
 import java.util.Map.Entry;
 
 import cpw.mods.fml.common.registry.LanguageRegistry;
-
-import net.minecraftforge.common.Configuration;
-import static net.minecraftforge.common.Configuration.CATEGORY_GENERAL;
-
-import static demonmodders.Crymod.Common.Crymod.conf;
-import static demonmodders.Crymod.Common.Crymod.logger;
 
 public class LanguageLoader {
 

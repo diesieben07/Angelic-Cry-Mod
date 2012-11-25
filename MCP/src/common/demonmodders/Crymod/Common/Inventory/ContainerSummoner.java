@@ -2,15 +2,11 @@ package demonmodders.Crymod.Common.Inventory;
 
 import java.util.List;
 
-import cpw.mods.fml.common.FMLCommonHandler;
-
+import net.minecraft.src.InventoryPlayer;
+import net.minecraft.src.Slot;
 import demonmodders.Crymod.Common.Items.ItemCryMod;
 import demonmodders.Crymod.Common.Network.PacketPageChange;
 import demonmodders.Crymod.Common.Recipes.SummoningRecipeRegistry;
-import net.minecraft.src.EntityPlayer;
-import net.minecraft.src.IInventory;
-import net.minecraft.src.InventoryPlayer;
-import net.minecraft.src.Slot;
 
 public class ContainerSummoner extends AbstractContainer {
 

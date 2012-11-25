@@ -1,7 +1,7 @@
 package demonmodders.Crymod.Common.WorldGen;
 
-import java.io.File;
 import java.io.InputStream;
+
 import net.minecraft.src.CompressedStreamTools;
 import net.minecraft.src.NBTTagCompound;
 import net.minecraft.src.World;

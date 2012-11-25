@@ -4,7 +4,6 @@ import java.util.Arrays;
 import java.util.List;
 
 import net.minecraft.src.IInventory;
-import net.minecraft.src.Item;
 import net.minecraft.src.ItemStack;
 import net.minecraft.src.Slot;
 

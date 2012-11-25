@@ -2,14 +2,14 @@ package demonmodders.Crymod.Common.Items;
 
 import java.util.List;
 
-import cpw.mods.fml.common.Side;
-import cpw.mods.fml.common.asm.SideOnly;
-import demonmodders.Crymod.Common.Crymod;
-import demonmodders.Crymod.Common.Gui.GuiType;
 import net.minecraft.src.CreativeTabs;
 import net.minecraft.src.EntityPlayer;
 import net.minecraft.src.ItemStack;
 import net.minecraft.src.World;
+import cpw.mods.fml.common.Side;
+import cpw.mods.fml.common.asm.SideOnly;
+import demonmodders.Crymod.Common.Crymod;
+import demonmodders.Crymod.Common.Gui.GuiType;
 
 public class ItemSummoner extends ItemCryMod {
 	

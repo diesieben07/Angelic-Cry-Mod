@@ -1,13 +1,10 @@
 package demonmodders.Crymod.Common.Network;
 
-import java.io.DataInput;
-import java.io.DataOutput;
-import java.io.IOException;
+import com.google.common.io.ByteArrayDataInput;
+import com.google.common.io.ByteArrayDataOutput;
 
 import net.minecraft.src.Container;
 import net.minecraft.src.EntityPlayer;
-
-import cpw.mods.fml.common.network.Player;
 import demonmodders.Crymod.Common.Inventory.ContainerSummoner;
 
 public class PacketPageChange extends CrymodPacket {
@@ -23,13 +20,13 @@ public class PacketPageChange extends CrymodPacket {
 	}
 	
 	@Override
-	void writeData(DataOutput out) throws IOException {
+	void writeData(ByteArrayDataOutput out) {
 		out.writeByte(windowId);
 		out.writeByte(page);
 	}
 
 	@Override
-	void readData(DataInput in) throws IOException {
+	void readData(ByteArrayDataInput in) {
 		windowId = in.readByte();
 		page = in.readByte();
 	}
