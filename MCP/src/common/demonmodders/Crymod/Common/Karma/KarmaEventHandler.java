@@ -1,5 +1,9 @@
 package demonmodders.Crymod.Common.Karma;
 
+import java.util.EnumSet;
+
+import cpw.mods.fml.common.ITickHandler;
+import cpw.mods.fml.common.TickType;
 import net.minecraft.src.EntityAnimal;
 import net.minecraft.src.EntityCreeper;
 import net.minecraft.src.EntityDamageSource;
@@ -12,7 +16,7 @@ import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.player.AttackEntityEvent;
 import net.minecraftforge.event.entity.player.EntityInteractEvent;
 
-public class KarmaEventHandler {
+public class KarmaEventHandler implements ITickHandler {
 	private KarmaEventHandler() {}
 	
 	public static void init() {
@@ -38,5 +42,25 @@ public class KarmaEventHandler {
 				PlayerKarmaManager.instance().getPlayerKarma(player).modifyKarmaWithMin(-2, -20);
 			}
 		}
+	}
+
+	@Override
+	public void tickStart(EnumSet<TickType> type, Object... tickData) {
+		
+	}
+
+	@Override
+	public void tickEnd(EnumSet<TickType> type, Object... tickData) {
+		
+	}
+
+	@Override
+	public EnumSet<TickType> ticks() {
+		return EnumSet.of(TickType.SERVER);
+	}
+
+	@Override
+	public String getLabel() {
+		return "SummoningModKarmaManager";
 	}
 }

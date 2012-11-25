@@ -7,3 +7,11 @@ item.crystal.purple.name:Magic Crystal
 item.crystal.green.name:Green Crystal (Need Name)
 item.crystal.orange.name:Fiery Crystal
 item.crystal.blue.name:Icy Crystal
+chat.prefix.good.10:Minor Priest
+chat.prefix.good.25:High Priest
+chat.prefix.good.40:Great Monk
+chat.prefix.good.50:Holy Overlord
+chat.prefix.bad.10:Crazed
+chat.prefix.bad.25:Consumed
+chat.prefix.bad.40:Demonist
+chat.prefix.bad.50:Dark God

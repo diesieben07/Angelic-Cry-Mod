@@ -8,16 +8,20 @@ import cpw.mods.fml.common.registry.GameRegistry;
 import demonmodders.Crymod.Common.Network.PacketPlayerKarma;
 
 import net.minecraft.src.EntityPlayer;
+import net.minecraft.src.StringTranslate;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.ForgeSubscribe;
+import net.minecraftforge.event.ServerChatEvent;
 
 /**
  * Class that manages player karma on the server
- * @author Take
  *
  */
 public class PlayerKarmaManager implements IPlayerTracker {
 	
 	private PlayerKarmaManager() {
 		GameRegistry.registerPlayerTracker(this);
+		MinecraftForge.EVENT_BUS.register(this);
 	}
 	
 	private static final PlayerKarmaManager instance = new PlayerKarmaManager();
@@ -42,7 +46,7 @@ public class PlayerKarmaManager implements IPlayerTracker {
 		if (player == null) {
 			return;
 		}
-		new PacketPlayerKarma(karmas.get(player)).sentToPlayer(player);
+		new PacketPlayerKarma(karmas.get(player)).sendToPlayer(player);
 	}
 
 	@Override
@@ -56,6 +60,28 @@ public class PlayerKarmaManager implements IPlayerTracker {
 	public void onPlayerLogout(EntityPlayer player) {
 		karmas.remove(player);
 		// TODO: save it
+	}
+	
+	private static final int[] MESSAGE_BORDERS = {50, 40, 25, 10};
+	
+	@ForgeSubscribe
+	public void onServerChat(ServerChatEvent evt) {
+		System.out.println("yes");
+		int karma = getPlayerKarma(evt.player).getKarma();
+		if (karma == 0) {
+			return;
+		}
+		int useBorder = -1;
+		for (int border : MESSAGE_BORDERS) {
+			if (karma > 0 && karma > border || karma < 0 && karma < -border && useBorder < border) {
+				useBorder = border;
+			}
+		}
+		if (useBorder != -1) {
+			String messageKey = "chat.prefix." + (karma < 0 ? "bad" : "good") + "." + useBorder;
+			String messageColor = karma < 0 ? "§4" : "§1";
+			evt.line = evt.line.replace(evt.username, messageColor + StringTranslate.getInstance().translateKey(messageKey) + " " + evt.username + "§f");
+		}
 	}
 
 	@Override
