@@ -6,6 +6,12 @@ import net.minecraft.src.CompressedStreamTools;
 import net.minecraft.src.NBTTagCompound;
 import net.minecraft.src.World;
 
+/**
+ * Class that makes structure generation easier
+ * @author Resinresin
+ *
+ */
+
 public class resinresinLoader {
 
  public byte[] blocks;
