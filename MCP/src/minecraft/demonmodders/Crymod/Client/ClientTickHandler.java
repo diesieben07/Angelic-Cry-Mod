@@ -67,7 +67,7 @@ public class ClientTickHandler extends Gui implements ITickHandler {
 			String karmaString = String.valueOf(karma);
 			
 			int xPos = width / 2 - mc.fontRenderer.getStringWidth(karmaString) / 2;
-			int yPos = 5;
+			int yPos = 2;
 			
 			FontRenderer fr = mc.fontRenderer;
 			fr.drawString(karmaString, xPos + 1, yPos, 0x000000);
@@ -75,6 +75,9 @@ public class ClientTickHandler extends Gui implements ITickHandler {
 			fr.drawString(karmaString, xPos, yPos + 1, 0x000000);
 			fr.drawString(karmaString, xPos, yPos - 1, 0x000000);
 			fr.drawString(karmaString, xPos, yPos, 0x80ff20);
+			
+			if(karma > 0){fr.drawString(karmaString, xPos, yPos, 0x0000FF);}
+			else if(karma < 0){fr.drawString(karmaString, xPos, yPos, 0xFF0000);}
 		}
 	}
 
