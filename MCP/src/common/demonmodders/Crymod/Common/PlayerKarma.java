@@ -25,12 +25,17 @@ public class PlayerKarma {
 	
 	public void setKarma(int karma) {
 		this.karma = karma;
+		if (this.karma > PlayerKarmaManager.MAX_KARMA_VALUE) {
+			this.karma = PlayerKarmaManager.MAX_KARMA_VALUE;
+		}
+		if (this.karma < -PlayerKarmaManager.MAX_KARMA_VALUE) {
+			this.karma = -PlayerKarmaManager.MAX_KARMA_VALUE;
+		}
 		PlayerKarmaManager.instance().updateClientKarma(player);
 	}
 	
 	public int modifyKarma(int modifier) {
-		karma += modifier;
-		PlayerKarmaManager.instance().updateClientKarma(player);
+		setKarma(karma + modifier);
 		return karma;
 	}
 	
