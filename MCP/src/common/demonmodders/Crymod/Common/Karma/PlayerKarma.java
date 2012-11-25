@@ -1,4 +1,4 @@
-package demonmodders.Crymod.Common;
+package demonmodders.Crymod.Common.Karma;
 
 import java.io.DataInput;
 import java.io.DataOutput;
@@ -8,7 +8,7 @@ import net.minecraft.src.EntityPlayer;
 
 public class PlayerKarma {
 	
-	private int karma = 50;
+	private int karma = 0;
 	private final EntityPlayer player;
 	
 	public PlayerKarma(EntityPlayer player) {
@@ -36,6 +36,20 @@ public class PlayerKarma {
 	
 	public int modifyKarma(int modifier) {
 		setKarma(karma + modifier);
+		return karma;
+	}
+	
+	public int modifyKarmaWithMax(int modifier, int max) {
+		if (karma < max) {
+			modifyKarma(modifier);
+		}
+		return karma;
+	}
+	
+	public int modifyKarmaWithMin(int modifier, int min) {
+		if (karma > min) {
+			modifyKarma(modifier);
+		}
 		return karma;
 	}
 	

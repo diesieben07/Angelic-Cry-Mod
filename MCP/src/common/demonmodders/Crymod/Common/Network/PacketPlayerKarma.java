@@ -5,7 +5,7 @@ import java.io.DataOutput;
 import java.io.IOException;
 
 import demonmodders.Crymod.Common.Crymod;
-import demonmodders.Crymod.Common.PlayerKarma;
+import demonmodders.Crymod.Common.Karma.PlayerKarma;
 
 import net.minecraft.src.EntityPlayer;
 

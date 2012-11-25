@@ -1,4 +1,4 @@
-package demonmodders.Crymod.Common;
+package demonmodders.Crymod.Common.Karma;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -26,7 +26,9 @@ public class PlayerKarmaManager implements IPlayerTracker {
 		return instance;
 	}
 	
-	public static void init() {}
+	public static void init() {
+		KarmaEventHandler.init();
+	}
 	
 	public static final int MAX_KARMA_VALUE = 50;
 	
@@ -45,7 +47,7 @@ public class PlayerKarmaManager implements IPlayerTracker {
 
 	@Override
 	public void onPlayerLogin(EntityPlayer player) {		
-		karmas.put(player, new PlayerKarma());
+		karmas.put(player, new PlayerKarma(player));
 		// TODO: load it
 		updateClientKarma(player);
 	}

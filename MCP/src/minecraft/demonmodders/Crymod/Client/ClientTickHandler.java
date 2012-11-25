@@ -11,8 +11,8 @@ import net.minecraft.src.ScaledResolution;
 import cpw.mods.fml.client.FMLClientHandler;
 import cpw.mods.fml.common.ITickHandler;
 import cpw.mods.fml.common.TickType;
-import demonmodders.Crymod.Common.PlayerKarma;
-import demonmodders.Crymod.Common.PlayerKarmaManager;
+import demonmodders.Crymod.Common.Karma.PlayerKarma;
+import demonmodders.Crymod.Common.Karma.PlayerKarmaManager;
 
 public class ClientTickHandler extends Gui implements ITickHandler {
 

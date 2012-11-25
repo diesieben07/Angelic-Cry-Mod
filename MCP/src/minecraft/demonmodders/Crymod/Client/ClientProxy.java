@@ -9,8 +9,8 @@ import net.minecraftforge.client.MinecraftForgeClient;
 import demonmodders.Crymod.Client.Gui.GuiSummoner;
 import demonmodders.Crymod.Common.CommonProxy;
 import demonmodders.Crymod.Common.Crymod;
-import demonmodders.Crymod.Common.PlayerKarma;
 import demonmodders.Crymod.Common.Gui.GuiType;
+import demonmodders.Crymod.Common.Karma.PlayerKarma;
 
 public class ClientProxy extends CommonProxy {
 	
