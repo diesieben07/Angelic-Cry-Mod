@@ -65,7 +65,7 @@ public class PlayerKarmaManager implements IPlayerTracker {
 	
 	@ForgeSubscribe
 	public void onServerChat(ServerChatEvent evt) {
-		int karma = getPlayerKarma(evt.player).getKarma();
+		float karma = getPlayerKarma(evt.player).getKarma();
 		if (karma == 0) {
 			return;
 		}

@@ -7,7 +7,7 @@ import net.minecraft.src.EntityPlayer;
 
 public class PlayerKarma {
 	
-	private int karma = 0;
+	private float karma = 0;
 	private final EntityPlayer player;
 	
 	public PlayerKarma(EntityPlayer player) {
@@ -18,11 +18,11 @@ public class PlayerKarma {
 		this(null);
 	}
 	
-	public int getKarma() {
+	public float getKarma() {
 		return karma;
 	}
 	
-	public void setKarma(int karma) {
+	public void setKarma(float karma) {
 		this.karma = karma;
 		if (this.karma > PlayerKarmaManager.MAX_KARMA_VALUE) {
 			this.karma = PlayerKarmaManager.MAX_KARMA_VALUE;
@@ -33,19 +33,19 @@ public class PlayerKarma {
 		PlayerKarmaManager.instance().updateClientKarma(player);
 	}
 	
-	public int modifyKarma(int modifier) {
+	public float modifyKarma(float modifier) {
 		setKarma(karma + modifier);
 		return karma;
 	}
 	
-	public int modifyKarmaWithMax(int modifier, int max) {
+	public float modifyKarmaWithMax(float modifier, float max) {
 		if (karma < max) {
 			modifyKarma(modifier);
 		}
 		return karma;
 	}
 	
-	public int modifyKarmaWithMin(int modifier, int min) {
+	public float modifyKarmaWithMin(float modifier, float min) {
 		if (karma > min) {
 			modifyKarma(modifier);
 		}
@@ -53,11 +53,11 @@ public class PlayerKarma {
 	}
 	
 	public void write(ByteArrayDataOutput out) {
-		out.writeByte(karma);
+		out.writeFloat(karma);
 	}
 	
 	public PlayerKarma read(ByteArrayDataInput in) {
-		karma = in.readByte();
+		karma = in.readFloat();
 		return this;
 	}
 	

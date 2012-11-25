@@ -50,7 +50,7 @@ public class ClientTickHandler extends Gui implements ITickHandler {
 			// background of the bar
 			drawTexturedModalRect(barXStart, 10, 0, 0, 182, 5);
 
-			int karma = clientKarma.getKarma();
+			float karma = clientKarma.getKarma();
 			
 			// the bar itself
 			if (karma != 0) {
@@ -64,7 +64,7 @@ public class ClientTickHandler extends Gui implements ITickHandler {
 				drawTexturedModalRect(barXStart + barTextureXStart, 10, barTextureXStart, 5, rescaledKarmaWidth, 5);
 			}
 			
-			String karmaString = String.valueOf(karma);
+			String karmaString = String.valueOf((int)karma);
 			
 			int xPos = width / 2 - mc.fontRenderer.getStringWidth(karmaString) / 2;
 			int yPos = 2;

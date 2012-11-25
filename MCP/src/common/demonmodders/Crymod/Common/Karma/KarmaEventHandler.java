@@ -36,9 +36,9 @@ public class KarmaEventHandler implements ITickHandler {
 		if (evt.source instanceof EntityDamageSource && ((EntityDamageSource)evt.source).getEntity() instanceof EntityPlayerMP) {
 			EntityPlayer player = (EntityPlayer)((EntityDamageSource)evt.source).getEntity();
 			if (evt.entity instanceof EntityCreeper) {
-				PlayerKarmaManager.instance().getPlayerKarma(player).modifyKarmaWithMax(1, 10);
+				PlayerKarmaManager.instance().getPlayerKarma(player).modifyKarmaWithMax(0.5F, 10);
 			} else if (evt.entity instanceof EntityVillager) {
-				PlayerKarmaManager.instance().getPlayerKarma(player).modifyKarmaWithMin(-2, -20);
+				PlayerKarmaManager.instance().getPlayerKarma(player).modifyKarmaWithMin(-1, -20);
 			}
 		}
 	}
@@ -53,7 +53,7 @@ public class KarmaEventHandler implements ITickHandler {
 					breedingInfo.put(evt.entityPlayer, new BreedingInfo(animal, animal.inLove));
 				} else {
 					if (info.animal.getDistanceSqToEntity(animal) <= 64) {
-						PlayerKarmaManager.instance().getPlayerKarma(evt.entityPlayer).modifyKarmaWithMax(1, 10);
+						PlayerKarmaManager.instance().getPlayerKarma(evt.entityPlayer).modifyKarmaWithMax(0.5F, 10);
 						breedingInfo.remove(evt.entityPlayer);
 					} else {
 						breedingInfo.put(evt.entityPlayer, new BreedingInfo(animal, animal.inLove));
