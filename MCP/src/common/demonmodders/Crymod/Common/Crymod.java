@@ -73,7 +73,6 @@ public class Crymod {
 		proxy.preInit();
 		
 		String targetFilePattern = new File(Minecraft.getMinecraftDir(), "mods/SummoningMod%s.zip").getAbsolutePath();
-		
 
 		UpdateChecker.startCheck();
 	}

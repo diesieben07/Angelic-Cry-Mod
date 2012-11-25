@@ -17,10 +17,12 @@ public abstract class InventoryItemStack implements IInventory {
 	}
 
 	private final ItemStack theStack;
+	private final ItemStack originalStack;
 	private final EntityPlayer player;
 		
 	public InventoryItemStack(ItemStack theStack, EntityPlayer player) {
 		this.theStack = theStack;
+		originalStack = theStack.copy();
 		this.player = player;
 	}
 	
@@ -79,7 +81,7 @@ public abstract class InventoryItemStack implements IInventory {
 		} else if (this.player != player) {
 			return false;
 		} else {
-			return ItemStack.areItemStacksEqual(player.inventory.getCurrentItem(), theStack);
+			return ItemStack.areItemStacksEqual(player.inventory.getCurrentItem(), originalStack);
 		}
 	}
 
