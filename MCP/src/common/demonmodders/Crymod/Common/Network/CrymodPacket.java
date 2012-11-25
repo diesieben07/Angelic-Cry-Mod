@@ -44,7 +44,6 @@ public abstract class CrymodPacket {
 		writeData(output);
 		byte[] bytes = output.toByteArray();
 		if (bytes.length <= Short.MAX_VALUE + 1) {
-			System.out.println("Using Tiny Packet because smaller than " + Short.MAX_VALUE);
 			return PacketDispatcher.getTinyPacket(Crymod.instance, bytes[0], Arrays.copyOfRange(bytes, 1, bytes.length));
 		} else {
 			return new Packet250CustomPayload(CHANNEL, bytes);

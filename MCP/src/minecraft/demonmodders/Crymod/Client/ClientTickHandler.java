@@ -74,10 +74,12 @@ public class ClientTickHandler extends Gui implements ITickHandler {
 			fr.drawString(karmaString, xPos - 1, yPos, 0x000000);
 			fr.drawString(karmaString, xPos, yPos + 1, 0x000000);
 			fr.drawString(karmaString, xPos, yPos - 1, 0x000000);
-			fr.drawString(karmaString, xPos, yPos, 0x80ff20);
 			
-			if(karma > 0){fr.drawString(karmaString, xPos, yPos, 0x0000FF);}
-			else if(karma < 0){fr.drawString(karmaString, xPos, yPos, 0xFF0000);}
+			if(karma >= 0) {
+				fr.drawString(karmaString, xPos, yPos, 0x4444FF);
+			} else {
+				fr.drawString(karmaString, xPos, yPos, 0xFF0000);
+			}
 		}
 	}
 
