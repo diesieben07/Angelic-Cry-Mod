@@ -25,7 +25,6 @@ import net.minecraftforge.event.entity.player.AttackEntityEvent;
 import net.minecraftforge.event.entity.player.EntityInteractEvent;
 
 public class KarmaEventHandler implements ITickHandler {
-	private static final int BREEDING_TICKS = 600;
 	
 	private KarmaEventHandler() {}
 	
@@ -54,13 +53,13 @@ public class KarmaEventHandler implements ITickHandler {
 			if (animal.isBreedingItem(evt.entityPlayer.getCurrentEquippedItem()) && animal.getGrowingAge() == 0) {
 				BreedingInfo info = breedingInfo.get(evt.entityPlayer);
 				if (info == null || info.animal == animal) {
-					breedingInfo.put(evt.entityPlayer, new BreedingInfo(animal, BREEDING_TICKS));
+					breedingInfo.put(evt.entityPlayer, new BreedingInfo(animal, animal.inLove));
 				} else {
 					if (info.animal.getDistanceSqToEntity(animal) <= 64) {
 						PlayerKarmaManager.instance().getPlayerKarma(evt.entityPlayer).modifyKarmaWithMax(1, 10);
 						breedingInfo.remove(evt.entityPlayer);
 					} else {
-						breedingInfo.put(evt.entityPlayer, new BreedingInfo(animal, BREEDING_TICKS));
+						breedingInfo.put(evt.entityPlayer, new BreedingInfo(animal, animal.inLove));
 					}
 				}
 			}
