@@ -52,7 +52,7 @@ public class ClientTickHandler extends Gui implements ITickHandler {
 
 			float karma = clientKarma.getKarma();
 			
-			// the bar itself
+			// the bar itself render
 			if (karma != 0) {
 				int rescaledKarmaWidth = (int)(Math.abs(karma) / (float)PlayerKarmaManager.MAX_KARMA_VALUE * (float)91);
 				if (rescaledKarmaWidth > 91) {
