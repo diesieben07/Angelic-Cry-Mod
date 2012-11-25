@@ -1,9 +1,17 @@
 package demonmodders.Crymod.Common.Karma;
 
 import java.util.EnumSet;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
 
 import cpw.mods.fml.common.ITickHandler;
+import cpw.mods.fml.common.Side;
 import cpw.mods.fml.common.TickType;
+import cpw.mods.fml.common.registry.TickRegistry;
 import net.minecraft.src.EntityAnimal;
 import net.minecraft.src.EntityCreeper;
 import net.minecraft.src.EntityDamageSource;
@@ -17,19 +25,14 @@ import net.minecraftforge.event.entity.player.AttackEntityEvent;
 import net.minecraftforge.event.entity.player.EntityInteractEvent;
 
 public class KarmaEventHandler implements ITickHandler {
+	private static final int BREEDING_TICKS = 600;
+	
 	private KarmaEventHandler() {}
 	
 	public static void init() {
-		MinecraftForge.EVENT_BUS.register(new KarmaEventHandler());
-	}
-	
-	@ForgeSubscribe
-	public void onEntityInteract(EntityInteractEvent evt) {
-		if (evt.entityPlayer instanceof EntityPlayerMP) {
-			if (evt.target instanceof EntityAnimal && ((EntityAnimal)evt.target).isBreedingItem(evt.entityPlayer.getCurrentEquippedItem())) {
-				PlayerKarmaManager.instance().getPlayerKarma(evt.entityPlayer).modifyKarmaWithMax(1, 10);
-			}
-		}
+		KarmaEventHandler instance = new KarmaEventHandler();
+		MinecraftForge.EVENT_BUS.register(instance);
+		TickRegistry.registerTickHandler(instance, Side.SERVER);		
 	}
 	
 	@ForgeSubscribe
@@ -43,10 +46,52 @@ public class KarmaEventHandler implements ITickHandler {
 			}
 		}
 	}
+	
+	@ForgeSubscribe
+	public void onEntityInteract(EntityInteractEvent evt) {
+		if (evt.entityPlayer instanceof EntityPlayerMP && evt.target instanceof EntityAnimal) {
+			EntityAnimal animal = (EntityAnimal)evt.target;
+			if (animal.isBreedingItem(evt.entityPlayer.getCurrentEquippedItem()) && animal.getGrowingAge() == 0) {
+				BreedingInfo info = breedingInfo.get(evt.entityPlayer);
+				if (info == null || info.animal == animal) {
+					breedingInfo.put(evt.entityPlayer, new BreedingInfo(animal, BREEDING_TICKS));
+				} else {
+					if (info.animal.getDistanceSqToEntity(animal) <= 64) {
+						PlayerKarmaManager.instance().getPlayerKarma(evt.entityPlayer).modifyKarmaWithMax(1, 10);
+						breedingInfo.remove(evt.entityPlayer);
+					} else {
+						breedingInfo.put(evt.entityPlayer, new BreedingInfo(animal, BREEDING_TICKS));
+					}
+				}
+			}
+		}
+	}
+	
+	private static class BreedingInfo {
+		private final EntityAnimal animal;
+		private int ticks;
+		
+		private BreedingInfo(EntityAnimal animal, int ticks) {
+			this.animal = animal;
+			this.ticks = ticks;
+		}
+	}
+	
+	private Map<EntityPlayer,BreedingInfo> breedingInfo = new HashMap<EntityPlayer,BreedingInfo>();
 
 	@Override
 	public void tickStart(EnumSet<TickType> type, Object... tickData) {
+		Set<EntityAnimal> remove = new HashSet<EntityAnimal>();
+		Iterator<Entry<EntityPlayer,BreedingInfo>> it = breedingInfo.entrySet().iterator();
 		
+		while (it.hasNext()) {
+			Entry<EntityPlayer,BreedingInfo> entry = it.next();
+			
+			entry.getValue().ticks--;
+			if (entry.getValue().ticks == 0) {
+				it.remove();
+			}
+		}
 	}
 
 	@Override
