@@ -1,10 +1,17 @@
 package demonmodders.Crymod.Common.Network;
 
+import static demonmodders.Crymod.Common.Crymod.logger;
+
 import java.io.DataInput;
 import java.io.DataOutput;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+
+import net.minecraft.src.EntityPlayer;
+import net.minecraft.src.Packet;
+import net.minecraft.src.Packet250CustomPayload;
 
 import com.google.common.io.ByteArrayDataInput;
 import com.google.common.io.ByteArrayDataOutput;
@@ -12,15 +19,11 @@ import com.google.common.io.ByteStreams;
 
 import cpw.mods.fml.common.network.PacketDispatcher;
 import cpw.mods.fml.common.network.Player;
-
-import static demonmodders.Crymod.Common.Crymod.logger;
-
-import net.minecraft.src.EntityPlayer;
-import net.minecraft.src.Packet250CustomPayload;
+import demonmodders.Crymod.Common.Crymod;
 
 public abstract class CrymodPacket {
 	
-	public static final String CHANNEL = "crymod";
+	public static final String CHANNEL = "SummoningMod";
 	
 	private static Map<Integer, Class<? extends CrymodPacket>> idToClassMap = new HashMap<Integer, Class<? extends CrymodPacket>>();
 	private static Map<Class<? extends CrymodPacket>, Integer> classToIdMap = new HashMap<Class<? extends CrymodPacket>, Integer>();
@@ -35,15 +38,17 @@ public abstract class CrymodPacket {
 		addMapping(1, PacketPlayerKarma.class);
 	}
 	
-	public final Packet250CustomPayload generatePacket() {
+	public final Packet generatePacket() {
 		ByteArrayDataOutput output = ByteStreams.newDataOutput();
 		output.writeByte(classToIdMap.get(getClass()));
-		try {
-			writeData(output);
-		} catch (IOException e) {
-			logger.warning("Exception during writing of packet data!");
+		writeData(output);
+		byte[] bytes = output.toByteArray();
+		if (bytes.length <= Short.MAX_VALUE + 1) {
+			System.out.println("Using Tiny Packet because smaller than " + Short.MAX_VALUE);
+			return PacketDispatcher.getTinyPacket(Crymod.instance, bytes[0], Arrays.copyOfRange(bytes, 1, bytes.length));
+		} else {
+			return new Packet250CustomPayload(CHANNEL, bytes);
 		}
-		return new Packet250CustomPayload(CHANNEL, output.toByteArray());
 	}
 	
 	public final void sendToServer() {
@@ -54,15 +59,13 @@ public abstract class CrymodPacket {
 		PacketDispatcher.sendPacketToPlayer(generatePacket(), (Player)player);
 	}
 	
-	abstract void writeData(DataOutput out) throws IOException;
+	abstract void writeData(ByteArrayDataOutput out);
 	
-	abstract void readData(DataInput in) throws IOException;
+	abstract void readData(ByteArrayDataInput in);
 	
 	abstract void execute(EntityPlayer player);
 	
-	public static void execute(Packet250CustomPayload packet, Player player) {
-		ByteArrayDataInput input = ByteStreams.newDataInput(packet.data);
-		int packetId = input.readByte();
+	public static void execute(ByteArrayDataInput input, int packetId, EntityPlayer player) {
 		Class<? extends CrymodPacket> packetClass = idToClassMap.get(packetId);
 		if (packetClass == null) {
 			logger.warning("Recieved unknown Packet-Id " + packetId);

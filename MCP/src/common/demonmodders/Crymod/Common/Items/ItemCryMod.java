@@ -1,11 +1,10 @@
 package demonmodders.Crymod.Common.Items;
 
+import net.minecraft.src.CreativeTabs;
+import net.minecraft.src.Item;
 import cpw.mods.fml.common.Side;
 import cpw.mods.fml.common.asm.SideOnly;
 import demonmodders.Crymod.Common.Crymod;
-import demonmodders.Crymod.Common.Gui.GuiType;
-import net.minecraft.src.CreativeTabs;
-import net.minecraft.src.Item;
 
 public class ItemCryMod extends Item {
 

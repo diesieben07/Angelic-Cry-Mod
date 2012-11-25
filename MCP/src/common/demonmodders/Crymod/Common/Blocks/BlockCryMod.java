@@ -1,8 +1,8 @@
 package demonmodders.Crymod.Common.Blocks;
 
-import demonmodders.Crymod.Common.Crymod;
 import net.minecraft.src.Block;
 import net.minecraft.src.Material;
+import demonmodders.Crymod.Common.Crymod;
 
 public class BlockCryMod extends Block {
 

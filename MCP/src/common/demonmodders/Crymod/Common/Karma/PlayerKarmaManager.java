@@ -3,15 +3,14 @@ package demonmodders.Crymod.Common.Karma;
 import java.util.HashMap;
 import java.util.Map;
 
-import cpw.mods.fml.common.IPlayerTracker;
-import cpw.mods.fml.common.registry.GameRegistry;
-import demonmodders.Crymod.Common.Network.PacketPlayerKarma;
-
 import net.minecraft.src.EntityPlayer;
 import net.minecraft.src.StringTranslate;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.ForgeSubscribe;
 import net.minecraftforge.event.ServerChatEvent;
+import cpw.mods.fml.common.IPlayerTracker;
+import cpw.mods.fml.common.registry.GameRegistry;
+import demonmodders.Crymod.Common.Network.PacketPlayerKarma;
 
 /**
  * Class that manages player karma on the server
@@ -66,7 +65,6 @@ public class PlayerKarmaManager implements IPlayerTracker {
 	
 	@ForgeSubscribe
 	public void onServerChat(ServerChatEvent evt) {
-		System.out.println("yes");
 		int karma = getPlayerKarma(evt.player).getKarma();
 		if (karma == 0) {
 			return;

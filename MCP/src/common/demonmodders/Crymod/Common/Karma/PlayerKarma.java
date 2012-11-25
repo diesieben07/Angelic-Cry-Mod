@@ -1,8 +1,7 @@
 package demonmodders.Crymod.Common.Karma;
 
-import java.io.DataInput;
-import java.io.DataOutput;
-import java.io.IOException;
+import com.google.common.io.ByteArrayDataInput;
+import com.google.common.io.ByteArrayDataOutput;
 
 import net.minecraft.src.EntityPlayer;
 
@@ -53,16 +52,16 @@ public class PlayerKarma {
 		return karma;
 	}
 	
-	public void write(DataOutput out) throws IOException {
+	public void write(ByteArrayDataOutput out) {
 		out.writeByte(karma);
 	}
 	
-	public PlayerKarma read(DataInput in) throws IOException {
+	public PlayerKarma read(ByteArrayDataInput in) {
 		karma = in.readByte();
 		return this;
 	}
 	
-	public static PlayerKarma create(DataInput in) throws IOException {
+	public static PlayerKarma create(ByteArrayDataInput in) {
 		return new PlayerKarma().read(in);
 	}
 }

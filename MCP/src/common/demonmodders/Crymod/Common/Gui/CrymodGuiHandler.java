@@ -1,14 +1,12 @@
 package demonmodders.Crymod.Common.Gui;
 
+import static demonmodders.Crymod.Common.Crymod.proxy;
 import net.minecraft.src.Container;
 import net.minecraft.src.EntityPlayer;
 import net.minecraft.src.World;
 import cpw.mods.fml.common.network.IGuiHandler;
 import demonmodders.Crymod.Common.Inventory.ContainerSummoner;
 import demonmodders.Crymod.Common.Inventory.InventorySummoner;
-import demonmodders.Crymod.Common.Inventory.AbstractContainer;
-
-import static demonmodders.Crymod.Common.Crymod.proxy;
 
 public class CrymodGuiHandler implements IGuiHandler {
 

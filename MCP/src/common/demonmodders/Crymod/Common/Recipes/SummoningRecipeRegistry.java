@@ -3,8 +3,6 @@ package demonmodders.Crymod.Common.Recipes;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.minecraft.src.ItemStack;
-
 public class SummoningRecipeRegistry {
 	private static List<SummoningRecipe> recipes = new ArrayList<SummoningRecipe>();
 	

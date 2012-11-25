@@ -1,9 +1,9 @@
 package demonmodders.Crymod.Common;
 
-import demonmodders.Crymod.Common.Karma.PlayerKarma;
 import net.minecraft.src.Container;
 import net.minecraft.src.EntityPlayer;
 import net.minecraft.src.World;
+import demonmodders.Crymod.Common.Karma.PlayerKarma;
 
 public class CommonProxy {
 	public void preInit() {

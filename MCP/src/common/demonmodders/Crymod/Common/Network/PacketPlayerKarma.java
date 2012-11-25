@@ -1,13 +1,11 @@
 package demonmodders.Crymod.Common.Network;
 
-import java.io.DataInput;
-import java.io.DataOutput;
-import java.io.IOException;
-
-import demonmodders.Crymod.Common.Crymod;
-import demonmodders.Crymod.Common.Karma.PlayerKarma;
+import com.google.common.io.ByteArrayDataOutput;
+import com.google.common.io.ByteArrayDataInput;
 
 import net.minecraft.src.EntityPlayer;
+import demonmodders.Crymod.Common.Crymod;
+import demonmodders.Crymod.Common.Karma.PlayerKarma;
 
 public class PacketPlayerKarma extends CrymodPacket {
 
@@ -20,12 +18,12 @@ public class PacketPlayerKarma extends CrymodPacket {
 	}
 	
 	@Override
-	void writeData(DataOutput out) throws IOException {
+	void writeData(ByteArrayDataOutput out) {
 		karma.write(out);
 	}
 
 	@Override
-	void readData(DataInput in) throws IOException {
+	void readData(ByteArrayDataInput in) {
 		karma = PlayerKarma.create(in);
 	}
 

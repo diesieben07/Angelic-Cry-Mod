@@ -5,6 +5,7 @@ import java.util.EnumSet;
 import org.lwjgl.opengl.GL11;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.src.FontRenderer;
 import net.minecraft.src.Gui;
 import net.minecraft.src.ScaledResolution;
 
@@ -62,6 +63,18 @@ public class ClientTickHandler extends Gui implements ITickHandler {
 				
 				drawTexturedModalRect(barXStart + barTextureXStart, 10, barTextureXStart, 5, rescaledKarmaWidth, 5);
 			}
+			
+			String karmaString = String.valueOf(karma);
+			
+			int xPos = width / 2 - mc.fontRenderer.getStringWidth(karmaString) / 2;
+			int yPos = 5;
+			
+			FontRenderer fr = mc.fontRenderer;
+			fr.drawString(karmaString, xPos + 1, yPos, 0x000000);
+			fr.drawString(karmaString, xPos - 1, yPos, 0x000000);
+			fr.drawString(karmaString, xPos, yPos + 1, 0x000000);
+			fr.drawString(karmaString, xPos, yPos - 1, 0x000000);
+			fr.drawString(karmaString, xPos, yPos, 0x80ff20);
 		}
 	}
 
