@@ -34,6 +34,8 @@ public class PlayerKarma {
 	}
 	
 	public float modifyKarma(float modifier) {
+		player.worldObj.playSoundAtEntity(player, "summoningmod.karma" + (modifier < 0 ? "down" : "up"), 1, 1);
+		
 		setKarma(karma + modifier);
 		return karma;
 	}

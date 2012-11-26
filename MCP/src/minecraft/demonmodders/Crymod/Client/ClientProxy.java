@@ -6,6 +6,7 @@ import net.minecraft.src.Container;
 import net.minecraft.src.EntityPlayer;
 import net.minecraft.src.World;
 import net.minecraftforge.client.MinecraftForgeClient;
+import net.minecraftforge.common.MinecraftForge;
 import demonmodders.Crymod.Client.Gui.GuiSummoner;
 import demonmodders.Crymod.Common.CommonProxy;
 import demonmodders.Crymod.Common.Crymod;
@@ -35,6 +36,7 @@ public class ClientProxy extends CommonProxy {
 	public void preInit() {
 		MinecraftForgeClient.preloadTexture(Crymod.TEXTURE_FILE);
 		TickRegistry.registerTickHandler(ClientTickHandler.instance(), Side.CLIENT);
+		MinecraftForge.EVENT_BUS.register(new ClientEventHandler());
 	}
 
 	@Override
