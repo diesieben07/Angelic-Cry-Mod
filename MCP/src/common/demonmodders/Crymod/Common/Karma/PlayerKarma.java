@@ -8,6 +8,7 @@ import net.minecraft.src.EntityPlayer;
 public class PlayerKarma {
 	
 	private float karma = 0;
+	private boolean hasKilledPigmen = false;
 	private final EntityPlayer player;
 	
 	public PlayerKarma(EntityPlayer player) {
@@ -54,12 +55,23 @@ public class PlayerKarma {
 		return karma;
 	}
 	
+	public boolean hasKilledPigmen() {
+		return hasKilledPigmen;
+	}
+	
+	public void setPigmenKilled() {
+		hasKilledPigmen = true;
+		PlayerKarmaManager.instance().updateClientKarma(player);
+	}
+	
 	public void write(ByteArrayDataOutput out) {
 		out.writeFloat(karma);
+		out.writeBoolean(hasKilledPigmen);
 	}
 	
 	public PlayerKarma read(ByteArrayDataInput in) {
 		karma = in.readFloat();
+		hasKilledPigmen = in.readBoolean();
 		return this;
 	}
 	

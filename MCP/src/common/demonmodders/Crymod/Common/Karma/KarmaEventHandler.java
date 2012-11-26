@@ -1,25 +1,44 @@
 package demonmodders.Crymod.Common.Karma;
 
+import java.util.Arrays;
 import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import net.minecraft.src.Block;
+import net.minecraft.src.BlockCrops;
 import net.minecraft.src.EntityAnimal;
 import net.minecraft.src.EntityCreeper;
 import net.minecraft.src.EntityDamageSource;
+import net.minecraft.src.EntityIronGolem;
+import net.minecraft.src.EntityPigZombie;
 import net.minecraft.src.EntityPlayer;
 import net.minecraft.src.EntityPlayerMP;
+import net.minecraft.src.EntitySnowman;
 import net.minecraft.src.EntityVillager;
+import net.minecraft.src.EntityWitch;
+import net.minecraft.src.Item;
+import net.minecraft.src.ItemPotion;
+import net.minecraft.src.Potion;
+import net.minecraft.src.PotionEffect;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.Event.Result;
+import net.minecraftforge.event.EventPriority;
 import net.minecraftforge.event.ForgeSubscribe;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
+import net.minecraftforge.event.entity.player.AttackEntityEvent;
+import net.minecraftforge.event.entity.player.BonemealEvent;
 import net.minecraftforge.event.entity.player.EntityInteractEvent;
+import net.minecraftforge.event.entity.player.PlayerDestroyItemEvent;
 import cpw.mods.fml.common.ITickHandler;
 import cpw.mods.fml.common.Side;
 import cpw.mods.fml.common.TickType;
 import cpw.mods.fml.common.registry.TickRegistry;
+
+import static demonmodders.Crymod.Common.Karma.PlayerKarmaManager.playerKarma;
 
 public class KarmaEventHandler implements ITickHandler {
 	
@@ -35,10 +54,39 @@ public class KarmaEventHandler implements ITickHandler {
 	public void onEntityDeath(LivingDeathEvent evt) {
 		if (evt.source instanceof EntityDamageSource && ((EntityDamageSource)evt.source).getEntity() instanceof EntityPlayerMP) {
 			EntityPlayer player = (EntityPlayer)((EntityDamageSource)evt.source).getEntity();
+			
 			if (evt.entity instanceof EntityCreeper) {
-				PlayerKarmaManager.instance().getPlayerKarma(player).modifyKarmaWithMax(0.5F, 10);
+				playerKarma(player).modifyKarmaWithMax(0.1F, 20);
 			} else if (evt.entity instanceof EntityVillager) {
-				PlayerKarmaManager.instance().getPlayerKarma(player).modifyKarmaWithMin(-1, -20);
+				playerKarma(player).modifyKarmaWithMin(-0.1F, -20);
+			} else if (evt.entity instanceof EntityWitch) {
+				playerKarma(player).modifyKarmaWithMax(0.5F, 49);
+			} else if (evt.entity instanceof EntityIronGolem || evt.entity instanceof EntitySnowman) {
+				playerKarma(player).modifyKarmaWithMin(-0.5F, -20);
+			}
+		}
+	}
+	
+	@ForgeSubscribe
+	public void onEntityAttack(AttackEntityEvent evt) {
+		if (evt.entityPlayer instanceof EntityPlayerMP && evt.target instanceof EntityPigZombie) {
+			PlayerKarma karma = playerKarma(evt.entityPlayer);
+			if (!karma.hasKilledPigmen()) {
+				karma.setPigmenKilled();
+				karma.modifyKarma(-1);
+			}
+		}
+	}
+	
+	@ForgeSubscribe
+	public void onItemDestroy(PlayerDestroyItemEvent evt) {
+		if (evt.entityPlayer instanceof EntityPlayerMP && evt.original.getItem().shiftedIndex == Item.potion.shiftedIndex && ItemPotion.isSplash(evt.original.getItemDamage())) {
+			List<PotionEffect> effects = Item.potion.getEffects(evt.original);
+			for (PotionEffect effect : effects) {
+				if (Potion.heal.id == effect.getPotionID()) {
+					playerKarma(evt.entityPlayer).modifyKarmaWithMax(1, 30);
+					return;
+				}
 			}
 		}
 	}
@@ -48,42 +96,49 @@ public class KarmaEventHandler implements ITickHandler {
 		if (evt.entityPlayer instanceof EntityPlayerMP && evt.target instanceof EntityAnimal) {
 			EntityAnimal animal = (EntityAnimal)evt.target;
 			if (animal.isBreedingItem(evt.entityPlayer.getCurrentEquippedItem()) && animal.getGrowingAge() == 0) {
-				BreedingInfo info = breedingInfo.get(evt.entityPlayer);
-				if (info == null || info.animal == animal) {
-					breedingInfo.put(evt.entityPlayer, new BreedingInfo(animal, animal.inLove));
+				EntityAnimal animalPrev = breedingInfo.get(evt.entityPlayer);
+				if (animalPrev == null || animalPrev == animal) {
+					breedingInfo.put(evt.entityPlayer, animal);
 				} else {
-					if (info.animal.getDistanceSqToEntity(animal) <= 64) {
-						PlayerKarmaManager.instance().getPlayerKarma(evt.entityPlayer).modifyKarmaWithMax(0.5F, 10);
+					if (animalPrev.getDistanceSqToEntity(animal) <= 64) {
+						playerKarma(evt.entityPlayer).modifyKarmaWithMax(0.1F, 20);
 						breedingInfo.remove(evt.entityPlayer);
 					} else {
-						breedingInfo.put(evt.entityPlayer, new BreedingInfo(animal, animal.inLove));
+						breedingInfo.put(evt.entityPlayer, animal);
 					}
 				}
 			}
 		}
 	}
 	
-	private static class BreedingInfo {
-		private final EntityAnimal animal;
-		private int ticks;
-		
-		private BreedingInfo(EntityAnimal animal, int ticks) {
-			this.animal = animal;
-			this.ticks = ticks;
+	private static final List<Integer> bonemealHandleIds = Arrays.asList(
+			Block.sapling.blockID,
+			Block.mushroomBrown.blockID,
+			Block.mushroomRed.blockID,
+			Block.melonStem.blockID,
+			Block.pumpkinStem.blockID,
+			Block.cocoaPlant.blockID,
+			Block.grass.blockID			
+		);
+	
+	// set priority to lowest to also give good karma when other mods handle bonemeal event
+	@ForgeSubscribe(priority = EventPriority.LOWEST)
+	public void onBonemealUse(BonemealEvent evt) {
+		if (evt.getResult() == Result.ALLOW || bonemealHandleIds.contains(evt.ID) || (evt.ID > 0 && Block.blocksList[evt.ID] instanceof BlockCrops)) { 
+			playerKarma(evt.entityPlayer).modifyKarmaWithMax(0.1F, 10);
 		}
 	}
 	
-	private Map<EntityPlayer,BreedingInfo> breedingInfo = new HashMap<EntityPlayer,BreedingInfo>();
+	private Map<EntityPlayer,EntityAnimal> breedingInfo = new HashMap<EntityPlayer,EntityAnimal>();
 
 	@Override
 	public void tickStart(EnumSet<TickType> type, Object... tickData) {
-		Iterator<Entry<EntityPlayer,BreedingInfo>> it = breedingInfo.entrySet().iterator();
+		Iterator<Entry<EntityPlayer,EntityAnimal>> it = breedingInfo.entrySet().iterator();
 		
 		while (it.hasNext()) {
-			Entry<EntityPlayer,BreedingInfo> entry = it.next();
+			Entry<EntityPlayer,EntityAnimal> entry = it.next();
 			
-			entry.getValue().ticks--;
-			if (entry.getValue().ticks == 0 || entry.getKey().isDead) {
+			if (entry.getValue().inLove == 0 || entry.getValue().isDead || entry.getKey().isDead) {
 				it.remove();
 			}
 		}
