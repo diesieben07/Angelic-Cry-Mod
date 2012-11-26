@@ -41,6 +41,10 @@ public class PlayerKarmaManager implements IPlayerTracker {
 		return karmas.get(player);
 	}
 	
+	public static PlayerKarma playerKarma(EntityPlayer player) {
+		return instance.getPlayerKarma(player);
+	}
+	
 	public void updateClientKarma(EntityPlayer player) {
 		if (player == null) {
 			return;
