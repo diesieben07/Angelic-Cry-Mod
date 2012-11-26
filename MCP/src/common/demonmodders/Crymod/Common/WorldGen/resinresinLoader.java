@@ -33,7 +33,7 @@ public class resinresinLoader {
  
  public void loadResinresin(String path) {
   try {
-   InputStream inputstream = resinresinLoader.class.getResourceAsStream("/resinresin/structures/" + path);
+   InputStream inputstream = resinresinLoader.class.getResourceAsStream("/crymodResource/resinresin/" + path);
    NBTTagCompound nbt = CompressedStreamTools.readCompressed(inputstream);
    
    blocks = nbt.getByteArray("Blocks");

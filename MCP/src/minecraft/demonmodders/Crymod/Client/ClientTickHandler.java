@@ -54,7 +54,7 @@ public class ClientTickHandler extends Gui implements ITickHandler {
 			
 			// the bar itself render
 			if (karma != 0) {
-				int rescaledKarmaWidth = (int)(Math.abs(clientKarma.getKarma()) / (float)PlayerKarmaManager.MAX_KARMA_VALUE * (float)182);
+				int rescaledKarmaWidth = (int)(Math.abs(karma) / (float)PlayerKarmaManager.MAX_KARMA_VALUE * (float)91);
 				if (rescaledKarmaWidth > 91) {
 					rescaledKarmaWidth = 91;
 				}
@@ -75,7 +75,7 @@ public class ClientTickHandler extends Gui implements ITickHandler {
 			fr.drawString(karmaString, xPos, yPos + 1, 0x000000);
 			fr.drawString(karmaString, xPos, yPos - 1, 0x000000);
 			
-			if(karma >= 0) {
+			if (karma >= 0) {
 				fr.drawString(karmaString, xPos, yPos, 0x4444FF);
 			} else {
 				fr.drawString(karmaString, xPos, yPos, 0xFF0000);

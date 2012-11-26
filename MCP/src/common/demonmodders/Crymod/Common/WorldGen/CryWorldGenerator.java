@@ -36,6 +36,16 @@ public class CryWorldGenerator implements IWorldGenerator{
         {BiomeGenBase biomegenbase = world.getWorldChunkManager().getBiomeGenAt(blockX, blockZ);
                 {     
                 	
+                	
+                	
+                    for(int k = 0; k < 1; k++)
+                    {
+                        int RandPosX = blockX + random.nextInt(16);
+                        int RandPosY = random.nextInt(128);
+                        int RandPosZ = blockZ + random.nextInt(16);
+                        (new GenDungeonLarge()).generate(world, random, RandPosX, RandPosY, RandPosZ);
+                    }	
+                	
                 }
        
      
