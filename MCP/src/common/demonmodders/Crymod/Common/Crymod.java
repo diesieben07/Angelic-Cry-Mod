@@ -19,11 +19,13 @@ import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.network.NetworkMod;
 import cpw.mods.fml.common.network.NetworkRegistry;
+import cpw.mods.fml.common.registry.GameRegistry;
 import demonmodders.Crymod.Common.Gui.CrymodGuiHandler;
 import demonmodders.Crymod.Common.Items.ItemCryMod;
 import demonmodders.Crymod.Common.Karma.PlayerKarmaManager;
 import demonmodders.Crymod.Common.Network.CrymodPacket;
 import demonmodders.Crymod.Common.Network.CrymodPacketHandler;
+import demonmodders.Crymod.Common.WorldGen.CryWorldGenerator;
 
 @Mod(modid = "crymod", name = "Angelic Cry Mod [WIP]", version = "0.1")
 @NetworkMod(channels = {CrymodPacket.CHANNEL}, packetHandler = CrymodPacketHandler.class, tinyPacketHandler = CrymodPacketHandler.class, clientSideRequired = true, serverSideRequired = false)
@@ -68,6 +70,8 @@ public class Crymod {
 		String targetFilePattern = new File(Minecraft.getMinecraftDir(), "mods/SummoningMod%s.zip").getAbsolutePath();
 
 		PlayerKarmaManager.init();
+		
+		GameRegistry.registerWorldGenerator(new CryWorldGenerator());
 	}
 	
 	@Init
@@ -75,12 +79,12 @@ public class Crymod {
 		proxy.init();
 		
 		ItemCryMod.createItems();
+		
 	}
 	
 	@PostInit
 	public void postInit(FMLPostInitializationEvent evt) {
 		proxy.postInit();
-		
 			
 		conf.save();
 	}
