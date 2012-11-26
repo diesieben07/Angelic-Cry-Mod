@@ -2,7 +2,7 @@ Good deeds:
 Breeding 0.1 20 Done
 Killing creeper 0.1 20 Done
 Curing villager 3 30
-Using splash potion of healing 1 30
+Using splash potion of healing 1 30 Done
 Using bone meal 0.1 10 Done
 Destroying monster spawner 1 30
 Killing a player with negitive karma (their karma /20 made positive) 49 (3 times max)
