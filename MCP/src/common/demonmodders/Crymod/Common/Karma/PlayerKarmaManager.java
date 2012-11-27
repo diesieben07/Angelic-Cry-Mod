@@ -30,7 +30,7 @@ public class PlayerKarmaManager implements IPlayerTracker {
 	}
 	
 	public static void init() {
-		KarmaEventHandler.init();
+		KarmaEventHandler.instance();
 	}
 	
 	public static final int MAX_KARMA_VALUE = 50;

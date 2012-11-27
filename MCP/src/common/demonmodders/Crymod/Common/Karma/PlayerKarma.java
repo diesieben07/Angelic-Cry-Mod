@@ -1,5 +1,9 @@
 package demonmodders.Crymod.Common.Karma;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Map.Entry;
+
 import com.google.common.io.ByteArrayDataInput;
 import com.google.common.io.ByteArrayDataOutput;
 
@@ -8,7 +12,9 @@ import net.minecraft.src.EntityPlayer;
 public class PlayerKarma {
 	
 	private float karma = 0;
-	private boolean hasKilledPigmen = false;
+	
+	private byte[] eventAmounts = new byte[CountableKarmaEvent.values().length];
+	
 	private final EntityPlayer player;
 	
 	public PlayerKarma(EntityPlayer player) {
@@ -55,27 +61,41 @@ public class PlayerKarma {
 		return karma;
 	}
 	
-	public boolean hasKilledPigmen() {
-		return hasKilledPigmen;
+	public byte getEventAmount(CountableKarmaEvent event) {
+		return eventAmounts[event.ordinal()];
 	}
 	
-	public void setPigmenKilled() {
-		hasKilledPigmen = true;
+	public void setEventAmount(CountableKarmaEvent event, int amount) {
+		eventAmounts[event.ordinal()] = (byte)amount;
 		PlayerKarmaManager.instance().updateClientKarma(player);
+	}
+	
+	public void increaseEventAmount(CountableKarmaEvent event) {
+		setEventAmount(event, eventAmounts[event.ordinal()] + 1);
 	}
 	
 	public void write(ByteArrayDataOutput out) {
 		out.writeFloat(karma);
-		out.writeBoolean(hasKilledPigmen);
+		for (byte amount : eventAmounts) {
+			out.writeByte(amount);
+		}
 	}
 	
 	public PlayerKarma read(ByteArrayDataInput in) {
 		karma = in.readFloat();
-		hasKilledPigmen = in.readBoolean();
+		
+		for (int i = 0; i < eventAmounts.length; i++) {
+			eventAmounts[i] = in.readByte();
+		}
+		
 		return this;
 	}
 	
 	public static PlayerKarma create(ByteArrayDataInput in) {
 		return new PlayerKarma().read(in);
+	}
+	
+	public static enum CountableKarmaEvent {
+		PIGMEN_ATTACK;
 	}
 }

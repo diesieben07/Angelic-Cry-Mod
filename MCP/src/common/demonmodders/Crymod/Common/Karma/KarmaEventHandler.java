@@ -1,5 +1,7 @@
 package demonmodders.Crymod.Common.Karma;
 
+import static demonmodders.Crymod.Common.Karma.PlayerKarmaManager.playerKarma;
+
 import java.util.Arrays;
 import java.util.EnumSet;
 import java.util.HashMap;
@@ -15,6 +17,7 @@ import net.minecraft.src.BlockCrops;
 import net.minecraft.src.EntityAnimal;
 import net.minecraft.src.EntityCreeper;
 import net.minecraft.src.EntityDamageSource;
+import net.minecraft.src.EntityDragon;
 import net.minecraft.src.EntityIronGolem;
 import net.minecraft.src.EntityPigZombie;
 import net.minecraft.src.EntityPlayer;
@@ -32,27 +35,30 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.Event.Result;
 import net.minecraftforge.event.EventPriority;
 import net.minecraftforge.event.ForgeSubscribe;
+import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
-import net.minecraftforge.event.entity.player.AttackEntityEvent;
 import net.minecraftforge.event.entity.player.BonemealEvent;
 import net.minecraftforge.event.entity.player.EntityInteractEvent;
 import net.minecraftforge.event.entity.player.PlayerDestroyItemEvent;
+import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import cpw.mods.fml.common.ITickHandler;
 import cpw.mods.fml.common.Side;
 import cpw.mods.fml.common.TickType;
 import cpw.mods.fml.common.registry.TickRegistry;
 import cpw.mods.fml.relauncher.ReflectionHelper;
-
-import static demonmodders.Crymod.Common.Karma.PlayerKarmaManager.playerKarma;
+import demonmodders.Crymod.Common.Karma.PlayerKarma.CountableKarmaEvent;
 
 public class KarmaEventHandler implements ITickHandler {
 	
-	private KarmaEventHandler() {}
+	private static final KarmaEventHandler instance = new KarmaEventHandler();
 	
-	public static void init() {
-		KarmaEventHandler instance = new KarmaEventHandler();
-		MinecraftForge.EVENT_BUS.register(instance);
-		TickRegistry.registerTickHandler(instance, Side.SERVER);		
+	public static KarmaEventHandler instance() {
+		return instance;
+	}
+	
+	private KarmaEventHandler() {
+		MinecraftForge.EVENT_BUS.register(this);
+		TickRegistry.registerTickHandler(this, Side.SERVER);
 	}
 	
 	@ForgeSubscribe
@@ -68,16 +74,18 @@ public class KarmaEventHandler implements ITickHandler {
 				playerKarma(player).modifyKarmaWithMax(0.5F, 49);
 			} else if (evt.entity instanceof EntityIronGolem || evt.entity instanceof EntitySnowman) {
 				playerKarma(player).modifyKarmaWithMin(-0.5F, -20);
+			} else if (evt.entity instanceof EntityDragon) {
+				playerKarma(player).modifyKarma(6);
 			}
 		}
 	}
 	
 	@ForgeSubscribe
-	public void onEntityAttack(AttackEntityEvent evt) {
-		if (evt.entityPlayer instanceof EntityPlayerMP && evt.target instanceof EntityPigZombie) {
-			PlayerKarma karma = playerKarma(evt.entityPlayer);
-			if (!karma.hasKilledPigmen()) {
-				karma.setPigmenKilled();
+	public void onEntityAttack(LivingAttackEvent evt) {
+		if (evt.source instanceof EntityDamageSource && ((EntityDamageSource)evt.source).getEntity() instanceof EntityPlayerMP && evt.entity instanceof EntityPigZombie) {
+			PlayerKarma karma = playerKarma((EntityPlayer)((EntityDamageSource)evt.source).getEntity());
+			if (karma.getEventAmount(CountableKarmaEvent.PIGMEN_ATTACK) == 0) {
+				karma.increaseEventAmount(CountableKarmaEvent.PIGMEN_ATTACK);
 				karma.modifyKarma(-1);
 			}
 		}
@@ -94,6 +102,13 @@ public class KarmaEventHandler implements ITickHandler {
 				}
 			}
 		}
+	}
+	
+	@ForgeSubscribe
+	public void onPlayerInteraction(PlayerInteractEvent evt) {
+		System.out.println(evt.action);
+		System.out.println(evt.entityPlayer.worldObj.getBlockId(evt.x, evt.y, evt.z));
+		System.out.println(evt.entityPlayer.getCurrentEquippedItem());
 	}
 	
 	private static final List<Integer> bonemealHandleIds = Arrays.asList(

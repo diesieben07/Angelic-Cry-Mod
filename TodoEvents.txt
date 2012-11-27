@@ -1,7 +1,7 @@
 Good deeds:
 Breeding 0.1 20 Done
 Killing creeper 0.1 20 Done
-Curing villager 3 30
+Curing villager 3 30 Done
 Using splash potion of healing 1 30 Done
 Using bone meal 0.1 10 Done
 Destroying monster spawner 1 30
@@ -10,12 +10,12 @@ Killing a demon 0.1 30
 Traveling to heaven 5 once only
 Making iron golem 2 three times only
 Making snow golem 1 two times only
-Defeating the ender dragon 6 once only
+Defeating the ender dragon 6 once only Done
 Healing another player 3 once only
 Killing witch 0.5 49 Done
 
 Bad deeds:
-Killing villager 0.1 20
+Killing villager 0.1 20 Done
 Setting off TNT 0.3 20
 Killing a good player (there karma/20 made negative) 3 times only 49
 Attack zombie pig man 1 once only Done
