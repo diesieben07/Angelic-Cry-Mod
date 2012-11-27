@@ -15,3 +15,4 @@ chat.prefix.bad.10:Crazed
 chat.prefix.bad.25:Consumed
 chat.prefix.bad.40:Demonist
 chat.prefix.bad.50:Dark God
+commands.karma.usage:Usage: /karma <value> [<player>]

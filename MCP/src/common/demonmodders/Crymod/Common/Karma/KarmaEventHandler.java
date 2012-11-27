@@ -40,7 +40,6 @@ import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.player.BonemealEvent;
 import net.minecraftforge.event.entity.player.EntityInteractEvent;
 import net.minecraftforge.event.entity.player.PlayerDestroyItemEvent;
-import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import cpw.mods.fml.common.ITickHandler;
 import cpw.mods.fml.common.Side;
 import cpw.mods.fml.common.TickType;
@@ -102,13 +101,6 @@ public class KarmaEventHandler implements ITickHandler {
 				}
 			}
 		}
-	}
-	
-	@ForgeSubscribe
-	public void onPlayerInteraction(PlayerInteractEvent evt) {
-		System.out.println(evt.action);
-		System.out.println(evt.entityPlayer.worldObj.getBlockId(evt.x, evt.y, evt.z));
-		System.out.println(evt.entityPlayer.getCurrentEquippedItem());
 	}
 	
 	private static final List<Integer> bonemealHandleIds = Arrays.asList(

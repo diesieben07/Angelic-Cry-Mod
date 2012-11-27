@@ -82,7 +82,7 @@ public class PlayerKarmaManager implements IPlayerTracker {
 		if (useBorder != -1) {
 			String messageKey = "chat.prefix." + (karma < 0 ? "bad" : "good") + "." + useBorder;
 			String messageColor = karma < 0 ? "§4" : "§1";
-			evt.line = evt.line.replace(evt.username, messageColor + StringTranslate.getInstance().translateKey(messageKey) + " " + evt.username + "§f");
+			evt.line = evt.line.replace(evt.username, messageColor + StringTranslate.getInstance().translateKey(messageKey) + "§f " + evt.username);
 		}
 	}
 
