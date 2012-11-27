@@ -11,6 +11,8 @@ import cpw.mods.fml.common.IWorldGenerator;
 public class CryWorldGenerator implements IWorldGenerator {
 	
 	private final WorldGenerator dungeonLargeGen = new GenDungeonLarge();
+	private final WorldGenerator featurePillar = new GenFeaturePillar();
+	private final WorldGenerator featureRuin = new GenFeatureRuin();
 	
 	@Override
 	public void generate(Random random, int chunkX, int chunkZ, World world,  IChunkProvider chunkGenerator, IChunkProvider chunkProvider){
@@ -33,6 +35,15 @@ public class CryWorldGenerator implements IWorldGenerator {
 		int RandPosY = random.nextInt(128);
 		int RandPosZ = blockZ + random.nextInt(16);
 		dungeonLargeGen.generate(world, random, RandPosX, RandPosY, RandPosZ);
+		int RandPosX1 = blockX + random.nextInt(16);
+		int RandPosY1 = random.nextInt(128);
+		int RandPosZ1 = blockZ + random.nextInt(16);
+		featurePillar.generate(world, random, RandPosX1, RandPosY1, RandPosZ1);
+		int RandPosX2 = blockX + random.nextInt(16);
+		int RandPosY2 = random.nextInt(128);
+		int RandPosZ2 = blockZ + random.nextInt(16);
+		featureRuin.generate(world, random, RandPosX2, RandPosY2, RandPosZ2);
 	}
+	
 }      
        
