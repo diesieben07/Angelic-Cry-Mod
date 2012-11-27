@@ -2,12 +2,16 @@ package demonmodders.Crymod.Common;
 
 import demonmodders.Crymod.Common.Karma.PlayerKarmaManager;
 import net.minecraft.src.CommandBase;
-import net.minecraft.src.EntityPlayer;
 import net.minecraft.src.EntityPlayerMP;
 import net.minecraft.src.ICommandSender;
 import net.minecraft.src.WrongUsageException;
 
 public class CommandKarma extends CommandBase {
+
+	@Override
+	public boolean canCommandSenderUseCommand(ICommandSender sender) {
+		return sender instanceof EntityPlayerMP ? ((EntityPlayerMP)sender).mcServer.getConfigurationManager().areCommandsAllowed(sender.getCommandSenderName()) : false;
+	}
 
 	@Override
 	public String getCommandName() {
