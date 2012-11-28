@@ -23,7 +23,7 @@ public class SchematicWorldGenerator {
 		length = 0;
 		height = 0;
 		try {
-			InputStream inputstream = SchematicWorldGenerator.class.getResourceAsStream("/crymodResource/schematics/" + path);
+			InputStream inputstream = getClass().getResourceAsStream("/crymodResource/schematics/" + path);
 			NBTTagCompound nbt = CompressedStreamTools.readCompressed(inputstream);
 			
 			blocks = nbt.getByteArray("Blocks");
