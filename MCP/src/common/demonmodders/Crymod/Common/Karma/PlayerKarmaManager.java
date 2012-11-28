@@ -69,7 +69,7 @@ public class PlayerKarmaManager implements IPlayerTracker {
 		}
 		int useBorder = -1;
 		for (int border : MESSAGE_BORDERS) {
-			if (karma > 0 && karma > border || karma < 0 && karma < -border && useBorder < border) {
+			if (karma > 0 && karma >= border || karma < 0 && karma <= -border && useBorder < border) {
 				useBorder = border;
 			}
 		}
