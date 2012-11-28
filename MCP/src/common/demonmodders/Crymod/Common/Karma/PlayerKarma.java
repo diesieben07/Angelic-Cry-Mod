@@ -8,6 +8,8 @@ import com.google.common.io.ByteArrayDataInput;
 import com.google.common.io.ByteArrayDataOutput;
 
 import net.minecraft.src.EntityPlayer;
+import net.minecraft.src.NBTTagCompound;
+import net.minecraft.src.NBTTagList;
 
 public class PlayerKarma {
 	
@@ -88,6 +90,31 @@ public class PlayerKarma {
 			eventAmounts[i] = in.readByte();
 		}
 		
+		return this;
+	}
+	
+	public void write(NBTTagCompound nbt) {
+		nbt.setFloat("karma", karma);
+		NBTTagList eventList = new NBTTagList();
+		for (int i = 0; i < eventAmounts.length; i++) {
+			NBTTagCompound evtInfo = new NBTTagCompound();
+			evtInfo.setByte("id", (byte)i);
+			evtInfo.setByte("value", eventAmounts[i]);
+			eventList.appendTag(evtInfo);
+		}
+		nbt.setTag("events", eventList);
+	}
+	
+	public PlayerKarma read(NBTTagCompound nbt) {
+		karma = nbt.getFloat("karma");
+		NBTTagList eventList = nbt.getTagList("events");
+		for (int i = 0; i < eventList.tagCount(); i++) {
+			NBTTagCompound evtInfo = (NBTTagCompound)eventList.tagAt(i);
+			byte eventId = evtInfo.getByte("id");
+			if (eventId >= 0 && eventId < eventAmounts.length) {
+				eventAmounts[eventId] = evtInfo.getByte("value");
+			}
+		}
 		return this;
 	}
 	

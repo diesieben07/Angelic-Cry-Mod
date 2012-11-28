@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import net.minecraft.src.EntityPlayer;
+import net.minecraft.src.NBTTagCompound;
 import net.minecraft.src.StringTranslate;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.ForgeSubscribe;
@@ -54,15 +55,20 @@ public class PlayerKarmaManager implements IPlayerTracker {
 
 	@Override
 	public void onPlayerLogin(EntityPlayer player) {		
-		karmas.put(player, new PlayerKarma(player));
-		// TODO: load it
+		PlayerKarma karma = new PlayerKarma(player);
+		karma.read(player.getEntityData().getCompoundTag(EntityPlayer.PERSISTED_NBT_TAG).getCompoundTag("summoningmod"));
+		karmas.put(player, karma);
 		updateClientKarma(player);
 	}
 
 	@Override
 	public void onPlayerLogout(EntityPlayer player) {
+		NBTTagCompound karmaNbt = new NBTTagCompound();
+		getPlayerKarma(player).write(karmaNbt);
+		NBTTagCompound persistedNbt = player.getEntityData().getCompoundTag(EntityPlayer.PERSISTED_NBT_TAG);
+		persistedNbt.setCompoundTag("summoningmod", karmaNbt);
+		player.getEntityData().setCompoundTag(EntityPlayer.PERSISTED_NBT_TAG, persistedNbt);
 		karmas.remove(player);
-		// TODO: save it
 	}
 	
 	private static final int[] MESSAGE_BORDERS = {50, 40, 25, 10};
