@@ -13,7 +13,7 @@ import net.minecraft.src.World;
  */
 public class SchematicWorldGenerator {
 	public byte[] blocks;
-	public byte[] datablocks;
+	public byte[] blockData;
 	public short width;
 	public short length;
 	public short height;
@@ -27,7 +27,7 @@ public class SchematicWorldGenerator {
 			NBTTagCompound nbt = CompressedStreamTools.readCompressed(inputstream);
 			
 			blocks = nbt.getByteArray("Blocks");
-			datablocks = nbt.getByteArray("Data");
+			blockData = nbt.getByteArray("Data");
 			width = nbt.getShort("Width");
 			length = nbt.getShort("Length");
 			height = nbt.getShort("Height");
@@ -42,7 +42,7 @@ public class SchematicWorldGenerator {
 		int znum = 0;
 		for (int i = 0; i < blocks.length; i++) {
 			if (blocks[i] != 0 && !spawnairblocks || spawnairblocks) {
-				world.setBlockAndMetadata(posX + xnum, posY + ynum, posZ + znum, blocks[i], datablocks[i]);
+				world.setBlockAndMetadata(posX + xnum, posY + ynum, posZ + znum, blocks[i], blockData[i]);
 			}
     
 			if (xnum < width - 1) {
