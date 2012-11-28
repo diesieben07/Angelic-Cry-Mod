@@ -7,6 +7,8 @@ import java.util.Map.Entry;
 import com.google.common.io.ByteArrayDataInput;
 import com.google.common.io.ByteArrayDataOutput;
 
+import demonmodders.Crymod.Common.Network.PacketPlayerKarma;
+
 import net.minecraft.src.EntityPlayer;
 import net.minecraft.src.NBTTagCompound;
 import net.minecraft.src.NBTTagList;
@@ -39,7 +41,7 @@ public class PlayerKarma {
 		if (this.karma < -PlayerKarmaManager.MAX_KARMA_VALUE) {
 			this.karma = -PlayerKarmaManager.MAX_KARMA_VALUE;
 		}
-		PlayerKarmaManager.instance().updateClientKarma(player);
+		updateToClient();
 	}
 	
 	public float modifyKarma(float modifier) {
@@ -69,11 +71,17 @@ public class PlayerKarma {
 	
 	public void setEventAmount(CountableKarmaEvent event, int amount) {
 		eventAmounts[event.ordinal()] = (byte)amount;
-		PlayerKarmaManager.instance().updateClientKarma(player);
+		updateToClient();
 	}
 	
 	public void increaseEventAmount(CountableKarmaEvent event) {
 		setEventAmount(event, eventAmounts[event.ordinal()] + 1);
+	}
+	
+	public void updateToClient() {
+		if (player != null) {
+			new PacketPlayerKarma(this).sendToPlayer(player);
+		}
 	}
 	
 	public void write(ByteArrayDataOutput out) {
@@ -116,6 +124,16 @@ public class PlayerKarma {
 			}
 		}
 		return this;
+	}
+	
+	public void updatePlayerNbt() {
+		if (player != null) {
+			NBTTagCompound karmaNbt = new NBTTagCompound();
+			write(karmaNbt);
+			NBTTagCompound persistedNbt = player.getEntityData().getCompoundTag(EntityPlayer.PERSISTED_NBT_TAG);
+			persistedNbt.setCompoundTag("summoningmod", karmaNbt);
+			player.getEntityData().setCompoundTag(EntityPlayer.PERSISTED_NBT_TAG, persistedNbt);
+		}
 	}
 	
 	public static PlayerKarma create(ByteArrayDataInput in) {

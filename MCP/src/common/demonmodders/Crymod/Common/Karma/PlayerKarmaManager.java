@@ -45,30 +45,18 @@ public class PlayerKarmaManager implements IPlayerTracker {
 	public static PlayerKarma playerKarma(EntityPlayer player) {
 		return instance.getPlayerKarma(player);
 	}
-	
-	public void updateClientKarma(EntityPlayer player) {
-		if (player == null) {
-			return;
-		}
-		new PacketPlayerKarma(karmas.get(player)).sendToPlayer(player);
-	}
 
 	@Override
 	public void onPlayerLogin(EntityPlayer player) {		
 		PlayerKarma karma = new PlayerKarma(player);
 		karma.read(player.getEntityData().getCompoundTag(EntityPlayer.PERSISTED_NBT_TAG).getCompoundTag("summoningmod"));
 		karmas.put(player, karma);
-		updateClientKarma(player);
+		karma.updateToClient();
 	}
 
 	@Override
 	public void onPlayerLogout(EntityPlayer player) {
-		NBTTagCompound karmaNbt = new NBTTagCompound();
-		getPlayerKarma(player).write(karmaNbt);
-		NBTTagCompound persistedNbt = player.getEntityData().getCompoundTag(EntityPlayer.PERSISTED_NBT_TAG);
-		persistedNbt.setCompoundTag("summoningmod", karmaNbt);
-		player.getEntityData().setCompoundTag(EntityPlayer.PERSISTED_NBT_TAG, persistedNbt);
-		karmas.remove(player);
+		karmas.remove(player).updatePlayerNbt();
 	}
 	
 	private static final int[] MESSAGE_BORDERS = {50, 40, 25, 10};
