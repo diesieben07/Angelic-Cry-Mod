@@ -1,6 +1,6 @@
 package demonmodders.Crymod.Common.Karma;
 
-import static demonmodders.Crymod.Common.Karma.PlayerKarmaManager.playerKarma;
+import static demonmodders.Crymod.Common.PlayerInfo.PlayerInfo.playerKarma;
 
 import java.util.Arrays;
 import java.util.EnumSet;
@@ -31,10 +31,12 @@ import net.minecraft.src.ItemPotion;
 import net.minecraft.src.ItemStack;
 import net.minecraft.src.Potion;
 import net.minecraft.src.PotionEffect;
+import net.minecraft.src.StringTranslate;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.Event.Result;
 import net.minecraftforge.event.EventPriority;
 import net.minecraftforge.event.ForgeSubscribe;
+import net.minecraftforge.event.ServerChatEvent;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.player.BonemealEvent;
@@ -49,10 +51,8 @@ import demonmodders.Crymod.Common.Karma.PlayerKarma.CountableKarmaEvent;
 
 public class KarmaEventHandler implements ITickHandler {
 	
-	private static final KarmaEventHandler instance = new KarmaEventHandler();
-	
-	public static KarmaEventHandler instance() {
-		return instance;
+	public static void init() {
+		new KarmaEventHandler();
 	}
 	
 	private KarmaEventHandler() {
@@ -211,5 +211,26 @@ public class KarmaEventHandler implements ITickHandler {
 	@Override
 	public String getLabel() {
 		return "SummoningModKarmaManager";
+	}
+	
+	private static final int[] MESSAGE_BORDERS = {50, 40, 25, 10};
+	
+	@ForgeSubscribe
+	public void onServerChat(ServerChatEvent evt) {
+		float karma = playerKarma(evt.player).getKarma();
+		if (karma == 0) {
+			return;
+		}
+		int useBorder = -1;
+		for (int border : MESSAGE_BORDERS) {
+			if (karma > 0 && karma >= border || karma < 0 && karma <= -border && useBorder < border) {
+				useBorder = border;
+			}
+		}
+		if (useBorder != -1) {
+			String messageKey = "chat.prefix." + (karma < 0 ? "bad" : "good") + "." + useBorder;
+			String messageColor = karma < 0 ? "\u00A74" : "\u00A71";
+			evt.line = evt.line.replace(evt.username, messageColor + StringTranslate.getInstance().translateKey(messageKey) + "\u00A7f " + evt.username);
+		}
 	}
 }

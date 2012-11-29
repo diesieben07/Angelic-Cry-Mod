@@ -1,22 +1,21 @@
 package demonmodders.Crymod.Client;
 
-import cpw.mods.fml.common.Side;
-import cpw.mods.fml.common.registry.TickRegistry;
 import net.minecraft.src.Container;
 import net.minecraft.src.EntityPlayer;
 import net.minecraft.src.World;
 import net.minecraftforge.client.MinecraftForgeClient;
 import net.minecraftforge.common.MinecraftForge;
+import cpw.mods.fml.common.Side;
+import cpw.mods.fml.common.registry.TickRegistry;
 import demonmodders.Crymod.Client.Gui.GuiSummoner;
 import demonmodders.Crymod.Common.CommonProxy;
 import demonmodders.Crymod.Common.Crymod;
 import demonmodders.Crymod.Common.Gui.GuiType;
-import demonmodders.Crymod.Common.Karma.PlayerKarma;
 
 public class ClientProxy extends CommonProxy {
 	
 	@Override
-	public void setClientKarma(PlayerKarma karma) {
+	public void setClientKarma(float karma) {
 		ClientTickHandler.instance().setClientKarma(karma);
 	}
 

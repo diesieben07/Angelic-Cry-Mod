@@ -1,32 +1,21 @@
 package demonmodders.Crymod.Common.Karma;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Map.Entry;
-
-import com.google.common.io.ByteArrayDataInput;
-import com.google.common.io.ByteArrayDataOutput;
-
-import demonmodders.Crymod.Common.Network.PacketPlayerKarma;
-
-import net.minecraft.src.EntityPlayer;
 import net.minecraft.src.NBTTagCompound;
 import net.minecraft.src.NBTTagList;
+import demonmodders.Crymod.Common.PlayerInfo.PlayerInfo;
 
 public class PlayerKarma {
+	
+	public static final int MAX_KARMA_VALUE = 50;
 	
 	private float karma = 0;
 	
 	private byte[] eventAmounts = new byte[CountableKarmaEvent.values().length];
 	
-	private final EntityPlayer player;
+	private final PlayerInfo info;
 	
-	public PlayerKarma(EntityPlayer player) {
-		this.player = player;
-	}
-	
-	public PlayerKarma() {
-		this(null);
+	public PlayerKarma(PlayerInfo info) {
+		this.info = info;
 	}
 	
 	public float getKarma() {
@@ -35,17 +24,17 @@ public class PlayerKarma {
 	
 	public void setKarma(float karma) {
 		this.karma = karma;
-		if (this.karma > PlayerKarmaManager.MAX_KARMA_VALUE) {
-			this.karma = PlayerKarmaManager.MAX_KARMA_VALUE;
+		if (this.karma > MAX_KARMA_VALUE) {
+			this.karma = MAX_KARMA_VALUE;
 		}
-		if (this.karma < -PlayerKarmaManager.MAX_KARMA_VALUE) {
-			this.karma = -PlayerKarmaManager.MAX_KARMA_VALUE;
+		if (this.karma < -MAX_KARMA_VALUE) {
+			this.karma = -MAX_KARMA_VALUE;
 		}
-		updateToClient();
+		info.onChange();
 	}
 	
 	public float modifyKarma(float modifier) {
-		player.worldObj.playSoundAtEntity(player, "summoningmod.karma" + (modifier < 0 ? "down" : "up"), 1, 1);
+		info.player.worldObj.playSoundAtEntity(info.player, "summoningmod.karma" + (modifier < 0 ? "down" : "up"), 1, 1);
 		
 		setKarma(karma + modifier);
 		return karma;
@@ -71,36 +60,17 @@ public class PlayerKarma {
 	
 	public void setEventAmount(CountableKarmaEvent event, int amount) {
 		eventAmounts[event.ordinal()] = (byte)amount;
-		updateToClient();
+		info.onChange();
 	}
 	
 	public void increaseEventAmount(CountableKarmaEvent event) {
 		setEventAmount(event, eventAmounts[event.ordinal()] + 1);
 	}
 	
-	public void updateToClient() {
-		if (player != null) {
-			new PacketPlayerKarma(this).sendToPlayer(player);
-		}
+	public static enum CountableKarmaEvent {
+		PIGMEN_ATTACK;
 	}
-	
-	public void write(ByteArrayDataOutput out) {
-		out.writeFloat(karma);
-		for (byte amount : eventAmounts) {
-			out.writeByte(amount);
-		}
-	}
-	
-	public PlayerKarma read(ByteArrayDataInput in) {
-		karma = in.readFloat();
-		
-		for (int i = 0; i < eventAmounts.length; i++) {
-			eventAmounts[i] = in.readByte();
-		}
-		
-		return this;
-	}
-	
+
 	public void write(NBTTagCompound nbt) {
 		nbt.setFloat("karma", karma);
 		NBTTagList eventList = new NBTTagList();
@@ -113,7 +83,7 @@ public class PlayerKarma {
 		nbt.setTag("events", eventList);
 	}
 	
-	public PlayerKarma read(NBTTagCompound nbt) {
+	public void read(NBTTagCompound nbt) {
 		karma = nbt.getFloat("karma");
 		NBTTagList eventList = nbt.getTagList("events");
 		for (int i = 0; i < eventList.tagCount(); i++) {
@@ -123,24 +93,5 @@ public class PlayerKarma {
 				eventAmounts[eventId] = evtInfo.getByte("value");
 			}
 		}
-		return this;
-	}
-	
-	public void updatePlayerNbt() {
-		if (player != null) {
-			NBTTagCompound karmaNbt = new NBTTagCompound();
-			write(karmaNbt);
-			NBTTagCompound persistedNbt = player.getEntityData().getCompoundTag(EntityPlayer.PERSISTED_NBT_TAG);
-			persistedNbt.setCompoundTag("summoningmod", karmaNbt);
-			player.getEntityData().setCompoundTag(EntityPlayer.PERSISTED_NBT_TAG, persistedNbt);
-		}
-	}
-	
-	public static PlayerKarma create(ByteArrayDataInput in) {
-		return new PlayerKarma().read(in);
-	}
-	
-	public static enum CountableKarmaEvent {
-		PIGMEN_ATTACK;
 	}
 }

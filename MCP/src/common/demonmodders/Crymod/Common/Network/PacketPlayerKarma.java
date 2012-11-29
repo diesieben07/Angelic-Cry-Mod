@@ -9,22 +9,26 @@ import demonmodders.Crymod.Common.Karma.PlayerKarma;
 
 public class PacketPlayerKarma extends CrymodPacket {
 
-	private PlayerKarma karma;
+	private float karma;
 	
 	public PacketPlayerKarma() { }
 	
-	public PacketPlayerKarma(PlayerKarma karma) {
+	public PacketPlayerKarma(float karma) {
 		this.karma = karma;
+	}
+	
+	public PacketPlayerKarma(PlayerKarma karma) {
+		this.karma = karma.getKarma();
 	}
 	
 	@Override
 	void writeData(ByteArrayDataOutput out) {
-		karma.write(out);
+		out.writeFloat(karma);
 	}
 
 	@Override
 	void readData(ByteArrayDataInput in) {
-		karma = PlayerKarma.create(in);
+		karma = in.readFloat();
 	}
 
 	@Override

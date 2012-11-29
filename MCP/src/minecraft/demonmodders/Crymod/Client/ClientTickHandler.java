@@ -13,7 +13,6 @@ import cpw.mods.fml.client.FMLClientHandler;
 import cpw.mods.fml.common.ITickHandler;
 import cpw.mods.fml.common.TickType;
 import demonmodders.Crymod.Common.Karma.PlayerKarma;
-import demonmodders.Crymod.Common.Karma.PlayerKarmaManager;
 
 public class ClientTickHandler extends Gui implements ITickHandler {
 
@@ -27,9 +26,9 @@ public class ClientTickHandler extends Gui implements ITickHandler {
 	
 	private final Minecraft mc = FMLClientHandler.instance().getClient();
 	
-	private PlayerKarma clientKarma;
+	private float clientKarma = Float.MIN_VALUE;
 	
-	public void setClientKarma(PlayerKarma karma) {
+	public void setClientKarma(float karma) {
 		clientKarma = karma;
 	}
 	
@@ -43,18 +42,18 @@ public class ClientTickHandler extends Gui implements ITickHandler {
 		ScaledResolution scaler = new ScaledResolution(mc.gameSettings, mc.displayWidth, mc.displayHeight);
         int width = scaler.getScaledWidth();
         int height = scaler.getScaledHeight();
-		if (type.contains(TickType.RENDER) && mc.theWorld != null && clientKarma != null) {
+		if (type.contains(TickType.RENDER) && mc.theWorld != null && clientKarma != Float.MIN_VALUE) {
 			GL11.glBindTexture(GL11.GL_TEXTURE_2D, mc.renderEngine.getTexture("/crymodResource/tex/gui.png"));
 			int barXStart = width / 2 - 182 / 2;
 			
 			// background of the bar
 			drawTexturedModalRect(barXStart, 10, 0, 0, 182, 5);
 
-			float karma = clientKarma.getKarma();
+			float karma = clientKarma;
 			
 			// the bar itself render
 			if (karma != 0) {
-				int rescaledKarmaWidth = (int)(Math.abs(karma) / (float)PlayerKarmaManager.MAX_KARMA_VALUE * (float)91);
+				int rescaledKarmaWidth = (int)(Math.abs(karma) / (float)PlayerKarma.MAX_KARMA_VALUE * (float)91);
 				if (rescaledKarmaWidth > 91) {
 					rescaledKarmaWidth = 91;
 				}

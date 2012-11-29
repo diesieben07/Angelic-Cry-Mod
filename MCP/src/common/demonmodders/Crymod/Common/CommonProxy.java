@@ -3,7 +3,6 @@ package demonmodders.Crymod.Common;
 import net.minecraft.src.Container;
 import net.minecraft.src.EntityPlayer;
 import net.minecraft.src.World;
-import demonmodders.Crymod.Common.Karma.PlayerKarma;
 
 public class CommonProxy {
 	public void preInit() {
@@ -23,7 +22,7 @@ public class CommonProxy {
 		return null;
 	}
 	
-	public void setClientKarma(PlayerKarma karma) {
+	public void setClientKarma(float karma) {
 		// NO OP on server
 	}
 }

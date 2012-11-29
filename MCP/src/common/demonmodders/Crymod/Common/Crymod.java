@@ -1,10 +1,8 @@
 package demonmodders.Crymod.Common;
 
-import java.io.File;
 import java.util.Arrays;
 import java.util.logging.Logger;
 
-import net.minecraft.client.Minecraft;
 import net.minecraftforge.common.Configuration;
 import cpw.mods.fml.common.FMLLog;
 import cpw.mods.fml.common.Mod;
@@ -24,9 +22,11 @@ import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
 import demonmodders.Crymod.Common.Gui.CrymodGuiHandler;
 import demonmodders.Crymod.Common.Items.ItemCryMod;
-import demonmodders.Crymod.Common.Karma.PlayerKarmaManager;
+import demonmodders.Crymod.Common.Karma.KarmaEventHandler;
+import demonmodders.Crymod.Common.Karma.PlayerPowersHandler;
 import demonmodders.Crymod.Common.Network.CrymodPacket;
 import demonmodders.Crymod.Common.Network.CrymodPacketHandler;
+import demonmodders.Crymod.Common.PlayerInfo.PlayerInfo;
 import demonmodders.Crymod.Common.WorldGen.CryWorldGenerator;
 
 @Mod(modid = "crymod", name = "Angelic Cry Mod [WIP]", version = "0.1")
@@ -68,13 +68,11 @@ public class Crymod {
 		NetworkRegistry.instance().registerGuiHandler(this, new CrymodGuiHandler());
 		
 		proxy.preInit();
-		
-		String targetFilePattern = new File(Minecraft.getMinecraftDir(), "mods/SummoningMod%s.zip").getAbsolutePath();
 
-		PlayerKarmaManager.init();
-		
-		
-		
+		KarmaEventHandler.init();
+		PlayerPowersHandler.init();
+		PlayerInfo.init();
+				
 		GameRegistry.registerWorldGenerator(new CryWorldGenerator());
 	}
 	
