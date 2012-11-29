@@ -42,7 +42,9 @@ public class ClientTickHandler extends Gui implements ITickHandler {
 		ScaledResolution scaler = new ScaledResolution(mc.gameSettings, mc.displayWidth, mc.displayHeight);
         int width = scaler.getScaledWidth();
         int height = scaler.getScaledHeight();
-		if (type.contains(TickType.RENDER) && mc.theWorld != null && clientKarma != Float.MIN_VALUE) {
+		mc.entityRenderer.setupOverlayRendering();
+		GL11.glColor3f(1, 1, 1);
+        if (type.contains(TickType.RENDER) && mc.theWorld != null && clientKarma != Float.MIN_VALUE) {
 			GL11.glBindTexture(GL11.GL_TEXTURE_2D, mc.renderEngine.getTexture("/crymodResource/tex/gui.png"));
 			int barXStart = width / 2 - 182 / 2;
 			
