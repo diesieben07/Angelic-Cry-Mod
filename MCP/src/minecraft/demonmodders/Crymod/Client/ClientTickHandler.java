@@ -13,6 +13,7 @@ import cpw.mods.fml.client.FMLClientHandler;
 import cpw.mods.fml.common.ITickHandler;
 import cpw.mods.fml.common.TickType;
 import demonmodders.Crymod.Common.Karma.PlayerKarma;
+import demonmodders.Crymod.Common.PlayerInfo.PlayerInfo;
 
 public class ClientTickHandler extends Gui implements ITickHandler {
 
@@ -26,10 +27,10 @@ public class ClientTickHandler extends Gui implements ITickHandler {
 	
 	private final Minecraft mc = FMLClientHandler.instance().getClient();
 	
-	private float clientKarma = Float.MIN_VALUE;
+	private PlayerInfo clientPlayerInfo = null;
 	
-	public void setClientKarma(float karma) {
-		clientKarma = karma;
+	public void setClientPlayerInfo(PlayerInfo info) {
+		clientPlayerInfo = info;
 	}
 	
 	@Override
@@ -44,14 +45,14 @@ public class ClientTickHandler extends Gui implements ITickHandler {
         int height = scaler.getScaledHeight();
 		mc.entityRenderer.setupOverlayRendering();
 		GL11.glColor3f(1, 1, 1);
-        if (type.contains(TickType.RENDER) && mc.theWorld != null && clientKarma != Float.MIN_VALUE) {
+        if (type.contains(TickType.RENDER) && mc.theWorld != null && clientPlayerInfo != null) {
 			GL11.glBindTexture(GL11.GL_TEXTURE_2D, mc.renderEngine.getTexture("/crymodResource/tex/gui.png"));
 			int barXStart = width / 2 - 182 / 2;
 			
 			// background of the bar
 			drawTexturedModalRect(barXStart, 10, 0, 0, 182, 5);
 
-			float karma = clientKarma;
+			float karma = clientPlayerInfo.getKarma().getKarma();
 			
 			// the bar itself render
 			if (karma != 0) {
@@ -81,6 +82,8 @@ public class ClientTickHandler extends Gui implements ITickHandler {
 			} else {
 				fr.drawString(karmaString, xPos, yPos, 0xFF0000);
 			}
+			
+			fr.drawString(String.valueOf(clientPlayerInfo.getFlyTime()), 10, 10, 0xffffff);
 		}
 	}
 

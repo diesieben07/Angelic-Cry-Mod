@@ -6,34 +6,35 @@ import com.google.common.io.ByteArrayDataInput;
 import net.minecraft.src.EntityPlayer;
 import demonmodders.Crymod.Common.Crymod;
 import demonmodders.Crymod.Common.Karma.PlayerKarma;
+import demonmodders.Crymod.Common.PlayerInfo.PlayerInfo;
 
-public class PacketPlayerKarma extends CrymodPacket {
+public class PacketPlayerInfo extends CrymodPacket {
 
 	private float karma;
+	private int flyTime;
 	
-	public PacketPlayerKarma() { }
+	public PacketPlayerInfo() { }
 	
-	public PacketPlayerKarma(float karma) {
-		this.karma = karma;
-	}
-	
-	public PacketPlayerKarma(PlayerKarma karma) {
-		this.karma = karma.getKarma();
+	public PacketPlayerInfo(PlayerInfo info) {
+		karma = info.getKarma().getKarma();
+		flyTime = info.getFlyTime();
 	}
 	
 	@Override
 	void writeData(ByteArrayDataOutput out) {
 		out.writeFloat(karma);
+		out.writeByte(flyTime);
 	}
 
 	@Override
 	void readData(ByteArrayDataInput in) {
 		karma = in.readFloat();
+		flyTime = in.readByte();
 	}
 
 	@Override
 	void execute(EntityPlayer player) {
-		Crymod.proxy.setClientKarma(karma);
+		Crymod.proxy.setClientPlayerInfo(new PlayerInfo(new PlayerKarma(karma), flyTime));
 	}
 
 }

@@ -14,6 +14,11 @@ public class PlayerKarma {
 	
 	private final PlayerInfo info;
 	
+	public PlayerKarma(float karma) {
+		this.karma = karma;
+		info = null;
+	}
+	
 	public PlayerKarma(PlayerInfo info) {
 		this.info = info;
 	}
@@ -23,14 +28,16 @@ public class PlayerKarma {
 	}
 	
 	public void setKarma(float karma) {
-		this.karma = karma;
-		if (this.karma > MAX_KARMA_VALUE) {
-			this.karma = MAX_KARMA_VALUE;
+		if (this.karma != karma) {
+			this.karma = karma;
+			if (this.karma > MAX_KARMA_VALUE) {
+				this.karma = MAX_KARMA_VALUE;
+			}
+			if (this.karma < -MAX_KARMA_VALUE) {
+				this.karma = -MAX_KARMA_VALUE;
+			}
+			info.onChange();
 		}
-		if (this.karma < -MAX_KARMA_VALUE) {
-			this.karma = -MAX_KARMA_VALUE;
-		}
-		info.onChange();
 	}
 	
 	public float modifyKarma(float modifier) {
@@ -59,8 +66,10 @@ public class PlayerKarma {
 	}
 	
 	public void setEventAmount(CountableKarmaEvent event, int amount) {
-		eventAmounts[event.ordinal()] = (byte)amount;
-		info.onChange();
+		if (eventAmounts[event.ordinal()] != amount) {
+			eventAmounts[event.ordinal()] = (byte)amount;
+			info.onChange();
+		}
 	}
 	
 	public void increaseEventAmount(CountableKarmaEvent event) {

@@ -3,9 +3,9 @@ Titles and powers:
 +10 : Minor Priest title. You have higher resistance.
 +25 : Holy title. You take no fall damage Done
 +40 : High Priest title. Animals will follow you.
-50 : Chosen One title. you can fly for 30 seconds (with 100 second call down) by pressing the f key.
+50 : Chosen One title. you can fly for 30 seconds (with 100 second call down) by pressing the f key. Done
 
 -10 : Corrupt title. More attack damage
--24 : Evil title. You can't drown or die in lava or fire.
+-24 : Evil title. You can't drown or die in lava or fire. Done
 -40 : Anarchist title. Mob won't attack you.
 50 : Dark God title. You can press f key to turn completely invisible for 30 seconds. 100 seconds cool down.

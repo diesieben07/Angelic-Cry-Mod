@@ -11,12 +11,13 @@ import demonmodders.Crymod.Client.Gui.GuiSummoner;
 import demonmodders.Crymod.Common.CommonProxy;
 import demonmodders.Crymod.Common.Crymod;
 import demonmodders.Crymod.Common.Gui.GuiType;
+import demonmodders.Crymod.Common.PlayerInfo.PlayerInfo;
 
 public class ClientProxy extends CommonProxy {
 	
 	@Override
-	public void setClientKarma(float karma) {
-		ClientTickHandler.instance().setClientKarma(karma);
+	public void setClientPlayerInfo(PlayerInfo info) {
+		ClientTickHandler.instance().setClientPlayerInfo(info);
 	}
 
 	@Override
