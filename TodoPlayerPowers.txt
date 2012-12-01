@@ -7,5 +7,5 @@ Titles and powers:
 
 -10 : Corrupt title. More attack damage
 -24 : Evil title. You can't drown or die in lava or fire. Done
--40 : Anarchist title. Mob won't attack you.
+-40 : Anarchist title. Mob won't attack you. Done
 50 : Dark God title. You can press f key to turn completely invisible for 30 seconds. 100 seconds cool down.

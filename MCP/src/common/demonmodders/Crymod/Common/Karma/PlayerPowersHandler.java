@@ -4,6 +4,7 @@ import java.util.EnumSet;
 
 import net.minecraft.src.DamageSource;
 import net.minecraft.src.Entity;
+import net.minecraft.src.EntityMob;
 import net.minecraft.src.EntityPlayer;
 import net.minecraft.src.EntityPlayerMP;
 import net.minecraft.src.Potion;
@@ -12,6 +13,7 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.ForgeSubscribe;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.living.LivingFallEvent;
+import net.minecraftforge.event.entity.living.LivingSetAttackTargetEvent;
 import cpw.mods.fml.common.IScheduledTickHandler;
 import cpw.mods.fml.common.Side;
 import cpw.mods.fml.common.TickType;
@@ -42,10 +44,17 @@ public class PlayerPowersHandler implements IScheduledTickHandler {
 	
 	@ForgeSubscribe
 	public void onLivingAttack(LivingAttackEvent evt) {
-		if (evt.entity instanceof EntityPlayerMP && ensureMinKarma(evt.entity, -25)) {
+		if (evt.entity instanceof EntityPlayerMP && ensureMaxKarma(evt.entity, -25)) {
 			if (evt.source.isFireDamage() || evt.source == DamageSource.drown) {
 				evt.setCanceled(true);
 			}
+		}
+	}
+	
+	@ForgeSubscribe
+	public void onEntityAttackTarget(LivingSetAttackTargetEvent evt) {
+		if (evt.target != null && evt.target instanceof EntityPlayerMP && evt.entity instanceof EntityMob && ensureMaxKarma(evt.target, -40)) {
+			evt.entityLiving.setAttackTarget(null);
 		}
 	}
 	
@@ -60,7 +69,7 @@ public class PlayerPowersHandler implements IScheduledTickHandler {
 	public void onPlayerInvisibilityRequest(EntityPlayer player) {
 		PlayerInfo info = PlayerInfo.forPlayer(player);
 		int cooldown = info.getInvisibilityCooldown();
-		if (cooldown == 0) {
+		if (cooldown == 0 && info.getKarma().getKarma() <= -50) {
 			info.setInvisibilityCooldown(INVISIBILITY_COOLDOWN);
 			player.addPotionEffect(new PotionEffect(Potion.invisibility.id, INVISIBILITY_TIME));
 		}
