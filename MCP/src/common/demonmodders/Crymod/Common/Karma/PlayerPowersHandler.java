@@ -6,6 +6,8 @@ import net.minecraft.src.DamageSource;
 import net.minecraft.src.Entity;
 import net.minecraft.src.EntityPlayer;
 import net.minecraft.src.EntityPlayerMP;
+import net.minecraft.src.Potion;
+import net.minecraft.src.PotionEffect;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.ForgeSubscribe;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
@@ -18,10 +20,15 @@ import demonmodders.Crymod.Common.PlayerInfo.PlayerInfo;
 
 public class PlayerPowersHandler implements IScheduledTickHandler {
 	
+	private static final PlayerPowersHandler instance = new PlayerPowersHandler();
+	
+	public static PlayerPowersHandler instance() {
+		return instance;
+	}
+	
 	private PlayerPowersHandler() {}
 	
 	public static void init() {
-		PlayerPowersHandler instance = new PlayerPowersHandler();
 		MinecraftForge.EVENT_BUS.register(instance);
 		TickRegistry.registerScheduledTickHandler(instance, Side.SERVER);
 	}
@@ -50,14 +57,33 @@ public class PlayerPowersHandler implements IScheduledTickHandler {
 		return PlayerInfo.forPlayer((EntityPlayer)ent).getKarma().getKarma() <= maxKarma;
 	}
 	
+	public void onPlayerInvisibilityRequest(EntityPlayer player) {
+		PlayerInfo info = PlayerInfo.forPlayer(player);
+		int cooldown = info.getInvisibilityCooldown();
+		if (cooldown == 0) {
+			info.setInvisibilityCooldown(INVISIBILITY_COOLDOWN);
+			player.addPotionEffect(new PotionEffect(Potion.invisibility.id, INVISIBILITY_TIME));
+		}
+	}
+	
 	private static final int TICKS_PER_SECOND = 20;
 	private static final int FLYING_TIME = 30;
 	private static final int FLYING_COOLDOWN = 100;
+	
+	private static final int INVISIBILITY_TIME = 30 * TICKS_PER_SECOND;
+	private static final int INVISIBILITY_COOLDOWN = 100;
 	
 	@Override
 	public void tickStart(EnumSet<TickType> type, Object... tickData) {		
 		EntityPlayer player = (EntityPlayer)tickData[0];
 		PlayerInfo info = PlayerInfo.forPlayer(player);
+		
+		int invisCooldown = info.getInvisibilityCooldown();
+		if (invisCooldown > 0) {
+			invisCooldown--;
+		}
+		
+		info.setInvisibilityCooldown(invisCooldown);
 		
 		int flyTime = info.getFlyTime();
 		
@@ -97,7 +123,9 @@ public class PlayerPowersHandler implements IScheduledTickHandler {
 	}
 
 	@Override
-	public void tickEnd(EnumSet<TickType> type, Object... tickData) { }
+	public void tickEnd(EnumSet<TickType> type, Object... tickData) {
+		PlayerInfo.forPlayer((EntityPlayer) tickData[0]).onUpdate();
+	}
 
 	@Override
 	public EnumSet<TickType> ticks() {

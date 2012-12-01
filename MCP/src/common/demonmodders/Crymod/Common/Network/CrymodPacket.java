@@ -36,6 +36,7 @@ public abstract class CrymodPacket {
 	static {
 		addMapping(0, PacketPageChange.class);
 		addMapping(1, PacketPlayerInfo.class);
+		addMapping(2, PacketClientRequest.class);
 	}
 	
 	public final Packet generatePacket() {

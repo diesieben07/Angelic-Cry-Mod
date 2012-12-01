@@ -60,13 +60,16 @@ public final class PlayerInfo {
 	private PlayerKarma karma;
 	
 	private int flyTime;
+	private int invisibilityCooldown;
+	private boolean isDirty = true;
 	
 	private PlayerInfo(EntityPlayer player) {
 		this.player = player;
 		karma = new PlayerKarma(this);
 		NBTTagCompound infoNbt = player.getEntityData().getCompoundTag(EntityPlayer.PERSISTED_NBT_TAG).getCompoundTag("summoningmod");
 		karma.read(infoNbt);
-		flyTime = infoNbt.getInteger("flyCooldown");
+		flyTime = infoNbt.getByte("flyTime");
+		invisibilityCooldown = infoNbt.getByte("invisCooldown");
 	}
 	
 	public PlayerInfo(PlayerKarma karma, int flyTime) {
@@ -86,7 +89,18 @@ public final class PlayerInfo {
 	public void setFlyTime(int flyTime) {
 		if (this.flyTime != flyTime) {
 			this.flyTime = flyTime;
-			onChange();
+			setDirty();
+		}
+	}
+
+	public int getInvisibilityCooldown() {
+		return invisibilityCooldown;
+	}
+	
+	public void setInvisibilityCooldown(int cooldown) {
+		if (invisibilityCooldown != cooldown) {
+			invisibilityCooldown = cooldown;
+			updatePlayerNbt();
 		}
 	}
 	
@@ -99,15 +113,24 @@ public final class PlayerInfo {
 		
 		karma.write(infoNbt);
 		
-		infoNbt.setInteger("flyCooldown", flyTime);
+		infoNbt.setByte("flyTime", (byte)flyTime);
+		
+		infoNbt.setByte("invisCooldown", (byte)invisibilityCooldown);
 		
 		NBTTagCompound persistedNbt = player.getEntityData().getCompoundTag(EntityPlayer.PERSISTED_NBT_TAG);
 		persistedNbt.setCompoundTag("summoningmod", infoNbt);
 		player.getEntityData().setCompoundTag(EntityPlayer.PERSISTED_NBT_TAG, persistedNbt);
 	}
 	
-	public void onChange() {
-		updateClient();
-		updatePlayerNbt();
+	public void setDirty() {
+		isDirty = true;
+	}
+	
+	public void onUpdate() {
+		if (isDirty) {
+			updateClient();
+			updatePlayerNbt();
+			isDirty = false;
+		}
 	}
 }

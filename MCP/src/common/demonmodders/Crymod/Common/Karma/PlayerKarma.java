@@ -36,7 +36,7 @@ public class PlayerKarma {
 			if (this.karma < -MAX_KARMA_VALUE) {
 				this.karma = -MAX_KARMA_VALUE;
 			}
-			info.onChange();
+			info.setDirty();
 		}
 	}
 	
@@ -68,7 +68,7 @@ public class PlayerKarma {
 	public void setEventAmount(CountableKarmaEvent event, int amount) {
 		if (eventAmounts[event.ordinal()] != amount) {
 			eventAmounts[event.ordinal()] = (byte)amount;
-			info.onChange();
+			info.setDirty();
 		}
 	}
 	
