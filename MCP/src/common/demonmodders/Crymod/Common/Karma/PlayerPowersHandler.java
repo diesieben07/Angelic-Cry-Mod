@@ -4,6 +4,7 @@ import java.util.EnumSet;
 
 import net.minecraft.src.DamageSource;
 import net.minecraft.src.Entity;
+import net.minecraft.src.EntityDamageSource;
 import net.minecraft.src.EntityMob;
 import net.minecraft.src.EntityPlayer;
 import net.minecraft.src.EntityPlayerMP;
@@ -13,6 +14,7 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.ForgeSubscribe;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.living.LivingFallEvent;
+import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.living.LivingSetAttackTargetEvent;
 import cpw.mods.fml.common.IScheduledTickHandler;
 import cpw.mods.fml.common.Side;
@@ -44,9 +46,19 @@ public class PlayerPowersHandler implements IScheduledTickHandler {
 	
 	@ForgeSubscribe
 	public void onLivingAttack(LivingAttackEvent evt) {
-		if (evt.entity instanceof EntityPlayerMP && ensureMaxKarma(evt.entity, -25)) {
-			if (evt.source.isFireDamage() || evt.source == DamageSource.drown) {
-				evt.setCanceled(true);
+		if (evt.entity instanceof EntityPlayerMP && (evt.source.isFireDamage() || evt.source == DamageSource.drown) && ensureMaxKarma(evt.entity, -25)) {
+			evt.setCanceled(true);
+		}
+	}
+	
+	@ForgeSubscribe
+	public void onLivingHurt(LivingHurtEvent evt) {
+		if (evt.entity instanceof EntityPlayerMP && ensureMinKarma(evt.entity, 10)) {
+			evt.ammount -= 1;
+		} else if (evt.source instanceof EntityDamageSource) {
+			EntityDamageSource source = (EntityDamageSource)evt.source;
+			if (source.getEntity() instanceof EntityPlayerMP && ensureMaxKarma(source.getEntity(), -10)) {
+				evt.ammount += 1;
 			}
 		}
 	}
