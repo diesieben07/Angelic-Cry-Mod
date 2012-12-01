@@ -92,7 +92,7 @@ public class PlayerPowersHandler implements IScheduledTickHandler {
 	private static final int FLYING_COOLDOWN = 100;
 	
 	private static final int INVISIBILITY_TIME = 30 * TICKS_PER_SECOND;
-	private static final int INVISIBILITY_COOLDOWN = 100;
+	private static final int INVISIBILITY_COOLDOWN = 130;
 	
 	@Override
 	public void tickStart(EnumSet<TickType> type, Object... tickData) {		
