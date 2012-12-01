@@ -19,7 +19,9 @@ import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.event.FMLServerStartingEvent;
 import cpw.mods.fml.common.network.NetworkMod;
 import cpw.mods.fml.common.network.NetworkRegistry;
+import cpw.mods.fml.common.registry.EntityRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
+import demonmodders.Crymod.Common.Entities.EntityHeavenZombie;
 import demonmodders.Crymod.Common.Gui.CrymodGuiHandler;
 import demonmodders.Crymod.Common.Items.ItemCryMod;
 import demonmodders.Crymod.Common.Karma.KarmaEventHandler;
@@ -74,6 +76,11 @@ public class Crymod {
 		PlayerInfo.init();
 				
 		GameRegistry.registerWorldGenerator(new CryWorldGenerator());
+		
+		int heavenZombieId = EntityRegistry.findGlobalUniqueEntityId();
+		
+		EntityRegistry.registerGlobalEntityID(EntityHeavenZombie.class, "crymodHeavenZombie", heavenZombieId, 0xffffff, 0x000000);
+		EntityRegistry.registerModEntity(EntityHeavenZombie.class, "crymodHeavenZombie", heavenZombieId, this, 80, 3, true);
 	}
 	
 	@Init
