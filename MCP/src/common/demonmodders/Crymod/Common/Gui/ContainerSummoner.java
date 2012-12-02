@@ -1,21 +1,21 @@
 package demonmodders.Crymod.Common.Gui;
 
+import static demonmodders.Crymod.Common.Crymod.logger;
+
 import java.util.List;
 import java.util.Random;
 
+import net.minecraft.src.EntityLiving;
 import net.minecraft.src.EntityPlayer;
 import net.minecraft.src.InventoryPlayer;
 import net.minecraft.src.Slot;
 import net.minecraft.src.World;
 import cpw.mods.fml.common.Side;
-import demonmodders.Crymod.Common.Entities.SummonableEntity;
 import demonmodders.Crymod.Common.Inventory.InventoryHelper;
 import demonmodders.Crymod.Common.Inventory.InventorySummoner;
 import demonmodders.Crymod.Common.Inventory.SlotForItem;
 import demonmodders.Crymod.Common.Items.ItemCryMod;
 import demonmodders.Crymod.Common.Recipes.SummoningEntityList;
-
-import static demonmodders.Crymod.Common.Crymod.logger;
 
 public class ContainerSummoner extends AbstractContainer<InventorySummoner> {
 
@@ -94,7 +94,7 @@ public class ContainerSummoner extends AbstractContainer<InventorySummoner> {
 		case BUTTON_SUMMON:
 			if (side.isServer()) {
 				try {
-					SummonableEntity entity = SummoningEntityList.getSummonings(inventory.getShowAngels()).get(currentPage).getDemon().getConstructor(World.class).newInstance(player.worldObj);
+					EntityLiving entity = SummoningEntityList.getSummonings(inventory.getShowAngels()).get(currentPage).getDemon().getConstructor(World.class).newInstance(player.worldObj);
 					Random rng = new Random();
 					entity.setPosition(player.posX + 1.5F + rng.nextFloat() * 3F, player.posY, player.posZ + 1.5F + rng.nextFloat() * 3F);
 					player.worldObj.spawnEntityInWorld(entity);

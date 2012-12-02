@@ -3,6 +3,7 @@ package demonmodders.Crymod.Common;
 import java.util.Arrays;
 import java.util.logging.Logger;
 
+import net.minecraft.src.Entity;
 import net.minecraftforge.common.Configuration;
 import cpw.mods.fml.common.FMLLog;
 import cpw.mods.fml.common.Mod;
@@ -22,6 +23,7 @@ import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.registry.EntityRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
 import demonmodders.Crymod.Common.Entities.EntityHeavenZombie;
+import demonmodders.Crymod.Common.Entities.EntityHellZombie;
 import demonmodders.Crymod.Common.Gui.CrymodGuiHandler;
 import demonmodders.Crymod.Common.Items.ItemCryMod;
 import demonmodders.Crymod.Common.Karma.KarmaEventHandler;
@@ -77,10 +79,15 @@ public class Crymod {
 				
 		GameRegistry.registerWorldGenerator(new CryWorldGenerator());
 		
-		int heavenZombieId = EntityRegistry.findGlobalUniqueEntityId();
+		registerEntity(EntityHeavenZombie.class, "crymodHeavenZombie", 0xffffff, 0x000000, 80, 3, true);
+		registerEntity(EntityHellZombie.class, "crymodHellZombie", 0x000000, 0xffffff, 80, 3, true);
+	}
+	
+	private void registerEntity(Class<? extends Entity> entity, String name, int foreground, int background, int range, int updateFrequency, boolean velocityUpdates) {
+		int entityId = EntityRegistry.findGlobalUniqueEntityId();
 		
-		EntityRegistry.registerGlobalEntityID(EntityHeavenZombie.class, "crymodHeavenZombie", heavenZombieId, 0xffffff, 0x000000);
-		EntityRegistry.registerModEntity(EntityHeavenZombie.class, "crymodHeavenZombie", heavenZombieId, this, 80, 3, true);
+		EntityRegistry.registerGlobalEntityID(entity, name, entityId, foreground, background);
+		EntityRegistry.registerModEntity(entity, name, entityId, this, range, updateFrequency, velocityUpdates);
 	}
 	
 	@Init

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import demonmodders.Crymod.Common.Entities.EntityHeavenZombie;
+import demonmodders.Crymod.Common.Entities.EntityHellZombie;
 
 public abstract class SummoningEntityList {
 	private static List<SummoningEntityListEntry> angelList = new ArrayList<SummoningEntityListEntry>();
@@ -18,10 +19,8 @@ public abstract class SummoningEntityList {
 	}
 	
 	static {
-		angelList.add(new SummoningEntityListEntry(null, EntityHeavenZombie.class, "Heaven Zombie I"));
-		angelList.add(new SummoningEntityListEntry(null, EntityHeavenZombie.class, "Heaven Zombie II"));
-		angelList.add(new SummoningEntityListEntry(null, EntityHeavenZombie.class, "Heaven Zombie III"));
+		angelList.add(new SummoningEntityListEntry(null, EntityHeavenZombie.class, "Heaven Zombie"));
 		
-		demonList.add(new SummoningEntityListEntry(null, EntityHeavenZombie.class, "Heaven Zombie (Placeholder)"));
+		demonList.add(new SummoningEntityListEntry(null, EntityHellZombie.class, "Hell Zombie"));
 	}
 }
