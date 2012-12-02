@@ -1,18 +1,31 @@
-package demonmodders.Crymod.Common.Inventory;
+package demonmodders.Crymod.Common.Gui;
 
 import java.util.List;
+import java.util.Random;
 
+import net.minecraft.src.EntityPlayer;
 import net.minecraft.src.InventoryPlayer;
 import net.minecraft.src.Slot;
+import net.minecraft.src.World;
+import cpw.mods.fml.common.Side;
+import demonmodders.Crymod.Common.Entities.SummonableEntity;
+import demonmodders.Crymod.Common.Inventory.InventoryHelper;
+import demonmodders.Crymod.Common.Inventory.InventorySummoner;
+import demonmodders.Crymod.Common.Inventory.SlotForItem;
 import demonmodders.Crymod.Common.Items.ItemCryMod;
-import demonmodders.Crymod.Common.Network.PacketPageChange;
 import demonmodders.Crymod.Common.Recipes.SummoningRecipeRegistry;
+
+import static demonmodders.Crymod.Common.Crymod.logger;
 
 public class ContainerSummoner extends AbstractContainer {
 
 	private static final int[] SLOT_X_POSTITIONS = new int[] {
 		80, 80, 58, 103, 80, 38, 121, 80, 58, 103
 	};
+	
+	public static final int BUTTON_NEXT_PAGE = 0;
+	public static final int BUTTON_PREV_PAGE = 1;
+	public static final int BUTTON_SUMMON = 2;
 	
 	private int currentPage = 0;
 	
@@ -68,14 +81,28 @@ public class ContainerSummoner extends AbstractContainer {
 			((Slot)inventorySlots.get(i + slotNumStart)).xDisplayPosition = SLOT_X_POSTITIONS[i];
 		}
 	}
-	
-	public void nextPage() {
-		setCurrentPage(currentPage + 1);
-		new PacketPageChange(currentPage, this).sendToServer();
-	}
-	
-	public void prevPage() {
-		setCurrentPage(currentPage - 1);
-		new PacketPageChange(currentPage, this).sendToServer();
+
+	@Override
+	public void buttonClick(int buttonId, Side side, EntityPlayer player) {
+		switch (buttonId) {
+		case BUTTON_NEXT_PAGE:
+			setCurrentPage(currentPage + 1);
+			break;
+		case BUTTON_PREV_PAGE:
+			setCurrentPage(currentPage - 1);
+			break;
+		case BUTTON_SUMMON:
+			if (side.isServer()) {
+				try {
+					SummonableEntity entity = SummoningRecipeRegistry.getRecipes().get(currentPage).getDemon().getConstructor(World.class).newInstance(player.worldObj);
+					Random rng = new Random();
+					entity.setPosition(player.posX + 1.5F + rng.nextFloat() * 3F, player.posY, player.posZ + 1.5F + rng.nextFloat() * 3F);
+					player.worldObj.spawnEntityInWorld(entity);
+				} catch (Exception e) {
+					logger.warning("Invalid Entity for Summoning!");
+				}
+			}
+			break;
+		}
 	}
 }

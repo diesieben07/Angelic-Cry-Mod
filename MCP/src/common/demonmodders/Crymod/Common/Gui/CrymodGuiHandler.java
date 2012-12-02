@@ -5,7 +5,6 @@ import net.minecraft.src.Container;
 import net.minecraft.src.EntityPlayer;
 import net.minecraft.src.World;
 import cpw.mods.fml.common.network.IGuiHandler;
-import demonmodders.Crymod.Common.Inventory.ContainerSummoner;
 import demonmodders.Crymod.Common.Inventory.InventorySummoner;
 
 public class CrymodGuiHandler implements IGuiHandler {

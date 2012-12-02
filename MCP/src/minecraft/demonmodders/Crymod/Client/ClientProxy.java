@@ -12,6 +12,7 @@ import cpw.mods.fml.common.registry.TickRegistry;
 import demonmodders.Crymod.Client.Gui.GuiSummoner;
 import demonmodders.Crymod.Common.CommonProxy;
 import demonmodders.Crymod.Common.Crymod;
+import demonmodders.Crymod.Common.Gui.ContainerSummoner;
 import demonmodders.Crymod.Common.Gui.GuiType;
 import demonmodders.Crymod.Common.PlayerInfo.PlayerInfo;
 
@@ -26,9 +27,9 @@ public class ClientProxy extends CommonProxy {
 	public Object getClientGuiElement(Container container, int id, EntityPlayer player, World world, int x, int y, int z) {
 		switch (GuiType.fromGuiId(id)) {
 		case SUMMONING_BOOK:
-			return new GuiSummoner("/crymodResource/tex/summoningBook.png", container);
+			return new GuiSummoner("/crymodResource/tex/summoningBook.png", (ContainerSummoner)container);
 		case EVIL_TABLET:
-			return new GuiSummoner("/crymodResource/tex/evilTablet.png", container);
+			return new GuiSummoner("/crymodResource/tex/evilTablet.png", (ContainerSummoner)container);
 		default:
 			return null;
 		}

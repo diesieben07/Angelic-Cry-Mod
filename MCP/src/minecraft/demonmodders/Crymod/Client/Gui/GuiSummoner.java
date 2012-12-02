@@ -1,16 +1,17 @@
 package demonmodders.Crymod.Client.Gui;
 
-import org.lwjgl.opengl.GL11;
-
-import demonmodders.Crymod.Common.Inventory.ContainerSummoner;
-import demonmodders.Crymod.Common.Recipes.SummoningRecipeRegistry;
-
+import static demonmodders.Crymod.Common.Gui.ContainerSummoner.BUTTON_NEXT_PAGE;
+import static demonmodders.Crymod.Common.Gui.ContainerSummoner.BUTTON_PREV_PAGE;
+import static demonmodders.Crymod.Common.Gui.ContainerSummoner.BUTTON_SUMMON;
 import net.minecraft.src.Container;
 import net.minecraft.src.GuiButton;
-import net.minecraft.src.GuiContainer;
-import net.minecraft.src.Slot;
 
-public class GuiSummoner extends GuiContainer {
+import org.lwjgl.opengl.GL11;
+
+import demonmodders.Crymod.Common.Gui.ContainerSummoner;
+import demonmodders.Crymod.Common.Recipes.SummoningRecipeRegistry;
+
+public class GuiSummoner extends AbstractGuiContainer {
 
 	private static final int EFFECTIVE_HEIGHT = 256;
 	private static final int EFFECTIVE_WIDTH = 176;
@@ -22,12 +23,9 @@ public class GuiSummoner extends GuiContainer {
 	private static final int HEADING_TEXT_FIELD_X_POSITION = 39;
 	private static final int HEADING_TEXT_FIELD_Y_POSITION = 17;
 	
-	private static final int BUTTON_NEXT = 0;
-	private static final int BUTTON_PREV = 1;
-	
 	private final String texture;
 	
-	public GuiSummoner(String texture, Container container) {
+	public GuiSummoner(String texture, ContainerSummoner container) {
 		super(container);
 		this.texture = texture;
 		xSize = EFFECTIVE_WIDTH;
@@ -42,20 +40,9 @@ public class GuiSummoner extends GuiContainer {
 		
 		int buttonY = (height - EFFECTIVE_HEIGHT) / 2 + BOOK_HEIGHT - ARROW_HEIGHT - 3;
 		
-		controlList.add(new GuiButtonImage(BUTTON_NEXT, buttonNextX, buttonY, ARROW_WIDTH, ARROW_HEIGHT, 256 - ARROW_WIDTH, 0, texture));
-		controlList.add(new GuiButtonImage(BUTTON_PREV, buttonPrevX, buttonY, ARROW_WIDTH, ARROW_HEIGHT, 256 - ARROW_WIDTH - ARROW_WIDTH, 0, texture));
-	}
-
-	@Override
-	protected void actionPerformed(GuiButton button) {
-		switch (button.id) {
-		case BUTTON_NEXT:
-			((ContainerSummoner)inventorySlots).nextPage();
-			break;
-		case BUTTON_PREV:
-			((ContainerSummoner)inventorySlots).prevPage();
-			break;
-		}
+		controlList.add(new GuiButtonImage(BUTTON_NEXT_PAGE, buttonNextX, buttonY, ARROW_WIDTH, ARROW_HEIGHT, 256 - ARROW_WIDTH, 0, texture));
+		controlList.add(new GuiButtonImage(BUTTON_PREV_PAGE, buttonPrevX, buttonY, ARROW_WIDTH, ARROW_HEIGHT, 256 - ARROW_WIDTH - ARROW_WIDTH, 0, texture));
+		controlList.add(new GuiButton(BUTTON_SUMMON, width / 2 - EFFECTIVE_WIDTH / 2 + 49, height / 2 - EFFECTIVE_HEIGHT / 2 + 150, 80, 20, "Summon"));
 	}
 
 	@Override
@@ -68,8 +55,16 @@ public class GuiSummoner extends GuiContainer {
 
 	@Override
 	protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
-		String demonName = SummoningRecipeRegistry.getRecipes().get(((ContainerSummoner)inventorySlots).page()).getDemon();
+		String demonName = SummoningRecipeRegistry.getRecipes().get(((ContainerSummoner)inventorySlots).page()).getDemonName();
 		int demonNameWidth = fontRenderer.getStringWidth(demonName);
 		fontRenderer.drawString(demonName, HEADING_TEXT_FIELD_X_POSITION, HEADING_TEXT_FIELD_Y_POSITION, 0xffffff);
+	}
+	
+	@Override
+	protected void actionPerformed(GuiButton button) {
+		super.actionPerformed(button);
+		if (button.id == BUTTON_SUMMON) {
+			mc.displayGuiScreen(null);
+		}
 	}
 }

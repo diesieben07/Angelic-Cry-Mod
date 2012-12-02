@@ -1,23 +1,24 @@
-package demonmodders.Crymod.Common.Inventory;
+package demonmodders.Crymod.Common.Gui;
 
 import net.minecraft.src.Container;
 import net.minecraft.src.EntityPlayer;
 import net.minecraft.src.IInventory;
 import net.minecraft.src.ItemStack;
 import net.minecraft.src.Slot;
+import cpw.mods.fml.common.Side;
 
 public abstract class AbstractContainer extends Container {
-
-	@Override
-	public ItemStack transferStackInSlot(EntityPlayer par1EntityPlayer, int par2) {
-		return null;
-	}
 
 	final IInventory inventory;
 	
 	public AbstractContainer(IInventory inventory) {
 		this.inventory = inventory;
 		inventory.openChest();
+	}
+	
+	@Override
+	public ItemStack transferStackInSlot(EntityPlayer par1EntityPlayer, int par2) {
+		return null;
 	}
 	
 	@Override
@@ -32,8 +33,10 @@ public abstract class AbstractContainer extends Container {
 	}
 	
 	@Override
-	public void onCraftGuiClosed(EntityPlayer par1EntityPlayer) {
-		super.onCraftGuiClosed(par1EntityPlayer);
+	public void onCraftGuiClosed(EntityPlayer player) {
+		super.onCraftGuiClosed(player);
 		inventory.closeChest();
 	}
+	
+	public abstract void buttonClick(int buttonId, Side side, EntityPlayer player);
 }

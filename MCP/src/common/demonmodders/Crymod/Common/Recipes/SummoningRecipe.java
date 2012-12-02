@@ -3,14 +3,17 @@ package demonmodders.Crymod.Common.Recipes;
 import java.util.List;
 
 import net.minecraft.src.ItemStack;
+import demonmodders.Crymod.Common.Entities.SummonableEntity;
 
 public class SummoningRecipe {
 	private final ItemStack[] stacks;
-	private final String demon;
+	private final Class<? extends SummonableEntity> demon;
+	private final String demonName;
 	
-	public SummoningRecipe(ItemStack[] stacks, String demon) {
+	public SummoningRecipe(ItemStack[] stacks, Class<? extends SummonableEntity> demon, String demonName) {
 		this.stacks = stacks;
 		this.demon = demon;
+		this.demonName = demonName;
 	}
 	
 	public boolean matches(List<ItemStack> checkStacks) {
@@ -26,7 +29,11 @@ public class SummoningRecipe {
 		}
 	}
 	
-	public String getDemon() {
+	public Class<? extends SummonableEntity> getDemon() {
 		return demon;
+	}
+	
+	public String getDemonName() {
+		return demonName;
 	}
 }

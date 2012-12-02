@@ -34,12 +34,12 @@ public class ClientTickHandler extends Gui implements ITickHandler {
 	}
 	
 	@Override
-	public void tickStart(EnumSet<TickType> type, Object... tickData) {
+	public void tickEnd(EnumSet<TickType> type, Object... tickData) {
 		
 	}
 
 	@Override
-	public void tickEnd(EnumSet<TickType> type, Object... tickData) {
+	public void tickStart(EnumSet<TickType> type, Object... tickData) {
 		ScaledResolution scaler = new ScaledResolution(mc.gameSettings, mc.displayWidth, mc.displayHeight);
         int width = scaler.getScaledWidth();
         int height = scaler.getScaledHeight();

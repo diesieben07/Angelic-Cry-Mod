@@ -1,5 +1,6 @@
 package demonmodders.Crymod.Common.Inventory;
 
+import demonmodders.Crymod.Common.Gui.AbstractContainer;
 import net.minecraft.src.IInventory;
 import net.minecraft.src.Slot;
 
