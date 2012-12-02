@@ -3,15 +3,15 @@ package demonmodders.Crymod.Client.Gui;
 import static demonmodders.Crymod.Common.Gui.ContainerSummoner.BUTTON_NEXT_PAGE;
 import static demonmodders.Crymod.Common.Gui.ContainerSummoner.BUTTON_PREV_PAGE;
 import static demonmodders.Crymod.Common.Gui.ContainerSummoner.BUTTON_SUMMON;
-import net.minecraft.src.Container;
 import net.minecraft.src.GuiButton;
 
 import org.lwjgl.opengl.GL11;
 
 import demonmodders.Crymod.Common.Gui.ContainerSummoner;
-import demonmodders.Crymod.Common.Recipes.SummoningRecipeRegistry;
+import demonmodders.Crymod.Common.Inventory.InventorySummoner;
+import demonmodders.Crymod.Common.Recipes.SummoningEntityList;
 
-public class GuiSummoner extends AbstractGuiContainer {
+public class GuiSummoner extends AbstractGuiContainer<ContainerSummoner, InventorySummoner> {
 
 	private static final int EFFECTIVE_HEIGHT = 256;
 	private static final int EFFECTIVE_WIDTH = 176;
@@ -55,7 +55,7 @@ public class GuiSummoner extends AbstractGuiContainer {
 
 	@Override
 	protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
-		String demonName = SummoningRecipeRegistry.getRecipes().get(((ContainerSummoner)inventorySlots).page()).getDemonName();
+		String demonName = SummoningEntityList.getSummonings(container.getInventoryInstance().getShowAngels()).get(container.page()).getDemonName();
 		int demonNameWidth = fontRenderer.getStringWidth(demonName);
 		fontRenderer.drawString(demonName, HEADING_TEXT_FIELD_X_POSITION, HEADING_TEXT_FIELD_Y_POSITION, 0xffffff);
 	}

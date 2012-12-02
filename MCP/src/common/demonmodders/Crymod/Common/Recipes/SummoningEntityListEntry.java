@@ -5,12 +5,12 @@ import java.util.List;
 import net.minecraft.src.ItemStack;
 import demonmodders.Crymod.Common.Entities.SummonableEntity;
 
-public class SummoningRecipe {
+public class SummoningEntityListEntry {
 	private final ItemStack[] stacks;
 	private final Class<? extends SummonableEntity> demon;
 	private final String demonName;
 	
-	public SummoningRecipe(ItemStack[] stacks, Class<? extends SummonableEntity> demon, String demonName) {
+	public SummoningEntityListEntry(ItemStack[] stacks, Class<? extends SummonableEntity> demon, String demonName) {
 		this.stacks = stacks;
 		this.demon = demon;
 		this.demonName = demonName;

@@ -13,9 +13,6 @@ import demonmodders.Crymod.Common.Gui.GuiType;
 
 public class ItemSummoner extends ItemCryMod {
 	
-	private static final int ICON_SUMMONING_BOOK = 0;
-	private static final int ICON_EVIL_TABLET = 1;
-	
 	public ItemSummoner(int itemId) {
 		super(itemId);
 	}
@@ -29,7 +26,7 @@ public class ItemSummoner extends ItemCryMod {
 	@Override
 	public ItemStack onItemRightClick(ItemStack itemStack, World world, EntityPlayer player) {
 		if (!world.isRemote) {
-			GuiType guiType = itemStack.getItemDamage() == 0 ? GuiType.SUMMONING_BOOK : GuiType.EVIL_TABLET;
+			GuiType guiType = Type.fromItemDamage(itemStack).guiType;
 			player.openGui(Crymod.instance, guiType.getGuiId(), world, 0, 0, 0);
 		}
 		return itemStack;
@@ -38,7 +35,7 @@ public class ItemSummoner extends ItemCryMod {
 	@Override
 	@SideOnly(Side.CLIENT)
 	public int getIconFromDamage(int damage) {
-		return damage == 0 ? ICON_SUMMONING_BOOK : ICON_EVIL_TABLET;
+		return Type.fromItemDamage(damage).icon;
 	}
 
 	@Override
@@ -51,5 +48,29 @@ public class ItemSummoner extends ItemCryMod {
 	public void getSubItems(int itemId, CreativeTabs creativeTab, List itemList) {
 		itemList.add(new ItemStack(this, 1, 0));
 		itemList.add(new ItemStack(this, 1, 1));
-	}		
+	}
+	
+	public static enum Type {
+		SUMMONING_BOOK(GuiType.SUMMONING_BOOK, 0), EVIL_TABLET(GuiType.EVIL_TABLET, 1);
+		
+		public final GuiType guiType;
+		public final int icon;
+		
+		private Type(GuiType guiType, int icon) {
+			this.guiType = guiType;
+			this.icon = icon;
+		}
+		
+		public static Type fromItemDamage(int damage) {
+			return damage == 0 ? SUMMONING_BOOK : EVIL_TABLET;
+		}
+		
+		public static Type fromItemDamage(ItemStack stack) {
+			return fromItemDamage(stack.getItemDamage());
+		}
+		
+		public boolean showsAngels() {
+			return this == SUMMONING_BOOK;
+		}
+	}
 }

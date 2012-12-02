@@ -13,11 +13,11 @@ import demonmodders.Crymod.Common.Inventory.InventoryHelper;
 import demonmodders.Crymod.Common.Inventory.InventorySummoner;
 import demonmodders.Crymod.Common.Inventory.SlotForItem;
 import demonmodders.Crymod.Common.Items.ItemCryMod;
-import demonmodders.Crymod.Common.Recipes.SummoningRecipeRegistry;
+import demonmodders.Crymod.Common.Recipes.SummoningEntityList;
 
 import static demonmodders.Crymod.Common.Crymod.logger;
 
-public class ContainerSummoner extends AbstractContainer {
+public class ContainerSummoner extends AbstractContainer<InventorySummoner> {
 
 	private static final int[] SLOT_X_POSTITIONS = new int[] {
 		80, 80, 58, 103, 80, 38, 121, 80, 58, 103
@@ -31,7 +31,7 @@ public class ContainerSummoner extends AbstractContainer {
 	
 	public ContainerSummoner(InventorySummoner inventory, InventoryPlayer inventoryPlayer) {
 		super(inventory);
-		for (int i = 0; i < SummoningRecipeRegistry.getNumRecipes(); i++) {
+		for (int i = 0; i < SummoningEntityList.getNumSummonings(inventory.getShowAngels()); i++) {
 			addSlotsForPage(i);
 		}		
 		
@@ -62,7 +62,7 @@ public class ContainerSummoner extends AbstractContainer {
 	}
 	
 	public void setCurrentPage(int page) {
-		if (page >= SummoningRecipeRegistry.getNumRecipes() || page < 0) {
+		if (page >= SummoningEntityList.getNumSummonings(inventory.getShowAngels()) || page < 0) {
 			return;
 		}
 		
@@ -94,7 +94,7 @@ public class ContainerSummoner extends AbstractContainer {
 		case BUTTON_SUMMON:
 			if (side.isServer()) {
 				try {
-					SummonableEntity entity = SummoningRecipeRegistry.getRecipes().get(currentPage).getDemon().getConstructor(World.class).newInstance(player.worldObj);
+					SummonableEntity entity = SummoningEntityList.getSummonings(inventory.getShowAngels()).get(currentPage).getDemon().getConstructor(World.class).newInstance(player.worldObj);
 					Random rng = new Random();
 					entity.setPosition(player.posX + 1.5F + rng.nextFloat() * 3F, player.posY, player.posZ + 1.5F + rng.nextFloat() * 3F);
 					player.worldObj.spawnEntityInWorld(entity);

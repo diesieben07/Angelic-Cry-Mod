@@ -8,7 +8,7 @@ import net.minecraft.src.NBTTagList;
 
 public abstract class InventoryItemStack implements IInventory {
 
-	ItemStack[] stacks = new ItemStack[getSizeInventory()];
+	ItemStack[] stacks;
 	
 	@Override
 	public int getInventoryStackLimit() {
@@ -27,6 +27,10 @@ public abstract class InventoryItemStack implements IInventory {
 	
 	public InventoryItemStack(ItemStack theStack) {
 		this(theStack, null);
+	}
+	
+	final void initStorage() {
+		stacks = new ItemStack[getSizeInventory()];
 	}
 
 	@Override

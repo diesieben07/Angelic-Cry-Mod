@@ -7,13 +7,17 @@ import net.minecraft.src.ItemStack;
 import net.minecraft.src.Slot;
 import cpw.mods.fml.common.Side;
 
-public abstract class AbstractContainer extends Container {
+public abstract class AbstractContainer<T extends IInventory> extends Container {
 
-	final IInventory inventory;
+	final T inventory;
 	
-	public AbstractContainer(IInventory inventory) {
+	public AbstractContainer(T inventory) {
 		this.inventory = inventory;
 		inventory.openChest();
+	}
+	
+	public final T getInventoryInstance() {
+		return inventory;
 	}
 	
 	@Override
