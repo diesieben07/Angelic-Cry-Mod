@@ -9,6 +9,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
+import net.minecraft.src.Entity;
 import net.minecraft.src.EntityPlayer;
 import net.minecraft.src.Packet;
 import net.minecraft.src.Packet250CustomPayload;
@@ -17,6 +18,7 @@ import com.google.common.io.ByteArrayDataInput;
 import com.google.common.io.ByteArrayDataOutput;
 import com.google.common.io.ByteStreams;
 
+import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.network.PacketDispatcher;
 import cpw.mods.fml.common.network.Player;
 import demonmodders.Crymod.Common.Crymod;
@@ -37,6 +39,7 @@ public abstract class CrymodPacket {
 		addMapping(0, PacketGuiButton.class);
 		addMapping(1, PacketPlayerInfo.class);
 		addMapping(2, PacketClientRequest.class);
+		addMapping(3, PacketClientEffect.class);
 	}
 	
 	public final Packet generatePacket() {
@@ -57,6 +60,10 @@ public abstract class CrymodPacket {
 	
 	public final void sendToPlayer(EntityPlayer player) {
 		PacketDispatcher.sendPacketToPlayer(generatePacket(), (Player)player);
+	}
+	
+	public final void sendToAllNear(Entity entity, double radius) {
+		FMLCommonHandler.instance().getMinecraftServerInstance().getConfigurationManager().sendToAllNear(entity.posX, entity.posY, entity.posZ, radius, entity.dimension, generatePacket());
 	}
 	
 	abstract void writeData(ByteArrayDataOutput out);

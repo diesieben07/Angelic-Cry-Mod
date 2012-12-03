@@ -17,6 +17,7 @@ import demonmodders.Crymod.Common.Inventory.InventoryHelper;
 import demonmodders.Crymod.Common.Inventory.InventorySummoner;
 import demonmodders.Crymod.Common.Inventory.SlotForItem;
 import demonmodders.Crymod.Common.Items.ItemCryMod;
+import demonmodders.Crymod.Common.Network.PacketClientEffect;
 import demonmodders.Crymod.Common.Recipes.SummoningEntityList;
 
 public class ContainerSummoner extends AbstractContainer<InventorySummoner> {
@@ -117,9 +118,10 @@ public class ContainerSummoner extends AbstractContainer<InventorySummoner> {
 					
 					if (!validCoordinates.isEmpty()) {
 						Random rng = new Random();
-						ChunkCoordinates spawnCoords = validCoordinates.get(rng.nextInt(validCoordinates.size()));
+						ChunkCoordinates spawnCoords = validCoordinates.get(0); //rng.nextInt(validCoordinates.size()));
 						entity.setPosition(spawnCoords.posX, spawnCoords.posY, spawnCoords.posZ);
 						player.worldObj.spawnEntityInWorld(entity);
+						new PacketClientEffect(PacketClientEffect.Type.SUMMON_GOOD, entity.posX, entity.posY + entity.height + 0.5F, entity.posZ).sendToAllNear(player, 64);
 					}
 				} catch (Exception e) {
 					logger.warning("Invalid Entity for Summoning!");
