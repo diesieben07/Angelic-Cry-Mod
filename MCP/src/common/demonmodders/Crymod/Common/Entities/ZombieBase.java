@@ -6,12 +6,12 @@ import net.minecraft.src.EntityAILookIdle;
 import net.minecraft.src.EntityAINearestAttackableTarget;
 import net.minecraft.src.EntityAISwimming;
 import net.minecraft.src.EntityAIWander;
+import net.minecraft.src.EntityCreature;
 import net.minecraft.src.EntityLiving;
-import net.minecraft.src.EntityMob;
 import net.minecraft.src.World;
 
-public abstract class ZombieBase extends EntityMob {
-	
+public abstract class ZombieBase extends EntityCreature {
+
 	public ZombieBase(World world) {
 		super(world);
 		moveSpeed = 0.23F;

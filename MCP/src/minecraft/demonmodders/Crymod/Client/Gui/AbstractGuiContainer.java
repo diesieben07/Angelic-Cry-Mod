@@ -18,7 +18,7 @@ public abstract class AbstractGuiContainer<T extends AbstractContainer<R>, R ext
 
 	@Override
 	protected void actionPerformed(GuiButton button) {
-		((AbstractContainer)inventorySlots).buttonClick(button.id, Side.CLIENT, mc.thePlayer);
+		container.buttonClick(button.id, Side.CLIENT, mc.thePlayer);
 		new PacketGuiButton(inventorySlots, button.id).sendToServer();
 	}
 }

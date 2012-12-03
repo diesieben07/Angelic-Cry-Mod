@@ -2,9 +2,11 @@ package demonmodders.Crymod.Common.Gui;
 
 import static demonmodders.Crymod.Common.Crymod.logger;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import net.minecraft.src.ChunkCoordinates;
 import net.minecraft.src.EntityLiving;
 import net.minecraft.src.EntityPlayer;
 import net.minecraft.src.InventoryPlayer;
@@ -95,9 +97,30 @@ public class ContainerSummoner extends AbstractContainer<InventorySummoner> {
 			if (side.isServer()) {
 				try {
 					EntityLiving entity = SummoningEntityList.getSummonings(inventory.getShowAngels()).get(currentPage).getDemon().getConstructor(World.class).newInstance(player.worldObj);
-					Random rng = new Random();
-					entity.setPosition(player.posX + 1.5F + rng.nextFloat() * 3F, player.posY, player.posZ + 1.5F + rng.nextFloat() * 3F);
-					player.worldObj.spawnEntityInWorld(entity);
+					
+					final int spawnRadiusX = 10;
+					final int spawnRadiusY = 5;
+					final int spawnRadiusZ = 10;
+					
+					List<ChunkCoordinates> validCoordinates = new ArrayList<ChunkCoordinates>(3000);
+					
+					for (int x = (int)player.posX - spawnRadiusX; x < player.posX + spawnRadiusX; x++) {
+						for (int y = (int)player.posY - spawnRadiusY; y < player.posY + spawnRadiusY; y++) {
+							for (int z = (int)player.posZ - spawnRadiusZ; z < player.posZ + spawnRadiusZ; z++) {
+								entity.setPosition(x, y, z);
+								if (entity.getCanSpawnHere()) {
+									validCoordinates.add(new ChunkCoordinates(x, y, z));
+								}
+							}
+						}
+					}
+					
+					if (!validCoordinates.isEmpty()) {
+						Random rng = new Random();
+						ChunkCoordinates spawnCoords = validCoordinates.get(rng.nextInt(validCoordinates.size()));
+						entity.setPosition(spawnCoords.posX, spawnCoords.posY, spawnCoords.posZ);
+						player.worldObj.spawnEntityInWorld(entity);
+					}
 				} catch (Exception e) {
 					logger.warning("Invalid Entity for Summoning!");
 				}
