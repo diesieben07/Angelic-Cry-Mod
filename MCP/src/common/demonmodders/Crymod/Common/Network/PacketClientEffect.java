@@ -5,12 +5,14 @@ import net.minecraft.src.EntityPlayer;
 import com.google.common.io.ByteArrayDataInput;
 import com.google.common.io.ByteArrayDataOutput;
 
+import demonmodders.Crymod.Common.Crymod;
+
 public class PacketClientEffect extends CrymodPacket {
 
-	private Type type;
-	private double x;
-	private double y;
-	private double z;
+	public Type type;
+	public double x;
+	public double y;
+	public double z;
 	
 	public PacketClientEffect() {}
 	
@@ -50,7 +52,7 @@ public class PacketClientEffect extends CrymodPacket {
 			case SUMMON_BAD:
 				break;
 			case SUMMON_GOOD:
-				// todo :)
+				Crymod.proxy.handleClientEffect(this);
 				break;
 			}
 		}

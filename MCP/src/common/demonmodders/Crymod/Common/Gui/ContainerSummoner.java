@@ -122,6 +122,7 @@ public class ContainerSummoner extends AbstractContainer<InventorySummoner> {
 						entity.setPosition(spawnCoords.posX, spawnCoords.posY, spawnCoords.posZ);
 						player.worldObj.spawnEntityInWorld(entity);
 						new PacketClientEffect(PacketClientEffect.Type.SUMMON_GOOD, entity.posX, entity.posY + entity.height + 0.5F, entity.posZ).sendToAllNear(player, 64);
+						new PacketClientEffect(PacketClientEffect.Type.SUMMON_GOOD, player.posX + 2, player.posY + player.height + 0.5F, player.posZ).sendToAllNear(player, 64);
 					}
 				} catch (Exception e) {
 					logger.warning("Invalid Entity for Summoning!");

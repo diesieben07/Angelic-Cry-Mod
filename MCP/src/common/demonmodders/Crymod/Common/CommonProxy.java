@@ -3,6 +3,7 @@ package demonmodders.Crymod.Common;
 import net.minecraft.src.Container;
 import net.minecraft.src.EntityPlayer;
 import net.minecraft.src.World;
+import demonmodders.Crymod.Common.Network.PacketClientEffect;
 import demonmodders.Crymod.Common.PlayerInfo.PlayerInfo;
 
 public class CommonProxy {
@@ -24,6 +25,10 @@ public class CommonProxy {
 	}
 	
 	public void setClientPlayerInfo(PlayerInfo info) {
+		// NO OP on server
+	}
+
+	public void handleClientEffect(PacketClientEffect clientEffect) {
 		// NO OP on server
 	}
 }

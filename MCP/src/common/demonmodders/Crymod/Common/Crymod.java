@@ -111,4 +111,5 @@ public class Crymod {
 	}
 	
 	public static final String TEXTURE_FILE = "/crymodResource/tex/textures.png";
+	public static final String PARTICLE_TEXTURE_FILE = "/crymodResource/tex/particles.png";
 }
