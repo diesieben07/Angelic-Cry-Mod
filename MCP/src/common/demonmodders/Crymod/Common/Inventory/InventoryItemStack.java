@@ -7,8 +7,6 @@ import net.minecraft.src.NBTTagCompound;
 import net.minecraft.src.NBTTagList;
 
 public abstract class InventoryItemStack extends AbstractInventory {
-
-	ItemStack[] stacks;
 	
 	private final ItemStack theStack;
 	private final ItemStack originalStack;

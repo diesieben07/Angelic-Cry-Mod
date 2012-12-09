@@ -5,8 +5,21 @@ import demonmodders.Crymod.Common.Items.ItemCrystal;
 import net.minecraft.src.EntityPlayer;
 import net.minecraft.src.Item;
 import net.minecraft.src.ItemStack;
+import net.minecraft.src.NBTTagCompound;
 
 public class TileEntityRechargeStation extends TileEntityInventory {
+
+	@Override
+	public void writeToNBT(NBTTagCompound nbt) {
+		super.writeToNBT(nbt);
+		nbt.setByte("rechargeTime", (byte) rechargeTime);
+	}
+
+	@Override
+	public void readFromNBT(NBTTagCompound nbt) {
+		super.readFromNBT(nbt);
+		rechargeTime = nbt.getByte("rechargeTime");
+	}
 
 	private static final int RECHARGE_SPEED = 20;
 	private static final int RECHARGE_DURATION = 200;
