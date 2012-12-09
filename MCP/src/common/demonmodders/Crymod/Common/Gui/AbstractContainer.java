@@ -21,19 +21,13 @@ public abstract class AbstractContainer<T extends IInventory> extends Container 
 	}
 	
 	@Override
-	public ItemStack transferStackInSlot(EntityPlayer par1EntityPlayer, int par2) {
+	public ItemStack transferStackInSlot(EntityPlayer player, int slot) {
 		return null;
 	}
 	
 	@Override
 	public boolean canInteractWith(EntityPlayer player) {
 		return inventory.isUseableByPlayer(player);
-	}
-
-	@Override
-	public Slot addSlotToContainer(Slot par1Slot) {
-		// make it public, for InventoryHelper
-		return super.addSlotToContainer(par1Slot);
 	}
 	
 	@Override
@@ -42,5 +36,17 @@ public abstract class AbstractContainer<T extends IInventory> extends Container 
 		inventory.closeChest();
 	}
 	
-	public abstract void buttonClick(int buttonId, Side side, EntityPlayer player);
+	final void addPlayerInventoryToContainer(IInventory inventoryPlayer, int xStart, int yStart) {
+		for (int j = 0; j < 3; j++) {
+            for (int i1 = 0; i1 < 9; i1++) {
+                addSlotToContainer(new Slot(inventoryPlayer, i1 + j * 9 + 9, xStart + i1 * 18, yStart + j * 18));
+            }
+        }
+
+        for (int k = 0; k < 9; k++) {
+            addSlotToContainer(new Slot(inventoryPlayer, k, xStart + k * 18, yStart + 58));
+        }
+	}
+	
+	public void buttonClick(int buttonId, Side side, EntityPlayer player) { }
 }

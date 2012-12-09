@@ -22,6 +22,7 @@ import cpw.mods.fml.common.network.NetworkMod;
 import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.registry.EntityRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
+import demonmodders.Crymod.Common.Blocks.BlockCryMod;
 import demonmodders.Crymod.Common.Entities.EntityHeavenZombie;
 import demonmodders.Crymod.Common.Entities.EntityHellZombie;
 import demonmodders.Crymod.Common.Gui.CrymodGuiHandler;
@@ -31,6 +32,7 @@ import demonmodders.Crymod.Common.Karma.PlayerPowersHandler;
 import demonmodders.Crymod.Common.Network.CrymodPacket;
 import demonmodders.Crymod.Common.Network.CrymodPacketHandler;
 import demonmodders.Crymod.Common.PlayerInfo.PlayerInfo;
+import demonmodders.Crymod.Common.TileEntities.TileEntityRechargeStation;
 import demonmodders.Crymod.Common.WorldGen.CryWorldGenerator;
 
 @Mod(modid = "crymod", name = "Angelic Cry Mod [WIP]", version = "0.1")
@@ -91,11 +93,14 @@ public class Crymod {
 	}
 	
 	@Init
-	public void init(FMLInitializationEvent evt) {
-		proxy.init();
-		
+	public void init(FMLInitializationEvent evt) {		
 		ItemCryMod.createItems();
 		
+		BlockCryMod.createBlocks();
+		
+		GameRegistry.registerTileEntity(TileEntityRechargeStation.class, "crymodRechargeStation");
+		
+		proxy.init();
 	}
 	
 	@PostInit

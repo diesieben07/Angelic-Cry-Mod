@@ -11,11 +11,14 @@ import cpw.mods.fml.client.registry.KeyBindingRegistry;
 import cpw.mods.fml.common.Side;
 import cpw.mods.fml.common.registry.TickRegistry;
 import demonmodders.Crymod.Client.FX.EntitySummonFX;
+import demonmodders.Crymod.Client.Gui.GuiRechargeStation;
 import demonmodders.Crymod.Client.Gui.GuiSummoner;
 import demonmodders.Crymod.Common.CommonProxy;
 import demonmodders.Crymod.Common.Crymod;
+import demonmodders.Crymod.Common.Gui.ContainerRechargeStation;
 import demonmodders.Crymod.Common.Gui.ContainerSummoner;
 import demonmodders.Crymod.Common.Gui.GuiType;
+import demonmodders.Crymod.Common.Items.ItemCryMod;
 import demonmodders.Crymod.Common.Network.PacketClientEffect;
 import demonmodders.Crymod.Common.PlayerInfo.PlayerInfo;
 
@@ -46,6 +49,8 @@ public class ClientProxy extends CommonProxy {
 			return new GuiSummoner("/crymodResource/tex/summoningBook.png", (ContainerSummoner)container);
 		case EVIL_TABLET:
 			return new GuiSummoner("/crymodResource/tex/evilTablet.png", (ContainerSummoner)container);
+		case RECHARGE_STATION:
+			return new GuiRechargeStation((ContainerRechargeStation)container);
 		default:
 			return null;
 		}
@@ -61,6 +66,7 @@ public class ClientProxy extends CommonProxy {
 
 	@Override
 	public void init() {
+		MinecraftForgeClient.registerItemRenderer(ItemCryMod.crystal.shiftedIndex, new CrymodItemRenderer());
 	}
 
 	@Override

@@ -6,6 +6,7 @@ import net.minecraft.src.EntityPlayer;
 import net.minecraft.src.World;
 import cpw.mods.fml.common.network.IGuiHandler;
 import demonmodders.Crymod.Common.Inventory.InventorySummoner;
+import demonmodders.Crymod.Common.TileEntities.TileEntityRechargeStation;
 
 public class CrymodGuiHandler implements IGuiHandler {
 
@@ -15,6 +16,8 @@ public class CrymodGuiHandler implements IGuiHandler {
 		case SUMMONING_BOOK:
 		case EVIL_TABLET:
 			return new ContainerSummoner(new InventorySummoner(player.getCurrentEquippedItem(), player), player.inventory);
+		case RECHARGE_STATION:
+			return new ContainerRechargeStation((TileEntityRechargeStation)world.getBlockTileEntity(x, y, z), player.inventory);
 		default:
 			return null;
 		}

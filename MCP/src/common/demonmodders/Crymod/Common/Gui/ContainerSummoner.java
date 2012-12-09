@@ -38,7 +38,7 @@ public class ContainerSummoner extends AbstractContainer<InventorySummoner> {
 			addSlotsForPage(i);
 		}		
 		
-		InventoryHelper.addPlayerInventoryToContainer(this, inventoryPlayer, 8, 174);
+		addPlayerInventoryToContainer(inventoryPlayer, 8, 174);
 		
 		setCurrentPage(0);
 	}

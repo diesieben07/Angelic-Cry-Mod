@@ -6,20 +6,16 @@ import net.minecraft.src.ItemStack;
 import net.minecraft.src.NBTTagCompound;
 import net.minecraft.src.NBTTagList;
 
-public abstract class InventoryItemStack implements IInventory {
+public abstract class InventoryItemStack extends AbstractInventory {
 
 	ItemStack[] stacks;
 	
-	@Override
-	public int getInventoryStackLimit() {
-		return 64;
-	}
-
 	private final ItemStack theStack;
 	private final ItemStack originalStack;
 	private final EntityPlayer player;
 		
 	public InventoryItemStack(ItemStack theStack, EntityPlayer player) {
+		super(false);
 		this.theStack = theStack;
 		originalStack = theStack.copy();
 		this.player = player;
@@ -29,53 +25,10 @@ public abstract class InventoryItemStack implements IInventory {
 		this(theStack, null);
 	}
 	
-	final void initStorage() {
-		stacks = new ItemStack[getSizeInventory()];
-	}
-
 	@Override
-	public ItemStack getStackInSlot(int slot) {
-		return stacks[slot];
+	public int getInventoryStackLimit() {
+		return 64;
 	}
-
-	@Override
-	public ItemStack decrStackSize(int slot, int numDecrease) {
-		ItemStack stack = getStackInSlot(slot);
-		
-		if (stack != null) {
-            ItemStack returnStack;
-
-            if (stack.stackSize <= numDecrease) {
-                returnStack = stack;
-                setInventorySlotContents(slot, null);
-                return returnStack;
-            } else {
-                returnStack = stack.splitStack(numDecrease);
-
-                if (stack.stackSize == 0) {
-                    setInventorySlotContents(slot, null);
-                }
-                
-                return returnStack;
-            }
-        } else {
-            return null;
-        }
-	}
-
-	@Override
-	public ItemStack getStackInSlotOnClosing(int slot) {
-		return getStackInSlot(slot);
-	}
-
-	@Override
-	public void setInventorySlotContents(int slot, ItemStack stack) {
-		stacks[slot] = stack;
-		onInventoryChanged();
-	}
-	
-	@Override
-	public void onInventoryChanged() {	}
 
 	@Override
 	public boolean isUseableByPlayer(EntityPlayer player) {
