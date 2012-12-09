@@ -5,6 +5,7 @@ import net.minecraft.src.Container;
 import net.minecraft.src.EntityPlayer;
 import net.minecraft.src.World;
 import cpw.mods.fml.common.network.IGuiHandler;
+import demonmodders.Crymod.Common.Inventory.InventoryCrystalBag;
 import demonmodders.Crymod.Common.Inventory.InventorySummoner;
 import demonmodders.Crymod.Common.TileEntities.TileEntityRechargeStation;
 
@@ -18,6 +19,8 @@ public class CrymodGuiHandler implements IGuiHandler {
 			return new ContainerSummoner(new InventorySummoner(player.getCurrentEquippedItem(), player), player.inventory);
 		case RECHARGE_STATION:
 			return new ContainerRechargeStation((TileEntityRechargeStation)world.getBlockTileEntity(x, y, z), player.inventory);
+		case CRYSTAL_BAG:
+			return new ContainerCrystalBag(new InventoryCrystalBag(player.getCurrentEquippedItem(), player), player.inventory);
 		default:
 			return null;
 		}

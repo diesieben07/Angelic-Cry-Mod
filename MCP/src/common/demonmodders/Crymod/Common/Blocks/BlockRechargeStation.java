@@ -32,7 +32,6 @@ public class BlockRechargeStation extends BlockCryMod {
 		}
 		boolean isActive = (blockAccess.getBlockMetadata(x, y, z) & 8) == 8;
 		int meta = (blockAccess.getBlockMetadata(x, y, z) & 7);
-		System.out.println(blockAccess.getBlockMetadata(x, y, z));
 		return meta == side ? (isActive ? FRONT_TEXTURE_ACTIVE : FRONT_TEXTURE) : SIDES_TEXTURE;
 	}
 

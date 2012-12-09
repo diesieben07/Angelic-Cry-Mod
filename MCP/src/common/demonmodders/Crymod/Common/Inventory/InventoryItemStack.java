@@ -14,8 +14,8 @@ public abstract class InventoryItemStack extends AbstractInventory {
 		
 	public InventoryItemStack(ItemStack theStack, EntityPlayer player) {
 		super(false);
-		this.theStack = theStack;
-		originalStack = theStack.copy();
+		this.theStack = theStack.copy();
+		originalStack = theStack;
 		this.player = player;
 	}
 	

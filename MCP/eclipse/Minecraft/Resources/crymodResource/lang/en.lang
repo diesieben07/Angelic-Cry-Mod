@@ -8,6 +8,7 @@ item.crystal.green.name:Green Crystal (Need Name)
 item.crystal.orange.name:Fiery Crystal
 item.crystal.blue.name:Icy Crystal
 item.recipeBook.name:Recipe Book
+item.crystalBag.name:Crystal Bag
 tile.rechargeStation.name:Recharge Station
 chat.prefix.good.10:Minor Priest
 chat.prefix.good.25:High Priest

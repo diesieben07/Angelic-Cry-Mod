@@ -11,10 +11,12 @@ import cpw.mods.fml.client.registry.KeyBindingRegistry;
 import cpw.mods.fml.common.Side;
 import cpw.mods.fml.common.registry.TickRegistry;
 import demonmodders.Crymod.Client.FX.EntitySummonFX;
+import demonmodders.Crymod.Client.Gui.GuiCrystalBag;
 import demonmodders.Crymod.Client.Gui.GuiRechargeStation;
 import demonmodders.Crymod.Client.Gui.GuiSummoner;
 import demonmodders.Crymod.Common.CommonProxy;
 import demonmodders.Crymod.Common.Crymod;
+import demonmodders.Crymod.Common.Gui.ContainerCrystalBag;
 import demonmodders.Crymod.Common.Gui.ContainerRechargeStation;
 import demonmodders.Crymod.Common.Gui.ContainerSummoner;
 import demonmodders.Crymod.Common.Gui.GuiType;
@@ -51,6 +53,8 @@ public class ClientProxy extends CommonProxy {
 			return new GuiSummoner("/crymodResource/tex/evilTablet.png", (ContainerSummoner)container);
 		case RECHARGE_STATION:
 			return new GuiRechargeStation((ContainerRechargeStation)container);
+		case CRYSTAL_BAG:
+			return new GuiCrystalBag((ContainerCrystalBag)container);
 		default:
 			return null;
 		}

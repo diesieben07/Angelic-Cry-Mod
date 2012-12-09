@@ -1,7 +1,7 @@
 package demonmodders.Crymod.Common.Gui;
 
 public enum GuiType {
-	SUMMONING_BOOK, EVIL_TABLET, RECHARGE_STATION;
+	SUMMONING_BOOK, EVIL_TABLET, RECHARGE_STATION, CRYSTAL_BAG;
 	
 	public int getGuiId() {
 		return ordinal();
