@@ -64,7 +64,7 @@ public class BlockCryMod extends Block {
 	public static Block rechargeStation;
 	
 	public static void createBlocks() {
-		rechargeStation = new BlockRechargeStation(Crymod.conf.getBlock("rechargeStationId", 3956).getInt()).setBlockName("rechargeStation");
+		rechargeStation = new BlockRechargeStation(Crymod.conf.getBlock("rechargeStationId", 3956).getInt()).setBlockName("rechargeStation").setRequiresSelfNotify();
 		GameRegistry.registerBlock(rechargeStation);
 	}
 	

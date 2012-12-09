@@ -17,6 +17,7 @@ public class BlockRechargeStation extends BlockCryMod {
 
 	private static final int TOP_BOTTOM_TEXTURE = 14 * 16 + 13;
 	private static final int FRONT_TEXTURE = 14 * 16 + 15;
+	private static final int FRONT_TEXTURE_ACTIVE = 14 * 16 + 14;
 	private static final int SIDES_TEXTURE = 15 * 16 + 15;
 	
 	public BlockRechargeStation(int blockId) {
@@ -29,8 +30,10 @@ public class BlockRechargeStation extends BlockCryMod {
 		if (side < 2) {
 			return TOP_BOTTOM_TEXTURE;
 		}
-		int meta = blockAccess.getBlockMetadata(x, y, z);
-		return meta == side ? FRONT_TEXTURE : SIDES_TEXTURE;
+		boolean isActive = (blockAccess.getBlockMetadata(x, y, z) & 8) == 8;
+		int meta = (blockAccess.getBlockMetadata(x, y, z) & 7);
+		System.out.println(blockAccess.getBlockMetadata(x, y, z));
+		return meta == side ? (isActive ? FRONT_TEXTURE_ACTIVE : FRONT_TEXTURE) : SIDES_TEXTURE;
 	}
 
 	@Override

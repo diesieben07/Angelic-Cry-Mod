@@ -31,6 +31,13 @@ public class TileEntityRechargeStation extends TileEntityInventory {
 		if (worldObj.isRemote) {
 			return;
 		}
+		
+		if (rechargeTime == 0 && (getBlockMetadata() & 8) != 0) {
+			worldObj.setBlockMetadataWithNotify(xCoord, yCoord, zCoord, getBlockMetadata() & 7);
+		} else if (rechargeTime != 0 && (getBlockMetadata() & 8) != 8) {
+			worldObj.setBlockMetadataWithNotify(xCoord, yCoord, zCoord, getBlockMetadata() | 8);
+		}
+		
 		if (rechargeTime > 0) {
 			rechargeTime--;
 			
