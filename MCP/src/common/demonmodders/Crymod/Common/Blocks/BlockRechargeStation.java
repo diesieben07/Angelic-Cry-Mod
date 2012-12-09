@@ -20,7 +20,7 @@ public class BlockRechargeStation extends BlockCryMod {
 	private static final int SIDES_TEXTURE = 15 * 16 + 15;
 	
 	public BlockRechargeStation(int blockId) {
-		super(blockId, 1, Material.iron);
+		super(blockId, 0, Material.iron);
 	}
 
 	@Override
@@ -31,6 +31,14 @@ public class BlockRechargeStation extends BlockCryMod {
 		}
 		int meta = blockAccess.getBlockMetadata(x, y, z);
 		return meta == side ? FRONT_TEXTURE : SIDES_TEXTURE;
+	}
+
+	@Override
+	public int getBlockTextureFromSide(int side) {
+		if (side < 2) {
+			return TOP_BOTTOM_TEXTURE;
+		}
+		return side == 3 ? FRONT_TEXTURE : SIDES_TEXTURE;
 	}
 
 	@Override
