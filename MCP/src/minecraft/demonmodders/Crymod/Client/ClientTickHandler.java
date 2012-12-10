@@ -7,6 +7,7 @@ import org.lwjgl.opengl.GL11;
 import net.minecraft.client.Minecraft;
 import net.minecraft.src.FontRenderer;
 import net.minecraft.src.Gui;
+import net.minecraft.src.GuiChat;
 import net.minecraft.src.ScaledResolution;
 
 import cpw.mods.fml.client.FMLClientHandler;
@@ -34,18 +35,16 @@ public class ClientTickHandler extends Gui implements ITickHandler {
 	}
 	
 	@Override
-	public void tickEnd(EnumSet<TickType> type, Object... tickData) {
-		
-	}
+	public void tickStart(EnumSet<TickType> type, Object... tickData) {	}
 
 	@Override
-	public void tickStart(EnumSet<TickType> type, Object... tickData) {
+	public void tickEnd(EnumSet<TickType> type, Object... tickData) {
 		ScaledResolution scaler = new ScaledResolution(mc.gameSettings, mc.displayWidth, mc.displayHeight);
         int width = scaler.getScaledWidth();
         int height = scaler.getScaledHeight();
 		mc.entityRenderer.setupOverlayRendering();
 		GL11.glColor3f(1, 1, 1);
-        if (type.contains(TickType.RENDER) && mc.theWorld != null && clientPlayerInfo != null) {
+        if (type.contains(TickType.RENDER) && mc.theWorld != null && clientPlayerInfo != null && (mc.currentScreen == null || mc.currentScreen instanceof GuiChat)) {
 			GL11.glBindTexture(GL11.GL_TEXTURE_2D, mc.renderEngine.getTexture("/crymodResource/tex/gui.png"));
 			int barXStart = width / 2 - 182 / 2;
 			
