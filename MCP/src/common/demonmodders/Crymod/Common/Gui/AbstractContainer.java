@@ -3,9 +3,11 @@ package demonmodders.Crymod.Common.Gui;
 import net.minecraft.src.Container;
 import net.minecraft.src.EntityPlayer;
 import net.minecraft.src.IInventory;
+import net.minecraft.src.InventoryPlayer;
 import net.minecraft.src.ItemStack;
 import net.minecraft.src.Slot;
 import cpw.mods.fml.common.Side;
+import demonmodders.Crymod.Common.Inventory.SlotNoPickup;
 
 public abstract class AbstractContainer<T extends IInventory> extends Container {
 
@@ -36,15 +38,27 @@ public abstract class AbstractContainer<T extends IInventory> extends Container 
 		inventory.closeChest();
 	}
 	
-	final void addPlayerInventoryToContainer(IInventory inventoryPlayer, int xStart, int yStart) {
+	final void addPlayerInventoryToContainer(InventoryPlayer inventoryPlayer, int xStart, int yStart) {
+		addPlayerInventoryToContainer(inventoryPlayer, xStart, yStart, false);
+	}
+	
+	final void addPlayerInventoryToContainer(InventoryPlayer inventoryPlayer, int xStart, int yStart, boolean useCantPickup) {
 		for (int j = 0; j < 3; j++) {
-            for (int i1 = 0; i1 < 9; i1++) {
-                addSlotToContainer(new Slot(inventoryPlayer, i1 + j * 9 + 9, xStart + i1 * 18, yStart + j * 18));
+            for (int i = 0; i < 9; i++) {
+                if (useCantPickup && i + j * 9 == inventoryPlayer.currentItem) {
+                	addSlotToContainer(new SlotNoPickup(inventoryPlayer, i + j * 9 + 9, xStart + i * 18, yStart + j * 18));
+                } else {
+                	addSlotToContainer(new Slot(inventoryPlayer, i + j * 9 + 9, xStart + i * 18, yStart + j * 18));
+                }
             }
         }
 
         for (int k = 0; k < 9; k++) {
-            addSlotToContainer(new Slot(inventoryPlayer, k, xStart + k * 18, yStart + 58));
+        	if (useCantPickup && k == inventoryPlayer.currentItem) {
+        		addSlotToContainer(new SlotNoPickup(inventoryPlayer, k, xStart + k * 18, yStart + 58));
+        	} else {
+        		addSlotToContainer(new Slot(inventoryPlayer, k, xStart + k * 18, yStart + 58));
+        	}
         }
 	}
 	

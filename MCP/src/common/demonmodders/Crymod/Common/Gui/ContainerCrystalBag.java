@@ -17,7 +17,7 @@ public class ContainerCrystalBag extends AbstractContainer<InventoryCrystalBag> 
 			}
 		}
 		
-		addPlayerInventoryToContainer(inventoryPlayer, 8, 84);
+		addPlayerInventoryToContainer(inventoryPlayer, 8, 84, true);
 	}
 
 }

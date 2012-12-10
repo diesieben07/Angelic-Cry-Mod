@@ -13,6 +13,7 @@ import net.minecraft.src.InventoryPlayer;
 import net.minecraft.src.Slot;
 import net.minecraft.src.World;
 import cpw.mods.fml.common.Side;
+import cpw.mods.fml.common.network.Player;
 import demonmodders.Crymod.Common.Inventory.InventoryHelper;
 import demonmodders.Crymod.Common.Inventory.InventorySummoner;
 import demonmodders.Crymod.Common.Inventory.SlotForItem;
@@ -38,7 +39,7 @@ public class ContainerSummoner extends AbstractContainer<InventorySummoner> {
 			addSlotsForPage(i);
 		}		
 		
-		addPlayerInventoryToContainer(inventoryPlayer, 8, 174);
+		addPlayerInventoryToContainer(inventoryPlayer, 8, 174, true);
 		
 		setCurrentPage(0);
 	}
