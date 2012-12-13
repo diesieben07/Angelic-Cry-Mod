@@ -124,6 +124,7 @@ public class ContainerSummoner extends AbstractContainer<InventorySummoner> {
 						ChunkCoordinates spawnCoords = validCoordinates.get(rng.nextInt(validCoordinates.size()));
 						entity.setPosition(spawnCoords.posX, spawnCoords.posY, spawnCoords.posZ);
 						entity.setOwner(player);
+						entity.initCreature();
 						player.worldObj.spawnEntityInWorld(entity);
 						new PacketClientEffect(inventory.getShowAngels() ? Type.SUMMON_GOOD : Type.SUMMON_BAD, entity.posX, entity.posY + entity.height + 0.5F, entity.posZ).sendToAllNear(entity, 64);
 					}

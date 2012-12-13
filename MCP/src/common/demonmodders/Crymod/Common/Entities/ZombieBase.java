@@ -13,14 +13,10 @@ import net.minecraft.src.EntityPlayer;
 import net.minecraft.src.MathHelper;
 import net.minecraft.src.NBTTagCompound;
 import net.minecraft.src.World;
+import net.minecraftforge.common.ForgeDirection;
 
 public abstract class ZombieBase extends SummonableBase {
-
-	@Override
-	public boolean getCanSpawnHere() {
-		return super.getCanSpawnHere() && worldObj.getBlockId(MathHelper.floor_double(posX), MathHelper.floor_double(posY), MathHelper.floor_double(posZ)) != 0; 
-	}
-
+	
 	public ZombieBase(World world) {
 		super(world);
 		moveSpeed = 0.23F;
@@ -36,6 +32,11 @@ public abstract class ZombieBase extends SummonableBase {
 	@Override
 	protected boolean isAIEnabled() {
 		return true;
+	}
+	
+	@Override
+	public boolean getCanSpawnHere() {
+		return worldObj.checkIfAABBIsClear(boundingBox) && worldObj.getCollidingBoundingBoxes(this, boundingBox).isEmpty() && !worldObj.isAnyLiquid(this.boundingBox); // && worldObj.isBlockSolidOnSide(MathHelper.floor_double(posX), MathHelper.floor_double(posY), MathHelper.floor_double(posZ), ForgeDirection.UP); 
 	}
 
 	@Override

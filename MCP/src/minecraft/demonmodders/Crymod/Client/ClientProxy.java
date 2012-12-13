@@ -8,6 +8,7 @@ import net.minecraftforge.client.MinecraftForgeClient;
 import net.minecraftforge.common.MinecraftForge;
 import cpw.mods.fml.client.FMLClientHandler;
 import cpw.mods.fml.client.registry.KeyBindingRegistry;
+import cpw.mods.fml.client.registry.RenderingRegistry;
 import cpw.mods.fml.common.Side;
 import cpw.mods.fml.common.registry.TickRegistry;
 import demonmodders.Crymod.Client.FX.EntitySummonFX;
@@ -16,6 +17,7 @@ import demonmodders.Crymod.Client.Gui.GuiRechargeStation;
 import demonmodders.Crymod.Client.Gui.GuiSummoner;
 import demonmodders.Crymod.Common.CommonProxy;
 import demonmodders.Crymod.Common.Crymod;
+import demonmodders.Crymod.Common.Entities.ZombieBase;
 import demonmodders.Crymod.Common.Gui.ContainerCrystalBag;
 import demonmodders.Crymod.Common.Gui.ContainerRechargeStation;
 import demonmodders.Crymod.Common.Gui.ContainerSummoner;
@@ -37,7 +39,13 @@ public class ClientProxy extends CommonProxy {
 		
 		switch (clientEffect.type) {
 		case SUMMON_GOOD:
-			mc.effectRenderer.addEffect(new EntitySummonFX(mc.renderEngine, mc.theWorld, clientEffect.x, clientEffect.y, clientEffect.z, 0, 3, 0));
+			double movement = 0.05;
+			double movementUp = 0.4;
+			mc.effectRenderer.addEffect(new EntitySummonFX(mc.renderEngine, mc.theWorld, clientEffect.x, clientEffect.y, clientEffect.z, movement, movementUp, 0));
+			mc.effectRenderer.addEffect(new EntitySummonFX(mc.renderEngine, mc.theWorld, clientEffect.x, clientEffect.y, clientEffect.z, -movement, movementUp, 0));
+			mc.effectRenderer.addEffect(new EntitySummonFX(mc.renderEngine, mc.theWorld, clientEffect.x, clientEffect.y, clientEffect.z, 0, movementUp, movement));
+			mc.effectRenderer.addEffect(new EntitySummonFX(mc.renderEngine, mc.theWorld, clientEffect.x, clientEffect.y, clientEffect.z, 0, movementUp, -movement));
+			mc.effectRenderer.addEffect(new EntitySummonFX(mc.renderEngine, mc.theWorld, clientEffect.x, clientEffect.y, clientEffect.z, 0, movementUp, 0));
 			break;
 		case SUMMON_BAD:
 			break;
@@ -66,6 +74,8 @@ public class ClientProxy extends CommonProxy {
 		TickRegistry.registerTickHandler(ClientTickHandler.instance(), Side.CLIENT);
 		MinecraftForge.EVENT_BUS.register(new ClientEventHandler());
 		KeyBindingRegistry.registerKeyBinding(new CrymodKeyHandler());
+		
+		RenderingRegistry.registerEntityRenderingHandler(ZombieBase.class, new RenderZombieBase());
 	}
 
 	@Override
