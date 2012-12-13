@@ -2,15 +2,15 @@ package demonmodders.Crymod.Common.Recipes;
 
 import java.util.List;
 
-import net.minecraft.src.EntityLiving;
 import net.minecraft.src.ItemStack;
+import demonmodders.Crymod.Common.Entities.SummonableBase;
 
 public class SummoningEntityListEntry {
 	private final ItemStack[] stacks;
-	private final Class<? extends EntityLiving> demon;
+	private final Class<? extends SummonableBase> demon;
 	private final String demonName;
 	
-	public SummoningEntityListEntry(ItemStack[] stacks, Class<? extends EntityLiving> demon, String demonName) {
+	public SummoningEntityListEntry(ItemStack[] stacks, Class<? extends SummonableBase> demon, String demonName) {
 		this.stacks = stacks;
 		this.demon = demon;
 		this.demonName = demonName;
@@ -29,7 +29,7 @@ public class SummoningEntityListEntry {
 		}
 	}
 	
-	public Class<? extends EntityLiving> getDemon() {
+	public Class<? extends SummonableBase> getDemon() {
 		return demon;
 	}
 	

@@ -14,11 +14,13 @@ import net.minecraft.src.Slot;
 import net.minecraft.src.World;
 import cpw.mods.fml.common.Side;
 import cpw.mods.fml.common.network.Player;
+import demonmodders.Crymod.Common.Entities.SummonableBase;
 import demonmodders.Crymod.Common.Inventory.InventoryHelper;
 import demonmodders.Crymod.Common.Inventory.InventorySummoner;
 import demonmodders.Crymod.Common.Inventory.SlotForItem;
 import demonmodders.Crymod.Common.Items.ItemCryMod;
 import demonmodders.Crymod.Common.Network.PacketClientEffect;
+import demonmodders.Crymod.Common.Network.PacketClientEffect.Type;
 import demonmodders.Crymod.Common.Recipes.SummoningEntityList;
 
 public class ContainerSummoner extends AbstractContainer<InventorySummoner> {
@@ -98,13 +100,13 @@ public class ContainerSummoner extends AbstractContainer<InventorySummoner> {
 		case BUTTON_SUMMON:
 			if (side.isServer()) {
 				try {
-					EntityLiving entity = SummoningEntityList.getSummonings(inventory.getShowAngels()).get(currentPage).getDemon().getConstructor(World.class).newInstance(player.worldObj);
+					SummonableBase entity = SummoningEntityList.getSummonings(inventory.getShowAngels()).get(currentPage).getDemon().getConstructor(World.class).newInstance(player.worldObj);
 					
-					final int spawnRadiusX = 10;
+					final int spawnRadiusX = 5;
 					final int spawnRadiusY = 5;
-					final int spawnRadiusZ = 10;
+					final int spawnRadiusZ = 5;
 					
-					List<ChunkCoordinates> validCoordinates = new ArrayList<ChunkCoordinates>(3000);
+					List<ChunkCoordinates> validCoordinates = new ArrayList<ChunkCoordinates>(150);
 					
 					for (int x = (int)player.posX - spawnRadiusX; x < player.posX + spawnRadiusX; x++) {
 						for (int y = (int)player.posY - spawnRadiusY; y < player.posY + spawnRadiusY; y++) {
@@ -119,11 +121,11 @@ public class ContainerSummoner extends AbstractContainer<InventorySummoner> {
 					
 					if (!validCoordinates.isEmpty()) {
 						Random rng = new Random();
-						ChunkCoordinates spawnCoords = validCoordinates.get(0); //rng.nextInt(validCoordinates.size()));
+						ChunkCoordinates spawnCoords = validCoordinates.get(rng.nextInt(validCoordinates.size()));
 						entity.setPosition(spawnCoords.posX, spawnCoords.posY, spawnCoords.posZ);
+						entity.setOwner(player);
 						player.worldObj.spawnEntityInWorld(entity);
-						new PacketClientEffect(PacketClientEffect.Type.SUMMON_GOOD, entity.posX, entity.posY + entity.height + 0.5F, entity.posZ).sendToAllNear(player, 64);
-						new PacketClientEffect(PacketClientEffect.Type.SUMMON_GOOD, player.posX + 2, player.posY + player.height + 0.5F, player.posZ).sendToAllNear(player, 64);
+						new PacketClientEffect(inventory.getShowAngels() ? Type.SUMMON_GOOD : Type.SUMMON_BAD, entity.posX, entity.posY + entity.height + 0.5F, entity.posZ).sendToAllNear(entity, 64);
 					}
 				} catch (Exception e) {
 					logger.warning("Invalid Entity for Summoning!");
@@ -131,5 +133,9 @@ public class ContainerSummoner extends AbstractContainer<InventorySummoner> {
 			}
 			break;
 		}
+	}
+	
+	private boolean canEntitySpawn(EntityLiving ent) {
+		return ent.worldObj.checkIfAABBIsClear(ent.boundingBox) && ent.worldObj.getCollidingBoundingBoxes(ent, ent.boundingBox).isEmpty() && !ent.worldObj.isAnyLiquid(ent.boundingBox);
 	}
 }

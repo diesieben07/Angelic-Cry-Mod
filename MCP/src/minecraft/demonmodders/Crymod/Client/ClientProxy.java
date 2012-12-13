@@ -37,7 +37,7 @@ public class ClientProxy extends CommonProxy {
 		
 		switch (clientEffect.type) {
 		case SUMMON_GOOD:
-			mc.effectRenderer.addEffect(new EntitySummonFX(mc.renderEngine, mc.theWorld, clientEffect.x, clientEffect.y, clientEffect.z, 0, 0, 0));
+			mc.effectRenderer.addEffect(new EntitySummonFX(mc.renderEngine, mc.theWorld, clientEffect.x, clientEffect.y, clientEffect.z, 0, 3, 0));
 			break;
 		case SUMMON_BAD:
 			break;

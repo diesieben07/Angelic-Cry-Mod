@@ -8,12 +8,6 @@ import net.minecraft.src.World;
 
 public class EntityHeavenZombie extends ZombieBase {
 	
-	@Override
-	public void onUpdate() {
-		super.onUpdate();
-		//new PacketClientEffect(PacketClientEffect.Type.SUMMON_GOOD, posX, posY + 3, posZ, motionX, motionY, motionZ).sendToAllNear(this, 64);
-	}
-
 	public EntityHeavenZombie(World world) {
 		super(world);
 		texture = "/crymodResource/tex/mob/heavenZombie.png";

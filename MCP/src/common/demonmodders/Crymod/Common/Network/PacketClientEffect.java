@@ -48,13 +48,7 @@ public class PacketClientEffect extends CrymodPacket {
 	@Override
 	void execute(EntityPlayer player) {
 		if (type != null) {
-			switch (type) {
-			case SUMMON_BAD:
-				break;
-			case SUMMON_GOOD:
-				Crymod.proxy.handleClientEffect(this);
-				break;
-			}
+			Crymod.proxy.handleClientEffect(this);
 		}
 	}
 
