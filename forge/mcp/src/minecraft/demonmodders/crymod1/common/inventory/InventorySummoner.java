@@ -1,0 +1,31 @@
+package demonmodders.crymod1.common.inventory;
+
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
+import demonmodders.crymod1.common.items.ItemSummoner;
+import demonmodders.crymod1.common.recipes.SummoningEntityList;
+
+public class InventorySummoner extends InventoryItemStack {
+
+	private final boolean showAngels;
+	
+	public InventorySummoner(ItemStack theStack, EntityPlayer player) {
+		super(theStack, player);
+		showAngels = ItemSummoner.Type.fromItemDamage(theStack).showsAngels();
+		initStorage();
+	}
+
+	public boolean getShowAngels() {
+		return showAngels;
+	}
+	
+	@Override
+	public int getSizeInventory() {
+		return SummoningEntityList.getNumSummonings(showAngels) * 10;
+	}
+
+	@Override
+	public String getInvName() {
+		return "";
+	}
+}
