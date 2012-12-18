@@ -1,13 +1,7 @@
 package demonmodders.Crymod.Common.Entities;
 
-import net.minecraft.src.EntityAIAttackOnCollide;
-import net.minecraft.src.EntityAIHurtByTarget;
-import net.minecraft.src.EntityAILookIdle;
-import net.minecraft.src.EntityAINearestAttackableTarget;
-import net.minecraft.src.EntityAISwimming;
-import net.minecraft.src.EntityAIWander;
-import net.minecraft.src.EntityLiving;
-import net.minecraft.src.World;
+import net.minecraft.entity.EntityLiving;
+import net.minecraft.world.World;
 
 public class EntityHellZombie extends ZombieBase {
 

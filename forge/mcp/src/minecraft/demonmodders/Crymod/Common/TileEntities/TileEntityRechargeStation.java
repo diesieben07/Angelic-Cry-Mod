@@ -1,11 +1,10 @@
 package demonmodders.Crymod.Common.TileEntities;
 
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import demonmodders.Crymod.Common.Items.ItemCryMod;
 import demonmodders.Crymod.Common.Items.ItemCrystal;
-import net.minecraft.src.EntityPlayer;
-import net.minecraft.src.Item;
-import net.minecraft.src.ItemStack;
-import net.minecraft.src.NBTTagCompound;
 
 public class TileEntityRechargeStation extends TileEntityInventory {
 

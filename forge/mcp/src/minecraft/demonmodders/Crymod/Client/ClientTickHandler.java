@@ -2,13 +2,13 @@ package demonmodders.Crymod.Client;
 
 import java.util.EnumSet;
 
-import org.lwjgl.opengl.GL11;
-
 import net.minecraft.client.Minecraft;
-import net.minecraft.src.FontRenderer;
-import net.minecraft.src.Gui;
-import net.minecraft.src.GuiChat;
-import net.minecraft.src.ScaledResolution;
+import net.minecraft.client.gui.FontRenderer;
+import net.minecraft.client.gui.Gui;
+import net.minecraft.client.gui.GuiChat;
+import net.minecraft.client.gui.ScaledResolution;
+
+import org.lwjgl.opengl.GL11;
 
 import cpw.mods.fml.client.FMLClientHandler;
 import cpw.mods.fml.common.ITickHandler;

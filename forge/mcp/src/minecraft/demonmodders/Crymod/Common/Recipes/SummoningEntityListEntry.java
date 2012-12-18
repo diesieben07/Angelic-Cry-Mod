@@ -2,7 +2,7 @@ package demonmodders.Crymod.Common.Recipes;
 
 import java.util.List;
 
-import net.minecraft.src.ItemStack;
+import net.minecraft.item.ItemStack;
 import demonmodders.Crymod.Common.Entities.SummonableBase;
 
 public class SummoningEntityListEntry {

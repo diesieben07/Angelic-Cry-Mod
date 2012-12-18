@@ -16,6 +16,7 @@
 /forge/mcp/*.*
 /forge/mcp/src/minecraft/*
 /forge/mcp/eclipse/Minecraft/*
+/forge/mcp/eclipse/.metadata/*
 
 !/forge/mcp/src/minecraft/demonmodders/*
 !/forge/mcp/eclipse/Minecraft/Resource/*

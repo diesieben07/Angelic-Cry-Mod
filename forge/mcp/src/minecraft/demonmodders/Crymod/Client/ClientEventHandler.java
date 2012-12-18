@@ -2,7 +2,6 @@ package demonmodders.Crymod.Client;
 
 import java.net.URL;
 
-import net.minecraftforge.client.event.sound.PlaySoundEvent;
 import net.minecraftforge.client.event.sound.SoundLoadEvent;
 import net.minecraftforge.event.ForgeSubscribe;
 

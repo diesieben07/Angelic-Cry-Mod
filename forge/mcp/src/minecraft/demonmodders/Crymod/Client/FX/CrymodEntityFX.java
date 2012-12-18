@@ -1,10 +1,10 @@
 package demonmodders.Crymod.Client.FX;
 
+import net.minecraft.client.particle.EntityFX;
+import net.minecraft.client.renderer.RenderEngine;
+import net.minecraft.client.renderer.Tessellator;
+import net.minecraft.world.World;
 import demonmodders.Crymod.Common.Crymod;
-import net.minecraft.src.EntityFX;
-import net.minecraft.src.RenderEngine;
-import net.minecraft.src.Tessellator;
-import net.minecraft.src.World;
 
 public abstract class CrymodEntityFX extends EntityFX {
 

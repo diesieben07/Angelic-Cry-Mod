@@ -2,14 +2,14 @@ package demonmodders.Crymod.Common.Karma;
 
 import java.util.EnumSet;
 
-import net.minecraft.src.DamageSource;
-import net.minecraft.src.Entity;
-import net.minecraft.src.EntityDamageSource;
-import net.minecraft.src.EntityMob;
-import net.minecraft.src.EntityPlayer;
-import net.minecraft.src.EntityPlayerMP;
-import net.minecraft.src.Potion;
-import net.minecraft.src.PotionEffect;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.monster.EntityMob;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.potion.Potion;
+import net.minecraft.potion.PotionEffect;
+import net.minecraft.util.DamageSource;
+import net.minecraft.util.EntityDamageSource;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.ForgeSubscribe;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
@@ -17,9 +17,9 @@ import net.minecraftforge.event.entity.living.LivingFallEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.living.LivingSetAttackTargetEvent;
 import cpw.mods.fml.common.IScheduledTickHandler;
-import cpw.mods.fml.common.Side;
 import cpw.mods.fml.common.TickType;
 import cpw.mods.fml.common.registry.TickRegistry;
+import cpw.mods.fml.relauncher.Side;
 import demonmodders.Crymod.Common.PlayerInfo.PlayerInfo;
 
 public class PlayerPowersHandler implements IScheduledTickHandler {

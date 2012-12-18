@@ -1,14 +1,11 @@
 package demonmodders.Crymod.Common.Network;
 
-import net.minecraft.src.EntityPlayer;
-import net.minecraft.src.Potion;
-import net.minecraft.src.PotionEffect;
+import net.minecraft.entity.player.EntityPlayer;
 
 import com.google.common.io.ByteArrayDataInput;
 import com.google.common.io.ByteArrayDataOutput;
 
 import demonmodders.Crymod.Common.Karma.PlayerPowersHandler;
-import demonmodders.Crymod.Common.PlayerInfo.PlayerInfo;
 
 public class PacketClientRequest extends CrymodPacket {
 

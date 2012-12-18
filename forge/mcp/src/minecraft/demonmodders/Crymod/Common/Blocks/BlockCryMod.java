@@ -2,17 +2,14 @@ package demonmodders.Crymod.Common.Blocks;
 
 import java.util.Random;
 
-import cpw.mods.fml.common.Side;
-import cpw.mods.fml.common.asm.SideOnly;
+import net.minecraft.block.Block;
+import net.minecraft.block.material.Material;
+import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.entity.item.EntityItem;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.world.World;
 import cpw.mods.fml.common.registry.GameRegistry;
-import net.minecraft.src.Block;
-import net.minecraft.src.CreativeTabs;
-import net.minecraft.src.EntityItem;
-import net.minecraft.src.ItemStack;
-import net.minecraft.src.Material;
-import net.minecraft.src.NBTTagCompound;
-import net.minecraft.src.TileEntityFurnace;
-import net.minecraft.src.World;
 import demonmodders.Crymod.Common.Crymod;
 import demonmodders.Crymod.Common.TileEntities.TileEntityInventory;
 
@@ -31,7 +28,7 @@ public class BlockCryMod extends Block {
 		setBlockName("crymod_" + blockName);
 		setTextureFile(Crymod.TEXTURE_FILE);
 		setCreativeTab(CreativeTabs.tabMisc);
-		GameRegistry.registerBlock(this);
+		GameRegistry.registerBlock(this, blockName);
 	}
 	
 	@Override
@@ -59,7 +56,7 @@ public class BlockCryMod extends Block {
                             EntityItem itemEntity = new EntityItem(world, x + randomPositionX, y + randomPositionY, z + randomPositionZ, new ItemStack(stack.itemID, partialStackSize, stack.getItemDamage()));
 
                             if (stack.hasTagCompound()) {
-                                itemEntity.item.setTagCompound((NBTTagCompound)stack.getTagCompound().copy());
+                                itemEntity.func_92014_d().setTagCompound((NBTTagCompound)stack.getTagCompound().copy());
                             }
 
                             float motionMultiplier = 0.05F;

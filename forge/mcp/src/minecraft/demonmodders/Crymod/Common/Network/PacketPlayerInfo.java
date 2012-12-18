@@ -1,9 +1,10 @@
 package demonmodders.Crymod.Common.Network;
 
-import com.google.common.io.ByteArrayDataOutput;
-import com.google.common.io.ByteArrayDataInput;
+import net.minecraft.entity.player.EntityPlayer;
 
-import net.minecraft.src.EntityPlayer;
+import com.google.common.io.ByteArrayDataInput;
+import com.google.common.io.ByteArrayDataOutput;
+
 import demonmodders.Crymod.Common.Crymod;
 import demonmodders.Crymod.Common.Karma.PlayerKarma;
 import demonmodders.Crymod.Common.PlayerInfo.PlayerInfo;

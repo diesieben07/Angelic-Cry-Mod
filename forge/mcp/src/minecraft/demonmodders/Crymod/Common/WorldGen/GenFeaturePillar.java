@@ -1,8 +1,8 @@
 package demonmodders.Crymod.Common.WorldGen;
 import java.util.Random;
 
-import net.minecraft.src.World;
-import net.minecraft.src.WorldGenerator;
+import net.minecraft.world.World;
+import net.minecraft.world.gen.feature.WorldGenerator;
 
 public class GenFeaturePillar extends WorldGenerator {
     

@@ -1,7 +1,7 @@
 package demonmodders.Crymod.Client.FX;
 
-import net.minecraft.src.RenderEngine;
-import net.minecraft.src.World;
+import net.minecraft.client.renderer.RenderEngine;
+import net.minecraft.world.World;
 
 public class EntitySummonFX extends CrymodEntityFX {
 

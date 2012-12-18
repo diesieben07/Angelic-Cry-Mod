@@ -1,9 +1,9 @@
 package demonmodders.Crymod.Common.Gui;
 
 import static demonmodders.Crymod.Common.Crymod.proxy;
-import net.minecraft.src.Container;
-import net.minecraft.src.EntityPlayer;
-import net.minecraft.src.World;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.Container;
+import net.minecraft.world.World;
 import cpw.mods.fml.common.network.IGuiHandler;
 import demonmodders.Crymod.Common.Inventory.InventoryCrystalBag;
 import demonmodders.Crymod.Common.Inventory.InventorySummoner;

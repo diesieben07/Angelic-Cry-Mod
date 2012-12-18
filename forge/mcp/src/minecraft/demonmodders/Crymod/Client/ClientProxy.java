@@ -1,16 +1,16 @@
 package demonmodders.Crymod.Client;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.src.Container;
-import net.minecraft.src.EntityPlayer;
-import net.minecraft.src.World;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.Container;
+import net.minecraft.world.World;
 import net.minecraftforge.client.MinecraftForgeClient;
 import net.minecraftforge.common.MinecraftForge;
 import cpw.mods.fml.client.FMLClientHandler;
 import cpw.mods.fml.client.registry.KeyBindingRegistry;
 import cpw.mods.fml.client.registry.RenderingRegistry;
-import cpw.mods.fml.common.Side;
 import cpw.mods.fml.common.registry.TickRegistry;
+import cpw.mods.fml.relauncher.Side;
 import demonmodders.Crymod.Client.FX.EntitySummonFX;
 import demonmodders.Crymod.Client.Gui.GuiCrystalBag;
 import demonmodders.Crymod.Client.Gui.GuiRechargeStation;

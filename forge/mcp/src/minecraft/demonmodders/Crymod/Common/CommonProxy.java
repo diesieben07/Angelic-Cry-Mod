@@ -1,8 +1,8 @@
 package demonmodders.Crymod.Common;
 
-import net.minecraft.src.Container;
-import net.minecraft.src.EntityPlayer;
-import net.minecraft.src.World;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.Container;
+import net.minecraft.world.World;
 import demonmodders.Crymod.Common.Network.PacketClientEffect;
 import demonmodders.Crymod.Common.PlayerInfo.PlayerInfo;
 

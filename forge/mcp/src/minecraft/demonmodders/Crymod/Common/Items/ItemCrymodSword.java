@@ -1,7 +1,7 @@
 package demonmodders.Crymod.Common.Items;
 
-import net.minecraft.src.EnumToolMaterial;
-import net.minecraft.src.ItemSword;
+import net.minecraft.item.EnumToolMaterial;
+import net.minecraft.item.ItemSword;
 
 public abstract class ItemCrymodSword extends ItemSword {
 

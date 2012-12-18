@@ -1,13 +1,14 @@
 package demonmodders.Crymod.Common.Entities;
 
+import net.minecraft.entity.EntityCreature;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.world.World;
+
 import com.google.common.io.ByteArrayDataInput;
 import com.google.common.io.ByteArrayDataOutput;
 
 import cpw.mods.fml.common.registry.IEntityAdditionalSpawnData;
-import net.minecraft.src.EntityCreature;
-import net.minecraft.src.EntityPlayer;
-import net.minecraft.src.NBTTagCompound;
-import net.minecraft.src.World;
 
 public abstract class SummonableBase extends EntityCreature implements IEntityAdditionalSpawnData {
 

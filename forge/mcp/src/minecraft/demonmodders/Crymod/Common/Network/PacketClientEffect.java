@@ -1,6 +1,6 @@
 package demonmodders.Crymod.Common.Network;
 
-import net.minecraft.src.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayer;
 
 import com.google.common.io.ByteArrayDataInput;
 import com.google.common.io.ByteArrayDataOutput;

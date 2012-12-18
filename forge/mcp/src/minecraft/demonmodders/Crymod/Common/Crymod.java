@@ -3,7 +3,7 @@ package demonmodders.Crymod.Common;
 import java.util.Arrays;
 import java.util.logging.Logger;
 
-import net.minecraft.src.Entity;
+import net.minecraft.entity.Entity;
 import net.minecraftforge.common.Configuration;
 import cpw.mods.fml.common.FMLLog;
 import cpw.mods.fml.common.Mod;

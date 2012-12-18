@@ -1,13 +1,14 @@
 package demonmodders.Crymod.Common.Network;
 
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.network.INetworkManager;
+import net.minecraft.network.packet.NetHandler;
+import net.minecraft.network.packet.Packet131MapData;
+import net.minecraft.network.packet.Packet250CustomPayload;
+
 import com.google.common.io.ByteArrayDataInput;
 import com.google.common.io.ByteStreams;
 
-import net.minecraft.src.EntityPlayer;
-import net.minecraft.src.INetworkManager;
-import net.minecraft.src.NetHandler;
-import net.minecraft.src.Packet131MapData;
-import net.minecraft.src.Packet250CustomPayload;
 import cpw.mods.fml.common.network.IPacketHandler;
 import cpw.mods.fml.common.network.ITinyPacketHandler;
 import cpw.mods.fml.common.network.Player;

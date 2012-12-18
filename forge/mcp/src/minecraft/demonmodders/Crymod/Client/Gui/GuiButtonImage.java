@@ -1,9 +1,9 @@
 package demonmodders.Crymod.Client.Gui;
 
-import org.lwjgl.opengl.GL11;
-
 import net.minecraft.client.Minecraft;
-import net.minecraft.src.GuiButton;
+import net.minecraft.client.gui.GuiButton;
+
+import org.lwjgl.opengl.GL11;
 
 public class GuiButtonImage extends GuiButton {
 

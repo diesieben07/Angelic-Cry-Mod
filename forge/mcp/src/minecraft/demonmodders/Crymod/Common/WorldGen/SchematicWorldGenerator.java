@@ -2,9 +2,9 @@ package demonmodders.Crymod.Common.WorldGen;
 
 import java.io.InputStream;
 
-import net.minecraft.src.CompressedStreamTools;
-import net.minecraft.src.NBTTagCompound;
-import net.minecraft.src.World;
+import net.minecraft.nbt.CompressedStreamTools;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.world.World;
 
 /**
  * Class that makes structure generation easier

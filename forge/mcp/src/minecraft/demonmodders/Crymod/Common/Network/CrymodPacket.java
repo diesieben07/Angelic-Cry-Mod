@@ -2,17 +2,14 @@ package demonmodders.Crymod.Common.Network;
 
 import static demonmodders.Crymod.Common.Crymod.logger;
 
-import java.io.DataInput;
-import java.io.DataOutput;
-import java.io.IOException;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
-import net.minecraft.src.Entity;
-import net.minecraft.src.EntityPlayer;
-import net.minecraft.src.Packet;
-import net.minecraft.src.Packet250CustomPayload;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.network.packet.Packet;
+import net.minecraft.network.packet.Packet250CustomPayload;
 
 import com.google.common.io.ByteArrayDataInput;
 import com.google.common.io.ByteArrayDataOutput;

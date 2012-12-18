@@ -1,3 +1,0 @@
-INDEX VERSION 1.126+C:\Users\Take\Minecraft\My Mods\SummoningMod\repo\forge\mcp\eclipse\.metadata\.plugins\org.eclipse.jdt.core
-286606776.index
-3726805247.index

@@ -1,6 +1,6 @@
 package demonmodders.Crymod.Common.PlayerInfo;
 
-import net.minecraft.src.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayer;
 import cpw.mods.fml.common.IPlayerTracker;
 
 public final class PlayerInfoManager implements IPlayerTracker {

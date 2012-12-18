@@ -3,7 +3,7 @@ package demonmodders.Crymod.Client.Gui;
 import static demonmodders.Crymod.Common.Gui.ContainerSummoner.BUTTON_NEXT_PAGE;
 import static demonmodders.Crymod.Common.Gui.ContainerSummoner.BUTTON_PREV_PAGE;
 import static demonmodders.Crymod.Common.Gui.ContainerSummoner.BUTTON_SUMMON;
-import net.minecraft.src.GuiButton;
+import net.minecraft.client.gui.GuiButton;
 
 import org.lwjgl.opengl.GL11;
 

@@ -1,11 +1,9 @@
 package demonmodders.Crymod.Common.Items;
 
-import net.minecraft.src.CreativeTabs;
-import net.minecraft.src.Item;
-import net.minecraft.src.ItemStack;
-import net.minecraft.src.NBTTagCompound;
-import cpw.mods.fml.common.Side;
-import cpw.mods.fml.common.asm.SideOnly;
+import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import demonmodders.Crymod.Common.Crymod;
 
 public class ItemCryMod extends Item {

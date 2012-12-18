@@ -1,7 +1,6 @@
 package demonmodders.Crymod.Common.Gui;
 
-import net.minecraft.src.InventoryPlayer;
-import net.minecraft.src.Slot;
+import net.minecraft.entity.player.InventoryPlayer;
 import demonmodders.Crymod.Common.Inventory.InventoryCrystalBag;
 import demonmodders.Crymod.Common.Inventory.SlotForItem;
 import demonmodders.Crymod.Common.Items.ItemCryMod;

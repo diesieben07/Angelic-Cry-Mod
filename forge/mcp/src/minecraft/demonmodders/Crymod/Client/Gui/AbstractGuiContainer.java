@@ -1,9 +1,9 @@
 package demonmodders.Crymod.Client.Gui;
 
-import net.minecraft.src.GuiButton;
-import net.minecraft.src.GuiContainer;
-import net.minecraft.src.IInventory;
-import cpw.mods.fml.common.Side;
+import net.minecraft.client.gui.GuiButton;
+import net.minecraft.client.gui.inventory.GuiContainer;
+import net.minecraft.inventory.IInventory;
+import cpw.mods.fml.relauncher.Side;
 import demonmodders.Crymod.Common.Gui.AbstractContainer;
 import demonmodders.Crymod.Common.Network.PacketGuiButton;
 

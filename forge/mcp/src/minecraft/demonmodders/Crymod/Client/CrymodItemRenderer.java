@@ -1,14 +1,14 @@
 package demonmodders.Crymod.Client;
 
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.Tessellator;
+import net.minecraft.client.renderer.entity.RenderItem;
+import net.minecraft.item.ItemStack;
+import net.minecraftforge.client.IItemRenderer;
+
 import org.lwjgl.opengl.GL11;
 
 import demonmodders.Crymod.Common.Items.ItemCrystal;
-
-import net.minecraft.client.Minecraft;
-import net.minecraft.src.ItemStack;
-import net.minecraft.src.RenderItem;
-import net.minecraft.src.Tessellator;
-import net.minecraftforge.client.IItemRenderer;
 
 public class CrymodItemRenderer implements IItemRenderer {
 

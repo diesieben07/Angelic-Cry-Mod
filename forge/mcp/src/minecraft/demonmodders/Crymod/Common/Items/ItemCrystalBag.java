@@ -2,11 +2,11 @@ package demonmodders.Crymod.Common.Items;
 
 import java.util.List;
 
-import net.minecraft.src.EntityPlayer;
-import net.minecraft.src.ItemStack;
-import net.minecraft.src.World;
-import cpw.mods.fml.common.Side;
-import cpw.mods.fml.common.asm.SideOnly;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
+import net.minecraft.world.World;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import demonmodders.Crymod.Common.Crymod;
 import demonmodders.Crymod.Common.Gui.GuiType;
 

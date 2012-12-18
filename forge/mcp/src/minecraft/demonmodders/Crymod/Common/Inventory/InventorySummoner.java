@@ -1,7 +1,7 @@
 package demonmodders.Crymod.Common.Inventory;
 
-import net.minecraft.src.EntityPlayer;
-import net.minecraft.src.ItemStack;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
 import demonmodders.Crymod.Common.Items.ItemSummoner;
 import demonmodders.Crymod.Common.Recipes.SummoningEntityList;
 

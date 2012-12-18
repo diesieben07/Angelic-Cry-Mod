@@ -1,9 +1,8 @@
 package demonmodders.Crymod.Client;
 
-import demonmodders.Crymod.Common.Entities.ZombieBase;
-import net.minecraft.src.EntityLiving;
-import net.minecraft.src.ModelBiped;
-import net.minecraft.src.RenderLiving;
+import net.minecraft.client.model.ModelBiped;
+import net.minecraft.client.renderer.entity.RenderLiving;
+import net.minecraft.entity.EntityLiving;
 
 public class RenderZombieBase extends RenderLiving {
 

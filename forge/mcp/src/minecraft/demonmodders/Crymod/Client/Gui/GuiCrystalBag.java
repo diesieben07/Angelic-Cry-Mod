@@ -1,6 +1,6 @@
 package demonmodders.Crymod.Client.Gui;
 
-import net.minecraft.src.StringTranslate;
+import net.minecraft.util.StringTranslate;
 
 import org.lwjgl.opengl.GL11;
 

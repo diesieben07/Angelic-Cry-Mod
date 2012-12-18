@@ -3,8 +3,8 @@ package demonmodders.Crymod.Common.PlayerInfo;
 import java.util.HashMap;
 import java.util.Map;
 
-import net.minecraft.src.EntityPlayer;
-import net.minecraft.src.NBTTagCompound;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.nbt.NBTTagCompound;
 import cpw.mods.fml.common.IPlayerTracker;
 import cpw.mods.fml.common.registry.GameRegistry;
 import demonmodders.Crymod.Common.Karma.PlayerKarma;

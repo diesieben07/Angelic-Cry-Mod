@@ -1,10 +1,7 @@
 package demonmodders.Crymod.Common.Gui;
 
-import net.minecraft.src.EntityPlayer;
-import net.minecraft.src.InventoryPlayer;
-import net.minecraft.src.Slot;
-import net.minecraft.src.SlotCrafting;
-import cpw.mods.fml.common.Side;
+import net.minecraft.entity.player.InventoryPlayer;
+import net.minecraft.inventory.Slot;
 import demonmodders.Crymod.Common.TileEntities.TileEntityRechargeStation;
 
 public class ContainerRechargeStation extends AbstractContainer<TileEntityRechargeStation> {

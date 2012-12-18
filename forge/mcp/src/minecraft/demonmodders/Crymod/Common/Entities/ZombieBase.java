@@ -1,19 +1,14 @@
 package demonmodders.Crymod.Common.Entities;
 
+import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.ai.EntityAIAttackOnCollide;
+import net.minecraft.entity.ai.EntityAIHurtByTarget;
+import net.minecraft.entity.ai.EntityAILookIdle;
+import net.minecraft.entity.ai.EntityAINearestAttackableTarget;
+import net.minecraft.entity.ai.EntityAISwimming;
+import net.minecraft.entity.ai.EntityAIWander;
+import net.minecraft.world.World;
 import demonmodders.Crymod.Common.Entities.Ai.EntityAIFollowOwner;
-import net.minecraft.src.EntityAIAttackOnCollide;
-import net.minecraft.src.EntityAIHurtByTarget;
-import net.minecraft.src.EntityAILookIdle;
-import net.minecraft.src.EntityAINearestAttackableTarget;
-import net.minecraft.src.EntityAISwimming;
-import net.minecraft.src.EntityAIWander;
-import net.minecraft.src.EntityCreature;
-import net.minecraft.src.EntityLiving;
-import net.minecraft.src.EntityPlayer;
-import net.minecraft.src.MathHelper;
-import net.minecraft.src.NBTTagCompound;
-import net.minecraft.src.World;
-import net.minecraftforge.common.ForgeDirection;
 
 public abstract class ZombieBase extends SummonableBase {
 	

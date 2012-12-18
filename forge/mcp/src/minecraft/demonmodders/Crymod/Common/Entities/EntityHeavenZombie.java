@@ -1,10 +1,7 @@
 package demonmodders.Crymod.Common.Entities;
 
-import demonmodders.Crymod.Common.Network.PacketClientEffect;
-import net.minecraft.src.EntityAIHurtByTarget;
-import net.minecraft.src.EntityAINearestAttackableTarget;
-import net.minecraft.src.EntityLiving;
-import net.minecraft.src.World;
+import net.minecraft.entity.EntityLiving;
+import net.minecraft.world.World;
 
 public class EntityHeavenZombie extends ZombieBase {
 	
