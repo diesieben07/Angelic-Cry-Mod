@@ -14,12 +14,10 @@
 /forge/mcp/temp/*
 /forge/mcp/CHANGELOG
 /forge/mcp/*.*
+/forge/mcp/eclipse/*
+
+/build/temp/*
+
 /forge/mcp/src/minecraft/*
-/forge/mcp/eclipse/Minecraft/*
-/forge/mcp/eclipse/.metadata/*
-
-!/forge/mcp/src/minecraft/demonmodders/*
-!/forge/mcp/eclipse/Minecraft/Resource/*
-
-
 !/forge/mcp/src/minecraft/demonmodders
+!/forge/mcp/src/minecraft/crymodResource
