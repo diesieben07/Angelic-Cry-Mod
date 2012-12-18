@@ -12,8 +12,11 @@ import demonmodders.Crymod.Common.Gui.GuiType;
 
 public class ItemCrystalBag extends ItemCryMod {
 
-	public ItemCrystalBag(int itemId) {
-		super(itemId);
+	public ItemCrystalBag(String itemName, int defaultId) {
+		super(itemName, defaultId);
+		setHasSubtypes(true);
+		setMaxStackSize(1);
+		setIconCoord(12, 2);
 	}
 
 	@Override

@@ -1,15 +1,18 @@
-item.summoningBook.name:Holy Summoning Book
-item.evilTablet.name:Evil Tablet
-item.crystal.yellow.name:Gold Crystal
-item.crystal.red.name:Core Crystal
-item.crystal.lightBlue.name:Sky Crystal
-item.crystal.purple.name:Magic Crystal
-item.crystal.green.name:Green Crystal (Need Name)
-item.crystal.orange.name:Fiery Crystal
-item.crystal.blue.name:Icy Crystal
-item.recipeBook.name:Recipe Book
-item.crystalBag.name:Crystal Bag
-tile.rechargeStation.name:Recharge Station
+item.crymod_summoningBook.name:Holy Summoning Book
+item.crymod_evilTablet.name:Evil Tablet
+item.crymod_crystal.yellow.name:Gold Crystal
+item.crymod_crystal.red.name:Core Crystal
+item.crymod_crystal.lightBlue.name:Sky Crystal
+item.crymod_crystal.purple.name:Magic Crystal
+item.crymod_crystal.green.name:Green Crystal (Need Name)
+item.crymod_crystal.orange.name:Fiery Crystal
+item.crymod_crystal.blue.name:Icy Crystal
+item.crymod_recipeBook.name:Recipe Book
+item.crymod_crystalBag.name:Crystal Bag
+item.crymod_swordOfDarkness.name:Sword of Darkness
+
+tile.crymod_rechargeStation.name:Recharge Station
+
 chat.prefix.good.10:Minor Priest
 chat.prefix.good.25:High Priest
 chat.prefix.good.40:Great Monk
@@ -18,5 +21,7 @@ chat.prefix.bad.10:Crazed
 chat.prefix.bad.25:Consumed
 chat.prefix.bad.40:Demonist
 chat.prefix.bad.50:Dark God
+
 commands.karma.usage:Usage: /karma <value> [<player>]
+
 entity.crymodHeavenZombie.name:Heaven Zombie

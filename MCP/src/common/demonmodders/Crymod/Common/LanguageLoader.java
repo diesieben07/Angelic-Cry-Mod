@@ -13,8 +13,6 @@ import cpw.mods.fml.common.registry.LanguageRegistry;
 public class LanguageLoader {
 
 	private static final String DEFAULT_LANGUAGE = "en";
-	private static final String SEPARATOR = ":";
-	private static final String COMMENT = "#";
 	
 	public static void loadLanguages() {
 		String language = conf.get(CATEGORY_GENERAL, "language", DEFAULT_LANGUAGE).value;

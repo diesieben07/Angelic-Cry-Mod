@@ -13,8 +13,10 @@ public class ItemCrystal extends ItemCryMod {
 
 	public static final int MAX_CHARGE = 50;
 	
-	public ItemCrystal(int itemId) {
-		super(itemId);
+	public ItemCrystal(String itemName, int defaultId) {
+		super(itemName, defaultId);
+		setHasSubtypes(true);
+		setMaxStackSize(1);
 	}
 
 	@Override

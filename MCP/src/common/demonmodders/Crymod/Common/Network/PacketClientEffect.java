@@ -53,7 +53,7 @@ public class PacketClientEffect extends CrymodPacket {
 	}
 
 	public static enum Type {
-		SUMMON_GOOD, SUMMON_BAD
+		SUMMON_GOOD, SUMMON_BAD, SWORD_OF_DARKNESS
 	}
 	
 }

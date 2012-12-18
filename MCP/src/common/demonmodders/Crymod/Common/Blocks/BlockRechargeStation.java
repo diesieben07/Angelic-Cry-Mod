@@ -20,8 +20,8 @@ public class BlockRechargeStation extends BlockCryMod {
 	private static final int FRONT_TEXTURE_ACTIVE = 14 * 16 + 14;
 	private static final int SIDES_TEXTURE = 15 * 16 + 15;
 	
-	public BlockRechargeStation(int blockId) {
-		super(blockId, 0, Material.iron);
+	public BlockRechargeStation(String blockName, int defaultId) {
+		super(blockName, defaultId, 0, Material.iron);
 	}
 
 	@Override

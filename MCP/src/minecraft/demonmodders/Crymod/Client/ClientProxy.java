@@ -34,20 +34,25 @@ public class ClientProxy extends CommonProxy {
 	}
 
 	@Override
-	public void handleClientEffect(PacketClientEffect clientEffect) {
+	public void handleClientEffect(PacketClientEffect effect) {
 		Minecraft mc = FMLClientHandler.instance().getClient();
 		
-		switch (clientEffect.type) {
+		switch (effect.type) {
 		case SUMMON_GOOD:
 			double movement = 0.05;
 			double movementUp = 0.4;
-			mc.effectRenderer.addEffect(new EntitySummonFX(mc.renderEngine, mc.theWorld, clientEffect.x, clientEffect.y, clientEffect.z, movement, movementUp, 0));
-			mc.effectRenderer.addEffect(new EntitySummonFX(mc.renderEngine, mc.theWorld, clientEffect.x, clientEffect.y, clientEffect.z, -movement, movementUp, 0));
-			mc.effectRenderer.addEffect(new EntitySummonFX(mc.renderEngine, mc.theWorld, clientEffect.x, clientEffect.y, clientEffect.z, 0, movementUp, movement));
-			mc.effectRenderer.addEffect(new EntitySummonFX(mc.renderEngine, mc.theWorld, clientEffect.x, clientEffect.y, clientEffect.z, 0, movementUp, -movement));
-			mc.effectRenderer.addEffect(new EntitySummonFX(mc.renderEngine, mc.theWorld, clientEffect.x, clientEffect.y, clientEffect.z, 0, movementUp, 0));
+			mc.effectRenderer.addEffect(new EntitySummonFX(mc.renderEngine, mc.theWorld, effect.x, effect.y, effect.z, movement, movementUp, 0));
+			mc.effectRenderer.addEffect(new EntitySummonFX(mc.renderEngine, mc.theWorld, effect.x, effect.y, effect.z, -movement, movementUp, 0));
+			mc.effectRenderer.addEffect(new EntitySummonFX(mc.renderEngine, mc.theWorld, effect.x, effect.y, effect.z, 0, movementUp, movement));
+			mc.effectRenderer.addEffect(new EntitySummonFX(mc.renderEngine, mc.theWorld, effect.x, effect.y, effect.z, 0, movementUp, -movement));
+			mc.effectRenderer.addEffect(new EntitySummonFX(mc.renderEngine, mc.theWorld, effect.x, effect.y, effect.z, 0, movementUp, 0));
 			break;
 		case SUMMON_BAD:
+			break;
+		case SWORD_OF_DARKNESS:
+			for (int i = 0; i < 10; i++) {
+				mc.renderGlobal.spawnParticle("largesmoke", effect.x, effect.y, effect.z, 0, 0, 0);
+			}
 			break;
 		}
 	}

@@ -18,7 +18,21 @@ import demonmodders.Crymod.Common.TileEntities.TileEntityInventory;
 
 public class BlockCryMod extends Block {
 	
+	public static Block rechargeStation;
+	
+	public static void createBlocks() {
+		rechargeStation = new BlockRechargeStation("rechargeStation", 3956).setRequiresSelfNotify();
+	}
+	
 	private final Random rand = new Random();
+
+	public BlockCryMod(String blockName, int defaultId, int texture, Material material) {
+		super(Crymod.conf.getBlock(blockName + "Id", defaultId).getInt(), texture, material);
+		setBlockName("crymod_" + blockName);
+		setTextureFile(Crymod.TEXTURE_FILE);
+		setCreativeTab(CreativeTabs.tabMisc);
+		GameRegistry.registerBlock(this);
+	}
 	
 	@Override
 	public void breakBlock(World world, int x, int y, int z, int blockId, int meta) {
@@ -59,27 +73,5 @@ public class BlockCryMod extends Block {
             }
 		}
 		super.breakBlock(world, x, y, z, blockId, meta);
-	}
-
-	public static Block rechargeStation;
-	
-	public static void createBlocks() {
-		rechargeStation = new BlockRechargeStation(Crymod.conf.getBlock("rechargeStationId", 3956).getInt()).setBlockName("rechargeStation").setRequiresSelfNotify();
-		GameRegistry.registerBlock(rechargeStation);
-	}
-	
-	@Override
-	@SideOnly(Side.CLIENT)
-	public CreativeTabs getCreativeTabToDisplayOn() {
-		return CreativeTabs.tabMisc;
-	}
-
-	public BlockCryMod(int blockId, int texture, Material material) {
-		super(blockId, texture, material);
-	}
-
-	@Override
-	public String getTextureFile() {
-		return Crymod.TEXTURE_FILE;
 	}
 }

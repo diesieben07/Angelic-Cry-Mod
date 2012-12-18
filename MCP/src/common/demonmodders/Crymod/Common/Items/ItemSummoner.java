@@ -13,8 +13,10 @@ import demonmodders.Crymod.Common.Gui.GuiType;
 
 public class ItemSummoner extends ItemCryMod {
 	
-	public ItemSummoner(int itemId) {
-		super(itemId);
+	public ItemSummoner(String itemName, int itemId) {
+		super(itemName, itemId);
+		setHasSubtypes(true);
+		setMaxStackSize(1);
 	}
 
 	@Override
@@ -40,7 +42,7 @@ public class ItemSummoner extends ItemCryMod {
 
 	@Override
 	public String getItemNameIS(ItemStack itemStack) {
-		return itemStack.getItemDamage() == 0 ? "item.summoningBook" : "item.evilTablet";
+		return itemStack.getItemDamage() == 0 ? "item.crymod_summoningBook" : "item.crymod_evilTablet";
 	}
 
 	@Override
