@@ -7,7 +7,7 @@ rmdir /q /s temp
 md temp
 
 echo.  Unpacking forge...
-for /r zips %%g in (*.zip) do cscript unzip.vbs "%CD%\zips\%%~nxg" "%CD%\temp"
+for /r zips %%g in (*.zip) do %windir%\system32\cscript unzip.vbs "%CD%\zips\%%~nxg" "%CD%\temp"
 
 echo.  Installing forge...
 
