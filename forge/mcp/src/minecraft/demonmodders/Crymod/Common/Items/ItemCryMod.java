@@ -1,10 +1,10 @@
-package demonmodders.Crymod.Common.Items;
+package demonmodders.crymod.common.items;
 
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import demonmodders.Crymod.Common.Crymod;
+import demonmodders.crymod.common.Crymod;
 
 public class ItemCryMod extends Item {
 

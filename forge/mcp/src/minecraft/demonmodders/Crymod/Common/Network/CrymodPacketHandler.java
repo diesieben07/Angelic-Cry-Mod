@@ -1,4 +1,4 @@
-package demonmodders.Crymod.Common.Network;
+package demonmodders.crymod.common.network;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.network.INetworkManager;

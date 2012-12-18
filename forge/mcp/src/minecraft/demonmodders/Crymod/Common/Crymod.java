@@ -1,4 +1,4 @@
-package demonmodders.Crymod.Common;
+package demonmodders.crymod.common;
 
 import java.util.Arrays;
 import java.util.logging.Logger;
@@ -22,18 +22,18 @@ import cpw.mods.fml.common.network.NetworkMod;
 import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.registry.EntityRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
-import demonmodders.Crymod.Common.Blocks.BlockCryMod;
-import demonmodders.Crymod.Common.Entities.EntityHeavenZombie;
-import demonmodders.Crymod.Common.Entities.EntityHellZombie;
-import demonmodders.Crymod.Common.Gui.CrymodGuiHandler;
-import demonmodders.Crymod.Common.Items.ItemCryMod;
-import demonmodders.Crymod.Common.Karma.KarmaEventHandler;
-import demonmodders.Crymod.Common.Karma.PlayerPowersHandler;
-import demonmodders.Crymod.Common.Network.CrymodPacket;
-import demonmodders.Crymod.Common.Network.CrymodPacketHandler;
-import demonmodders.Crymod.Common.PlayerInfo.PlayerInfo;
-import demonmodders.Crymod.Common.TileEntities.TileEntityRechargeStation;
-import demonmodders.Crymod.Common.WorldGen.CryWorldGenerator;
+import demonmodders.crymod.common.blocks.BlockCryMod;
+import demonmodders.crymod.common.entities.EntityHeavenZombie;
+import demonmodders.crymod.common.entities.EntityHellZombie;
+import demonmodders.crymod.common.gui.CrymodGuiHandler;
+import demonmodders.crymod.common.items.ItemCryMod;
+import demonmodders.crymod.common.karma.KarmaEventHandler;
+import demonmodders.crymod.common.karma.PlayerPowersHandler;
+import demonmodders.crymod.common.network.CrymodPacket;
+import demonmodders.crymod.common.network.CrymodPacketHandler;
+import demonmodders.crymod.common.playerinfo.PlayerInfo;
+import demonmodders.crymod.common.tileentities.TileEntityRechargeStation;
+import demonmodders.crymod.common.worldgen.CryWorldGenerator;
 
 @Mod(modid = "crymod", name = "Angelic Cry Mod [WIP]", version = "0.1")
 @NetworkMod(channels = {CrymodPacket.CHANNEL}, packetHandler = CrymodPacketHandler.class, tinyPacketHandler = CrymodPacketHandler.class, clientSideRequired = true, serverSideRequired = false)
@@ -41,7 +41,7 @@ public class Crymod {
 	
 	public static String VERSION;
 	
-	@SidedProxy(clientSide = "demonmodders.Crymod.Client.ClientProxy", serverSide = "demonmodders.Crymod.Common.CommonProxy")
+	@SidedProxy(clientSide = "demonmodders.crymod.client.ClientProxy", serverSide = "demonmodders.crymod.common.CommonProxy")
 	public static CommonProxy proxy;
 	
 	@Instance
@@ -115,6 +115,6 @@ public class Crymod {
 		evt.registerServerCommand(new CommandKarma());
 	}
 	
-	public static final String TEXTURE_FILE = "/crymodResource/tex/textures.png";
-	public static final String PARTICLE_TEXTURE_FILE = "/crymodResource/tex/particles.png";
+	public static final String TEXTURE_FILE = "/demonmodders/crymod/resource/tex/textures.png";
+	public static final String PARTICLE_TEXTURE_FILE = "/demonmodders/crymod/resource/tex/particles.png";
 }

@@ -1,4 +1,4 @@
-package demonmodders.Crymod.Common.Karma;
+package demonmodders.crymod.common.karma;
 
 import java.util.EnumSet;
 
@@ -20,7 +20,7 @@ import cpw.mods.fml.common.IScheduledTickHandler;
 import cpw.mods.fml.common.TickType;
 import cpw.mods.fml.common.registry.TickRegistry;
 import cpw.mods.fml.relauncher.Side;
-import demonmodders.Crymod.Common.PlayerInfo.PlayerInfo;
+import demonmodders.crymod.common.playerinfo.PlayerInfo;
 
 public class PlayerPowersHandler implements IScheduledTickHandler {
 	

@@ -1,4 +1,4 @@
-package demonmodders.Crymod.Common.TileEntities;
+package demonmodders.crymod.common.tileentities;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
@@ -6,7 +6,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.tileentity.TileEntity;
-import demonmodders.Crymod.Common.Inventory.InventoryHelper;
+import demonmodders.crymod.common.inventory.InventoryHelper;
 
 public abstract class TileEntityInventory extends TileEntity implements IInventory {
 

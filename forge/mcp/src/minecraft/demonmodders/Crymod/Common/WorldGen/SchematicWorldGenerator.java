@@ -1,4 +1,4 @@
-package demonmodders.Crymod.Common.WorldGen;
+package demonmodders.crymod.common.worldgen;
 
 import java.io.InputStream;
 
@@ -23,7 +23,7 @@ public class SchematicWorldGenerator {
 		length = 0;
 		height = 0;
 		try {
-			InputStream inputstream = getClass().getResourceAsStream("/crymodResource/schematics/" + path);
+			InputStream inputstream = getClass().getResourceAsStream("/demonmodders/crymod/resource/schematics/" + path);
 			NBTTagCompound nbt = CompressedStreamTools.readCompressed(inputstream);
 			
 			blocks = nbt.getByteArray("Blocks");

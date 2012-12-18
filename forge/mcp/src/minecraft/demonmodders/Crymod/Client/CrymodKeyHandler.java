@@ -1,4 +1,4 @@
-package demonmodders.Crymod.Client;
+package demonmodders.crymod.client;
 
 import java.util.EnumSet;
 
@@ -8,8 +8,8 @@ import org.lwjgl.input.Keyboard;
 
 import cpw.mods.fml.client.registry.KeyBindingRegistry.KeyHandler;
 import cpw.mods.fml.common.TickType;
-import demonmodders.Crymod.Common.Network.PacketClientRequest;
-import demonmodders.Crymod.Common.Network.PacketClientRequest.Action;
+import demonmodders.crymod.common.network.PacketClientRequest;
+import demonmodders.crymod.common.network.PacketClientRequest.Action;
 
 public class CrymodKeyHandler extends KeyHandler {
 	

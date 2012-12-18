@@ -1,10 +1,10 @@
-package demonmodders.Crymod.Common.Recipes;
+package demonmodders.crymod.common.recipes;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import demonmodders.Crymod.Common.Entities.EntityHeavenZombie;
-import demonmodders.Crymod.Common.Entities.EntityHellZombie;
+import demonmodders.crymod.common.entities.EntityHeavenZombie;
+import demonmodders.crymod.common.entities.EntityHellZombie;
 
 public abstract class SummoningEntityList {
 	private static List<SummoningEntityListEntry> angelList = new ArrayList<SummoningEntityListEntry>();

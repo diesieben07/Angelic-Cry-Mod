@@ -1,6 +1,6 @@
-package demonmodders.Crymod.Common.Network;
+package demonmodders.crymod.common.network;
 
-import static demonmodders.Crymod.Common.Crymod.logger;
+import static demonmodders.crymod.common.Crymod.logger;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -18,7 +18,7 @@ import com.google.common.io.ByteStreams;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.network.PacketDispatcher;
 import cpw.mods.fml.common.network.Player;
-import demonmodders.Crymod.Common.Crymod;
+import demonmodders.crymod.common.Crymod;
 
 public abstract class CrymodPacket {
 	

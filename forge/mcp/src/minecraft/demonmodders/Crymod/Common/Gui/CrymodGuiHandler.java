@@ -1,13 +1,13 @@
-package demonmodders.Crymod.Common.Gui;
+package demonmodders.crymod.common.gui;
 
-import static demonmodders.Crymod.Common.Crymod.proxy;
+import static demonmodders.crymod.common.Crymod.proxy;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.world.World;
 import cpw.mods.fml.common.network.IGuiHandler;
-import demonmodders.Crymod.Common.Inventory.InventoryCrystalBag;
-import demonmodders.Crymod.Common.Inventory.InventorySummoner;
-import demonmodders.Crymod.Common.TileEntities.TileEntityRechargeStation;
+import demonmodders.crymod.common.inventory.InventoryCrystalBag;
+import demonmodders.crymod.common.inventory.InventorySummoner;
+import demonmodders.crymod.common.tileentities.TileEntityRechargeStation;
 
 public class CrymodGuiHandler implements IGuiHandler {
 

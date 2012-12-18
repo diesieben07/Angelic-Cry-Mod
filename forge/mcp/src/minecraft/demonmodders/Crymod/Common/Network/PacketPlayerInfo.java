@@ -1,13 +1,13 @@
-package demonmodders.Crymod.Common.Network;
+package demonmodders.crymod.common.network;
 
 import net.minecraft.entity.player.EntityPlayer;
 
 import com.google.common.io.ByteArrayDataInput;
 import com.google.common.io.ByteArrayDataOutput;
 
-import demonmodders.Crymod.Common.Crymod;
-import demonmodders.Crymod.Common.Karma.PlayerKarma;
-import demonmodders.Crymod.Common.PlayerInfo.PlayerInfo;
+import demonmodders.crymod.common.Crymod;
+import demonmodders.crymod.common.karma.PlayerKarma;
+import demonmodders.crymod.common.playerinfo.PlayerInfo;
 
 public class PacketPlayerInfo extends CrymodPacket {
 

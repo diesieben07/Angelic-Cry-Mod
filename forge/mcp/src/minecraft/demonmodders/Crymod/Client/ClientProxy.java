@@ -1,4 +1,4 @@
-package demonmodders.Crymod.Client;
+package demonmodders.crymod.client;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
@@ -11,20 +11,20 @@ import cpw.mods.fml.client.registry.KeyBindingRegistry;
 import cpw.mods.fml.client.registry.RenderingRegistry;
 import cpw.mods.fml.common.registry.TickRegistry;
 import cpw.mods.fml.relauncher.Side;
-import demonmodders.Crymod.Client.FX.EntitySummonFX;
-import demonmodders.Crymod.Client.Gui.GuiCrystalBag;
-import demonmodders.Crymod.Client.Gui.GuiRechargeStation;
-import demonmodders.Crymod.Client.Gui.GuiSummoner;
-import demonmodders.Crymod.Common.CommonProxy;
-import demonmodders.Crymod.Common.Crymod;
-import demonmodders.Crymod.Common.Entities.ZombieBase;
-import demonmodders.Crymod.Common.Gui.ContainerCrystalBag;
-import demonmodders.Crymod.Common.Gui.ContainerRechargeStation;
-import demonmodders.Crymod.Common.Gui.ContainerSummoner;
-import demonmodders.Crymod.Common.Gui.GuiType;
-import demonmodders.Crymod.Common.Items.ItemCryMod;
-import demonmodders.Crymod.Common.Network.PacketClientEffect;
-import demonmodders.Crymod.Common.PlayerInfo.PlayerInfo;
+import demonmodders.crymod.client.fx.EntitySummonFX;
+import demonmodders.crymod.client.gui.GuiCrystalBag;
+import demonmodders.crymod.client.gui.GuiRechargeStation;
+import demonmodders.crymod.client.gui.GuiSummoner;
+import demonmodders.crymod.common.CommonProxy;
+import demonmodders.crymod.common.Crymod;
+import demonmodders.crymod.common.entities.ZombieBase;
+import demonmodders.crymod.common.gui.ContainerCrystalBag;
+import demonmodders.crymod.common.gui.ContainerRechargeStation;
+import demonmodders.crymod.common.gui.ContainerSummoner;
+import demonmodders.crymod.common.gui.GuiType;
+import demonmodders.crymod.common.items.ItemCryMod;
+import demonmodders.crymod.common.network.PacketClientEffect;
+import demonmodders.crymod.common.playerinfo.PlayerInfo;
 
 public class ClientProxy extends CommonProxy {
 	
@@ -61,9 +61,9 @@ public class ClientProxy extends CommonProxy {
 	public Object getClientGuiElement(Container container, int id, EntityPlayer player, World world, int x, int y, int z) {
 		switch (GuiType.fromGuiId(id)) {
 		case SUMMONING_BOOK:
-			return new GuiSummoner("/crymodResource/tex/summoningBook.png", (ContainerSummoner)container);
+			return new GuiSummoner("/demonmodders/crymod/resource/tex/summoningBook.png", (ContainerSummoner)container);
 		case EVIL_TABLET:
-			return new GuiSummoner("/crymodResource/tex/evilTablet.png", (ContainerSummoner)container);
+			return new GuiSummoner("/demonmodders/crymod/resource/tex/evilTablet.png", (ContainerSummoner)container);
 		case RECHARGE_STATION:
 			return new GuiRechargeStation((ContainerRechargeStation)container);
 		case CRYSTAL_BAG:

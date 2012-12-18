@@ -1,4 +1,4 @@
-package demonmodders.Crymod.Common.Items;
+package demonmodders.crymod.common.items;
 
 public class ItemRecipePage extends ItemCryMod {
 

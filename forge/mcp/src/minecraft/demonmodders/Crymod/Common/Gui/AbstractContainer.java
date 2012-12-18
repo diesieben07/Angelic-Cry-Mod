@@ -1,4 +1,4 @@
-package demonmodders.Crymod.Common.Gui;
+package demonmodders.crymod.common.gui;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
@@ -7,7 +7,7 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import cpw.mods.fml.relauncher.Side;
-import demonmodders.Crymod.Common.Inventory.SlotNoPickup;
+import demonmodders.crymod.common.inventory.SlotNoPickup;
 
 public abstract class AbstractContainer<T extends IInventory> extends Container {
 

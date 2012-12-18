@@ -1,4 +1,4 @@
-package demonmodders.Crymod.Common.Blocks;
+package demonmodders.crymod.common.blocks;
 
 import java.util.Random;
 
@@ -10,8 +10,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
 import cpw.mods.fml.common.registry.GameRegistry;
-import demonmodders.Crymod.Common.Crymod;
-import demonmodders.Crymod.Common.TileEntities.TileEntityInventory;
+import demonmodders.crymod.common.Crymod;
+import demonmodders.crymod.common.tileentities.TileEntityInventory;
 
 public class BlockCryMod extends Block {
 	

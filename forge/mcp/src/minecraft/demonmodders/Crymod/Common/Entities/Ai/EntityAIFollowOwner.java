@@ -1,9 +1,9 @@
-package demonmodders.Crymod.Common.Entities.Ai;
+package demonmodders.crymod.common.entities.ai;
 
 import net.minecraft.entity.ai.EntityAIBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.pathfinding.PathNavigate;
-import demonmodders.Crymod.Common.Entities.ZombieBase;
+import demonmodders.crymod.common.entities.ZombieBase;
 
 public class EntityAIFollowOwner extends EntityAIBase {
 

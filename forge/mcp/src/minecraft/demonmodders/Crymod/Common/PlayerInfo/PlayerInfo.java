@@ -1,4 +1,4 @@
-package demonmodders.Crymod.Common.PlayerInfo;
+package demonmodders.crymod.common.playerinfo;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -7,8 +7,8 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import cpw.mods.fml.common.IPlayerTracker;
 import cpw.mods.fml.common.registry.GameRegistry;
-import demonmodders.Crymod.Common.Karma.PlayerKarma;
-import demonmodders.Crymod.Common.Network.PacketPlayerInfo;
+import demonmodders.crymod.common.karma.PlayerKarma;
+import demonmodders.crymod.common.network.PacketPlayerInfo;
 
 public final class PlayerInfo {
 	

@@ -1,4 +1,4 @@
-package demonmodders.Crymod.Client;
+package demonmodders.crymod.client;
 
 import java.util.EnumSet;
 
@@ -13,8 +13,8 @@ import org.lwjgl.opengl.GL11;
 import cpw.mods.fml.client.FMLClientHandler;
 import cpw.mods.fml.common.ITickHandler;
 import cpw.mods.fml.common.TickType;
-import demonmodders.Crymod.Common.Karma.PlayerKarma;
-import demonmodders.Crymod.Common.PlayerInfo.PlayerInfo;
+import demonmodders.crymod.common.karma.PlayerKarma;
+import demonmodders.crymod.common.playerinfo.PlayerInfo;
 
 public class ClientTickHandler extends Gui implements ITickHandler {
 
@@ -45,7 +45,7 @@ public class ClientTickHandler extends Gui implements ITickHandler {
 		mc.entityRenderer.setupOverlayRendering();
 		GL11.glColor3f(1, 1, 1);
         if (type.contains(TickType.RENDER) && mc.theWorld != null && clientPlayerInfo != null && (mc.currentScreen == null || mc.currentScreen instanceof GuiChat)) {
-			GL11.glBindTexture(GL11.GL_TEXTURE_2D, mc.renderEngine.getTexture("/crymodResource/tex/gui.png"));
+			GL11.glBindTexture(GL11.GL_TEXTURE_2D, mc.renderEngine.getTexture("/demonmodders/crymod/resource/tex/gui.png"));
 			int barXStart = width / 2 - 182 / 2;
 			
 			// background of the bar

@@ -1,4 +1,4 @@
-package demonmodders.Crymod.Common.Inventory;
+package demonmodders.crymod.common.inventory;
 
 import java.util.Arrays;
 import java.util.List;

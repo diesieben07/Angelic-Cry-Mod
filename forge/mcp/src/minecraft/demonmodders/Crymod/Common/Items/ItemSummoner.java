@@ -1,4 +1,4 @@
-package demonmodders.Crymod.Common.Items;
+package demonmodders.crymod.common.items;
 
 import java.util.List;
 
@@ -8,8 +8,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import demonmodders.Crymod.Common.Crymod;
-import demonmodders.Crymod.Common.Gui.GuiType;
+import demonmodders.crymod.common.Crymod;
+import demonmodders.crymod.common.gui.GuiType;
 
 public class ItemSummoner extends ItemCryMod {
 	

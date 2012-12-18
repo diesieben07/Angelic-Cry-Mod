@@ -1,4 +1,4 @@
-package demonmodders.Crymod.Client;
+package demonmodders.crymod.client;
 
 import java.net.URL;
 
@@ -23,6 +23,6 @@ public class ClientEventHandler {
 	}
 		
 	private URL getSound(String sound) {
-		return getClass().getResource("/crymodResource/sound/" + sound + ".ogg");
+		return getClass().getResource("/demonmodders/crymod/resource/sound/" + sound + ".ogg");
 	}
 }

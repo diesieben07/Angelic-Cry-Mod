@@ -1,4 +1,4 @@
-package demonmodders.Crymod.Client.FX;
+package demonmodders.crymod.client.fx;
 
 import net.minecraft.client.renderer.RenderEngine;
 import net.minecraft.world.World;

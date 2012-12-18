@@ -1,15 +1,15 @@
-package demonmodders.Crymod.Client.Gui;
+package demonmodders.crymod.client.gui;
 
-import static demonmodders.Crymod.Common.Gui.ContainerSummoner.BUTTON_NEXT_PAGE;
-import static demonmodders.Crymod.Common.Gui.ContainerSummoner.BUTTON_PREV_PAGE;
-import static demonmodders.Crymod.Common.Gui.ContainerSummoner.BUTTON_SUMMON;
+import static demonmodders.crymod.common.gui.ContainerSummoner.BUTTON_NEXT_PAGE;
+import static demonmodders.crymod.common.gui.ContainerSummoner.BUTTON_PREV_PAGE;
+import static demonmodders.crymod.common.gui.ContainerSummoner.BUTTON_SUMMON;
 import net.minecraft.client.gui.GuiButton;
 
 import org.lwjgl.opengl.GL11;
 
-import demonmodders.Crymod.Common.Gui.ContainerSummoner;
-import demonmodders.Crymod.Common.Inventory.InventorySummoner;
-import demonmodders.Crymod.Common.Recipes.SummoningEntityList;
+import demonmodders.crymod.common.gui.ContainerSummoner;
+import demonmodders.crymod.common.inventory.InventorySummoner;
+import demonmodders.crymod.common.recipes.SummoningEntityList;
 
 public class GuiSummoner extends AbstractGuiContainer<ContainerSummoner, InventorySummoner> {
 

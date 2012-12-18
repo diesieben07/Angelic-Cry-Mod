@@ -1,11 +1,11 @@
-package demonmodders.Crymod.Common.Items;
+package demonmodders.crymod.common.items;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.item.EnumToolMaterial;
 import net.minecraft.item.ItemStack;
-import demonmodders.Crymod.Common.Network.PacketClientEffect;
-import demonmodders.Crymod.Common.Network.PacketClientEffect.Type;
+import demonmodders.crymod.common.network.PacketClientEffect;
+import demonmodders.crymod.common.network.PacketClientEffect.Type;
 
 public class ItemSwordOfDarkness extends ItemCrymodSword {
 

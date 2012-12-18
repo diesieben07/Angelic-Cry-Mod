@@ -1,4 +1,4 @@
-package demonmodders.Crymod.Common.Gui;
+package demonmodders.crymod.common.gui;
 
 public enum GuiType {
 	SUMMONING_BOOK, EVIL_TABLET, RECHARGE_STATION, CRYSTAL_BAG;

@@ -1,9 +1,9 @@
-package demonmodders.Crymod.Common.Recipes;
+package demonmodders.crymod.common.recipes;
 
 import java.util.List;
 
 import net.minecraft.item.ItemStack;
-import demonmodders.Crymod.Common.Entities.SummonableBase;
+import demonmodders.crymod.common.entities.SummonableBase;
 
 public class SummoningEntityListEntry {
 	private final ItemStack[] stacks;

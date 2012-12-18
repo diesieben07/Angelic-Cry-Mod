@@ -1,8 +1,8 @@
-package demonmodders.Crymod.Common.Karma;
+package demonmodders.crymod.common.karma;
 
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
-import demonmodders.Crymod.Common.PlayerInfo.PlayerInfo;
+import demonmodders.crymod.common.playerinfo.PlayerInfo;
 
 public class PlayerKarma {
 	

@@ -1,4 +1,4 @@
-package demonmodders.Crymod.Common.Blocks;
+package demonmodders.crymod.common.blocks;
 
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.EntityLiving;
@@ -9,9 +9,9 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import demonmodders.Crymod.Common.Crymod;
-import demonmodders.Crymod.Common.Gui.GuiType;
-import demonmodders.Crymod.Common.TileEntities.TileEntityRechargeStation;
+import demonmodders.crymod.common.Crymod;
+import demonmodders.crymod.common.gui.GuiType;
+import demonmodders.crymod.common.tileentities.TileEntityRechargeStation;
 
 public class BlockRechargeStation extends BlockCryMod {
 

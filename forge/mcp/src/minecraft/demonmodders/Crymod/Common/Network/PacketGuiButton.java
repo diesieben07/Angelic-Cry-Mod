@@ -1,4 +1,4 @@
-package demonmodders.Crymod.Common.Network;
+package demonmodders.crymod.common.network;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
@@ -7,7 +7,7 @@ import com.google.common.io.ByteArrayDataInput;
 import com.google.common.io.ByteArrayDataOutput;
 
 import cpw.mods.fml.relauncher.Side;
-import demonmodders.Crymod.Common.Gui.AbstractContainer;
+import demonmodders.crymod.common.gui.AbstractContainer;
 
 public class PacketGuiButton extends CrymodPacket {
 

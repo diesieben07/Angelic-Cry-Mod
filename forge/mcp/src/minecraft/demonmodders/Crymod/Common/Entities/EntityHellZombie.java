@@ -1,4 +1,4 @@
-package demonmodders.Crymod.Common.Entities;
+package demonmodders.crymod.common.entities;
 
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.world.World;
@@ -7,7 +7,7 @@ public class EntityHellZombie extends ZombieBase {
 
 	public EntityHellZombie(World world) {
 		super(world);
-		texture = "/crymodResource/tex/mob/hellZombie.png";
+		texture = "/demonmodders/crymod/resource/tex/mob/hellZombie.png";
 	}
 
 	@Override

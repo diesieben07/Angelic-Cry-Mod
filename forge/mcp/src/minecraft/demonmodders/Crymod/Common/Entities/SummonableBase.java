@@ -1,4 +1,4 @@
-package demonmodders.Crymod.Common.Entities;
+package demonmodders.crymod.common.entities;
 
 import net.minecraft.entity.EntityCreature;
 import net.minecraft.entity.player.EntityPlayer;

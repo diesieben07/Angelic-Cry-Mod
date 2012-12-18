@@ -1,11 +1,11 @@
-package demonmodders.Crymod.Client.Gui;
+package demonmodders.crymod.client.gui;
 
 import net.minecraft.util.StringTranslate;
 
 import org.lwjgl.opengl.GL11;
 
-import demonmodders.Crymod.Common.Gui.ContainerCrystalBag;
-import demonmodders.Crymod.Common.Inventory.InventoryCrystalBag;
+import demonmodders.crymod.common.gui.ContainerCrystalBag;
+import demonmodders.crymod.common.inventory.InventoryCrystalBag;
 
 public class GuiCrystalBag extends AbstractGuiContainer<ContainerCrystalBag, InventoryCrystalBag> {
 
@@ -21,7 +21,7 @@ public class GuiCrystalBag extends AbstractGuiContainer<ContainerCrystalBag, Inv
 	
 	@Override
 	protected void drawGuiContainerBackgroundLayer(float var1, int var2, int var3) {
-		int texture = mc.renderEngine.getTexture("/crymodResource/tex/crystalBag.png");
+		int texture = mc.renderEngine.getTexture("/demonmodders/crymod/resource/tex/crystalBag.png");
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
         mc.renderEngine.bindTexture(texture);
         int xPos = (this.width - this.xSize) / 2;

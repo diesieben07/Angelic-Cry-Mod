@@ -1,4 +1,4 @@
-package demonmodders.Crymod.Common.Inventory;
+package demonmodders.crymod.common.inventory;
 
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;

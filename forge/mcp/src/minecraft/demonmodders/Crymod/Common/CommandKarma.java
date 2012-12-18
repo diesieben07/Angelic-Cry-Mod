@@ -1,11 +1,11 @@
-package demonmodders.Crymod.Common;
+package demonmodders.crymod.common;
 
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.command.WrongUsageException;
 import net.minecraft.entity.player.EntityPlayerMP;
-import demonmodders.Crymod.Common.Karma.PlayerKarma;
-import demonmodders.Crymod.Common.PlayerInfo.PlayerInfo;
+import demonmodders.crymod.common.karma.PlayerKarma;
+import demonmodders.crymod.common.playerinfo.PlayerInfo;
 
 public class CommandKarma extends CommandBase {
 

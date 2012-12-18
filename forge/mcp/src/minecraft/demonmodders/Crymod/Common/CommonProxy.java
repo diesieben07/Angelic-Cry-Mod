@@ -1,10 +1,10 @@
-package demonmodders.Crymod.Common;
+package demonmodders.crymod.common;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.world.World;
-import demonmodders.Crymod.Common.Network.PacketClientEffect;
-import demonmodders.Crymod.Common.PlayerInfo.PlayerInfo;
+import demonmodders.crymod.common.network.PacketClientEffect;
+import demonmodders.crymod.common.playerinfo.PlayerInfo;
 
 public class CommonProxy {
 	public void preInit() {

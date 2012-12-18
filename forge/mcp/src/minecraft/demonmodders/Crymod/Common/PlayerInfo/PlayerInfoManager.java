@@ -1,4 +1,4 @@
-package demonmodders.Crymod.Common.PlayerInfo;
+package demonmodders.crymod.common.playerinfo;
 
 import net.minecraft.entity.player.EntityPlayer;
 import cpw.mods.fml.common.IPlayerTracker;

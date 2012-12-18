@@ -1,4 +1,4 @@
-package demonmodders.Crymod.Client;
+package demonmodders.crymod.client;
 
 import net.minecraft.client.model.ModelBiped;
 import net.minecraft.client.renderer.entity.RenderLiving;

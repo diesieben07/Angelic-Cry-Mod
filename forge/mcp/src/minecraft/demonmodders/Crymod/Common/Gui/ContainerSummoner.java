@@ -1,6 +1,6 @@
-package demonmodders.Crymod.Common.Gui;
+package demonmodders.crymod.common.gui;
 
-import static demonmodders.Crymod.Common.Crymod.logger;
+import static demonmodders.crymod.common.Crymod.logger;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,13 +13,13 @@ import net.minecraft.inventory.Slot;
 import net.minecraft.util.ChunkCoordinates;
 import net.minecraft.world.World;
 import cpw.mods.fml.relauncher.Side;
-import demonmodders.Crymod.Common.Entities.SummonableBase;
-import demonmodders.Crymod.Common.Inventory.InventorySummoner;
-import demonmodders.Crymod.Common.Inventory.SlotForItem;
-import demonmodders.Crymod.Common.Items.ItemCryMod;
-import demonmodders.Crymod.Common.Network.PacketClientEffect;
-import demonmodders.Crymod.Common.Network.PacketClientEffect.Type;
-import demonmodders.Crymod.Common.Recipes.SummoningEntityList;
+import demonmodders.crymod.common.entities.SummonableBase;
+import demonmodders.crymod.common.inventory.InventorySummoner;
+import demonmodders.crymod.common.inventory.SlotForItem;
+import demonmodders.crymod.common.items.ItemCryMod;
+import demonmodders.crymod.common.network.PacketClientEffect;
+import demonmodders.crymod.common.network.PacketClientEffect.Type;
+import demonmodders.crymod.common.recipes.SummoningEntityList;
 
 public class ContainerSummoner extends AbstractContainer<InventorySummoner> {
 

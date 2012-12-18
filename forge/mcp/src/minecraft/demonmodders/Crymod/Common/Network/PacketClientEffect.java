@@ -1,11 +1,11 @@
-package demonmodders.Crymod.Common.Network;
+package demonmodders.crymod.common.network;
 
 import net.minecraft.entity.player.EntityPlayer;
 
 import com.google.common.io.ByteArrayDataInput;
 import com.google.common.io.ByteArrayDataOutput;
 
-import demonmodders.Crymod.Common.Crymod;
+import demonmodders.crymod.common.Crymod;
 
 public class PacketClientEffect extends CrymodPacket {
 

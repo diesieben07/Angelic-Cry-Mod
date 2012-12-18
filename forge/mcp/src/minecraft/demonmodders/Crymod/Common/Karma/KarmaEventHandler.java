@@ -1,6 +1,6 @@
-package demonmodders.Crymod.Common.Karma;
+package demonmodders.crymod.common.karma;
 
-import static demonmodders.Crymod.Common.PlayerInfo.PlayerInfo.playerKarma;
+import static demonmodders.crymod.common.playerinfo.PlayerInfo.playerKarma;
 
 import java.util.Arrays;
 import java.util.EnumSet;
@@ -47,7 +47,7 @@ import cpw.mods.fml.common.TickType;
 import cpw.mods.fml.common.registry.TickRegistry;
 import cpw.mods.fml.relauncher.ReflectionHelper;
 import cpw.mods.fml.relauncher.Side;
-import demonmodders.Crymod.Common.Karma.PlayerKarma.CountableKarmaEvent;
+import demonmodders.crymod.common.karma.PlayerKarma.CountableKarmaEvent;
 
 public class KarmaEventHandler implements ITickHandler {
 	

@@ -1,4 +1,4 @@
-package demonmodders.Crymod.Common.Entities;
+package demonmodders.crymod.common.entities;
 
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.ai.EntityAIAttackOnCollide;
@@ -8,7 +8,7 @@ import net.minecraft.entity.ai.EntityAINearestAttackableTarget;
 import net.minecraft.entity.ai.EntityAISwimming;
 import net.minecraft.entity.ai.EntityAIWander;
 import net.minecraft.world.World;
-import demonmodders.Crymod.Common.Entities.Ai.EntityAIFollowOwner;
+import demonmodders.crymod.common.entities.ai.EntityAIFollowOwner;
 
 public abstract class ZombieBase extends SummonableBase {
 	

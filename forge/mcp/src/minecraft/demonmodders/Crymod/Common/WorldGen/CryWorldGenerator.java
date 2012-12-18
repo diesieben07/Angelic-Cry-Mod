@@ -1,4 +1,4 @@
-package demonmodders.Crymod.Common.WorldGen;
+package demonmodders.crymod.common.worldgen;
  
 import java.util.Random;
 

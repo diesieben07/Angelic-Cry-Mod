@@ -1,7 +1,7 @@
-package demonmodders.Crymod.Common;
+package demonmodders.crymod.common;
 
-import static demonmodders.Crymod.Common.Crymod.conf;
-import static demonmodders.Crymod.Common.Crymod.logger;
+import static demonmodders.crymod.common.Crymod.conf;
+import static demonmodders.crymod.common.Crymod.logger;
 import static net.minecraftforge.common.Configuration.CATEGORY_GENERAL;
 
 import java.io.IOException;
@@ -16,10 +16,10 @@ public class LanguageLoader {
 	
 	public static void loadLanguages() {
 		String language = conf.get(CATEGORY_GENERAL, "language", DEFAULT_LANGUAGE).value;
-		InputStream stream = LanguageLoader.class.getResourceAsStream("/crymodResource/lang/" + language + ".lang");
+		InputStream stream = LanguageLoader.class.getResourceAsStream("/demonmodders/crymod/resource/lang/" + language + ".lang");
 		if (stream == null) {
 			logger.warning("Language " + language + " not found. Using default.");
-			stream = LanguageLoader.class.getResourceAsStream("/crymodResource/lang/" + DEFAULT_LANGUAGE + ".lang");
+			stream = LanguageLoader.class.getResourceAsStream("/demonmodders/crymod/resource/lang/" + DEFAULT_LANGUAGE + ".lang");
 		}
 		
 		PropertyReader reader = new PropertyReader(stream);
