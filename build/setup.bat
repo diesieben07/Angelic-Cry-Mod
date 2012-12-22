@@ -21,7 +21,7 @@ echo.  Merging forge workspace with repo...
 REM Goto repo root dir
 cd ..\..\..
 
-xcopy build\temp\*.* . /E /Y
+%windir%\system32\xcopy build\temp\*.* . /E /Y
 
 PAUSE
 EXIT
