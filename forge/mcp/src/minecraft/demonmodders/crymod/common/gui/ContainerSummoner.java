@@ -1,25 +1,15 @@
 package demonmodders.crymod.common.gui;
 
-import static demonmodders.crymod.common.Crymod.logger;
-
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Slot;
-import net.minecraft.util.ChunkCoordinates;
-import net.minecraft.world.World;
 import cpw.mods.fml.relauncher.Side;
-import demonmodders.crymod.common.entities.SummonableBase;
 import demonmodders.crymod.common.inventory.InventorySummoner;
 import demonmodders.crymod.common.inventory.SlotForItem;
 import demonmodders.crymod.common.items.ItemCryMod;
-import demonmodders.crymod.common.network.PacketClientEffect;
-import demonmodders.crymod.common.network.PacketClientEffect.Type;
-import demonmodders.crymod.common.recipes.SummoningEntityList;
 
 public class ContainerSummoner extends AbstractContainer<InventorySummoner> {
 
@@ -30,12 +20,13 @@ public class ContainerSummoner extends AbstractContainer<InventorySummoner> {
 	public static final int BUTTON_NEXT_PAGE = 0;
 	public static final int BUTTON_PREV_PAGE = 1;
 	public static final int BUTTON_SUMMON = 2;
+	public static final int NUM_PAGES = 3;
 	
 	private int currentPage = 0;
 	
 	public ContainerSummoner(InventorySummoner inventory, InventoryPlayer inventoryPlayer) {
 		super(inventory);
-		for (int i = 0; i < SummoningEntityList.getNumSummonings(inventory.getShowAngels()); i++) {
+		for (int i = 0; i < NUM_PAGES; i++) {
 			addSlotsForPage(i);
 		}		
 		
@@ -66,7 +57,7 @@ public class ContainerSummoner extends AbstractContainer<InventorySummoner> {
 	}
 	
 	public void setCurrentPage(int page) {
-		if (page >= SummoningEntityList.getNumSummonings(inventory.getShowAngels()) || page < 0) {
+		if (page >= NUM_PAGES || page < 0) {
 			return;
 		}
 		
@@ -97,9 +88,8 @@ public class ContainerSummoner extends AbstractContainer<InventorySummoner> {
 			break;
 		case BUTTON_SUMMON:
 			if (side.isServer()) {
-				try {
+				/*try {
 					SummonableBase entity = SummoningEntityList.getSummonings(inventory.getShowAngels()).get(currentPage).getDemon().getConstructor(World.class).newInstance(player.worldObj);
-					
 					final int spawnRadiusX = 5;
 					final int spawnRadiusY = 5;
 					final int spawnRadiusZ = 5;
@@ -128,7 +118,7 @@ public class ContainerSummoner extends AbstractContainer<InventorySummoner> {
 					}
 				} catch (Exception e) {
 					logger.warning("Invalid Entity for Summoning!");
-				}
+				}*/
 			}
 			break;
 		}

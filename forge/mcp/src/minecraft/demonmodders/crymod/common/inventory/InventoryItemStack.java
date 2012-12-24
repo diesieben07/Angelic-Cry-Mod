@@ -44,26 +44,12 @@ public abstract class InventoryItemStack extends AbstractInventory {
 			theStack.stackTagCompound = new NBTTagCompound();
 		}
 		
-		NBTTagList slotList = theStack.stackTagCompound.getTagList("slots");
-		for (int i = 0; i < slotList.tagCount(); i++) {
-			NBTTagCompound slotCompound = (NBTTagCompound)slotList.tagAt(i);
-			int slot = slotCompound.getInteger("slot");
-			stacks[slot] = ItemStack.loadItemStackFromNBT(slotCompound);
-		}
+		readFromNbt(theStack.stackTagCompound);
 	}
 
 	@Override
 	public void closeChest() {
-		NBTTagList slotList = new NBTTagList();
-		for (int i = 0; i < stacks.length; i++) {
-			if (stacks[i] != null) {
-				NBTTagCompound slotCompound = new NBTTagCompound();
-				slotCompound.setInteger("slot", i);
-				stacks[i].writeToNBT(slotCompound);
-				slotList.appendTag(slotCompound);
-			}
-		}
-		theStack.stackTagCompound.setTag("slots", slotList);
+		writeToNbt(theStack.stackTagCompound);
 		saveItemStack();
 	}
 	

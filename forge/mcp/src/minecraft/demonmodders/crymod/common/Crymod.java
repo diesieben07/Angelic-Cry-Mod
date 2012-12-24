@@ -5,6 +5,7 @@ import java.util.logging.Logger;
 
 import net.minecraft.entity.Entity;
 import net.minecraftforge.common.Configuration;
+import net.minecraftforge.common.MinecraftForge;
 import cpw.mods.fml.common.FMLLog;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.Init;
@@ -32,6 +33,7 @@ import demonmodders.crymod.common.karma.PlayerPowersHandler;
 import demonmodders.crymod.common.network.CrymodPacket;
 import demonmodders.crymod.common.network.CrymodPacketHandler;
 import demonmodders.crymod.common.playerinfo.PlayerInfo;
+import demonmodders.crymod.common.tileentities.TileEntityEnderbook;
 import demonmodders.crymod.common.tileentities.TileEntityRechargeStation;
 import demonmodders.crymod.common.worldgen.CryWorldGenerator;
 
@@ -78,6 +80,7 @@ public class Crymod {
 		KarmaEventHandler.init();
 		PlayerPowersHandler.init();
 		PlayerInfo.init();
+		MinecraftForge.EVENT_BUS.register(new EventHandler());
 				
 		GameRegistry.registerWorldGenerator(new CryWorldGenerator());
 		
@@ -99,6 +102,7 @@ public class Crymod {
 		BlockCryMod.createBlocks();
 		
 		GameRegistry.registerTileEntity(TileEntityRechargeStation.class, "crymodRechargeStation");
+		GameRegistry.registerTileEntity(TileEntityEnderbook.class, "crymodEnderbook");
 		
 		proxy.init();
 	}

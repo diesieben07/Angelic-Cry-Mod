@@ -13,13 +13,17 @@ import cpw.mods.fml.common.registry.TickRegistry;
 import cpw.mods.fml.relauncher.Side;
 import demonmodders.crymod.client.fx.EntitySummonFX;
 import demonmodders.crymod.client.gui.GuiCrystalBag;
+import demonmodders.crymod.client.gui.GuiEnderBook;
 import demonmodders.crymod.client.gui.GuiRechargeStation;
+import demonmodders.crymod.client.gui.GuiRecipePage;
 import demonmodders.crymod.client.gui.GuiSummoner;
 import demonmodders.crymod.common.CommonProxy;
 import demonmodders.crymod.common.Crymod;
 import demonmodders.crymod.common.entities.ZombieBase;
 import demonmodders.crymod.common.gui.ContainerCrystalBag;
+import demonmodders.crymod.common.gui.ContainerEnderBook;
 import demonmodders.crymod.common.gui.ContainerRechargeStation;
+import demonmodders.crymod.common.gui.ContainerRecipePage;
 import demonmodders.crymod.common.gui.ContainerSummoner;
 import demonmodders.crymod.common.gui.GuiType;
 import demonmodders.crymod.common.items.ItemCryMod;
@@ -68,6 +72,10 @@ public class ClientProxy extends CommonProxy {
 			return new GuiRechargeStation((ContainerRechargeStation)container);
 		case CRYSTAL_BAG:
 			return new GuiCrystalBag((ContainerCrystalBag)container);
+		case ENDER_BOOK:
+			return new GuiEnderBook((ContainerEnderBook)container);
+		case RECIPE_PAGE:
+			return new GuiRecipePage((ContainerRecipePage)container);
 		default:
 			return null;
 		}

@@ -9,7 +9,6 @@ import org.lwjgl.opengl.GL11;
 
 import demonmodders.crymod.common.gui.ContainerSummoner;
 import demonmodders.crymod.common.inventory.InventorySummoner;
-import demonmodders.crymod.common.recipes.SummoningEntityList;
 
 public class GuiSummoner extends AbstractGuiContainer<ContainerSummoner, InventorySummoner> {
 
@@ -45,17 +44,17 @@ public class GuiSummoner extends AbstractGuiContainer<ContainerSummoner, Invento
 		controlList.add(new GuiButton(BUTTON_SUMMON, width / 2 - EFFECTIVE_WIDTH / 2 + 49, height / 2 - EFFECTIVE_HEIGHT / 2 + 150, 80, 20, "Summon"));
 	}
 
-	@Override
+	/*@Override
 	protected void drawGuiContainerBackgroundLayer(float var1, int var2, int var3) {
 		int textureName = mc.renderEngine.getTexture(texture);
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
         mc.renderEngine.bindTexture(textureName);
         drawTexturedModalRect(width / 2 - EFFECTIVE_WIDTH / 2, height / 2 - EFFECTIVE_HEIGHT / 2, 0, 0, EFFECTIVE_WIDTH, EFFECTIVE_HEIGHT);
-	}
+	}*/
 
 	@Override
 	protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
-		String demonName = SummoningEntityList.getSummonings(container.getInventoryInstance().getShowAngels()).get(container.page()).getDemonName();
+		String demonName = "foo";//SummoningEntityList.getSummonings(container.getInventoryInstance().getShowAngels()).get(container.page()).getDemonName();
 		int demonNameWidth = fontRenderer.getStringWidth(demonName);
 		fontRenderer.drawString(demonName, HEADING_TEXT_FIELD_X_POSITION, HEADING_TEXT_FIELD_Y_POSITION, 0xffffff);
 	}
@@ -66,5 +65,10 @@ public class GuiSummoner extends AbstractGuiContainer<ContainerSummoner, Invento
 		if (button.id == BUTTON_SUMMON) {
 			mc.displayGuiScreen(null);
 		}
+	}
+
+	@Override
+	String getTextureFile() {
+		return texture;
 	}
 }

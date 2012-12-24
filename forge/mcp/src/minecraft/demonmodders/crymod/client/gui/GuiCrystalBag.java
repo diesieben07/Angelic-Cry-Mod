@@ -18,15 +18,9 @@ public class GuiCrystalBag extends AbstractGuiContainer<ContainerCrystalBag, Inv
 		fontRenderer.drawString(StringTranslate.getInstance().translateKey("item.crystalBag.name"), 60, 6, 0x404040);
 		fontRenderer.drawString(StringTranslate.getInstance().translateKey("container.inventory"), 8, ySize - 94, 0x404040);
 	}
-	
-	@Override
-	protected void drawGuiContainerBackgroundLayer(float var1, int var2, int var3) {
-		int texture = mc.renderEngine.getTexture("/demonmodders/crymod/resource/tex/crystalBag.png");
-        GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-        mc.renderEngine.bindTexture(texture);
-        int xPos = (this.width - this.xSize) / 2;
-        int yPos = (this.height - this.ySize) / 2;
-        drawTexturedModalRect(xPos, yPos, 0, 0, this.xSize, this.ySize);
-	}
 
+	@Override
+	String getTextureFile() {
+		return "/demonmodders/crymod/resource/tex/crystalBag.png";
+	}
 }

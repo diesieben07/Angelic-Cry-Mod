@@ -6,7 +6,9 @@ import net.minecraft.inventory.Container;
 import net.minecraft.world.World;
 import cpw.mods.fml.common.network.IGuiHandler;
 import demonmodders.crymod.common.inventory.InventoryCrystalBag;
+import demonmodders.crymod.common.inventory.InventoryEnderBook;
 import demonmodders.crymod.common.inventory.InventorySummoner;
+import demonmodders.crymod.common.recipes.SummoningRecipe;
 import demonmodders.crymod.common.tileentities.TileEntityRechargeStation;
 
 public class CrymodGuiHandler implements IGuiHandler {
@@ -21,6 +23,10 @@ public class CrymodGuiHandler implements IGuiHandler {
 			return new ContainerRechargeStation((TileEntityRechargeStation)world.getBlockTileEntity(x, y, z), player.inventory);
 		case CRYSTAL_BAG:
 			return new ContainerCrystalBag(new InventoryCrystalBag(player.getCurrentEquippedItem(), player), player.inventory);
+		case ENDER_BOOK:
+			return new ContainerEnderBook(new InventoryEnderBook(player), player.inventory);
+		case RECIPE_PAGE:
+			return new ContainerRecipePage(SummoningRecipe.fromDamage(player.getCurrentEquippedItem()));
 		default:
 			return null;
 		}

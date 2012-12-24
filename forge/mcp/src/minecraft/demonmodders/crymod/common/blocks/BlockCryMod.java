@@ -16,9 +16,11 @@ import demonmodders.crymod.common.tileentities.TileEntityInventory;
 public class BlockCryMod extends Block {
 	
 	public static Block rechargeStation;
+	public static Block enderBook;
 	
 	public static void createBlocks() {
 		rechargeStation = new BlockRechargeStation("rechargeStation", 3956).setRequiresSelfNotify();
+		enderBook = new BlockEnderBook("enderBook", 3957);
 	}
 	
 	private final Random rand = new Random();

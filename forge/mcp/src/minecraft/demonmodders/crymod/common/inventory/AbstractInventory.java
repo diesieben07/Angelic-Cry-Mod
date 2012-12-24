@@ -2,6 +2,8 @@ package demonmodders.crymod.common.inventory;
 
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
 
 public abstract class AbstractInventory implements IInventory {
 
@@ -15,7 +17,7 @@ public abstract class AbstractInventory implements IInventory {
 		}
 	}
 	
-	ItemStack[] stacks;
+	protected ItemStack[] stacks;
 	
 	@Override
 	public ItemStack getStackInSlot(int slot) {
@@ -57,4 +59,26 @@ public abstract class AbstractInventory implements IInventory {
 
 	@Override
 	public void closeChest() { }
+	
+	final void readFromNbt(NBTTagCompound nbt) {
+		NBTTagList slotList = nbt.getTagList("slots");
+		for (int i = 0; i < slotList.tagCount(); i++) {
+			NBTTagCompound slotCompound = (NBTTagCompound)slotList.tagAt(i);
+			int slot = slotCompound.getInteger("slot");
+			stacks[slot] = ItemStack.loadItemStackFromNBT(slotCompound);
+		}
+	}
+	
+	final void writeToNbt(NBTTagCompound nbt) {
+		NBTTagList slotList = new NBTTagList();
+		for (int i = 0; i < stacks.length; i++) {
+			if (stacks[i] != null) {
+				NBTTagCompound slotCompound = new NBTTagCompound();
+				slotCompound.setInteger("slot", i);
+				stacks[i].writeToNBT(slotCompound);
+				slotList.appendTag(slotCompound);
+			}
+		}
+		nbt.setTag("slots", slotList);
+	}
 }

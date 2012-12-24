@@ -10,6 +10,7 @@ item.crymod_crystal.blue.name:Icy Crystal
 item.crymod_recipeBook.name:Recipe Book
 item.crymod_crystalBag.name:Crystal Bag
 item.crymod_swordOfDarkness.name:Sword of Darkness
+item.crymod_recipePage.name:Recipe Page
 
 tile.crymod_rechargeStation.name:Recharge Station
 

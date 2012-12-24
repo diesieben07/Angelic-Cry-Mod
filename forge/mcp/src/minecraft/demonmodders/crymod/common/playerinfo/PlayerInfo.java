@@ -12,15 +12,20 @@ import demonmodders.crymod.common.network.PacketPlayerInfo;
 
 public final class PlayerInfo {
 	
-	private static Map<EntityPlayer, PlayerInfo> infoMap = new HashMap<EntityPlayer, PlayerInfo>();
+	private static Map<String, PlayerInfo> infoMap = new HashMap<String, PlayerInfo>();
 	
 	public static PlayerInfo forPlayer(EntityPlayer player) {
 		if (!infoMap.containsKey(player)) {
-			infoMap.put(player, new PlayerInfo(player));
+			infoMap.put(player.username, new PlayerInfo(player));
 		}
-		return infoMap.get(player);
+		return infoMap.get(player.username);
 	}
 	
+	/**
+	 * Utility method to get the PlayerKarma instance for a player
+	 * @param player
+	 * @return
+	 */
 	public static PlayerKarma playerKarma(EntityPlayer player) {
 		return forPlayer(player).getKarma();
 	}
@@ -29,21 +34,8 @@ public final class PlayerInfo {
 		GameRegistry.registerPlayerTracker(new IPlayerTracker() {
 			
 			@Override
-			public void onPlayerRespawn(EntityPlayer player) {
-				EntityPlayer oldPlayer = null;
-				for (EntityPlayer oldPlayerSearch : infoMap.keySet()) {
-					if (oldPlayerSearch.username.equals(player.username)) {
-						oldPlayer = oldPlayerSearch;
-					}
-				}
-				if (oldPlayer != null) {
-					infoMap.remove(oldPlayer);
-				}
-			}
-			
-			@Override
 			public void onPlayerLogout(EntityPlayer player) {
-				infoMap.remove(player).updatePlayerNbt();
+				infoMap.remove(player.username).updatePlayerNbt();
 			}
 			
 			@Override
@@ -53,6 +45,8 @@ public final class PlayerInfo {
 			
 			@Override
 			public void onPlayerChangedDimension(EntityPlayer player) { }
+			@Override
+			public void onPlayerRespawn(EntityPlayer player) { }
 		});
 	}
 	
