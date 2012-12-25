@@ -68,76 +68,94 @@ public class TileEntityEnderbook extends TileEntity {
 			return;
 		}
 		
-		bookSpreadPrev = bookSpread;
+		this.bookSpreadPrev = this.bookSpread;
         this.bookRotationPrev = this.bookRotation2;
-        EntityPlayer closestPlayer = worldObj.getClosestPlayer(xCoord + 0.5F, yCoord + 0.5F, zCoord + 0.5F, 3);
+        EntityPlayer var1 = this.worldObj.getClosestPlayer((double)((float)this.xCoord + 0.5F), (double)((float)this.yCoord + 0.5F), (double)((float)this.zCoord + 0.5F), 3.0D);
 
-        if (closestPlayer != null) {
-        	double distanceX = closestPlayer.posX - xCoord + 0.5F;
-            double distanceY = closestPlayer.posZ - zCoord + 0.5F;
-            bookRotation = (float)Math.atan2(distanceY, distanceX);
-            bookSpread += 0.1F;
-            
-            if (bookSpread < 0.5F || rand.nextInt(40) == 0) {
-                float var6 = field_70373_d;
+        if (var1 != null)
+        {
+            double var2 = var1.posX - (double)((float)this.xCoord + 0.5F);
+            double var4 = var1.posZ - (double)((float)this.zCoord + 0.5F);
+            this.bookRotation = (float)Math.atan2(var4, var2);
+            this.bookSpread += 0.1F;
 
-                do {
-                	field_70373_d += rand.nextInt(4) - rand.nextInt(4);
-                } while (var6 == this.field_70373_d);
+            if (this.bookSpread < 0.5F || rand.nextInt(40) == 0)
+            {
+                float var6 = this.field_70373_d;
+
+                do
+                {
+                    this.field_70373_d += (float)(rand.nextInt(4) - rand.nextInt(4));
+                }
+                while (var6 == this.field_70373_d);
             }
-        } else {
-            bookRotation += 0.02F;
-            bookSpread -= 0.1F;
+        }
+        else
+        {
+            this.bookRotation += 0.02F;
+            this.bookSpread -= 0.1F;
         }
 
-        while (bookRotation2 >= Math.PI) {
-            bookRotation2 -= Math.PI * 2;
+        while (this.bookRotation2 >= (float)Math.PI)
+        {
+            this.bookRotation2 -= ((float)Math.PI * 2F);
         }
 
-        while (bookRotation2 < -Math.PI) {
-            bookRotation2 += Math.PI * 2;
+        while (this.bookRotation2 < -(float)Math.PI)
+        {
+            this.bookRotation2 += ((float)Math.PI * 2F);
         }
 
-        while (bookRotation >= Math.PI) {
-            bookRotation -= Math.PI * 2;
+        while (this.bookRotation >= (float)Math.PI)
+        {
+            this.bookRotation -= ((float)Math.PI * 2F);
         }
 
-        while (bookRotation < -Math.PI) {
-            bookRotation += Math.PI * 2;
+        while (this.bookRotation < -(float)Math.PI)
+        {
+            this.bookRotation += ((float)Math.PI * 2F);
         }
 
         float var7;
 
-        for (var7 = bookRotation - bookRotation2; var7 >= Math.PI; var7 -= Math.PI * 2) { }
-
-        while (var7 < -Math.PI) {
-            var7 += Math.PI * 2;
+        for (var7 = this.bookRotation - this.bookRotation2; var7 >= (float)Math.PI; var7 -= ((float)Math.PI * 2F))
+        {
+            ;
         }
 
-        bookRotation2 += var7 * 0.4F;
-
-        if (bookSpread < 0.0F) {
-            bookSpread = 0.0F;
+        while (var7 < -(float)Math.PI)
+        {
+            var7 += ((float)Math.PI * 2F);
         }
 
-        if (bookSpread > 1.0F) {
-            bookSpread = 1.0F;
+        this.bookRotation2 += var7 * 0.4F;
+
+        if (this.bookSpread < 0.0F)
+        {
+            this.bookSpread = 0.0F;
         }
 
-        tickCount++;
-        pageFlipPrev = pageFlip;
-        float var3 = (field_70373_d - pageFlip) * 0.4F;
+        if (this.bookSpread > 1.0F)
+        {
+            this.bookSpread = 1.0F;
+        }
+
+        ++this.tickCount;
+        this.pageFlipPrev = this.pageFlip;
+        float var3 = (this.field_70373_d - this.pageFlip) * 0.4F;
         float var8 = 0.2F;
 
-        if (var3 < -var8) {
+        if (var3 < -var8)
+        {
             var3 = -var8;
         }
 
-        if (var3 > var8) {
+        if (var3 > var8)
+        {
             var3 = var8;
         }
 
-        field_70374_e += (var3 - field_70374_e) * 0.9F;
-        pageFlip += field_70374_e;
+        this.field_70374_e += (var3 - this.field_70374_e) * 0.9F;
+        this.pageFlip += this.field_70374_e;
 	}
 }
