@@ -23,6 +23,7 @@ public class BlockEnderBook extends BlockCryMod {
 	public BlockEnderBook(String blockName, int defaultId) {
 		super(blockName, defaultId, 0, Material.rock);
 		setBlockBounds(0, 0, 0, 1, 0.75F, 1);
+		setLightOpacity(0);
 	}
 	
 	@Override

@@ -6,7 +6,7 @@ import net.minecraft.inventory.Container;
 import net.minecraft.world.World;
 import net.minecraftforge.client.MinecraftForgeClient;
 import net.minecraftforge.common.MinecraftForge;
-import cpw.mods.fml.client.FMLClientHandler;
+import cpw.mods.fml.client.registry.ClientRegistry;
 import cpw.mods.fml.client.registry.KeyBindingRegistry;
 import cpw.mods.fml.client.registry.RenderingRegistry;
 import cpw.mods.fml.common.registry.TickRegistry;
@@ -17,6 +17,9 @@ import demonmodders.crymod.client.gui.GuiEnderBook;
 import demonmodders.crymod.client.gui.GuiRechargeStation;
 import demonmodders.crymod.client.gui.GuiRecipePage;
 import demonmodders.crymod.client.gui.GuiSummoner;
+import demonmodders.crymod.client.render.CrymodItemRenderer;
+import demonmodders.crymod.client.render.RenderEnderBook;
+import demonmodders.crymod.client.render.RenderZombieBase;
 import demonmodders.crymod.common.CommonProxy;
 import demonmodders.crymod.common.Crymod;
 import demonmodders.crymod.common.entities.ZombieBase;
@@ -31,6 +34,7 @@ import demonmodders.crymod.common.network.PacketClientEffect;
 import demonmodders.crymod.common.network.PacketEnderBookRecipe;
 import demonmodders.crymod.common.playerinfo.PlayerInfo;
 import demonmodders.crymod.common.recipes.SummoningRecipe;
+import demonmodders.crymod.common.tileentities.TileEntityEnderbook;
 
 public class ClientProxy extends CommonProxy {
 	
@@ -59,6 +63,9 @@ public class ClientProxy extends CommonProxy {
 			for (int i = 0; i < 10; i++) {
 				mc.renderGlobal.spawnParticle("largesmoke", effect.x, effect.y, effect.z, 0, 0, 0);
 			}
+			break;
+		case ENDERBOOK:
+			mc.renderGlobal.spawnParticle("largesmoke", effect.x, effect.y + 1, effect.z, 0, 0, 0);
 			break;
 		}
 	}
@@ -101,6 +108,7 @@ public class ClientProxy extends CommonProxy {
 		KeyBindingRegistry.registerKeyBinding(new CrymodKeyHandler());
 		
 		RenderingRegistry.registerEntityRenderingHandler(ZombieBase.class, new RenderZombieBase());
+		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityEnderbook.class, new RenderEnderBook());
 	}
 
 	@Override

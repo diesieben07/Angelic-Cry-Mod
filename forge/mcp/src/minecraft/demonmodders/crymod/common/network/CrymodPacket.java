@@ -10,12 +10,13 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.network.packet.Packet;
 import net.minecraft.network.packet.Packet250CustomPayload;
+import net.minecraft.server.MinecraftServer;
+import net.minecraft.tileentity.TileEntity;
 
 import com.google.common.io.ByteArrayDataInput;
 import com.google.common.io.ByteArrayDataOutput;
 import com.google.common.io.ByteStreams;
 
-import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.network.PacketDispatcher;
 import cpw.mods.fml.common.network.Player;
 import demonmodders.crymod.common.Crymod;
@@ -61,7 +62,15 @@ public abstract class CrymodPacket {
 	}
 	
 	public final void sendToAllNear(Entity entity, double radius) {
-		FMLCommonHandler.instance().getMinecraftServerInstance().getConfigurationManager().sendToAllNear(entity.posX, entity.posY, entity.posZ, radius, entity.dimension, generatePacket());
+		sendToAllNear(entity.posX, entity.posY, entity.posZ, entity.dimension, radius);
+	}
+	
+	public final void sendToAllNear(TileEntity tileEntity, double radius) {
+		sendToAllNear(tileEntity.xCoord, tileEntity.yCoord, tileEntity.zCoord, tileEntity.worldObj.provider.dimensionId, radius);
+	}
+	
+	public final void sendToAllNear(double x, double y, double z, int dimension, double radius) {
+		MinecraftServer.getServer().getConfigurationManager().sendToAllNear(x, y, z, radius, dimension, generatePacket());
 	}
 	
 	abstract void writeData(ByteArrayDataOutput out);

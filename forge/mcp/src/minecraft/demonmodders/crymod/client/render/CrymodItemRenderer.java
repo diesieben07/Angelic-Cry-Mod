@@ -1,4 +1,4 @@
-package demonmodders.crymod.client;
+package demonmodders.crymod.client.render;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.Tessellator;
