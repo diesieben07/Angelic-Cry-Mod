@@ -1,10 +1,11 @@
 package demonmodders.crymod.client.gui;
 
-import org.lwjgl.opengl.GL11;
-
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.inventory.IInventory;
+
+import org.lwjgl.opengl.GL11;
+
 import cpw.mods.fml.relauncher.Side;
 import demonmodders.crymod.common.gui.AbstractContainer;
 import demonmodders.crymod.common.network.PacketGuiButton;
@@ -20,8 +21,10 @@ public abstract class AbstractGuiContainer<T extends AbstractContainer<R>, R ext
 
 	@Override
 	protected void actionPerformed(GuiButton button) {
-		container.buttonClick(button.id, Side.CLIENT, mc.thePlayer);
-		new PacketGuiButton(inventorySlots, button.id).sendToServer();
+		if (container.handleButtonClick(button.id)) {
+			container.buttonClick(button.id, Side.CLIENT, mc.thePlayer);
+			new PacketGuiButton(inventorySlots, button.id).sendToServer();
+		}
 	}
 	
 	@Override

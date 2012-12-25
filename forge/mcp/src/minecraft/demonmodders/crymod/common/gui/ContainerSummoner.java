@@ -1,15 +1,21 @@
 package demonmodders.crymod.common.gui;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Slot;
+import net.minecraft.item.ItemStack;
+import net.minecraft.world.World;
 import cpw.mods.fml.relauncher.Side;
+import demonmodders.crymod.common.Crymod;
+import demonmodders.crymod.common.entities.SummonableBase;
 import demonmodders.crymod.common.inventory.InventorySummoner;
 import demonmodders.crymod.common.inventory.SlotForItem;
 import demonmodders.crymod.common.items.ItemCryMod;
+import demonmodders.crymod.common.recipes.SummoningRecipe;
 
 public class ContainerSummoner extends AbstractContainer<InventorySummoner> {
 
@@ -76,6 +82,20 @@ public class ContainerSummoner extends AbstractContainer<InventorySummoner> {
 			((Slot)inventorySlots.get(i + slotNumStart)).xDisplayPosition = SLOT_X_POSTITIONS[i];
 		}
 	}
+	
+	private List<ItemStack> getRecipeOnPage(int page) {
+		List<ItemStack> stacks = new ArrayList<ItemStack>();
+		int slotNumStart = page * 10 + 1;
+		for (int i = slotNumStart; i < slotNumStart + 9; i++) {
+			stacks.add(((Slot)inventorySlots.get(i)).getStack());
+		}
+		return stacks;
+	}
+	
+	public SummoningRecipe currentMatchingRecipe() {
+		List<ItemStack> stacks = getRecipeOnPage(currentPage);
+		return SummoningRecipe.findMatchingRecipe(stacks);
+	}
 
 	@Override
 	public void buttonClick(int buttonId, Side side, EntityPlayer player) {
@@ -88,37 +108,18 @@ public class ContainerSummoner extends AbstractContainer<InventorySummoner> {
 			break;
 		case BUTTON_SUMMON:
 			if (side.isServer()) {
-				/*try {
-					SummonableBase entity = SummoningEntityList.getSummonings(inventory.getShowAngels()).get(currentPage).getDemon().getConstructor(World.class).newInstance(player.worldObj);
-					final int spawnRadiusX = 5;
-					final int spawnRadiusY = 5;
-					final int spawnRadiusZ = 5;
-					
-					List<ChunkCoordinates> validCoordinates = new ArrayList<ChunkCoordinates>(150);
-					
-					for (int x = (int)player.posX - spawnRadiusX; x < player.posX + spawnRadiusX; x++) {
-						for (int y = (int)player.posY - spawnRadiusY; y < player.posY + spawnRadiusY; y++) {
-							for (int z = (int)player.posZ - spawnRadiusZ; z < player.posZ + spawnRadiusZ; z++) {
-								entity.setPosition(x, y, z);
-								if (entity.getCanSpawnHere()) {
-									validCoordinates.add(new ChunkCoordinates(x, y, z));
-								}
-							}
-						}
-					}
-					
-					if (!validCoordinates.isEmpty()) {
-						Random rng = new Random();
-						ChunkCoordinates spawnCoords = validCoordinates.get(rng.nextInt(validCoordinates.size()));
-						entity.setPosition(spawnCoords.posX, spawnCoords.posY, spawnCoords.posZ);
+				SummoningRecipe recipe = currentMatchingRecipe();
+				if (recipe != null && recipe.isAngel() == inventory.getShowAngels()) {
+					try {
+						SummonableBase entity = recipe.getDemon().getConstructor(World.class).newInstance(player.worldObj);
 						entity.setOwner(player);
+						entity.setPosition(player.posX, player.posY, player.posZ);
 						entity.initCreature();
 						player.worldObj.spawnEntityInWorld(entity);
-						new PacketClientEffect(inventory.getShowAngels() ? Type.SUMMON_GOOD : Type.SUMMON_BAD, entity.posX, entity.posY + entity.height + 0.5F, entity.posZ).sendToAllNear(entity, 64);
+					} catch (Exception e) {
+						Crymod.logger.warning("Invalid entity for summoning!");
 					}
-				} catch (Exception e) {
-					logger.warning("Invalid Entity for Summoning!");
-				}*/
+				}
 			}
 			break;
 		}

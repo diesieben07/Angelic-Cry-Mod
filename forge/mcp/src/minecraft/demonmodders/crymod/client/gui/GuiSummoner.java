@@ -9,8 +9,10 @@ import org.lwjgl.opengl.GL11;
 
 import demonmodders.crymod.common.gui.ContainerSummoner;
 import demonmodders.crymod.common.inventory.InventorySummoner;
+import demonmodders.crymod.common.inventory.AbstractInventory.InventoryChangeListener;
+import demonmodders.crymod.common.recipes.SummoningRecipe;
 
-public class GuiSummoner extends AbstractGuiContainer<ContainerSummoner, InventorySummoner> {
+public class GuiSummoner extends AbstractGuiContainer<ContainerSummoner, InventorySummoner> implements InventoryChangeListener {
 
 	private static final int EFFECTIVE_HEIGHT = 256;
 	private static final int EFFECTIVE_WIDTH = 176;
@@ -23,12 +25,14 @@ public class GuiSummoner extends AbstractGuiContainer<ContainerSummoner, Invento
 	private static final int HEADING_TEXT_FIELD_Y_POSITION = 17;
 	
 	private final String texture;
+	private String demonName = "";
 	
 	public GuiSummoner(String texture, ContainerSummoner container) {
 		super(container);
 		this.texture = texture;
 		xSize = EFFECTIVE_WIDTH;
 		ySize = EFFECTIVE_HEIGHT;
+		container.getInventoryInstance().registerListener(this);
 	}
 
 	@Override
@@ -44,17 +48,8 @@ public class GuiSummoner extends AbstractGuiContainer<ContainerSummoner, Invento
 		controlList.add(new GuiButton(BUTTON_SUMMON, width / 2 - EFFECTIVE_WIDTH / 2 + 49, height / 2 - EFFECTIVE_HEIGHT / 2 + 150, 80, 20, "Summon"));
 	}
 
-	/*@Override
-	protected void drawGuiContainerBackgroundLayer(float var1, int var2, int var3) {
-		int textureName = mc.renderEngine.getTexture(texture);
-        GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-        mc.renderEngine.bindTexture(textureName);
-        drawTexturedModalRect(width / 2 - EFFECTIVE_WIDTH / 2, height / 2 - EFFECTIVE_HEIGHT / 2, 0, 0, EFFECTIVE_WIDTH, EFFECTIVE_HEIGHT);
-	}*/
-
 	@Override
 	protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
-		String demonName = "foo";//SummoningEntityList.getSummonings(container.getInventoryInstance().getShowAngels()).get(container.page()).getDemonName();
 		int demonNameWidth = fontRenderer.getStringWidth(demonName);
 		fontRenderer.drawString(demonName, HEADING_TEXT_FIELD_X_POSITION, HEADING_TEXT_FIELD_Y_POSITION, 0xffffff);
 	}
@@ -64,11 +59,27 @@ public class GuiSummoner extends AbstractGuiContainer<ContainerSummoner, Invento
 		super.actionPerformed(button);
 		if (button.id == BUTTON_SUMMON) {
 			mc.displayGuiScreen(null);
+		} else {
+			updateDemonName();
 		}
 	}
 
 	@Override
 	String getTextureFile() {
 		return texture;
+	}
+
+	@Override
+	public void onInventoryChange() {
+		updateDemonName();
+	}
+	
+	private void updateDemonName() {
+		SummoningRecipe recipe = container.currentMatchingRecipe();
+		if (recipe != null) {
+			demonName = recipe.getDemonName();
+		} else {
+			demonName = "";
+		}
 	}
 }

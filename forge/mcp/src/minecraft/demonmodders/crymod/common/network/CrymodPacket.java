@@ -37,6 +37,7 @@ public abstract class CrymodPacket {
 		addMapping(1, PacketPlayerInfo.class);
 		addMapping(2, PacketClientRequest.class);
 		addMapping(3, PacketClientEffect.class);
+		addMapping(4, PacketEnderBookRecipe.class);
 	}
 	
 	public final Packet generatePacket() {
@@ -80,6 +81,7 @@ public abstract class CrymodPacket {
 				parsedPacket.execute((EntityPlayer)player);
 			} catch (Exception e) {
 				logger.warning("Exception during packet handling: " + e.getClass().getSimpleName() + " (" + e.getMessage() + ")");
+				e.printStackTrace();
 			}
 		}
 	}

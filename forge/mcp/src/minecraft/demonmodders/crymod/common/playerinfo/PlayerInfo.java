@@ -3,6 +3,7 @@ package demonmodders.crymod.common.playerinfo;
 import java.util.HashMap;
 import java.util.Map;
 
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import cpw.mods.fml.common.IPlayerTracker;
@@ -28,6 +29,20 @@ public final class PlayerInfo {
 	 */
 	public static PlayerKarma playerKarma(EntityPlayer player) {
 		return forPlayer(player).getKarma();
+	}
+	
+	public static NBTTagCompound getModEntityData(Entity entity) {
+		NBTTagCompound persistentData;
+		
+		if (entity instanceof EntityPlayer) {
+			persistentData = entity.getEntityData().getCompoundTag(EntityPlayer.PERSISTED_NBT_TAG);
+			entity.getEntityData().setCompoundTag(EntityPlayer.PERSISTED_NBT_TAG, persistentData);
+		} else {
+			persistentData = entity.getEntityData();
+		}
+		NBTTagCompound modData = persistentData.getCompoundTag("summoningmod");
+		persistentData.setCompoundTag("summoningmod", modData);
+		return modData;
 	}
 	
 	public static void init() {
@@ -60,7 +75,7 @@ public final class PlayerInfo {
 	private PlayerInfo(EntityPlayer player) {
 		this.player = player;
 		karma = new PlayerKarma(this);
-		NBTTagCompound infoNbt = player.getEntityData().getCompoundTag(EntityPlayer.PERSISTED_NBT_TAG).getCompoundTag("summoningmod");
+		NBTTagCompound infoNbt = getModEntityData(player);
 		karma.read(infoNbt);
 		flyTime = infoNbt.getByte("flyTime");
 		invisibilityCooldown = infoNbt.getByte("invisCooldown");
@@ -103,17 +118,11 @@ public final class PlayerInfo {
 	}
 	
 	private void updatePlayerNbt() {
-		NBTTagCompound infoNbt = new NBTTagCompound();
+		NBTTagCompound infoNbt = getModEntityData(player);
 		
 		karma.write(infoNbt);
-		
 		infoNbt.setByte("flyTime", (byte)flyTime);
-		
 		infoNbt.setByte("invisCooldown", (byte)invisibilityCooldown);
-		
-		NBTTagCompound persistedNbt = player.getEntityData().getCompoundTag(EntityPlayer.PERSISTED_NBT_TAG);
-		persistedNbt.setCompoundTag("summoningmod", infoNbt);
-		player.getEntityData().setCompoundTag(EntityPlayer.PERSISTED_NBT_TAG, persistedNbt);
 	}
 	
 	public void setDirty() {

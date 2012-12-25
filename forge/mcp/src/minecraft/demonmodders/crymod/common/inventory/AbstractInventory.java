@@ -1,5 +1,8 @@
 package demonmodders.crymod.common.inventory;
 
+import java.util.Collection;
+import java.util.HashSet;
+
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -7,6 +10,10 @@ import net.minecraft.nbt.NBTTagList;
 
 public abstract class AbstractInventory implements IInventory {
 
+	private Collection<InventoryChangeListener> listeners = new HashSet<InventoryChangeListener>();
+	
+	protected ItemStack[] stacks;
+	
 	public AbstractInventory() {
 		this(false);
 	}
@@ -16,8 +23,6 @@ public abstract class AbstractInventory implements IInventory {
 			initStorage();
 		}
 	}
-	
-	protected ItemStack[] stacks;
 	
 	@Override
 	public ItemStack getStackInSlot(int slot) {
@@ -52,7 +57,11 @@ public abstract class AbstractInventory implements IInventory {
 	}
 
 	@Override
-	public void onInventoryChanged() { }
+	public void onInventoryChanged() {
+		for (InventoryChangeListener listener : listeners) {
+			listener.onInventoryChange();
+		}
+	}
 
 	@Override
 	public void openChest() { }
@@ -80,5 +89,13 @@ public abstract class AbstractInventory implements IInventory {
 			}
 		}
 		nbt.setTag("slots", slotList);
+	}
+	
+	public final void registerListener(InventoryChangeListener listener) {
+		listeners.add(listener);
+	}
+	
+	public static interface InventoryChangeListener {
+		public void onInventoryChange();
 	}
 }

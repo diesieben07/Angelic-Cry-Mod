@@ -1,5 +1,8 @@
 package demonmodders.crymod.common.gui;
 
+import java.util.Collection;
+import java.util.HashSet;
+
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
@@ -63,4 +66,13 @@ public abstract class AbstractContainer<T extends IInventory> extends Container 
 	}
 	
 	public void buttonClick(int buttonId, Side side, EntityPlayer player) { }
+	
+	/**
+	 * if this returns false, this button is only handled on the client side
+	 * @param buttonId the button
+	 * @return if the given button should be send to the server
+	 */
+	public boolean handleButtonClick(int buttonId) {
+		return true;
+	}
 }

@@ -24,7 +24,7 @@ public class CrymodGuiHandler implements IGuiHandler {
 		case CRYSTAL_BAG:
 			return new ContainerCrystalBag(new InventoryCrystalBag(player.getCurrentEquippedItem(), player), player.inventory);
 		case ENDER_BOOK:
-			return new ContainerEnderBook(new InventoryEnderBook(player), player.inventory);
+			return new ContainerEnderBook(new InventoryEnderBook(player));
 		case RECIPE_PAGE:
 			return new ContainerRecipePage(SummoningRecipe.fromDamage(player.getCurrentEquippedItem()));
 		default:

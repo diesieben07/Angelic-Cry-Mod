@@ -1,7 +1,18 @@
 package demonmodders.crymod.common.inventory;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import demonmodders.crymod.common.playerinfo.PlayerInfo;
+import demonmodders.crymod.common.recipes.SummoningRecipe;
+
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.inventory.IInventory;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagByte;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
 
 public class InventoryEnderBook extends AbstractInventory {
 
@@ -11,10 +22,14 @@ public class InventoryEnderBook extends AbstractInventory {
 		super(true);
 		this.player = player;
 	}
+	
+	public EntityPlayer getPlayer() {
+		return player;
+	}
 
 	@Override
 	public int getSizeInventory() {
-		return 1;
+		return 9;
 	}
 
 	@Override
@@ -23,23 +38,15 @@ public class InventoryEnderBook extends AbstractInventory {
 	}
 
 	@Override
-	public void openChest() {
-		readFromNbt(player.getEntityData().getCompoundTag(EntityPlayer.PERSISTED_NBT_TAG).getCompoundTag("summoningmod").getCompoundTag("enderbook"));
-	}
-
-	@Override
-	public void closeChest() {
-		NBTTagCompound nbt = new NBTTagCompound();
-		writeToNbt(nbt);
-		NBTTagCompound persisted = player.getEntityData().getCompoundTag(EntityPlayer.PERSISTED_NBT_TAG);
-		NBTTagCompound summoningMod = persisted.getCompoundTag("summoningmod");
-		summoningMod.setCompoundTag("enderbook", nbt);
-		persisted.setCompoundTag("summoningmod", summoningMod);
-		player.getEntityData().setCompoundTag(EntityPlayer.PERSISTED_NBT_TAG, persisted);
-	}
-
-	@Override
 	public boolean isUseableByPlayer(EntityPlayer player) {
-		return this.player == player;
+		return player == this.player;
+	}
+	
+	public static byte[] getKnownRecipes(EntityPlayer player) {
+		return PlayerInfo.getModEntityData(player).getByteArray("enderBook");
+	}
+	
+	public byte[] getKnownRecipes() {
+		return getKnownRecipes(player);
 	}
 }

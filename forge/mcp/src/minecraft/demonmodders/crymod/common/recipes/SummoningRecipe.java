@@ -69,35 +69,10 @@ public class SummoningRecipe extends AbstractInventory {
 		return demonName;
 	}
 	
-	public final int id() {
-		return id;
+	public final byte id() {
+		return (byte)id;
 	}
 	
-	public ItemStack[] getStacks() {
-		return stacks;
-	}
-	
-	public ItemStack getStack(int slot) {
-		return slot >= 0 && slot < stacks.length ? stacks[slot] : null;
-	}
-	
-	public static SummoningRecipe[] recipes = new SummoningRecipe[16];
-	
-	public static final SummoningRecipe HEAVEN_ZOMBIE = new SummoningRecipe(0, EntityHeavenZombie.class, "Heaven Zombie", 
-			BLUE, BLUE, BLUE, BLUE, BLUE, BLUE, BLUE, BLUE, BLUE 
-			).setAngel();
-	public static final SummoningRecipe HELL_ZOMBIE = new SummoningRecipe(1, EntityHellZombie.class, "Hell Zombie",
-			RED, RED, RED, RED, RED, RED, RED, RED, RED			
-			);
-
-	public static SummoningRecipe fromDamage(ItemStack stack) {
-		return fromDamage(stack.getItemDamage());
-	}
-
-	private static SummoningRecipe fromDamage(int damage) {
-		return damage < recipes.length && damage >= 0 ? recipes[damage] : null;
-	}
-
 	@Override
 	public int getSizeInventory() {
 		return 9;
@@ -111,5 +86,31 @@ public class SummoningRecipe extends AbstractInventory {
 	@Override
 	public boolean isUseableByPlayer(EntityPlayer player) {
 		return true;
+	}
+	
+	public static SummoningRecipe[] recipes = new SummoningRecipe[16];
+	
+	public static final SummoningRecipe HEAVEN_ZOMBIE = new SummoningRecipe(0, EntityHeavenZombie.class, "Heaven Zombie", 
+			BLUE, BLUE, BLUE, BLUE, BLUE, BLUE, BLUE, BLUE, BLUE 
+			).setAngel();
+	public static final SummoningRecipe HELL_ZOMBIE = new SummoningRecipe(1, EntityHellZombie.class, "Hell Zombie",
+			RED, RED, RED, RED, RED, RED, RED, RED, RED			
+			);
+
+	public static SummoningRecipe fromDamage(ItemStack stack) {
+		return byId(stack.getItemDamage());
+	}
+
+	public static SummoningRecipe byId(int id) {
+		return id < recipes.length && id >= 0 ? recipes[id] : null;
+	}
+	
+	public static SummoningRecipe findMatchingRecipe(List<ItemStack> pattern) {
+		for (SummoningRecipe recipe : recipes) {
+			if (recipe != null && recipe.matches(pattern)) {
+				return recipe;
+			}
+		}
+		return null;
 	}
 }

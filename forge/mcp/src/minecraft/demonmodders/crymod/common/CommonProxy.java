@@ -4,9 +4,11 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.world.World;
 import demonmodders.crymod.common.network.PacketClientEffect;
+import demonmodders.crymod.common.network.PacketEnderBookRecipe;
 import demonmodders.crymod.common.playerinfo.PlayerInfo;
 
 public class CommonProxy {
+	
 	public void preInit() {
 		
 	}
@@ -29,6 +31,10 @@ public class CommonProxy {
 	}
 
 	public void handleClientEffect(PacketClientEffect clientEffect) {
+		// NO OP on server
+	}
+	
+	public void handleEnderBookRecipe(PacketEnderBookRecipe demonName) {
 		// NO OP on server
 	}
 }

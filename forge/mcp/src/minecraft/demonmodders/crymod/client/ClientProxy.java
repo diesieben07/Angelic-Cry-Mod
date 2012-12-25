@@ -28,9 +28,13 @@ import demonmodders.crymod.common.gui.ContainerSummoner;
 import demonmodders.crymod.common.gui.GuiType;
 import demonmodders.crymod.common.items.ItemCryMod;
 import demonmodders.crymod.common.network.PacketClientEffect;
+import demonmodders.crymod.common.network.PacketEnderBookRecipe;
 import demonmodders.crymod.common.playerinfo.PlayerInfo;
+import demonmodders.crymod.common.recipes.SummoningRecipe;
 
 public class ClientProxy extends CommonProxy {
+	
+	private final Minecraft mc = Minecraft.getMinecraft();
 	
 	@Override
 	public void setClientPlayerInfo(PlayerInfo info) {
@@ -39,8 +43,6 @@ public class ClientProxy extends CommonProxy {
 
 	@Override
 	public void handleClientEffect(PacketClientEffect effect) {
-		Minecraft mc = FMLClientHandler.instance().getClient();
-		
 		switch (effect.type) {
 		case SUMMON_GOOD:
 			double movement = 0.05;
@@ -58,6 +60,16 @@ public class ClientProxy extends CommonProxy {
 				mc.renderGlobal.spawnParticle("largesmoke", effect.x, effect.y, effect.z, 0, 0, 0);
 			}
 			break;
+		}
+	}
+
+	@Override
+	public void handleEnderBookRecipe(PacketEnderBookRecipe packet) {
+		if (mc.currentScreen instanceof GuiEnderBook && mc.thePlayer.openContainer instanceof ContainerEnderBook && mc.thePlayer.openContainer.windowId == packet.windowId) {
+			SummoningRecipe recipe = SummoningRecipe.byId(packet.recipeId);
+			if (recipe != null) {
+				((GuiEnderBook)mc.currentScreen).setCurrentRecipe(recipe);
+			}
 		}
 	}
 
