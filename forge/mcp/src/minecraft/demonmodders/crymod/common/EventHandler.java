@@ -3,8 +3,10 @@ package demonmodders.crymod.common;
 import demonmodders.crymod.common.items.ItemCryMod;
 import demonmodders.crymod.common.playerinfo.PlayerInfo;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraftforge.event.Event.Result;
 import net.minecraftforge.event.ForgeSubscribe;
 import net.minecraftforge.event.entity.item.ItemTossEvent;
+import net.minecraftforge.event.terraingen.ChunkProviderEvent;
 
 public class EventHandler {
 	

@@ -9,9 +9,4 @@ public class EntityHellZombie extends ZombieBase {
 		super(world);
 		texture = "/demonmodders/crymod/resource/tex/mob/hellZombie.png";
 	}
-
-	@Override
-	public Class<? extends EntityLiving> getTarget() {
-		return EntityHeavenZombie.class;
-	}
 }
