@@ -1,5 +1,7 @@
 package demonmodders.crymod.client;
 
+import java.util.Random;
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
@@ -11,7 +13,7 @@ import cpw.mods.fml.client.registry.KeyBindingRegistry;
 import cpw.mods.fml.client.registry.RenderingRegistry;
 import cpw.mods.fml.common.registry.TickRegistry;
 import cpw.mods.fml.relauncher.Side;
-import demonmodders.crymod.client.fx.EntitySummonFX;
+import demonmodders.crymod.client.fx.EntityFXTextureChange;
 import demonmodders.crymod.client.gui.GuiCrystalBag;
 import demonmodders.crymod.client.gui.GuiEnderBook;
 import demonmodders.crymod.client.gui.GuiRechargeStation;
@@ -39,6 +41,7 @@ import demonmodders.crymod.common.tileentities.TileEntityEnderbook;
 public class ClientProxy extends CommonProxy {
 	
 	private final Minecraft mc = Minecraft.getMinecraft();
+	private final Random random = new Random();
 	
 	@Override
 	public void setClientPlayerInfo(PlayerInfo info) {
@@ -51,11 +54,11 @@ public class ClientProxy extends CommonProxy {
 		case SUMMON_GOOD:
 			double movement = 0.05;
 			double movementUp = 0.4;
-			mc.effectRenderer.addEffect(new EntitySummonFX(mc.renderEngine, mc.theWorld, effect.x, effect.y, effect.z, movement, movementUp, 0));
-			mc.effectRenderer.addEffect(new EntitySummonFX(mc.renderEngine, mc.theWorld, effect.x, effect.y, effect.z, -movement, movementUp, 0));
-			mc.effectRenderer.addEffect(new EntitySummonFX(mc.renderEngine, mc.theWorld, effect.x, effect.y, effect.z, 0, movementUp, movement));
-			mc.effectRenderer.addEffect(new EntitySummonFX(mc.renderEngine, mc.theWorld, effect.x, effect.y, effect.z, 0, movementUp, -movement));
-			mc.effectRenderer.addEffect(new EntitySummonFX(mc.renderEngine, mc.theWorld, effect.x, effect.y, effect.z, 0, movementUp, 0));
+			/*mc.effectRenderer.addEffect(new EntityFXTextureChange(mc.renderEngine, mc.theWorld, effect.x, effect.y, effect.z, movement, movementUp, 0));
+			mc.effectRenderer.addEffect(new EntityFXTextureChange(mc.renderEngine, mc.theWorld, effect.x, effect.y, effect.z, -movement, movementUp, 0));
+			mc.effectRenderer.addEffect(new EntityFXTextureChange(mc.renderEngine, mc.theWorld, effect.x, effect.y, effect.z, 0, movementUp, movement));
+			mc.effectRenderer.addEffect(new EntityFXTextureChange(mc.renderEngine, mc.theWorld, effect.x, effect.y, effect.z, 0, movementUp, -movement));
+			mc.effectRenderer.addEffect(new EntityFXTextureChange(mc.renderEngine, mc.theWorld, effect.x, effect.y, effect.z, 0, movementUp, 0));*/
 			break;
 		case SUMMON_BAD:
 			break;
@@ -65,7 +68,9 @@ public class ClientProxy extends CommonProxy {
 			}
 			break;
 		case ENDERBOOK:
-			mc.renderGlobal.spawnParticle("largesmoke", effect.x, effect.y + 1, effect.z, 0, 0, 0);
+			for (int i = 0; i < 5; i++) {
+				mc.effectRenderer.addEffect(new EntityFXTextureChange(mc.renderEngine, mc.theWorld, effect.x + random.nextDouble(), effect.y + 1 + random.nextDouble(), effect.z + random.nextDouble(), 0, 0, 0).setBeginIndex(0).setEndIndex(7).setSpeed(1 + random.nextInt(3)).setMaxAge(10 + random.nextInt(10)));
+			}
 			break;
 		}
 	}

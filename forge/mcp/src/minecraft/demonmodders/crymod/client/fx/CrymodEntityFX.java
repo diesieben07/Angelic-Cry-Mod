@@ -20,4 +20,9 @@ public abstract class CrymodEntityFX extends EntityFX {
 		engine.bindTexture(engine.getTexture(Crymod.PARTICLE_TEXTURE_FILE));
 		super.renderParticle(tesselator, par2, par3, par4, par5, par6, par7);
 	}
+	
+	public CrymodEntityFX setMaxAge(int maxAge) {
+		particleMaxAge = maxAge;
+		return this;
+	}
 }
