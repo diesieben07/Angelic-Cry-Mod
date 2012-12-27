@@ -8,6 +8,8 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.Direction;
+import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 import cpw.mods.fml.relauncher.Side;
 import demonmodders.crymod.common.Crymod;
@@ -15,6 +17,8 @@ import demonmodders.crymod.common.entities.SummonableBase;
 import demonmodders.crymod.common.inventory.InventorySummoner;
 import demonmodders.crymod.common.inventory.SlotForItem;
 import demonmodders.crymod.common.items.ItemCryMod;
+import demonmodders.crymod.common.network.PacketClientEffect;
+import demonmodders.crymod.common.network.PacketClientEffect.Type;
 import demonmodders.crymod.common.recipes.SummoningRecipe;
 
 public class ContainerSummoner extends AbstractContainer<InventorySummoner> {
@@ -93,8 +97,12 @@ public class ContainerSummoner extends AbstractContainer<InventorySummoner> {
 	}
 	
 	public SummoningRecipe currentMatchingRecipe() {
-		List<ItemStack> stacks = getRecipeOnPage(currentPage);
-		return SummoningRecipe.findMatchingRecipe(stacks);
+		SummoningRecipe recipe = SummoningRecipe.findMatchingRecipe(getRecipeOnPage(currentPage));
+		if (recipe == null || recipe.isAngel() != inventory.getShowAngels()) {
+			return null;
+		} else {
+			return recipe;
+		}
 	}
 
 	@Override
@@ -109,13 +117,18 @@ public class ContainerSummoner extends AbstractContainer<InventorySummoner> {
 		case BUTTON_SUMMON:
 			if (side.isServer()) {
 				SummoningRecipe recipe = currentMatchingRecipe();
-				if (recipe != null && recipe.isAngel() == inventory.getShowAngels()) {
+				if (recipe != null) {
 					try {
 						SummonableBase entity = recipe.getDemon().getConstructor(World.class).newInstance(player.worldObj);
 						entity.setOwner(player);
-						entity.setPosition(player.posX, player.posY, player.posZ);
+						
+						int playerFacing = MathHelper.floor_double((player.rotationYaw * 4.0F / 360.0F) + 0.5D) & 3;
+						
+						entity.setPosition(player.posX + Direction.offsetX[playerFacing] * 2, player.posY, player.posZ + Direction.offsetZ[playerFacing] * 2);
+						
 						entity.initCreature();
 						player.worldObj.spawnEntityInWorld(entity);
+						new PacketClientEffect(recipe.isAngel() ? Type.SUMMON_GOOD : Type.SUMMON_BAD, entity.posX, entity.posY, entity.posZ).sendToAllNear(entity, 8);
 					} catch (Exception e) {
 						Crymod.logger.warning("Invalid entity for summoning!");
 					}

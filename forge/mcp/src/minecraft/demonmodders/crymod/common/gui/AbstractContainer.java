@@ -48,11 +48,7 @@ public abstract class AbstractContainer<T extends IInventory> extends Container 
 	final void addPlayerInventoryToContainer(InventoryPlayer inventoryPlayer, int xStart, int yStart, boolean useCantPickup) {
 		for (int j = 0; j < 3; j++) {
             for (int i = 0; i < 9; i++) {
-                if (useCantPickup && i + j * 9 == inventoryPlayer.currentItem) {
-                	addSlotToContainer(new SlotNoPickup(inventoryPlayer, i + j * 9 + 9, xStart + i * 18, yStart + j * 18));
-                } else {
-                	addSlotToContainer(new Slot(inventoryPlayer, i + j * 9 + 9, xStart + i * 18, yStart + j * 18));
-                }
+                addSlotToContainer(new Slot(inventoryPlayer, i + j * 9 + 9, xStart + i * 18, yStart + j * 18));
             }
         }
 

@@ -33,6 +33,7 @@ import demonmodders.crymod.common.gui.ContainerSummoner;
 import demonmodders.crymod.common.gui.GuiType;
 import demonmodders.crymod.common.items.ItemCryMod;
 import demonmodders.crymod.common.network.PacketClientEffect;
+import demonmodders.crymod.common.network.PacketClientEffect.Type;
 import demonmodders.crymod.common.network.PacketEnderBookRecipe;
 import demonmodders.crymod.common.playerinfo.PlayerInfo;
 import demonmodders.crymod.common.recipes.SummoningRecipe;
@@ -51,16 +52,17 @@ public class ClientProxy extends CommonProxy {
 	@Override
 	public void handleClientEffect(PacketClientEffect effect) {
 		switch (effect.type) {
-		case SUMMON_GOOD:
-			double movement = 0.05;
-			double movementUp = 0.4;
-			/*mc.effectRenderer.addEffect(new EntityFXTextureChange(mc.renderEngine, mc.theWorld, effect.x, effect.y, effect.z, movement, movementUp, 0));
-			mc.effectRenderer.addEffect(new EntityFXTextureChange(mc.renderEngine, mc.theWorld, effect.x, effect.y, effect.z, -movement, movementUp, 0));
-			mc.effectRenderer.addEffect(new EntityFXTextureChange(mc.renderEngine, mc.theWorld, effect.x, effect.y, effect.z, 0, movementUp, movement));
-			mc.effectRenderer.addEffect(new EntityFXTextureChange(mc.renderEngine, mc.theWorld, effect.x, effect.y, effect.z, 0, movementUp, -movement));
-			mc.effectRenderer.addEffect(new EntityFXTextureChange(mc.renderEngine, mc.theWorld, effect.x, effect.y, effect.z, 0, movementUp, 0));*/
-			break;
 		case SUMMON_BAD:
+		case SUMMON_GOOD:
+			for (int i = 0; i < 30; i++) {
+				double x = effect.x + random.nextDouble() * (random.nextBoolean() ? -2 : 2);
+				double y = effect.y + 1 + random.nextDouble() * 2;
+				double z = effect.z + random.nextDouble() * (random.nextBoolean() ? -2 : 2);
+				
+				int begin = effect.type == Type.SUMMON_BAD ? 16 : 32;
+								
+				mc.effectRenderer.addEffect(new EntityFXTextureChange(mc.renderEngine, mc.theWorld, x, y, z, 0, 0, 0).setBeginIndex(begin).setEndIndex(begin + 7).setSpeed(3 + random.nextInt(3)).setMaxAge(20 + random.nextInt(20)).makeMovementNoise());
+			}
 			break;
 		case SWORD_OF_DARKNESS:
 			for (int i = 0; i < 10; i++) {
@@ -68,8 +70,12 @@ public class ClientProxy extends CommonProxy {
 			}
 			break;
 		case ENDERBOOK:
-			for (int i = 0; i < 5; i++) {
-				mc.effectRenderer.addEffect(new EntityFXTextureChange(mc.renderEngine, mc.theWorld, effect.x + random.nextDouble(), effect.y + 1 + random.nextDouble(), effect.z + random.nextDouble(), 0, 0, 0).setBeginIndex(0).setEndIndex(7).setSpeed(1 + random.nextInt(3)).setMaxAge(10 + random.nextInt(10)));
+			for (int i = 0; i < 15; i++) {
+				double x = effect.x + random.nextDouble() * (random.nextBoolean() ? -2 : 2);
+				double y = effect.y + 1 + random.nextDouble() * 2;
+				double z = effect.z + random.nextDouble() * (random.nextBoolean() ? -2 : 2);
+				
+				mc.effectRenderer.addEffect(new EntityFXTextureChange(mc.renderEngine, mc.theWorld, x, y, z, 0, 0, 0).setBeginIndex(0).setEndIndex(7).setSpeed(1 + random.nextInt(3)));
 			}
 			break;
 		}

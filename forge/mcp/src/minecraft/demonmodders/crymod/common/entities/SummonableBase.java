@@ -12,16 +12,6 @@ import cpw.mods.fml.common.registry.IEntityAdditionalSpawnData;
 
 public abstract class SummonableBase extends EntityCreature implements IEntityAdditionalSpawnData {
 
-	@Override
-	public void writeSpawnData(ByteArrayDataOutput data) {
-		data.writeUTF(name);
-	}
-
-	@Override
-	public void readSpawnData(ByteArrayDataInput data) {
-		name = data.readUTF();
-	}
-
 	String owner = "";
 	String name = "";
 	
@@ -60,6 +50,16 @@ public abstract class SummonableBase extends EntityCreature implements IEntityAd
 	@Override
 	public void initCreature() {
 		name = RANDOM_NAMES[rand.nextInt(RANDOM_NAMES.length)];
+	}
+	
+	@Override
+	public void writeSpawnData(ByteArrayDataOutput data) {
+		data.writeUTF(name);
+	}
+
+	@Override
+	public void readSpawnData(ByteArrayDataInput data) {
+		name = data.readUTF();
 	}
 	
 	private static final String[]  RANDOM_NAMES = new String[] {

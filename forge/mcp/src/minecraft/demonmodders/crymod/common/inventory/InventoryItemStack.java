@@ -7,8 +7,8 @@ import net.minecraft.nbt.NBTTagList;
 
 public abstract class InventoryItemStack extends AbstractInventory {
 	
-	private final ItemStack theStack;
-	private final ItemStack originalStack;
+	private ItemStack theStack;
+	private ItemStack originalStack;
 	private final EntityPlayer player;
 		
 	public InventoryItemStack(ItemStack theStack, EntityPlayer player) {
@@ -56,6 +56,15 @@ public abstract class InventoryItemStack extends AbstractInventory {
 	void saveItemStack() {
 		if (player != null && isUseableByPlayer(player)) {
 			player.inventory.setInventorySlotContents(player.inventory.currentItem, theStack);
+			originalStack = theStack;
+			theStack = theStack.copy();
 		}
+	}
+
+	@Override
+	public void onInventoryChanged() {
+		super.onInventoryChanged();
+		writeToNbt(theStack.stackTagCompound);
+		saveItemStack();
 	}
 }

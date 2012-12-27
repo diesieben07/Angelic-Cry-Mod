@@ -8,6 +8,7 @@ import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.AxisAlignedBB;
+import demonmodders.crymod.common.inventory.InventoryEnderBook;
 import demonmodders.crymod.common.items.ItemCryMod;
 import demonmodders.crymod.common.network.PacketClientEffect;
 import demonmodders.crymod.common.network.PacketClientEffect.Type;
@@ -47,7 +48,7 @@ public class TileEntityEnderbook extends TileEntity {
 				EntityPlayer owner = worldObj.getPlayerEntityByName(ownerName);
 				SummoningRecipe recipe = SummoningRecipe.fromDamage(item.func_92014_d());
 				if (owner != null && recipe != null) {
-					byte[] knownRecipes = PlayerInfo.getModEntityData(owner).getByteArray("enderBook");
+					byte[] knownRecipes = InventoryEnderBook.getKnownRecipes(owner);
 					for (byte recipeId : knownRecipes) {
 						if (recipeId == recipe.id()) {
 							return;
@@ -59,7 +60,7 @@ public class TileEntityEnderbook extends TileEntity {
 					
 					byte[] newRecipeList = Arrays.copyOf(knownRecipes, knownRecipes.length + 1);
 					newRecipeList[knownRecipes.length] = recipe.id();
-					PlayerInfo.getModEntityData(owner).setByteArray("enderBook", newRecipeList);
+					InventoryEnderBook.setKnownRecipes(owner, newRecipeList);
 				}
 			}
 		}

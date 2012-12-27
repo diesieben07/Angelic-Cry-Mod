@@ -46,7 +46,15 @@ public class InventoryEnderBook extends AbstractInventory {
 		return PlayerInfo.getModEntityData(player).getByteArray("enderBook");
 	}
 	
+	public static void setKnownRecipes(EntityPlayer player, byte[] recipes) {
+		PlayerInfo.getModEntityData(player).setByteArray("enderBook", recipes);
+	}
+	
 	public byte[] getKnownRecipes() {
 		return getKnownRecipes(player);
+	}
+	
+	public void setKnownRecipes(byte[] recipes) {
+		setKnownRecipes(player, recipes);
 	}
 }

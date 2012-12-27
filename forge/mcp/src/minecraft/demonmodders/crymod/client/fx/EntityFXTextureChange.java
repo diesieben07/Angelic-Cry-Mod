@@ -13,9 +13,7 @@ public class EntityFXTextureChange extends CrymodEntityFX {
 	
 	public EntityFXTextureChange(RenderEngine engine, World world, double x, double y, double z, double motionX, double motionY, double motionZ) {
 		super(engine, world, x, y, z, motionX, motionY, motionZ);
-		this.motionX = motionX;
-		this.motionY = motionY;
-		this.motionZ = motionZ;
+		particleMaxAge = Integer.MAX_VALUE;
 	}
 	
 	public final EntityFXTextureChange setBeginIndex(int index) {
@@ -39,9 +37,10 @@ public class EntityFXTextureChange extends CrymodEntityFX {
 		tickCount++;
 		if (tickCount == speed) {
 			tickCount = 0;
-			currentTextureIndex++;
-			if (currentTextureIndex == endTextureIndex + 1) {
-				currentTextureIndex = beginTextureIndex;
+			if (currentTextureIndex < endTextureIndex) {
+				currentTextureIndex++;
+			} else {
+				setDead();
 			}
 			setParticleTextureIndex(currentTextureIndex);
 		}
