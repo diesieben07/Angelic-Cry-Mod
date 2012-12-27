@@ -19,6 +19,7 @@ public abstract class SummonableBase extends EntityCreature implements IEntityAd
 
 	String owner = "";
 	String name = "";
+	private boolean playerUsing = false;
 	
 	public SummonableBase(World world) {
 		super(world);
@@ -59,7 +60,9 @@ public abstract class SummonableBase extends EntityCreature implements IEntityAd
 	
 	@Override
 	public boolean interact(EntityPlayer player) {
-		player.openGui(Crymod.instance, GuiType.SUMMONED_ENTITY.getGuiId(), player.worldObj, entityId, 0, 0);
+		if (player.username.equalsIgnoreCase(owner)) {
+			player.openGui(Crymod.instance, GuiType.SUMMONED_ENTITY.getGuiId(), player.worldObj, entityId, 0, 0);
+		}
 		return true;
 	}
 	
@@ -123,8 +126,19 @@ public abstract class SummonableBase extends EntityCreature implements IEntityAd
 	}
 
 	@Override
-	public void openChest() { }
+	public void openChest() {
+		playerUsing = true;
+	}
 
 	@Override
-	public void closeChest() { }
+	public void closeChest() {
+		playerUsing = false;
+	}
+
+	@Override
+	public void onLivingUpdate() {
+		if (!playerUsing) {
+			super.onLivingUpdate();
+		}
+	}
 }
