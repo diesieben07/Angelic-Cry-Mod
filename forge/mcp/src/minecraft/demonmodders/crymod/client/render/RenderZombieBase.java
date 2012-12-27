@@ -1,10 +1,10 @@
 package demonmodders.crymod.client.render;
 
 import net.minecraft.client.model.ModelBiped;
-import net.minecraft.client.renderer.entity.RenderLiving;
+import net.minecraft.client.renderer.entity.RenderBiped;
 import net.minecraft.entity.EntityLiving;
 
-public class RenderZombieBase extends RenderLiving {
+public class RenderZombieBase extends RenderBiped {
 
 	public RenderZombieBase() {
 		super(new ModelBiped(), 0.5F);

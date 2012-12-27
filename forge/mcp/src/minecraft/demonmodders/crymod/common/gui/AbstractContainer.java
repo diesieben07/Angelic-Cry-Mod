@@ -52,7 +52,7 @@ public abstract class AbstractContainer<T extends IInventory> extends Container 
             }
         }
 
-        for (int k = 0; k < 9; k++) {
+		for (int k = 0; k < 9; k++) {
         	if (useCantPickup && k == inventoryPlayer.currentItem) {
         		addSlotToContainer(new SlotNoPickup(inventoryPlayer, k, xStart + k * 18, yStart + 58));
         	} else {
