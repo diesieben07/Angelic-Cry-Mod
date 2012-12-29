@@ -2,13 +2,15 @@ package demonmodders.crymod.common.inventory;
 
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 
-public abstract class AbstractInventory implements IInventory {
+public abstract class AbstractInventory implements IInventory, Iterable<ItemStack> {
 
 	private Collection<InventoryChangeListener> listeners = new HashSet<InventoryChangeListener>();
 	
@@ -68,6 +70,36 @@ public abstract class AbstractInventory implements IInventory {
 
 	@Override
 	public void closeChest() { }
+	
+	public Iterator<ItemStack> iterator() {
+		return new Iterator<ItemStack>() {
+
+			int element = 0;
+			
+			@Override
+			public boolean hasNext() {
+				return element < getSizeInventory();
+			}
+
+			@Override
+			public ItemStack next() {
+				if (!hasNext()) {
+					throw new NoSuchElementException();
+				} else {
+					return getStackInSlot(element++); 
+				}
+			}
+
+			@Override
+			public void remove() {
+				if (element == 0) {
+					throw new IllegalStateException();
+				} else {
+					setInventorySlotContents(element - 1, null);
+				}
+			}
+		};
+	}
 	
 	final void readFromNbt(NBTTagCompound nbt) {
 		NBTTagList slotList = nbt.getTagList("slots");

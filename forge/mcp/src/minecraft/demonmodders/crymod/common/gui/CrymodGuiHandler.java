@@ -32,7 +32,7 @@ public class CrymodGuiHandler implements IGuiHandler {
 		case SUMMONED_ENTITY:
 			Entity entity = world.getEntityByID(x);
 			if (entity != null && entity instanceof SummonableBase) {
-				return new ContainerEntityInfo((SummonableBase)entity, player.inventory);
+				return new ContainerEntityInfo((SummonableBase)entity, player);
 			} else {
 				return null;
 			}

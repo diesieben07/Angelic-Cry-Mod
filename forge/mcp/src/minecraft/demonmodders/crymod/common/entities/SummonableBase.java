@@ -5,6 +5,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
 
 import com.google.common.io.ByteArrayDataInput;
@@ -14,8 +15,10 @@ import cpw.mods.fml.common.registry.IEntityAdditionalSpawnData;
 import demonmodders.crymod.common.Crymod;
 import demonmodders.crymod.common.gui.GuiType;
 import demonmodders.crymod.common.inventory.InventoryHelper;
+import demonmodders.crymod.common.inventory.InventorySummonable;
+import demonmodders.crymod.common.network.PacketHealthUpdate;
 
-public abstract class SummonableBase extends EntityCreature implements IEntityAdditionalSpawnData, IInventory {
+public abstract class SummonableBase extends EntityCreature implements IEntityAdditionalSpawnData {
 
 	String owner = "";
 	String name = "";
@@ -61,9 +64,19 @@ public abstract class SummonableBase extends EntityCreature implements IEntityAd
 	@Override
 	public boolean interact(EntityPlayer player) {
 		if (player.username.equalsIgnoreCase(owner)) {
+			playerUsing = true;
 			player.openGui(Crymod.instance, GuiType.SUMMONED_ENTITY.getGuiId(), player.worldObj, entityId, 0, 0);
 		}
 		return true;
+	}
+	
+	public void onPlayerCloseGui() {
+		playerUsing = false;
+	}
+	
+	@Override
+	protected boolean isMovementBlocked() {
+		return super.isMovementBlocked() || playerUsing;
 	}
 	
 	@Override
@@ -76,69 +89,13 @@ public abstract class SummonableBase extends EntityCreature implements IEntityAd
 		name = data.readUTF();
 	}
 	
+	@Override
+	protected void damageEntity(DamageSource source, int amount) {
+		super.damageEntity(source, amount);
+		new PacketHealthUpdate(entityId, health).sendToAllTracking(this);
+	}
+	
 	private static final String[]  RANDOM_NAMES = new String[] {
 		"Name 1", "Name 2", "Name 3"
 	};
-
-	@Override
-	public int getSizeInventory() {
-		return 5;
-	}
-
-	@Override
-	public ItemStack getStackInSlot(int slot) {
-		return getCurrentItemOrArmor(slot);
-	}
-
-	@Override
-	public ItemStack decrStackSize(int slot, int numDecrease) {
-		return InventoryHelper.genericStackDecrease(this, slot, numDecrease);
-	}
-
-	@Override
-	public ItemStack getStackInSlotOnClosing(int var1) {
-		ItemStack stack = getStackInSlot(var1);
-		setInventorySlotContents(var1, null);
-		return stack;
-	}
-
-	@Override
-	public void setInventorySlotContents(int slot, ItemStack stack) {
-		setCurrentItemOrArmor(slot, stack);
-	}
-
-	@Override
-	public String getInvName() {
-		return getEntityName();
-	}
-
-	@Override
-	public int getInventoryStackLimit() {
-		return 64;
-	}
-
-	@Override
-	public void onInventoryChanged() { }
-
-	@Override
-	public boolean isUseableByPlayer(EntityPlayer player) {
-		return player.getDistanceSqToEntity(this) <= 64;
-	}
-
-	@Override
-	public void openChest() {
-		playerUsing = true;
-	}
-
-	@Override
-	public void closeChest() {
-		playerUsing = false;
-	}
-
-	@Override
-	public void onLivingUpdate() {
-		if (!playerUsing) {
-			super.onLivingUpdate();
-		}
-	}
 }
