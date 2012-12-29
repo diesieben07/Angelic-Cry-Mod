@@ -41,7 +41,6 @@ public class GuiEntityInfo extends AbstractGuiContainer<ContainerEntityInfo, Inv
 		SummonableBase entity = container.getEntity();
 
 		// Draw the Entity Model
-
 		int par1 = guiLeft + 195;
 		int par2 = guiTop + 52;
 		int scale = 18;
@@ -79,14 +78,19 @@ public class GuiEntityInfo extends AbstractGuiContainer<ContainerEntityInfo, Inv
 		GL11.glDisable(GL11.GL_TEXTURE_2D);
 		OpenGlHelper.setActiveTexture(OpenGlHelper.defaultTexUnit);
 
-		// Draw the name
-		fontRenderer.drawString(entity.getEntityName(), guiLeft + 132, guiTop + 106, 0x000000);
-
 		// draw the health
 		GL11.glColor3f(1, 1, 1);
 		mc.renderEngine.bindTexture(mc.renderEngine.getTexture(getTextureFile()));
 		drawBar(13, 35, entity.getHealth(), entity.getMaxHealth());
 		fontRenderer.drawString("Health: " + entity.getHealth() + " / " + entity.getMaxHealth(), guiLeft + 14, guiTop + 25, 0x000000);
+		
+		// Draw the name
+		fontRenderer.drawString(entity.getEntityName(), guiLeft + 132, guiTop + 106, 0x000000);
+		
+		// draw the edit name button
+		GL11.glColor3f(1, 1, 1);
+		mc.renderEngine.bindTexture(mc.renderEngine.getTexture("/gui/items.png"));
+		drawTexturedModalRect(guiLeft + 217, guiTop + 98, 11 * 16, 11 * 16, 16, 16);
 	}
 
 	private void drawBar(int x, int y, int value, int maxValue) {

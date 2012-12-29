@@ -23,6 +23,7 @@ public abstract class SummonableBase extends EntityCreature implements IEntityAd
 	String owner = "";
 	String name = "";
 	private boolean playerUsing = false;
+	private int healthLastTick;
 	
 	public SummonableBase(World world) {
 		super(world);
@@ -88,14 +89,17 @@ public abstract class SummonableBase extends EntityCreature implements IEntityAd
 	public void readSpawnData(ByteArrayDataInput data) {
 		name = data.readUTF();
 	}
-	
-	@Override
-	protected void damageEntity(DamageSource source, int amount) {
-		super.damageEntity(source, amount);
-		new PacketHealthUpdate(entityId, health).sendToAllTracking(this);
-	}
-	
+
 	private static final String[]  RANDOM_NAMES = new String[] {
 		"Name 1", "Name 2", "Name 3"
 	};
+
+	@Override
+	public void onUpdate() {
+		if (!worldObj.isRemote && healthLastTick != health) {
+			new PacketHealthUpdate(entityId, health).sendToAllTracking(this);
+			healthLastTick = health;
+		}
+		super.onUpdate();
+	}
 }
