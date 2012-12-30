@@ -27,7 +27,7 @@ public class CrymodTransformer implements IClassTransformer {
 		"targetMate",
 		"net/minecraft/entity/EntityAgeable",
 		
-		"net.miencraft.entity.monster.EntityZombie",
+		"net.minecraft.entity.monster.EntityZombie",
 		"convertToVillager"
 	};
 	
