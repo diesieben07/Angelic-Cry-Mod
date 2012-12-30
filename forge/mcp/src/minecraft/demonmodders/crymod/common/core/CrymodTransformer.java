@@ -28,7 +28,12 @@ public class CrymodTransformer implements IClassTransformer {
 		"net/minecraft/entity/EntityAgeable",
 		
 		"net.minecraft.entity.monster.EntityZombie",
-		"convertToVillager"
+		"convertToVillager",
+		
+		"net.minecraft.block.Block",
+		"onBlockHarvested",
+		"net/minecraft/world/World",
+		"net/minecraft/entity/player/EntityPlayer"
 	};
 	
 	private static final String[] OBF = {
@@ -44,6 +49,10 @@ public class CrymodTransformer implements IClassTransformer {
 	private static final int ENTITY_AGEABLE_TYPE = 4;
 	private static final int ENTITY_ZOMBIE = 5;
 	private static final int CONVERT_TO_VILLAGER = 6;
+	private static final int BLOCK = 7;
+	private static final int ON_BLOCK_HARVESTED = 8;
+	private static final int WORLD = 9;
+	private static final int ENTTIY_PLAYER = 10;
 	
 	@Override
 	public byte[] transform(String name, byte[] bytes) {
@@ -105,6 +114,38 @@ public class CrymodTransformer implements IClassTransformer {
 					if (insertionPoint != null) {
 						method.instructions.insertBefore(insertionPoint, hook);
 						System.out.println("[Summoningmod] Inserted Callback Hook into EntityZombie/convertToVillager");
+						hasTransformed = true;
+					}
+				}
+			}
+		} else if (name.equals(classInfo[BLOCK])) {
+			ClassReader reader = new ClassReader(bytes);
+			reader.accept(clazz, 0);
+			
+			for (MethodNode method : (List<MethodNode>)clazz.methods) {
+				if (method.name.equals(classInfo[ON_BLOCK_HARVESTED])) {
+					InsnList hook = new InsnList();
+					hook.add(new VarInsnNode(Opcodes.ALOAD, 0)); // this = the Block
+					hook.add(new VarInsnNode(Opcodes.ALOAD, 1)); // par1World
+					for (int i = 2; i < 6; i++) {
+						hook.add(new VarInsnNode(Opcodes.ILOAD, i)); // par2 - par5 (x, y, z, meta)
+					}
+					hook.add(new VarInsnNode(Opcodes.ALOAD, 6)); // par6EntityPlayer
+					
+					final String methodDescr = "(L" + classInfo[BLOCK].replace('.', '/') + ";L" + classInfo[WORLD] + ";IIIIL" + classInfo[ENTTIY_PLAYER] + ";)V";
+					hook.add(new MethodInsnNode(Opcodes.INVOKESTATIC, "demonmodders/crymod/common/karma/KarmaEventHandler", "onPlayerBlockHarvest", methodDescr));
+					
+					AbstractInsnNode insertionPoint = null;
+					
+					for (int i = 0; i < method.instructions.size(); i++) {
+						AbstractInsnNode instruction = method.instructions.get(i);
+						if (instruction.getOpcode() == Opcodes.RETURN) {
+							insertionPoint = instruction;
+						}
+					}
+					if (insertionPoint != null) {
+						method.instructions.insertBefore(insertionPoint, hook);
+						System.out.println("[Summoningmod] Inserted Callback Hook into Block/onBlockHarvested");
 						hasTransformed = true;
 					}
 				}

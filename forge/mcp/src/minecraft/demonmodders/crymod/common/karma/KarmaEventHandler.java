@@ -27,6 +27,7 @@ import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.EntityDamageSource;
 import net.minecraft.util.StringTranslate;
+import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.Event.Result;
 import net.minecraftforge.event.EventPriority;
@@ -153,6 +154,13 @@ public class KarmaEventHandler {
 		EntityPlayer player = zombie.worldObj.getPlayerEntityByName(curer);
 		if (player != null) {
 			playerKarma(player).modifyKarmaWithMax(3, 30);
+		}
+	}
+	
+	// called by the hook inserted into Block/onBlockHarvested by the CrymodTransformer
+	public static void onPlayerBlockHarvest(Block block, World world, int x, int y, int z, int meta, EntityPlayer player) {
+		if (block.blockID == Block.mobSpawner.blockID) {
+			playerKarma(player).modifyKarmaWithMax(1, 30);
 		}
 	}
 	
