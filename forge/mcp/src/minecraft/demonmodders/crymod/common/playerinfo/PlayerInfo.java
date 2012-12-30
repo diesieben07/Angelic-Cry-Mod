@@ -16,7 +16,7 @@ public final class PlayerInfo {
 	private static Map<String, PlayerInfo> infoMap = new HashMap<String, PlayerInfo>();
 	
 	public static PlayerInfo forPlayer(EntityPlayer player) {
-		if (!infoMap.containsKey(player)) {
+		if (!infoMap.containsKey(player.username)) {
 			infoMap.put(player.username, new PlayerInfo(player));
 		}
 		return infoMap.get(player.username);

@@ -3,17 +3,12 @@ package demonmodders.crymod.common.karma;
 import static demonmodders.crymod.common.playerinfo.PlayerInfo.playerKarma;
 
 import java.util.Arrays;
-import java.util.EnumSet;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.Set;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockCrops;
+import net.minecraft.entity.EntityAgeable;
+import net.minecraft.entity.ai.EntityAIMate;
 import net.minecraft.entity.boss.EntityDragon;
 import net.minecraft.entity.monster.EntityCreeper;
 import net.minecraft.entity.monster.EntityIronGolem;
@@ -42,14 +37,13 @@ import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.player.BonemealEvent;
 import net.minecraftforge.event.entity.player.EntityInteractEvent;
 import net.minecraftforge.event.entity.player.PlayerDestroyItemEvent;
-import cpw.mods.fml.common.ITickHandler;
-import cpw.mods.fml.common.TickType;
 import cpw.mods.fml.common.registry.TickRegistry;
 import cpw.mods.fml.relauncher.ReflectionHelper;
 import cpw.mods.fml.relauncher.Side;
 import demonmodders.crymod.common.karma.PlayerKarma.CountableKarmaEvent;
+import demonmodders.crymod.common.playerinfo.PlayerInfo;
 
-public class KarmaEventHandler implements ITickHandler {
+public class KarmaEventHandler {
 	
 	public static void init() {
 		new KarmaEventHandler();
@@ -57,7 +51,6 @@ public class KarmaEventHandler implements ITickHandler {
 	
 	private KarmaEventHandler() {
 		MinecraftForge.EVENT_BUS.register(this);
-		TickRegistry.registerTickHandler(this, Side.SERVER);
 	}
 	
 	@ForgeSubscribe
@@ -127,90 +120,40 @@ public class KarmaEventHandler implements ITickHandler {
 			if (evt.target instanceof EntityAnimal) {
 				EntityAnimal animal = (EntityAnimal)evt.target;
 				if (animal.isBreedingItem(evt.entityPlayer.getCurrentEquippedItem()) && animal.getGrowingAge() == 0) {
-					EntityAnimal animalPrev = breedingInfo.get(evt.entityPlayer);
-					if (animalPrev == null || animalPrev == animal) {
-						breedingInfo.put(evt.entityPlayer, animal);
-					} else {
-						if (animalPrev.getDistanceSqToEntity(animal) <= 64) {
-							playerKarma(evt.entityPlayer).modifyKarmaWithMax(0.1F, 20);
-							breedingInfo.remove(evt.entityPlayer);
-						} else {
-							breedingInfo.put(evt.entityPlayer, animal);
-						}
-					}
+					PlayerInfo.getModEntityData(animal).setString("breedingOwner", evt.entityPlayer.username);
 				}
 			} else if (evt.target instanceof EntityZombie) {
 				EntityZombie zombie = (EntityZombie)evt.target;
 				ItemStack currentItem = evt.entityPlayer.getCurrentEquippedItem();
 				if (currentItem != null && currentItem.getItem() == Item.appleGold && currentItem.getItemDamage() == 0 && zombie.isVillager() && zombie.isPotionActive(Potion.weakness)) {
-					startZombieCure(evt.entityPlayer, (EntityZombie) evt.target);
+					PlayerInfo.getModEntityData(zombie).setString("cureOwner", evt.entityPlayer.username);
 				}
 			}
 		}
 	}
 	
-	private void startZombieCure(EntityPlayer player, EntityZombie zombie) {
-		if (!zombieCureInfo.containsKey(player)) {
-			zombieCureInfo.put(player, new HashSet<EntityZombie>());
-		}
-		zombieCureInfo.get(player).add(zombie);
-	}
-	
-	private Map<EntityPlayer,EntityAnimal> breedingInfo = new HashMap<EntityPlayer,EntityAnimal>();
-	private Map<EntityPlayer,Set<EntityZombie>> zombieCureInfo = new HashMap<EntityPlayer, Set<EntityZombie>>();
-
-	@Override
-	public void tickStart(EnumSet<TickType> type, Object... tickData) {
-		// update breeding infos
-		Iterator<Entry<EntityPlayer,EntityAnimal>> it = breedingInfo.entrySet().iterator();
+	// called by the hook inserted into EntityAIMate by the CrymodTransformer 
+	public static void onBreedingSpawnChild(EntityAgeable baby, EntityAIMate aiInstance) {
+		EntityAnimal animal = ReflectionHelper.getPrivateValue(EntityAIMate.class, aiInstance, 0);
+		EntityAnimal mate = ReflectionHelper.getPrivateValue(EntityAIMate.class, aiInstance, 2);
+		String animalBreeder = PlayerInfo.getModEntityData(animal).getString("breedingOwner");
+		String mateBreeder = PlayerInfo.getModEntityData(mate).getString("breedingOwner");
 		
-		while (it.hasNext()) {
-			Entry<EntityPlayer,EntityAnimal> entry = it.next();
-			
-			if (entry.getValue().inLove == 0 || entry.getValue().isDead || entry.getKey().isDead) {
-				it.remove();
-			}
-		}
-		
-		// update zombie cure infos
-		Iterator<Entry<EntityPlayer,Set<EntityZombie>>> itZombieInfo = zombieCureInfo.entrySet().iterator();
-		while (itZombieInfo.hasNext()) {
-			Entry<EntityPlayer,Set<EntityZombie>> entry = itZombieInfo.next();
-			if (entry.getKey().isDead) {
-				itZombieInfo.remove();
-			} else {
-				Iterator<EntityZombie> itZombies = entry.getValue().iterator();
-				while (itZombies.hasNext()) {
-					EntityZombie zombie = itZombies.next();
-					if (zombie.isDead || getZombieCureTime(zombie) == 0) {
-						playerKarma(entry.getKey()).modifyKarmaWithMax(3, 30);
-						itZombies.remove();
-					}
-				}
-				if (entry.getValue().isEmpty()) {
-					itZombieInfo.remove();
-				}
+		if (animalBreeder.equals(mateBreeder)) {
+			EntityPlayer player = animal.worldObj.getPlayerEntityByName(animalBreeder);
+			if (player != null) {
+				playerKarma(player).modifyKarmaWithMax(0.1F, 20);
 			}
 		}
 	}
 	
-	private int getZombieCureTime(EntityZombie zombie) {
-		return ReflectionHelper.getPrivateValue(EntityZombie.class, zombie, 0);
-	}
-
-	@Override
-	public void tickEnd(EnumSet<TickType> type, Object... tickData) {
-		
-	}
-
-	@Override
-	public EnumSet<TickType> ticks() {
-		return EnumSet.of(TickType.SERVER);
-	}
-
-	@Override
-	public String getLabel() {
-		return "SummoningModKarmaManager";
+	// called by the hook inserted into EntityZombie by the CrymodTransformer
+	public static void onZombieConvert(EntityZombie zombie) {
+		String curer = PlayerInfo.getModEntityData(zombie).getString("cureOwner");
+		EntityPlayer player = zombie.worldObj.getPlayerEntityByName(curer);
+		if (player != null) {
+			playerKarma(player).modifyKarmaWithMax(3, 30);
+		}
 	}
 	
 	private static final int[] MESSAGE_BORDERS = {50, 40, 25, 10};

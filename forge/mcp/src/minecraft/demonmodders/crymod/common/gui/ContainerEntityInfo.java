@@ -72,4 +72,16 @@ public class ContainerEntityInfo extends AbstractContainer<InventorySummonable> 
 			break;
 		}
 	}
+
+	@Override
+	public ItemStack transferStackInSlot(EntityPlayer player, int slotNum) {
+		ItemStack stackCopy = null;
+		Slot slot = (Slot)inventorySlots.get(slotNum);
+		if (slot != null && slot.getHasStack()) {
+			ItemStack stack = slot.getStack();
+			stackCopy = stack.copy();
+			
+		}
+		return stackCopy;
+	}
 }
