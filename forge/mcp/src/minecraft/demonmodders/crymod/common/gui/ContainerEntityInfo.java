@@ -7,11 +7,13 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Slot;
+import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
 import demonmodders.crymod.common.entities.SummonableBase;
 import demonmodders.crymod.common.inventory.InventorySummonable;
 import demonmodders.crymod.common.inventory.SlotArmor;
 import demonmodders.crymod.common.inventory.SlotNoPickup;
+import demonmodders.crymod.common.items.ItemCryMod;
 
 public class ContainerEntityInfo extends AbstractContainer<InventorySummonable> {
 
@@ -74,14 +76,40 @@ public class ContainerEntityInfo extends AbstractContainer<InventorySummonable> 
 	}
 
 	@Override
-	public ItemStack transferStackInSlot(EntityPlayer player, int slotNum) {
-		ItemStack stackCopy = null;
-		Slot slot = (Slot)inventorySlots.get(slotNum);
-		if (slot != null && slot.getHasStack()) {
-			ItemStack stack = slot.getStack();
-			stackCopy = stack.copy();
-			
+	public ItemStack transferStackInSlot(EntityPlayer player, int slotId) {
+		Slot slotToTransfer = getSlot(slotId);
+		if (slotToTransfer == null || !slotToTransfer.getHasStack()) {
+			return null;
 		}
-		return stackCopy;
+		
+		ItemStack stackToTransfer = slotToTransfer.getStack();
+		ItemStack oldStack = stackToTransfer.copy();
+		
+		if (slotId < inventory.getSizeInventory()) { // transfer from entity to inventory
+			if (!mergeItemStack(stackToTransfer, inventory.getSizeInventory(), inventory.getSizeInventory() + 9, true)) {
+				return null;
+			}
+		} else { // transfer from inventory
+			if (stackToTransfer.getItem() instanceof ItemArmor) { // transfer into armor slots
+				int armorType = ((ItemArmor)stackToTransfer.getItem()).armorType;
+				if (!mergeItemStack(stackToTransfer, armorType, armorType + 1, false)) {
+					return null;
+				}
+			} else if (!mergeItemStack(stackToTransfer, 4, 5, false)) { // transfer into the held item slot
+				return null;
+			}
+		}
+		
+		if (stackToTransfer.stackSize == 0) {
+			slotToTransfer.putStack(null); // completely transferred
+		} else {
+			slotToTransfer.onSlotChanged(); // only partially transferred
+		}
+		
+		if (stackToTransfer.stackSize == oldStack.stackSize) {
+			return null; // we cannot transfer this stack
+		}
+		
+		return oldStack;
 	}
 }

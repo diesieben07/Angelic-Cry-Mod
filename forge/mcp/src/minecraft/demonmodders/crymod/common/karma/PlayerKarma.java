@@ -77,7 +77,7 @@ public class PlayerKarma {
 	}
 	
 	public static enum CountableKarmaEvent {
-		PIGMEN_ATTACK;
+		PIGMEN_ATTACK, CREATE_SNOWGOLEM, CREATE_IRONGOLEM;
 	}
 
 	public void write(NBTTagCompound nbt) {

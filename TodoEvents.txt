@@ -15,7 +15,6 @@ Killing witch 0.5 49 Done
 
 Bad deeds:
 Killing villager 0.1 20 Done
-Setting off TNT 0.3 20
 Killing a good player (there karma/20 made negative) 3 times only 49
 Attack zombie pig man 1 once only Done
 Killing iron golem 0.5 20 Done

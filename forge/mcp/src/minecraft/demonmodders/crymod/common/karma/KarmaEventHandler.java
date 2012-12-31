@@ -8,6 +8,7 @@ import java.util.List;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockCrops;
 import net.minecraft.entity.EntityAgeable;
+import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.ai.EntityAIMate;
 import net.minecraft.entity.boss.EntityDragon;
 import net.minecraft.entity.monster.EntityCreeper;
@@ -21,6 +22,7 @@ import net.minecraft.entity.passive.EntityVillager;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemPotion;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Potion;
@@ -161,6 +163,21 @@ public class KarmaEventHandler {
 	public static void onPlayerBlockHarvest(Block block, World world, int x, int y, int z, int meta, EntityPlayer player) {
 		if (block.blockID == Block.mobSpawner.blockID) {
 			playerKarma(player).modifyKarmaWithMax(1, 30);
+		}
+	}
+	
+	public static void onBeforePlayerPlaceBlock(ItemBlock item, World world, int x, int y, int z, EntityPlayer player) {
+		System.out.println("place");
+		if (!world.isRemote && item.getBlockID() == Block.pumpkin.blockID) {
+			System.out.println("place pumpkin on server");
+			// first check for snow golem
+			if (world.getBlockId(x, y - 1, z) == Block.blockSnow.blockID && world.getBlockId(x, y - 2, z) == Block.blockSnow.blockID) {
+				PlayerKarma karma = playerKarma(player);
+				if (karma.getEventAmount(CountableKarmaEvent.CREATE_SNOWGOLEM) < 2) {
+					karma.increaseEventAmount(CountableKarmaEvent.CREATE_SNOWGOLEM);
+					karma.modifyKarma(1);
+				}
+			}
 		}
 	}
 	

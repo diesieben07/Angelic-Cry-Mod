@@ -20,6 +20,8 @@ import cpw.mods.fml.relauncher.IClassTransformer;
 
 public class CrymodTransformer implements IClassTransformer {
 
+	private static final String EVENT_HANDLER = "demonmodders/crymod/common/karma/KarmaEventHandler";
+	
 	private static final String[] DEOBF = {
 		"net.minecraft.entity.ai.EntityAIMate",
 		"spawnBaby",
@@ -33,7 +35,11 @@ public class CrymodTransformer implements IClassTransformer {
 		"net.minecraft.block.Block",
 		"onBlockHarvested",
 		"net/minecraft/world/World",
-		"net/minecraft/entity/player/EntityPlayer"
+		"net/minecraft/entity/player/EntityPlayer",
+		
+		"net.minecraft.block.BlockPumpkin",
+		"onBlockPlacedBy",
+		"net/minecraft/entity/EntityLiving"
 	};
 	
 	private static final String[] OBF = {
@@ -53,6 +59,9 @@ public class CrymodTransformer implements IClassTransformer {
 	private static final int ON_BLOCK_HARVESTED = 8;
 	private static final int WORLD = 9;
 	private static final int ENTTIY_PLAYER = 10;
+	private static final int BLOCK_PUMPKIN = 11;
+	private static final int ON_BLOCK_PLACED_BY = 12;
+	private static final int ENTITY_LIVING = 13;
 	
 	@Override
 	public byte[] transform(String name, byte[] bytes) {
@@ -74,7 +83,7 @@ public class CrymodTransformer implements IClassTransformer {
 					
 					final String methodDescr = "(L" + classInfo[ENTITY_AGEABLE_TYPE] + ";L" + classInfo[ENTITY_AI_MATE].replace('.', '/') + ";)V";
 					
-					hook.add(new MethodInsnNode(Opcodes.INVOKESTATIC, "demonmodders/crymod/common/karma/KarmaEventHandler", "onBreedingSpawnChild", methodDescr));
+					hook.add(new MethodInsnNode(Opcodes.INVOKESTATIC, EVENT_HANDLER, "onBreedingSpawnChild", methodDescr));
 					
 					AbstractInsnNode insertionPoint = null;
 					
@@ -101,7 +110,7 @@ public class CrymodTransformer implements IClassTransformer {
 					hook.add(new VarInsnNode(Opcodes.ALOAD, 0)); // this: the Zombie
 
 					final String methodDescr = "(L" + classInfo[ENTITY_ZOMBIE].replace('.', '/') + ";)V";
-					hook.add(new MethodInsnNode(Opcodes.INVOKESTATIC, "demonmodders/crymod/common/karma/KarmaEventHandler", "onZombieConvert", methodDescr));
+					hook.add(new MethodInsnNode(Opcodes.INVOKESTATIC, EVENT_HANDLER, "onZombieConvert", methodDescr));
 					
 					AbstractInsnNode insertionPoint = null;
 					
@@ -133,7 +142,7 @@ public class CrymodTransformer implements IClassTransformer {
 					hook.add(new VarInsnNode(Opcodes.ALOAD, 6)); // par6EntityPlayer
 					
 					final String methodDescr = "(L" + classInfo[BLOCK].replace('.', '/') + ";L" + classInfo[WORLD] + ";IIIIL" + classInfo[ENTTIY_PLAYER] + ";)V";
-					hook.add(new MethodInsnNode(Opcodes.INVOKESTATIC, "demonmodders/crymod/common/karma/KarmaEventHandler", "onPlayerBlockHarvest", methodDescr));
+					hook.add(new MethodInsnNode(Opcodes.INVOKESTATIC, EVENT_HANDLER, "onPlayerBlockHarvest", methodDescr));
 					
 					AbstractInsnNode insertionPoint = null;
 					
@@ -147,6 +156,38 @@ public class CrymodTransformer implements IClassTransformer {
 						method.instructions.insertBefore(insertionPoint, hook);
 						System.out.println("[Summoningmod] Inserted Callback Hook into Block/onBlockHarvested");
 						hasTransformed = true;
+					}
+				}
+			}
+		} else if (false && name.equals(classInfo[BLOCK_PUMPKIN])) {
+			ClassReader reader = new ClassReader(bytes);
+			reader.accept(clazz, 0);
+			
+			for (MethodNode method : (List<MethodNode>)clazz.methods) {
+				if (method.name.equals(classInfo[ON_BLOCK_PLACED_BY])) {
+					InsnList hook = new InsnList();
+					hook.add(new VarInsnNode(Opcodes.ALOAD, 1)); // par1World
+					for (int i = 2; i < 5; i++) {
+						hook.add(new VarInsnNode(Opcodes.ILOAD, i)); // par2 - par4 (x, y, z)
+					}
+					hook.add(new VarInsnNode(Opcodes.ALOAD, 5)); // par5EntityLiving
+					
+					final String methodDescr = "(L" + classInfo[WORLD].replace('.', '/') + ";IIIL" + classInfo[ENTITY_LIVING] + ";)V";
+					hook.add(new MethodInsnNode(Opcodes.INVOKESTATIC, EVENT_HANDLER, "onLivingPlacePumpkin", methodDescr));
+
+					AbstractInsnNode insertionPoint = null;
+					
+					for (int i = 0; i < method.instructions.size(); i++) {
+						AbstractInsnNode node = method.instructions.get(i);
+						System.out.println(node.getOpcode() + " / " + node.getType() + " / " + node.getClass());
+						if (node.getOpcode() != -1) {
+							insertionPoint = node;
+						}
+					}
+					
+					if (insertionPoint == null) {
+						method.instructions.insertBefore(insertionPoint, hook);
+						System.out.println("[Summoningmod] Inserted Callback Hook into ItemBlock/placeBlockAt");
 					}
 				}
 			}

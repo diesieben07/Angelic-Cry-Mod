@@ -25,8 +25,11 @@ public abstract class AbstractContainer<T extends IInventory> extends Container 
 		return inventory;
 	}
 	
-	@Override
-	public ItemStack transferStackInSlot(EntityPlayer player, int slot) {
+	/**
+	 *  try to move the Stack in the specified slot by shift clicking
+	 *  @return null on failure
+	 */
+	public ItemStack transferStackInSlot(EntityPlayer player, int slotId) {
 		return null;
 	}
 	
@@ -46,12 +49,14 @@ public abstract class AbstractContainer<T extends IInventory> extends Container 
 	}
 	
 	final void addPlayerInventoryToContainer(InventoryPlayer inventoryPlayer, int xStart, int yStart, boolean useCantPickup) {
+		// add the upper 3 rows
 		for (int j = 0; j < 3; j++) {
             for (int i = 0; i < 9; i++) {
                 addSlotToContainer(new Slot(inventoryPlayer, i + j * 9 + 9, xStart + i * 18, yStart + j * 18));
             }
         }
 
+		// add the hotbar
 		for (int k = 0; k < 9; k++) {
         	if (useCantPickup && k == inventoryPlayer.currentItem) {
         		addSlotToContainer(new SlotNoPickup(inventoryPlayer, k, xStart + k * 18, yStart + 58));
