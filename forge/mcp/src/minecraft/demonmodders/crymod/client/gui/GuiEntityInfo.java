@@ -79,23 +79,32 @@ public class GuiEntityInfo extends AbstractGuiContainer<ContainerEntityInfo, Inv
 		OpenGlHelper.setActiveTexture(OpenGlHelper.defaultTexUnit);
 
 		// draw the health
-		GL11.glColor3f(1, 1, 1);
-		mc.renderEngine.bindTexture(mc.renderEngine.getTexture(getTextureFile()));
 		drawBar(13, 35, entity.getHealth(), entity.getMaxHealth());
 		fontRenderer.drawString("Health: " + entity.getHealth() + " / " + entity.getMaxHealth(), guiLeft + 14, guiTop + 25, 0x000000);
+		
+		drawBar(13, 66, entity.getSpeed(), SummonableBase.MAX_SPEED);
+		fontRenderer.drawString("Speed: " + entity.getSpeed() + " / " + SummonableBase.MAX_SPEED, guiLeft + 15, guiTop + 56, 0x000000);
+		
+		drawBar(13, 96, entity.getPower(), SummonableBase.MAX_POWER);
+		fontRenderer.drawString("Power: " + entity.getSpeed() + " / " + SummonableBase.MAX_SPEED, guiLeft + 15, guiTop + 86, 0x000000);
+		
+		drawBar(13, 126, entity.getControl(), SummonableBase.MAX_CONTROL);
+		fontRenderer.drawString("Control: " + entity.getSpeed() + " / " + SummonableBase.MAX_SPEED, guiLeft + 15, guiTop + 116, 0x000000);
 		
 		// Draw the name
 		fontRenderer.drawString(entity.getEntityName(), guiLeft + 132, guiTop + 106, 0x000000);
 		
 		// draw the edit name button
-		GL11.glColor3f(1, 1, 1);
-		mc.renderEngine.bindTexture(mc.renderEngine.getTexture("/gui/items.png"));
-		drawTexturedModalRect(guiLeft + 217, guiTop + 98, 11 * 16, 11 * 16, 16, 16);
+		//GL11.glColor3f(1, 1, 1);
+		//mc.renderEngine.bindTexture(mc.renderEngine.getTexture("/gui/items.png"));
+//		drawTexturedModalRect(guiLeft + 217, guiTop + 98, 11 * 16, 11 * 16, 16, 16);
 	}
 
 	private void drawBar(int x, int y, int value, int maxValue) {
 		float factor = (float) BAR_WIDTH / maxValue;
 		int scaledValue = (int) (value * factor);
+		GL11.glColor3f(1, 1, 1);
+		mc.renderEngine.bindTexture(mc.renderEngine.getTexture(getTextureFile()));
 		drawTexturedModalRect(x + guiLeft, y + guiTop, BAR_TEXTURE_X, BAR_TEXTURE_Y, scaledValue, BAR_HEIGHT);
 	}
 
@@ -110,6 +119,7 @@ public class GuiEntityInfo extends AbstractGuiContainer<ContainerEntityInfo, Inv
 	public void initGui() {
 		super.initGui();
 		controlList.add(new GuiButtonImage(ContainerEntityInfo.BUTTON_CONFIRM, width / 2 - SMALL_BUTTON_WIDTH / 2, guiTop + ySize - 50, SMALL_BUTTON_WIDTH, SMALL_BUTTON_HEIGHT, 0, 256 - SMALL_BUTTON_HEIGHT * 2, getTextureFile()).setDisplayString("Confirm"));
+		controlList.add(new GuiButtonEntityInfoRename(ContainerEntityInfo.BUTTON_RENAME, guiLeft + 217, guiTop + 98));
 	}
 
 }

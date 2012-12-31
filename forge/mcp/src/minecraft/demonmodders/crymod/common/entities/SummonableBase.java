@@ -20,13 +20,40 @@ import demonmodders.crymod.common.network.PacketHealthUpdate;
 
 public abstract class SummonableBase extends EntityCreature implements IEntityAdditionalSpawnData {
 
+	private static final String[]  RANDOM_NAMES = new String[] {
+		"Name 1", "Name 2", "Name 3"
+	};
+	
+	public static final int MAX_SPEED = 50;
+	public static final int MAX_POWER = 50;
+	public static final int MAX_CONTROL = 50;
+	
 	String owner = "";
 	String name = "";
 	private boolean playerUsing = false;
 	private int healthLastTick;
 	
+	private int speed;
+	private int power;
+	private int control;
+	
 	public SummonableBase(World world) {
 		super(world);
+		speed = MAX_SPEED;
+		power = MAX_POWER;
+		control = MAX_CONTROL;
+	}
+	
+	public int getSpeed() {
+		return speed;
+	}
+	
+	public int getPower() {
+		return power;
+	}
+	
+	public int getControl() {
+		return control;
 	}
 	
 	public EntityPlayer getOwner() {
@@ -43,6 +70,9 @@ public abstract class SummonableBase extends EntityCreature implements IEntityAd
 		super.writeEntityToNBT(nbt);
 		nbt.setString("owner", owner);
 		nbt.setString("name", name);
+		nbt.setInteger("speed", speed);
+		nbt.setInteger("power", power);
+		nbt.setInteger("control", control);
 	}
 
 	@Override
@@ -50,6 +80,9 @@ public abstract class SummonableBase extends EntityCreature implements IEntityAd
 		super.readEntityFromNBT(nbt);
 		owner = nbt.getString("owner");
 		name = nbt.getString("name");
+		speed = nbt.getInteger("speed");
+		power = nbt.getInteger("power");
+		control = nbt.getInteger("control");
 	}
 
 	@Override
@@ -83,16 +116,18 @@ public abstract class SummonableBase extends EntityCreature implements IEntityAd
 	@Override
 	public void writeSpawnData(ByteArrayDataOutput data) {
 		data.writeUTF(name);
+		data.writeByte(speed);
+		data.writeByte(power);
+		data.writeByte(control);
 	}
 
 	@Override
 	public void readSpawnData(ByteArrayDataInput data) {
 		name = data.readUTF();
+		speed = data.readByte();
+		power = data.readByte();
+		control = data.readByte();
 	}
-
-	private static final String[]  RANDOM_NAMES = new String[] {
-		"Name 1", "Name 2", "Name 3"
-	};
 
 	@Override
 	public void onUpdate() {

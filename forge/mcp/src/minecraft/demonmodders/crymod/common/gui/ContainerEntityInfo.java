@@ -18,6 +18,7 @@ import demonmodders.crymod.common.items.ItemCryMod;
 public class ContainerEntityInfo extends AbstractContainer<InventorySummonable> {
 
 	public static final int BUTTON_CONFIRM = 0;
+	public static final int BUTTON_RENAME = 1;
 	
 	private final SummonableBase entity;
 	private final InventoryPlayer playerInventoryCopy;
@@ -73,6 +74,11 @@ public class ContainerEntityInfo extends AbstractContainer<InventorySummonable> 
 			}
 			break;
 		}
+	}
+
+	@Override
+	public boolean handleButtonClick(int buttonId) {
+		return buttonId == BUTTON_CONFIRM;
 	}
 
 	@Override
