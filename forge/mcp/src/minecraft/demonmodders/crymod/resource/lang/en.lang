@@ -13,6 +13,7 @@ item.crymod_swordOfDarkness.name:Sword of Darkness
 item.crymod_recipePage.name:Recipe Page
 
 tile.crymod_rechargeStation.name:Recharge Station
+tile.crymod_enderBook.name:Ender Book
 
 chat.prefix.good.10:Minor Priest
 chat.prefix.good.25:High Priest
@@ -22,6 +23,11 @@ chat.prefix.bad.10:Crazed
 chat.prefix.bad.25:Consumed
 chat.prefix.bad.40:Demonist
 chat.prefix.bad.50:Dark God
+
+crymod.ui.health:Health %d / %d
+crymod.ui.control:Control %d / %d
+crymod.ui.power:Power %d / %d
+crymod.ui.speed:Speed %d / %d
 
 commands.karma.usage:Usage: /karma <value> [<player>]
 

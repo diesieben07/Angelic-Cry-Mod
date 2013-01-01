@@ -7,6 +7,7 @@ import net.minecraft.client.gui.GuiTextField;
 import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.entity.RenderManager;
+import net.minecraft.util.StringTranslate;
 
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.GL11;
@@ -99,17 +100,13 @@ public class GuiEntityInfo extends AbstractGuiContainer<ContainerEntityInfo, Inv
 		OpenGlHelper.setActiveTexture(OpenGlHelper.defaultTexUnit);
 
 		// draw the health
-		drawBar(13, 35, entity.getHealth(), entity.getMaxHealth());
-		fontRenderer.drawString("Health: " + entity.getHealth() + " / " + entity.getMaxHealth(), guiLeft + 14, guiTop + 25, 0x000000);
+		drawBar("crymod.ui.health", 13, 35, entity.getHealth(), entity.getMaxHealth());
 		
-		drawBar(13, 66, entity.getSpeed(), SummonableBase.MAX_SPEED);
-		fontRenderer.drawString("Speed: " + entity.getSpeed() + " / " + SummonableBase.MAX_SPEED, guiLeft + 15, guiTop + 56, 0x000000);
+		drawBar("crymod.ui.speed", 13, 66, entity.getSpeed(), SummonableBase.MAX_SPEED);
 		
-		drawBar(13, 96, entity.getPower(), SummonableBase.MAX_POWER);
-		fontRenderer.drawString("Power: " + entity.getSpeed() + " / " + SummonableBase.MAX_SPEED, guiLeft + 15, guiTop + 86, 0x000000);
+		drawBar("crymod.ui.power", 13, 96, entity.getPower(), SummonableBase.MAX_POWER);
 		
-		drawBar(13, 126, entity.getControl(), SummonableBase.MAX_CONTROL);
-		fontRenderer.drawString("Control: " + entity.getSpeed() + " / " + SummonableBase.MAX_SPEED, guiLeft + 15, guiTop + 116, 0x000000);
+		drawBar("crymod.ui.control", 13, 126, entity.getControl(), SummonableBase.MAX_CONTROL);
 		
 		// Draw the name
 		fontRenderer.drawString(textFieldEntityName.getText() + (textFieldEntityName.getText().equals(entity.getEntityName()) ? "" : "*"), guiLeft + 132, guiTop + 106, 0x000000);
@@ -117,12 +114,14 @@ public class GuiEntityInfo extends AbstractGuiContainer<ContainerEntityInfo, Inv
 		// draw the xp cost
 		fontRenderer.drawString("x " + container.calculateCurrentXpCost(), guiLeft + 27, guiTop + 148, 0x000000);
 }
-	private void drawBar(int x, int y, int value, int maxValue) {
+	private void drawBar(String label, int x, int y, int value, int maxValue) {
 		float factor = (float) BAR_WIDTH / maxValue;
 		int scaledValue = (int) (value * factor);
 		GL11.glColor3f(1, 1, 1);
 		mc.renderEngine.bindTexture(mc.renderEngine.getTexture(getTextureFile()));
 		drawTexturedModalRect(x + guiLeft, y + guiTop, BAR_TEXTURE_X, BAR_TEXTURE_Y, scaledValue, BAR_HEIGHT);
+		String displayString = StringTranslate.getInstance().translateKeyFormat(label, value, maxValue);
+		fontRenderer.drawString(displayString, guiLeft + x + BAR_WIDTH - 2 - fontRenderer.getStringWidth(displayString), guiTop + y - 10, 0x000000);
 	}
 
 	@Override

@@ -61,16 +61,7 @@ public class BlockEnderBook extends BlockCryMod {
 	}
 
 	@Override
-	public boolean isBlockNormalCube(World world, int x, int y, int z) {
+	public boolean isOpaqueCube() {
 		return false;
-	}
-
-	@Override
-	@SideOnly(Side.CLIENT)
-	public void randomDisplayTick(World par1World, int par2, int par3,
-			int par4, Random par5Random) {
-		// TODO Auto-generated method stub
-//		if (par5Random.nextInt(5) == 0) 
-//		Crymod.proxy.handleClientEffect(new PacketClientEffect(Type.SUMMON_GOOD, par2, par3, par4));
 	}
 }
