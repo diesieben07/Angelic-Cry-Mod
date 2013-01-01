@@ -72,7 +72,7 @@ public class ContainerEntityInfo extends AbstractContainer<InventorySummonable> 
 	public void buttonClick(int buttonId, Side side, EntityPlayer player) {
 		switch (buttonId) {
 		case BUTTON_CONFIRM:
-			int levelCost = calculateCurrentXpCost();
+			int levelCost = calculateCurrentXpCost(player);
 			applyChanges = levelCost <= player.experienceLevel;
 			
 			if (side.isServer()) {
@@ -95,12 +95,16 @@ public class ContainerEntityInfo extends AbstractContainer<InventorySummonable> 
 		}
 	}
 	
-	public int calculateCurrentXpCost() {
+	public int calculateCurrentXpCost(EntityPlayer player) {
+		if (player.capabilities.isCreativeMode) {
+			return 0;
+		}
+		
 		int xpLevelCost = 0;
 		
 		for (int i = 0; i < inventory.getSizeInventory(); i++) {
-			if (!ItemStack.areItemStacksEqual(inventory.getStackInSlot(i), entity.getCurrentItemOrArmor(i))) {
-				xpLevelCost += i == 0 ? 2 : 1; // 1 level for each armor, 2 for equipped item
+			if (entity.getCurrentItemOrArmor(i) == null && !ItemStack.areItemStacksEqual(inventory.getStackInSlot(i), entity.getCurrentItemOrArmor(i))) {
+				xpLevelCost += i == 0 ? 2 : 1; // 1 level for each armor added, 2 for equipped item
 			}
 		}
 		

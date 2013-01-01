@@ -112,7 +112,7 @@ public class GuiEntityInfo extends AbstractGuiContainer<ContainerEntityInfo, Inv
 		fontRenderer.drawString(textFieldEntityName.getText() + (textFieldEntityName.getText().equals(entity.getEntityName()) ? "" : "*"), guiLeft + 132, guiTop + 106, 0x000000);
 		
 		// draw the xp cost
-		fontRenderer.drawString("x " + container.calculateCurrentXpCost(), guiLeft + 27, guiTop + 148, 0x000000);
+		fontRenderer.drawString("x " + container.calculateCurrentXpCost(mc.thePlayer), guiLeft + 27, guiTop + 148, 0x000000);
 }
 	private void drawBar(String label, int x, int y, int value, int maxValue) {
 		float factor = (float) BAR_WIDTH / maxValue;
@@ -144,7 +144,7 @@ public class GuiEntityInfo extends AbstractGuiContainer<ContainerEntityInfo, Inv
 		super.initGui();
 		controlList.add((buttonConfirm = new GuiButtonImage(ContainerEntityInfo.BUTTON_CONFIRM, width / 2 - SMALL_BUTTON_WIDTH / 2, guiTop + ySize - 50, SMALL_BUTTON_WIDTH, SMALL_BUTTON_HEIGHT, 0, 256 - SMALL_BUTTON_HEIGHT * 2, getTextureFile()).setDisplayString("Confirm")));
 		controlList.add((buttonRename = new GuiButtonEntityInfoRename(ContainerEntityInfo.BUTTON_RENAME, guiLeft + 217, guiTop + 98)));
-		controlList.add((buttonRenameDone = new GuiButton(ContainerEntityInfo.BUTTON_RENAME_DONE, guiLeft + 20, guiTop + 200, "Done")));
+		controlList.add((buttonRenameDone = new GuiButton(ContainerEntityInfo.BUTTON_RENAME_DONE, width / 2 - 100, height - 60, "Done")));
 		
 		
 		String textFieldContents = textFieldEntityName == null ? container.getEntity().getEntityName() : textFieldEntityName.getText();
