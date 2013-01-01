@@ -20,7 +20,7 @@ public class GuiRechargeStation extends AbstractGuiContainer<ContainerRechargeSt
 	}
 
 	@Override
-	String getTextureFile() {
+	protected String getTextureFile() {
 		return "/demonmodders/crymod/resource/tex/rechargeStation.png";
 	}
 }

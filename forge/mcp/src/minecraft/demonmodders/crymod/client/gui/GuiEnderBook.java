@@ -39,7 +39,7 @@ public class GuiEnderBook extends AbstractGuiContainer<ContainerEnderBook, Inven
 	}
 
 	@Override
-	String getTextureFile() {
+	protected String getTextureFile() {
 		return "/demonmodders/crymod/resource/tex/enderBook.png";
 	}
 }

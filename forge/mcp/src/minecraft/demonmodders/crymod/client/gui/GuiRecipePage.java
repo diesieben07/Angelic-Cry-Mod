@@ -12,7 +12,7 @@ public class GuiRecipePage extends AbstractGuiContainer<ContainerRecipePage, Sum
 	}
 
 	@Override
-	String getTextureFile() {
+	protected String getTextureFile() {
 		return "/demonmodders/crymod/resource/tex/recipePage.png";
 	}
 

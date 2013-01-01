@@ -19,11 +19,13 @@ public class ContainerEntityInfo extends AbstractContainer<InventorySummonable> 
 
 	public static final int BUTTON_CONFIRM = 0;
 	public static final int BUTTON_RENAME = 1;
+	public static final int BUTTON_RENAME_DONE = 2;
 	
 	private final SummonableBase entity;
 	private final InventoryPlayer playerInventoryCopy;
 	private final EntityPlayer player;
 	private boolean hasConfirmed;
+	private String newName = null;
 		
 	public ContainerEntityInfo(SummonableBase entity, EntityPlayer player) {
 		super(new InventorySummonable(entity));
@@ -50,6 +52,10 @@ public class ContainerEntityInfo extends AbstractContainer<InventorySummonable> 
 	public SummonableBase getEntity() {
 		return entity;
 	}
+	
+	public void setNewName(String name) {
+		newName = name;
+	}
 
 	@Override
 	public void onCraftGuiClosed(EntityPlayer player) {
@@ -69,6 +75,9 @@ public class ContainerEntityInfo extends AbstractContainer<InventorySummonable> 
 			if (side.isServer()) {
 				for (int i = 0; i < inventory.getSizeInventory(); i++) {
 					entity.setCurrentItemOrArmor(i, inventory.getStackInSlotOnClosing(i));
+				}
+				if (newName != null) {
+					entity.setName(newName);
 				}
 				player.closeScreen();
 			}

@@ -1,16 +1,24 @@
-package demonmodders.crymod.client.gui;
+package demonmodders.crymod.client.gui.entityinfo;
 
+import java.util.List;
+
+import net.minecraft.client.gui.GuiButton;
+import net.minecraft.client.gui.GuiTextField;
 import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.entity.RenderManager;
 
+import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
 
+import demonmodders.crymod.client.gui.AbstractGuiContainer;
+import demonmodders.crymod.client.gui.GuiButtonImage;
 import demonmodders.crymod.client.render.RenderZombieBase;
 import demonmodders.crymod.common.entities.SummonableBase;
 import demonmodders.crymod.common.gui.ContainerEntityInfo;
 import demonmodders.crymod.common.inventory.InventorySummonable;
+import demonmodders.crymod.common.network.PacketRenameEntity;
 
 public class GuiEntityInfo extends AbstractGuiContainer<ContainerEntityInfo, InventorySummonable> {
 
@@ -22,6 +30,14 @@ public class GuiEntityInfo extends AbstractGuiContainer<ContainerEntityInfo, Inv
 	private static final int BAR_HEIGHT = 5;
 	private static final int BAR_TEXTURE_Y = 195;
 	private static final int BAR_TEXTURE_X = 0;
+	
+	private boolean isRenaming = false;
+	
+	private GuiButton buttonConfirm;
+	private GuiButton buttonRename;
+	private GuiButton buttonRenameDone;
+	
+	private GuiTextField textFieldEntityName = null;
 
 	public GuiEntityInfo(ContainerEntityInfo container) {
 		super(container);
@@ -30,16 +46,16 @@ public class GuiEntityInfo extends AbstractGuiContainer<ContainerEntityInfo, Inv
 	}
 
 	@Override
-	String getTextureFile() {
+	protected String getTextureFile() {
 		return "/demonmodders/crymod/resource/tex/creatureInterface.png";
 	}
 
 	@Override
 	protected void drawGuiContainerBackgroundLayer(float var1, int var2, int var3) {
 		super.drawGuiContainerBackgroundLayer(var1, var2, var3);
-
-		SummonableBase entity = container.getEntity();
-
+			
+			SummonableBase entity = container.getEntity();
+	
 		// Draw the Entity Model
 		int par1 = guiLeft + 195;
 		int par2 = guiTop + 52;
@@ -92,14 +108,8 @@ public class GuiEntityInfo extends AbstractGuiContainer<ContainerEntityInfo, Inv
 		fontRenderer.drawString("Control: " + entity.getSpeed() + " / " + SummonableBase.MAX_SPEED, guiLeft + 15, guiTop + 116, 0x000000);
 		
 		// Draw the name
-		fontRenderer.drawString(entity.getEntityName(), guiLeft + 132, guiTop + 106, 0x000000);
-		
-		// draw the edit name button
-		//GL11.glColor3f(1, 1, 1);
-		//mc.renderEngine.bindTexture(mc.renderEngine.getTexture("/gui/items.png"));
-//		drawTexturedModalRect(guiLeft + 217, guiTop + 98, 11 * 16, 11 * 16, 16, 16);
-	}
-
+		fontRenderer.drawString(textFieldEntityName.getText() + (textFieldEntityName.getText().equals(entity.getEntityName()) ? "" : "*"), guiLeft + 132, guiTop + 106, 0x000000);
+}
 	private void drawBar(int x, int y, int value, int maxValue) {
 		float factor = (float) BAR_WIDTH / maxValue;
 		int scaledValue = (int) (value * factor);
@@ -110,7 +120,15 @@ public class GuiEntityInfo extends AbstractGuiContainer<ContainerEntityInfo, Inv
 
 	@Override
 	public void drawScreen(int par1, int par2, float par3) {
-		super.drawScreen(par1, par2, par3);
+		if (!isRenaming) {
+			super.drawScreen(par1, par2, par3);
+		} else {
+			drawDefaultBackground();
+			for (GuiButton button : (List<GuiButton>)controlList) {
+				button.drawButton(mc, par1, par2);
+			}
+			textFieldEntityName.drawTextBox();
+		}
 		xSizeLo = par1;
 		ySizeLo = par2;
 	}
@@ -118,8 +136,65 @@ public class GuiEntityInfo extends AbstractGuiContainer<ContainerEntityInfo, Inv
 	@Override
 	public void initGui() {
 		super.initGui();
-		controlList.add(new GuiButtonImage(ContainerEntityInfo.BUTTON_CONFIRM, width / 2 - SMALL_BUTTON_WIDTH / 2, guiTop + ySize - 50, SMALL_BUTTON_WIDTH, SMALL_BUTTON_HEIGHT, 0, 256 - SMALL_BUTTON_HEIGHT * 2, getTextureFile()).setDisplayString("Confirm"));
-		controlList.add(new GuiButtonEntityInfoRename(ContainerEntityInfo.BUTTON_RENAME, guiLeft + 217, guiTop + 98));
+		controlList.add((buttonConfirm = new GuiButtonImage(ContainerEntityInfo.BUTTON_CONFIRM, width / 2 - SMALL_BUTTON_WIDTH / 2, guiTop + ySize - 50, SMALL_BUTTON_WIDTH, SMALL_BUTTON_HEIGHT, 0, 256 - SMALL_BUTTON_HEIGHT * 2, getTextureFile()).setDisplayString("Confirm")));
+		controlList.add((buttonRename = new GuiButtonEntityInfoRename(ContainerEntityInfo.BUTTON_RENAME, guiLeft + 217, guiTop + 98)));
+		controlList.add((buttonRenameDone = new GuiButton(ContainerEntityInfo.BUTTON_RENAME_DONE, guiLeft + 20, guiTop + 200, "Done")));
+		
+		
+		String textFieldContents = textFieldEntityName == null ? container.getEntity().getEntityName() : textFieldEntityName.getText();
+		textFieldEntityName = new GuiTextField(fontRenderer, guiLeft + 20, guiTop + 20, 200, 20);
+		textFieldEntityName.setText(textFieldContents);
+		setRenaming(isRenaming);
+	}
+	
+	private void setRenaming(boolean renaming) {
+		buttonConfirm.drawButton = buttonRename.drawButton = !renaming;
+		isRenaming = buttonRenameDone.drawButton = renaming;
+		textFieldEntityName.setFocused(renaming);
 	}
 
+	@Override
+	protected void actionPerformed(GuiButton button) {
+		if (button.id != ContainerEntityInfo.BUTTON_CONFIRM) {
+			setRenaming(button.id == ContainerEntityInfo.BUTTON_RENAME);
+		} else {
+			new PacketRenameEntity(textFieldEntityName.getText(), container.windowId).sendToServer();
+			container.setNewName(textFieldEntityName.getText());
+		}
+		super.actionPerformed(button);
+	}
+
+	@Override
+	protected void mouseClicked(int mouseX, int mouseY, int mouseButton) {
+		if (!isRenaming) {
+			super.mouseClicked(mouseX, mouseY, mouseButton);
+		} else {
+			for (GuiButton button : (List<GuiButton>)controlList) {
+				if (button.mousePressed(mc, mouseX, mouseY)) {
+					mc.sndManager.playSoundFX("random.click", 1, 1);
+                    actionPerformed(button);
+				}
+			}
+			textFieldEntityName.mouseClicked(mouseX, mouseY, mouseButton);
+		}
+	}
+
+	@Override
+	protected void keyTyped(char keyChar, int keyCode) {
+		if (keyCode == Keyboard.KEY_ESCAPE) {
+			if (isRenaming) {
+				setRenaming(false);
+			} else {
+				mc.displayGuiScreen(null);
+			}
+		} else if (isRenaming && textFieldEntityName.isFocused()) {
+			textFieldEntityName.textboxKeyTyped(keyChar, keyCode);
+		}
+	}
+
+	@Override
+	public void updateScreen() {
+		super.updateScreen();
+		textFieldEntityName.updateCursorCounter();
+	}
 }

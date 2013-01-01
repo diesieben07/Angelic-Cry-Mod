@@ -1,4 +1,4 @@
-package demonmodders.crymod.client.gui;
+package demonmodders.crymod.client.gui.entityinfo;
 
 import org.lwjgl.opengl.GL11;
 
@@ -13,9 +13,10 @@ public class GuiButtonEntityInfoRename extends GuiButton {
 
 	@Override
 	public void drawButton(Minecraft mc, int par2, int par3) {
-		GL11.glColor3f(1, 1, 1);
-		mc.renderEngine.bindTexture(mc.renderEngine.getTexture("/gui/items.png"));
-		drawTexturedModalRect(xPosition, yPosition, 11 * 16, 11 * 16, width, height);
+		if (drawButton) {
+			GL11.glColor3f(1, 1, 1);
+			mc.renderEngine.bindTexture(mc.renderEngine.getTexture("/gui/items.png"));
+			drawTexturedModalRect(xPosition, yPosition, 11 * 16, 11 * 16, width, height);
+		}
 	}
-
 }

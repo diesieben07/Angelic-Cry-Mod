@@ -17,6 +17,7 @@ import demonmodders.crymod.common.gui.GuiType;
 import demonmodders.crymod.common.inventory.InventoryHelper;
 import demonmodders.crymod.common.inventory.InventorySummonable;
 import demonmodders.crymod.common.network.PacketHealthUpdate;
+import demonmodders.crymod.common.network.PacketNameUpdate;
 
 public abstract class SummonableBase extends EntityCreature implements IEntityAdditionalSpawnData {
 
@@ -32,6 +33,7 @@ public abstract class SummonableBase extends EntityCreature implements IEntityAd
 	String name = "";
 	private boolean playerUsing = false;
 	private int healthLastTick;
+	private String nameLastTick = null;
 	
 	private int speed;
 	private int power;
@@ -63,6 +65,10 @@ public abstract class SummonableBase extends EntityCreature implements IEntityAd
 	public SummonableBase setOwner(EntityPlayer owner) {
 		this.owner = owner.username;
 		return this;
+	}
+	
+	public void setName(String name) {
+		this.name = name;
 	}
 	
 	@Override
@@ -115,25 +121,31 @@ public abstract class SummonableBase extends EntityCreature implements IEntityAd
 	
 	@Override
 	public void writeSpawnData(ByteArrayDataOutput data) {
-		data.writeUTF(name);
 		data.writeByte(speed);
 		data.writeByte(power);
 		data.writeByte(control);
+		data.writeUTF(name);
 	}
 
 	@Override
 	public void readSpawnData(ByteArrayDataInput data) {
-		name = data.readUTF();
 		speed = data.readByte();
 		power = data.readByte();
 		control = data.readByte();
+		name = data.readUTF();
 	}
 
 	@Override
 	public void onUpdate() {
-		if (!worldObj.isRemote && healthLastTick != health) {
-			new PacketHealthUpdate(entityId, health).sendToAllTracking(this);
-			healthLastTick = health;
+		if (!worldObj.isRemote) {
+			if (healthLastTick != health) {
+				new PacketHealthUpdate(entityId, health).sendToAllTracking(this);
+				healthLastTick = health;
+			}
+			if (nameLastTick != name) {
+				new PacketNameUpdate(entityId, name).sendToAllTracking(this);
+				nameLastTick = name;
+			}
 		}
 		super.onUpdate();
 	}

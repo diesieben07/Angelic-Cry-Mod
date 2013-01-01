@@ -20,7 +20,7 @@ public class GuiCrystalBag extends AbstractGuiContainer<ContainerCrystalBag, Inv
 	}
 
 	@Override
-	String getTextureFile() {
+	protected String getTextureFile() {
 		return "/demonmodders/crymod/resource/tex/crystalBag.png";
 	}
 }

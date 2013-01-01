@@ -12,7 +12,7 @@ import demonmodders.crymod.common.network.PacketGuiButton;
 
 public abstract class AbstractGuiContainer<T extends AbstractContainer<R>, R extends IInventory> extends GuiContainer {
 
-	final T container;
+	protected final T container;
 	
 	public AbstractGuiContainer(T container) {
 		super(container);
@@ -37,5 +37,5 @@ public abstract class AbstractGuiContainer<T extends AbstractContainer<R>, R ext
         drawTexturedModalRect(xPos, yPos, 0, 0, this.xSize, this.ySize);
 	}
 	
-	abstract String getTextureFile();
+	protected abstract String getTextureFile();
 }

@@ -65,7 +65,7 @@ public class GuiSummoner extends AbstractGuiContainer<ContainerSummoner, Invento
 	}
 
 	@Override
-	String getTextureFile() {
+	protected String getTextureFile() {
 		return texture;
 	}
 
