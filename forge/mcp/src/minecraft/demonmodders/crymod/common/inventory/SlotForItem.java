@@ -28,7 +28,7 @@ public class SlotForItem extends Slot {
 			return itemIds.contains(stack.itemID);
 		} else if (itemStacks != null) {
 			for (ItemStack stackCheck : itemStacks) {
-				if (ItemStack.areItemStacksEqual(stackCheck, stack)) {
+				if (stackCheck.itemID == stack.itemID && stackCheck.getItemDamage() == stack.getItemDamage()) {
 					return true;
 				}
 			}

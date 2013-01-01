@@ -17,10 +17,12 @@ public class BlockCryMod extends Block {
 	
 	public static Block rechargeStation;
 	public static Block enderBook;
+	public static Block magiciser;
 	
 	public static void createBlocks() {
 		rechargeStation = new BlockRechargeStation("rechargeStation", 3956).setRequiresSelfNotify();
 		enderBook = new BlockEnderBook("enderBook", 3957);
+		magiciser = new BlockMagiciser("magiciser", 3958);
 	}
 	
 	private final Random rand = new Random();

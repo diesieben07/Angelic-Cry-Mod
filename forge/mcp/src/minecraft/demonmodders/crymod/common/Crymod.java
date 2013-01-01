@@ -34,6 +34,7 @@ import demonmodders.crymod.common.network.CrymodPacket;
 import demonmodders.crymod.common.network.CrymodPacketHandler;
 import demonmodders.crymod.common.playerinfo.PlayerInfo;
 import demonmodders.crymod.common.tileentities.TileEntityEnderbook;
+import demonmodders.crymod.common.tileentities.TileEntityMagiciser;
 import demonmodders.crymod.common.tileentities.TileEntityRechargeStation;
 import demonmodders.crymod.common.worldgen.CryWorldGenerator;
 
@@ -103,6 +104,7 @@ public class Crymod {
 		
 		GameRegistry.registerTileEntity(TileEntityRechargeStation.class, "crymodRechargeStation");
 		GameRegistry.registerTileEntity(TileEntityEnderbook.class, "crymodEnderbook");
+		GameRegistry.registerTileEntity(TileEntityMagiciser.class, "crymodMagiciser");
 		
 		proxy.init();
 	}

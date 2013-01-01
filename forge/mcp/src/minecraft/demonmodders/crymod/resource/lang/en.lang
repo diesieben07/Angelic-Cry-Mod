@@ -14,6 +14,7 @@ item.crymod_recipePage.name:Recipe Page
 
 tile.crymod_rechargeStation.name:Recharge Station
 tile.crymod_enderBook.name:Ender Book
+tile.crymod_magiciser.name:Magiciser
 
 chat.prefix.good.10:Minor Priest
 chat.prefix.good.25:High Priest

@@ -16,6 +16,7 @@ import cpw.mods.fml.relauncher.Side;
 import demonmodders.crymod.client.fx.EntityFXTextureChange;
 import demonmodders.crymod.client.gui.GuiCrystalBag;
 import demonmodders.crymod.client.gui.GuiEnderBook;
+import demonmodders.crymod.client.gui.GuiMagiciser;
 import demonmodders.crymod.client.gui.GuiRechargeStation;
 import demonmodders.crymod.client.gui.GuiRecipePage;
 import demonmodders.crymod.client.gui.GuiSummoner;
@@ -29,6 +30,7 @@ import demonmodders.crymod.common.entities.ZombieBase;
 import demonmodders.crymod.common.gui.ContainerCrystalBag;
 import demonmodders.crymod.common.gui.ContainerEnderBook;
 import demonmodders.crymod.common.gui.ContainerEntityInfo;
+import demonmodders.crymod.common.gui.ContainerMagiciser;
 import demonmodders.crymod.common.gui.ContainerRechargeStation;
 import demonmodders.crymod.common.gui.ContainerRecipePage;
 import demonmodders.crymod.common.gui.ContainerSummoner;
@@ -110,6 +112,8 @@ public class ClientProxy extends CommonProxy {
 			return new GuiRecipePage((ContainerRecipePage)container);
 		case SUMMONED_ENTITY:
 			return new GuiEntityInfo((ContainerEntityInfo)container);
+		case MAGICISER:
+			return new GuiMagiciser((ContainerMagiciser)container);
 		default:
 			return null;
 		}

@@ -11,6 +11,7 @@ import demonmodders.crymod.common.inventory.InventoryCrystalBag;
 import demonmodders.crymod.common.inventory.InventoryEnderBook;
 import demonmodders.crymod.common.inventory.InventorySummoner;
 import demonmodders.crymod.common.recipes.SummoningRecipe;
+import demonmodders.crymod.common.tileentities.TileEntityMagiciser;
 import demonmodders.crymod.common.tileentities.TileEntityRechargeStation;
 
 public class CrymodGuiHandler implements IGuiHandler {
@@ -36,6 +37,8 @@ public class CrymodGuiHandler implements IGuiHandler {
 			} else {
 				return null;
 			}
+		case MAGICISER:
+			return new ContainerMagiciser((TileEntityMagiciser)world.getBlockTileEntity(x, y, z), player.inventory);
 		default:
 			return null;
 		}

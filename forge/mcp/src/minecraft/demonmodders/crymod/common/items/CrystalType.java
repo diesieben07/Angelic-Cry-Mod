@@ -44,6 +44,10 @@ public class CrystalType {
 		return new ItemStack(ItemCryMod.crystal, 1, damage);
 	}
 	
+	public boolean containsThis(ItemStack stack) {
+		return stack != null && stack.itemID == ItemCryMod.crystal.shiftedIndex && stack.getItemDamage() == damage;
+	}
+	
 	public static CrystalType fromItemDamage(int damage) {
 		if (damage > crystalTypes.length || damage < 0) {
 			return getDefault();
