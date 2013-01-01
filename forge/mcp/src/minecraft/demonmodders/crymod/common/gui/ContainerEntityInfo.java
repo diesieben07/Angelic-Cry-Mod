@@ -24,7 +24,7 @@ public class ContainerEntityInfo extends AbstractContainer<InventorySummonable> 
 	private final SummonableBase entity;
 	private final InventoryPlayer playerInventoryCopy;
 	private final EntityPlayer player;
-	private boolean applyChanges;
+	private boolean applyChanges = false;
 	private String newName;
 		
 	public ContainerEntityInfo(SummonableBase entity, EntityPlayer player) {

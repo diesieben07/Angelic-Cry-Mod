@@ -148,7 +148,7 @@ public class GuiEntityInfo extends AbstractGuiContainer<ContainerEntityInfo, Inv
 		
 		
 		String textFieldContents = textFieldEntityName == null ? container.getEntity().getEntityName() : textFieldEntityName.getText();
-		textFieldEntityName = new GuiTextField(fontRenderer, guiLeft + 20, guiTop + 20, 200, 20);
+		textFieldEntityName = new GuiTextField(fontRenderer, width / 2 - 100, guiTop + 20, 200, 20);
 		textFieldEntityName.setText(textFieldContents);
 		setRenaming(isRenaming);
 	}
@@ -193,7 +193,7 @@ public class GuiEntityInfo extends AbstractGuiContainer<ContainerEntityInfo, Inv
 			if (isRenaming) {
 				setRenaming(false);
 			} else {
-				mc.displayGuiScreen(null);
+				mc.thePlayer.closeScreen();
 			}
 		} else if (isRenaming && textFieldEntityName.isFocused()) {
 			textFieldEntityName.textboxKeyTyped(keyChar, keyCode);
