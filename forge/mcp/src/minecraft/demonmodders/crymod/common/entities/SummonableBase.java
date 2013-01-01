@@ -149,4 +149,19 @@ public abstract class SummonableBase extends EntityCreature implements IEntityAd
 		}
 		super.onUpdate();
 	}
+
+	@Override
+	public int getMaxHealth() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	protected void dropEquipment(boolean par1, int par2) {
+		for (ItemStack stack : getLastActiveItems()) {
+			if (stack != null) {
+				entityDropItem(stack, 0);
+			}
+		}
+	}
 }

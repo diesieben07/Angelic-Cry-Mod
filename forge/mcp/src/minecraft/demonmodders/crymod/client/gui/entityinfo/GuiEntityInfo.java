@@ -22,14 +22,18 @@ import demonmodders.crymod.common.network.PacketRenameEntity;
 
 public class GuiEntityInfo extends AbstractGuiContainer<ContainerEntityInfo, InventorySummonable> {
 
-	private int xSizeLo;
-	private int ySizeLo;
+	private int mouseX;
+	private int mouseY;
 	private static final int SMALL_BUTTON_WIDTH = 77;
 	private static final int SMALL_BUTTON_HEIGHT = 13;
 	private static final int BAR_WIDTH = 91;
 	private static final int BAR_HEIGHT = 5;
 	private static final int BAR_TEXTURE_Y = 195;
 	private static final int BAR_TEXTURE_X = 0;
+	private static final int ORB_TEXTURE_X = 0;
+	private static final int ORB_TEXTURE_Y = 200;
+	private static final int ORB_WIDTH = 8;
+	private static final int ORB_HEIGHT = 8;
 	
 	private boolean isRenaming = false;
 	
@@ -54,14 +58,14 @@ public class GuiEntityInfo extends AbstractGuiContainer<ContainerEntityInfo, Inv
 	protected void drawGuiContainerBackgroundLayer(float var1, int var2, int var3) {
 		super.drawGuiContainerBackgroundLayer(var1, var2, var3);
 			
-			SummonableBase entity = container.getEntity();
+		SummonableBase entity = container.getEntity();
 	
 		// Draw the Entity Model
 		int par1 = guiLeft + 195;
 		int par2 = guiTop + 52;
 		int scale = 18;
-		float par4 = (float) (guiLeft + 51) - xSizeLo;
-		float par5 = (float) (guiTop + 75 - 50) - ySizeLo;
+		float par4 = (float) (guiLeft + 51) - mouseX;
+		float par5 = (float) (guiTop + 75 - 50) - mouseY;
 
 		GL11.glEnable(GL11.GL_COLOR_MATERIAL);
 		GL11.glPushMatrix();
@@ -109,6 +113,9 @@ public class GuiEntityInfo extends AbstractGuiContainer<ContainerEntityInfo, Inv
 		
 		// Draw the name
 		fontRenderer.drawString(textFieldEntityName.getText() + (textFieldEntityName.getText().equals(entity.getEntityName()) ? "" : "*"), guiLeft + 132, guiTop + 106, 0x000000);
+		
+		// draw the xp cost
+		fontRenderer.drawString("x " + container.calculateCurrentXpCost(), guiLeft + 27, guiTop + 148, 0x000000);
 }
 	private void drawBar(int x, int y, int value, int maxValue) {
 		float factor = (float) BAR_WIDTH / maxValue;
@@ -119,18 +126,18 @@ public class GuiEntityInfo extends AbstractGuiContainer<ContainerEntityInfo, Inv
 	}
 
 	@Override
-	public void drawScreen(int par1, int par2, float par3) {
+	public void drawScreen(int mouseX, int mouseY, float par3) {
 		if (!isRenaming) {
-			super.drawScreen(par1, par2, par3);
+			super.drawScreen(mouseX, mouseY, par3);
 		} else {
 			drawDefaultBackground();
 			for (GuiButton button : (List<GuiButton>)controlList) {
-				button.drawButton(mc, par1, par2);
+				button.drawButton(mc, mouseX, mouseY);
 			}
 			textFieldEntityName.drawTextBox();
 		}
-		xSizeLo = par1;
-		ySizeLo = par2;
+		this.mouseX = mouseX;
+		this.mouseY = mouseY;
 	}
 
 	@Override
@@ -159,6 +166,8 @@ public class GuiEntityInfo extends AbstractGuiContainer<ContainerEntityInfo, Inv
 			setRenaming(button.id == ContainerEntityInfo.BUTTON_RENAME);
 		} else {
 			new PacketRenameEntity(textFieldEntityName.getText(), container.windowId).sendToServer();
+		}
+		if (button.id == ContainerEntityInfo.BUTTON_RENAME_DONE || button.id == ContainerEntityInfo.BUTTON_CONFIRM) {
 			container.setNewName(textFieldEntityName.getText());
 		}
 		super.actionPerformed(button);

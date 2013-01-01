@@ -104,7 +104,7 @@ public abstract class CrymodPacket {
 			try {
 				CrymodPacket parsedPacket = packetClass.newInstance();
 				parsedPacket.readData(input);
-				parsedPacket.execute((EntityPlayer)player);
+				parsedPacket.execute(player);
 			} catch (Exception e) {
 				logger.warning("Exception during packet handling: " + e.getClass().getSimpleName() + " (" + e.getMessage() + ")");
 				e.printStackTrace();

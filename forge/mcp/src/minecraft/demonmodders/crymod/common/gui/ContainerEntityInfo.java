@@ -24,8 +24,8 @@ public class ContainerEntityInfo extends AbstractContainer<InventorySummonable> 
 	private final SummonableBase entity;
 	private final InventoryPlayer playerInventoryCopy;
 	private final EntityPlayer player;
-	private boolean hasConfirmed;
-	private String newName = null;
+	private boolean applyChanges;
+	private String newName;
 		
 	public ContainerEntityInfo(SummonableBase entity, EntityPlayer player) {
 		super(new InventorySummonable(entity));
@@ -47,6 +47,7 @@ public class ContainerEntityInfo extends AbstractContainer<InventorySummonable> 
 		for (int i = 0; i < 5; i++) {
 			inventory.setInventorySlotContents(i, entity.getCurrentItemOrArmor(i));
 		}
+		newName = entity.getEntityName();
 	}
 	
 	public SummonableBase getEntity() {
@@ -62,7 +63,7 @@ public class ContainerEntityInfo extends AbstractContainer<InventorySummonable> 
 		super.onCraftGuiClosed(player);
 		entity.onPlayerCloseGui();
 		
-		if (!hasConfirmed) {
+		if (!applyChanges) {
 			player.inventory.copyInventory(playerInventoryCopy);
 		}
 	}
@@ -71,18 +72,42 @@ public class ContainerEntityInfo extends AbstractContainer<InventorySummonable> 
 	public void buttonClick(int buttonId, Side side, EntityPlayer player) {
 		switch (buttonId) {
 		case BUTTON_CONFIRM:
-			hasConfirmed = true;
+			int levelCost = calculateCurrentXpCost();
+			applyChanges = levelCost <= player.experienceLevel;
+			
 			if (side.isServer()) {
-				for (int i = 0; i < inventory.getSizeInventory(); i++) {
-					entity.setCurrentItemOrArmor(i, inventory.getStackInSlotOnClosing(i));
+				if (levelCost <= player.experienceLevel) {
+					
+					player.addExperienceLevel(-levelCost);
+					
+					for (int i = 0; i < inventory.getSizeInventory(); i++) {
+						entity.setCurrentItemOrArmor(i, inventory.getStackInSlotOnClosing(i));
+					}
+					
+					if (newName != null) {
+						entity.setName(newName);
+					}
 				}
-				if (newName != null) {
-					entity.setName(newName);
-				}
+				
 				player.closeScreen();
 			}
 			break;
 		}
+	}
+	
+	public int calculateCurrentXpCost() {
+		int xpLevelCost = 0;
+		
+		for (int i = 0; i < inventory.getSizeInventory(); i++) {
+			if (!ItemStack.areItemStacksEqual(inventory.getStackInSlot(i), entity.getCurrentItemOrArmor(i))) {
+				xpLevelCost += i == 0 ? 2 : 1; // 1 level for each armor, 2 for equipped item
+			}
+		}
+		
+		if (!entity.getEntityName().equals(newName)) {
+			xpLevelCost += 1; // +1 for name change
+		}
+		return xpLevelCost;			
 	}
 
 	@Override

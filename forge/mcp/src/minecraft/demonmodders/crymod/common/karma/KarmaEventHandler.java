@@ -161,7 +161,7 @@ public class KarmaEventHandler {
 	
 	// called by the hook inserted into Block/onBlockHarvested by the CrymodTransformer
 	public static void onPlayerBlockHarvest(Block block, World world, int x, int y, int z, int meta, EntityPlayer player) {
-		if (block.blockID == Block.mobSpawner.blockID) {
+		if (!world.isRemote && block.blockID == Block.mobSpawner.blockID) {
 			playerKarma(player).modifyKarmaWithMax(1, 30);
 		}
 	}
