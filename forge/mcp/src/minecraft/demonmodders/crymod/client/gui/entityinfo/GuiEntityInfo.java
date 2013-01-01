@@ -190,7 +190,7 @@ public class GuiEntityInfo extends AbstractGuiContainer<ContainerEntityInfo, Inv
 
 	@Override
 	protected void keyTyped(char keyChar, int keyCode) {
-		if (keyCode == Keyboard.KEY_ESCAPE) {
+		if (keyCode == Keyboard.KEY_ESCAPE || (keyCode == mc.gameSettings.keyBindInventory.keyCode && !isRenaming)) {
 			if (isRenaming) {
 				setRenaming(false);
 			} else {
