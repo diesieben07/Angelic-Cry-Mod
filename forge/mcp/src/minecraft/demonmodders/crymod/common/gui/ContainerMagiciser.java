@@ -2,10 +2,12 @@ package demonmodders.crymod.common.gui;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
+import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import demonmodders.crymod.common.inventory.SlotForItem;
-import demonmodders.crymod.common.inventory.SlotNoPlace;
+import demonmodders.crymod.common.inventory.SlotMagiciser;
+import demonmodders.crymod.common.inventory.SlotMagiciserResult;
 import demonmodders.crymod.common.items.CrystalType;
 import demonmodders.crymod.common.items.ItemCryMod;
 import demonmodders.crymod.common.tileentities.TileEntityMagiciser;
@@ -16,14 +18,16 @@ public class ContainerMagiciser extends AbstractContainer<TileEntityMagiciser> {
 		super(inventory);
 		
 		for (int i = 0; i < 5; i++) {
-			addSlotToContainer(new Slot(inventory, i, 47 + 18 * i, 13));
+			addSlotToContainer(new SlotMagiciser(inventory, i, 47 + 18 * i, 13));
 		}
 		
 		addSlotToContainer(new SlotForItem(inventory, 5, 8, 60, CrystalType.PURPLE.generateItemStack()));
 		
-		addSlotToContainer(new SlotNoPlace(inventory, 6, 84, 49));
+		addSlotToContainer(new SlotMagiciserResult(inventory, 6, 84, 49));
 		
 		addPlayerInventoryToContainer(inventoryPlayer, 8, 84);
+		
+		inventory.updateMagiciserOutput();
 	}
 
 	@Override
