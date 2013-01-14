@@ -52,15 +52,15 @@ public class ContainerSummoner extends AbstractContainer<InventorySummoner> {
 		addSlotToContainer(new Slot(inventory, slotNumStart + 0, 80, 33));
 		
 		
-		addSlotToContainer(new SlotForItem(inventory, slotNumStart + 1, 80, 70, ItemCryMod.crystal.shiftedIndex));
-		addSlotToContainer(new SlotForItem(inventory, slotNumStart + 2, 58, 79, ItemCryMod.crystal.shiftedIndex));
-		addSlotToContainer(new SlotForItem(inventory, slotNumStart + 3, 103, 79, ItemCryMod.crystal.shiftedIndex));
-		addSlotToContainer(new SlotForItem(inventory, slotNumStart + 4, 80, 100, ItemCryMod.crystal.shiftedIndex));
-		addSlotToContainer(new SlotForItem(inventory, slotNumStart + 5, 38, 100, ItemCryMod.crystal.shiftedIndex));
-		addSlotToContainer(new SlotForItem(inventory, slotNumStart + 6, 121, 100, ItemCryMod.crystal.shiftedIndex));
-		addSlotToContainer(new SlotForItem(inventory, slotNumStart + 7, 80, 130, ItemCryMod.crystal.shiftedIndex));
-		addSlotToContainer(new SlotForItem(inventory, slotNumStart + 8, 58, 121, ItemCryMod.crystal.shiftedIndex));
-		addSlotToContainer(new SlotForItem(inventory, slotNumStart + 9, 103, 121, ItemCryMod.crystal.shiftedIndex));
+		addSlotToContainer(new SlotForItem(inventory, slotNumStart + 1, 80, 70, ItemCryMod.crystal.itemID));
+		addSlotToContainer(new SlotForItem(inventory, slotNumStart + 2, 58, 79, ItemCryMod.crystal.itemID));
+		addSlotToContainer(new SlotForItem(inventory, slotNumStart + 3, 103, 79, ItemCryMod.crystal.itemID));
+		addSlotToContainer(new SlotForItem(inventory, slotNumStart + 4, 80, 100, ItemCryMod.crystal.itemID));
+		addSlotToContainer(new SlotForItem(inventory, slotNumStart + 5, 38, 100, ItemCryMod.crystal.itemID));
+		addSlotToContainer(new SlotForItem(inventory, slotNumStart + 6, 121, 100, ItemCryMod.crystal.itemID));
+		addSlotToContainer(new SlotForItem(inventory, slotNumStart + 7, 80, 130, ItemCryMod.crystal.itemID));
+		addSlotToContainer(new SlotForItem(inventory, slotNumStart + 8, 58, 121, ItemCryMod.crystal.itemID));
+		addSlotToContainer(new SlotForItem(inventory, slotNumStart + 9, 103, 121, ItemCryMod.crystal.itemID));
 	}
 	
 	public int page() {
@@ -154,11 +154,11 @@ public class ContainerSummoner extends AbstractContainer<InventorySummoner> {
 				return null;
 			}
 		} else { // transfer from inventory
-			if (stackToTransfer.itemID == ItemCryMod.crystal.shiftedIndex) { // merge it with one of the crystal slots
+			if (stackToTransfer.itemID == ItemCryMod.crystal.itemID) { // merge it with one of the crystal slots
 				if (!mergeItemStack(stackToTransfer, currentPage * 10 + 1, currentPage * 10 + 10, false)) {
 					return null;
 				}
-			} else if (stackToTransfer.itemID == Item.ingotGold.shiftedIndex) { // merge it with the gold slot
+			} else if (stackToTransfer.itemID == Item.ingotGold.itemID) { // merge it with the gold slot
 				if (!mergeItemStack(stackToTransfer, currentPage * 10, currentPage * 10 + 1, false)) {
 					return null;
 				}

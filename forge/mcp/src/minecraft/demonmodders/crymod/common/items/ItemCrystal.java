@@ -40,7 +40,7 @@ public class ItemCrystal extends ItemCryMod {
 	}
 	
 	public static int getCharge(ItemStack itemStack) {
-		if (itemStack.getItem().shiftedIndex != crystal.shiftedIndex || itemStack.stackTagCompound == null) {
+		if (itemStack.getItem().itemID != crystal.itemID || itemStack.stackTagCompound == null) {
 			return 0;
 		} else {
 			return itemStack.stackTagCompound.getByte("summoningCharge");
@@ -48,7 +48,7 @@ public class ItemCrystal extends ItemCryMod {
 	}
 	
 	public static void setCharge(ItemStack itemStack, int charge) {
-		if (itemStack.getItem().shiftedIndex == crystal.shiftedIndex) {
+		if (itemStack.getItem().itemID == crystal.itemID) {
 			createStackCompound(itemStack);
 			if (charge > MAX_CHARGE) {
 				charge = MAX_CHARGE;

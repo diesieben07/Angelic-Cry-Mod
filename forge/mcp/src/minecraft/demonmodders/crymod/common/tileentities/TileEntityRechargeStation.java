@@ -44,7 +44,7 @@ public class TileEntityRechargeStation extends TileEntityInventory {
 				// loop through all possible crystals
 				for (int i = 0; i < 9; i++) {
 					ItemStack crystal = getStackInSlot(i);
-					if (crystal != null && crystal.itemID == ItemCryMod.crystal.shiftedIndex) {
+					if (crystal != null && crystal.itemID == ItemCryMod.crystal.itemID) {
 						int charge = ItemCrystal.getCharge(crystal);
 						if (charge < ItemCrystal.MAX_CHARGE) {
 							charge++;
@@ -58,13 +58,13 @@ public class TileEntityRechargeStation extends TileEntityInventory {
 			boolean canCharge = false;
 			for (int i = 0; i < 9; i++) {
 				ItemStack crystal = getStackInSlot(i);
-				if (crystal != null && crystal.itemID == ItemCryMod.crystal.shiftedIndex && ItemCrystal.getCharge(crystal) != ItemCrystal.MAX_CHARGE) {
+				if (crystal != null && crystal.itemID == ItemCryMod.crystal.itemID && ItemCrystal.getCharge(crystal) != ItemCrystal.MAX_CHARGE) {
 					canCharge = true;
 				}
 			}
 			if (canCharge) {
 				ItemStack gold = getStackInSlot(9);
-				if (gold != null && gold.itemID == Item.ingotGold.shiftedIndex) {
+				if (gold != null && gold.itemID == Item.ingotGold.itemID) {
 					decrStackSize(9, 1);
 					rechargeTime = RECHARGE_DURATION;
 				}

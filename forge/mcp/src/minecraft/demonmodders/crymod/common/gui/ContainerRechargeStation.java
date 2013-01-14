@@ -39,11 +39,11 @@ public class ContainerRechargeStation extends AbstractContainer<TileEntityRechar
 				return null;
 			}
 		} else { // transfer from inventory
-			if (stackToTransfer.itemID == ItemCryMod.crystal.shiftedIndex) { // merge it with one of the crystal slots
+			if (stackToTransfer.itemID == ItemCryMod.crystal.itemID) { // merge it with one of the crystal slots
 				if (!mergeItemStack(stackToTransfer, 1, 10, false)) {
 					return null;
 				}
-			} else if (stackToTransfer.itemID == Item.ingotGold.shiftedIndex) { // merge it with the gold slot
+			} else if (stackToTransfer.itemID == Item.ingotGold.itemID) { // merge it with the gold slot
 				if (!mergeItemStack(stackToTransfer, 0, 1, false)) {
 					return null;
 				}

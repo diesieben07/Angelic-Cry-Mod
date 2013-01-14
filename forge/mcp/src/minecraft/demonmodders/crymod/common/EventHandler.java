@@ -19,7 +19,7 @@ public class EventHandler {
 	
 	@ForgeSubscribe
 	public void onItemToss(ItemTossEvent evt) {
-		if (evt.entityItem.func_92014_d().itemID == ItemCryMod.recipePage.shiftedIndex) {
+		if (evt.entityItem.func_92014_d().itemID == ItemCryMod.recipePage.itemID) {
 			PlayerInfo.getModEntityData(evt.entityItem).setString("tossedBy", evt.player.username);
 		}
 	}

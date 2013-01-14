@@ -132,7 +132,7 @@ public class ClientProxy extends CommonProxy {
 
 	@Override
 	public void init() {
-		MinecraftForgeClient.registerItemRenderer(ItemCryMod.crystal.shiftedIndex, new CrymodItemRenderer());
+		MinecraftForgeClient.registerItemRenderer(ItemCryMod.crystal.itemID, new CrymodItemRenderer());
 	}
 
 	@Override

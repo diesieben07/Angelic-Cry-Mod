@@ -43,7 +43,7 @@ public class TileEntityEnderbook extends TileEntity {
 		AxisAlignedBB checkBB = AxisAlignedBB.getAABBPool().addOrModifyAABBInPool(xCoord - 3, yCoord - 1, zCoord - 3, xCoord + 3, yCoord + 1, zCoord + 3);
 		List<EntityItem> itemsNearby = worldObj.getEntitiesWithinAABB(EntityItem.class, checkBB);
 		for (EntityItem item : itemsNearby) {
-			if (item.func_92014_d().itemID == ItemCryMod.recipePage.shiftedIndex) {
+			if (item.func_92014_d().itemID == ItemCryMod.recipePage.itemID) {
 				String ownerName = PlayerInfo.getModEntityData(item).getString("tossedBy");
 				EntityPlayer owner = worldObj.getPlayerEntityByName(ownerName);
 				SummoningRecipe recipe = SummoningRecipe.fromDamage(item.func_92014_d());

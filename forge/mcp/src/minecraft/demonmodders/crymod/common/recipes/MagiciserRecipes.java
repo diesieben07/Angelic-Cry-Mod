@@ -86,7 +86,7 @@ public class MagiciserRecipes {
 	}
 	
 	void addValue(Item item, int value) {
-		values.put(item.shiftedIndex, value);
+		values.put(item.itemID, value);
 	}
 	
 	void addValue(Block block, int value) {
@@ -94,11 +94,11 @@ public class MagiciserRecipes {
 	}
 	
 	void addValue(Item item, int meta, int value) {
-		itemMetaValues.put(Arrays.asList(item.shiftedIndex, meta), value);
+		itemMetaValues.put(Arrays.asList(item.itemID, meta), value);
 	}
 	
 	void addResult(Item item, int value) {
-		resultItemValues.add(new int[] {item.shiftedIndex, value});
+		resultItemValues.add(new int[] {item.itemID, value});
 	}
 	
 	void addResult(Block block, int value) {

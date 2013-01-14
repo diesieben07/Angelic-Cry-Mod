@@ -15,7 +15,7 @@ public class ContainerCrystalBag extends AbstractContainer<InventoryCrystalBag> 
 		
 		for (int x = 0; x < 3; x++)	{
 			for (int y = 0; y < 3; y++) {
-				addSlotToContainer(new SlotForItem(inventory, y + x * 3, 62 + y * 18, 17 + x * 18, ItemCryMod.crystal.shiftedIndex));
+				addSlotToContainer(new SlotForItem(inventory, y + x * 3, 62 + y * 18, 17 + x * 18, ItemCryMod.crystal.itemID));
 			}
 		}
 		
@@ -37,7 +37,7 @@ public class ContainerCrystalBag extends AbstractContainer<InventoryCrystalBag> 
 				return null;
 			}
 		} else { // transfer from inventory
-			if (stackToTransfer.itemID == ItemCryMod.crystal.shiftedIndex) { // its a crystal
+			if (stackToTransfer.itemID == ItemCryMod.crystal.itemID) { // its a crystal
 				if (!mergeItemStack(stackToTransfer, 0, inventory.getSizeInventory(), false)) { // merge into the crystal bag
 					return null;
 				}

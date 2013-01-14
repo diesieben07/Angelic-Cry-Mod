@@ -17,7 +17,7 @@ public class GuiRecipePage extends AbstractGuiContainer<ContainerRecipePage, Sum
 	}
 
 	@Override
-	protected boolean func_74188_c(int par1, int par2, int par3, int par4, int par5, int par6) {
+	protected boolean isPointInRegion(int par1, int par2, int par3, int par4, int par5, int par6) {
 		return false;
 	}
 

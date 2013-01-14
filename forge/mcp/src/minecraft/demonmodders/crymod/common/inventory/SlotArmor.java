@@ -25,7 +25,7 @@ public class SlotArmor extends Slot {
 		if (item instanceof ItemArmor) {
 			return ((ItemArmor)item).armorType == armorType;
 		} else {
-			return item.shiftedIndex == Block.pumpkin.blockID || item.shiftedIndex == Item.skull.shiftedIndex;
+			return item.itemID == Block.pumpkin.blockID || item.itemID == Item.skull.itemID;
 		}
 	}
 

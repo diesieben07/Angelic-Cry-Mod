@@ -88,7 +88,7 @@ public class KarmaEventHandler {
 	
 	@ForgeSubscribe
 	public void onItemDestroy(PlayerDestroyItemEvent evt) {
-		if (evt.entityPlayer instanceof EntityPlayerMP && evt.original.getItem().shiftedIndex == Item.potion.shiftedIndex && ItemPotion.isSplash(evt.original.getItemDamage())) {
+		if (evt.entityPlayer instanceof EntityPlayerMP && evt.original.getItem().itemID == Item.potion.itemID && ItemPotion.isSplash(evt.original.getItemDamage())) {
 			List<PotionEffect> effects = Item.potion.getEffects(evt.original);
 			for (PotionEffect effect : effects) {
 				if (Potion.heal.id == effect.getPotionID()) {

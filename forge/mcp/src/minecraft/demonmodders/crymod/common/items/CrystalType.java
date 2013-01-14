@@ -45,7 +45,7 @@ public class CrystalType {
 	}
 	
 	public boolean containsThis(ItemStack stack) {
-		return stack != null && stack.itemID == ItemCryMod.crystal.shiftedIndex && stack.getItemDamage() == damage;
+		return stack != null && stack.itemID == ItemCryMod.crystal.itemID && stack.getItemDamage() == damage;
 	}
 	
 	public static CrystalType fromItemDamage(int damage) {
