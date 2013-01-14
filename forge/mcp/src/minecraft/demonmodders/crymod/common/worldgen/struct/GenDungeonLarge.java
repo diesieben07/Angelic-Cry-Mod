@@ -3,8 +3,11 @@ package demonmodders.crymod.common.worldgen.struct;
 import java.util.Random;
 
 import net.minecraft.block.Block;
+import net.minecraft.util.AxisAlignedBB;
+import net.minecraft.world.ChunkPosition;
 import net.minecraft.world.World;
 import demonmodders.crymod.common.worldgen.AbstractWorldGenerator;
+import demonmodders.crymod.common.worldgen.Rotation;
 import demonmodders.crymod.common.worldgen.SchematicPlacer;
 import demonmodders.crymod.common.worldgen.StructureInformation;
 import demonmodders.crymod.common.worldgen.StructureType;
@@ -48,5 +51,17 @@ public class GenDungeonLarge extends AbstractWorldGenerator {
 			return false;
 		}
 		return world.getBlockId(x, y, z) == GRASS && world.getBlockId(x + 7, y, z) == GRASS && world.getBlockId(x, y, z + 7) == GRASS && world.getBlockId(x + 7, y, z + 7) == GRASS;
+	}
+
+	@Override
+	public AxisAlignedBB[] getBoundingBoxes(ChunkPosition position, Rotation rotation) {
+		return new AxisAlignedBB[] {
+			smallEntrance.getBoundingBox(position, Rotation.NONE),
+			spiralstairs.getBoundingBox(position.x + 2, position.y - 17, position.z + 3, Rotation.NONE),
+			largeHall.getBoundingBox(position.x - 6, position.y - 30, position.z - 27, Rotation.NONE),
+			room9.getBoundingBox(position.x + 15, position.y - 28, position.z - 19, Rotation.NONE),
+			stairs.getBoundingBox(position.x + 15, position.y - 28, position.z + 11, Rotation.NONE),
+			lavaHall.getBoundingBox(position.x + 15, position.y - 28, position.z + 22, Rotation.NONE)
+		};
 	}
 }

@@ -9,6 +9,8 @@ import net.minecraft.block.BlockStairs;
 import net.minecraft.nbt.CompressedStreamTools;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
+import net.minecraft.util.AxisAlignedBB;
+import net.minecraft.world.ChunkPosition;
 import net.minecraft.world.World;
 
 /**
@@ -45,6 +47,26 @@ public class SchematicPlacer {
 	
 	public SchematicPlacer(String classpathResource) {
 		this(SchematicPlacer.class.getResourceAsStream("/demonmodders/crymod/resource/schematics/" + classpathResource));
+	}
+
+	public int getSizeY() {
+		return height;
+	}
+	
+	public int getRotatedSizeX(Rotation rotation) {
+		return rotation == Rotation.NONE || rotation == Rotation.R180 ? width : length;
+	}
+	
+	public int getRotatedSizeZ(Rotation rotation) {
+		return rotation == Rotation.NONE || rotation == Rotation.R180 ? length : width;
+	}
+	
+	public AxisAlignedBB getBoundingBox(ChunkPosition position, Rotation rotation) {
+		return getBoundingBox(position.x, position.y, position.z, rotation);
+	}
+	
+	public AxisAlignedBB getBoundingBox(int x, int y, int z, Rotation rotation) {
+		return AxisAlignedBB.getAABBPool().addOrModifyAABBInPool(x, y, z, getRotatedSizeX(rotation), getSizeY(), getRotatedSizeZ(rotation));
 	}
 
 	public void place(Rotation rotation, World world, int posX, int posY, int posZ, boolean spawnairblocks) {

@@ -2,6 +2,8 @@ package demonmodders.crymod.common.worldgen;
 
 import java.util.Random;
 
+import net.minecraft.util.AxisAlignedBB;
+import net.minecraft.world.ChunkPosition;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.IChunkProvider;
 import cpw.mods.fml.common.IWorldGenerator;
@@ -34,6 +36,8 @@ public abstract class AbstractWorldGenerator implements IWorldGenerator {
 	}
 	
 	protected abstract void generateAt(World world, Random random, int dimension, int x, int y, int z);
+	
+	public abstract AxisAlignedBB[] getBoundingBoxes(ChunkPosition position, Rotation rotation);
 	
 	protected boolean canGenerate(World world, int dimension, int x, int y, int z) {
 		return true;
