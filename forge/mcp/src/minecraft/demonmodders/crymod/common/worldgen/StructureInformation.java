@@ -83,6 +83,26 @@ public final class StructureInformation {
 		return new StructureInformation(type, x, y, z, rotation);
 	}
 	
+	public int getX() {
+		return x;
+	}
+
+	public int getY() {
+		return y;
+	}
+
+	public int getZ() {
+		return z;
+	}
+
+	public StructureType getType() {
+		return type;
+	}
+
+	public Rotation getRotation() {
+		return rotation;
+	}
+
 	private static Multimap<Chunk, StructureInformation> loadedStructures = ArrayListMultimap.create();
 	
 	/**
