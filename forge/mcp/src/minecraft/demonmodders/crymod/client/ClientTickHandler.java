@@ -26,6 +26,8 @@ public class ClientTickHandler extends Gui implements ITickHandler {
 		return instance;
 	}
 	
+	private int tickCountdown = 0;
+	
 	private final Minecraft mc = FMLClientHandler.instance().getClient();
 	
 	private PlayerInfo clientPlayerInfo = null;
@@ -83,6 +85,10 @@ public class ClientTickHandler extends Gui implements ITickHandler {
 			}
 			
 			fr.drawString(String.valueOf(clientPlayerInfo.getFlyTime()), 10, 10, 0xffffff);
+			
+			if (mc.getIntegratedServer() != null && mc.getIntegratedServer().serverIsInRunLoop() && tickCountdown-- <= 0) {
+				
+			}
 		}
 	}
 

@@ -18,7 +18,7 @@ public class CrymodCore implements IFMLLoadingPlugin {
 
 	@Override
 	public String getModContainerClass() {
-		return "demonmodders.crymod.common.core.CrymodCoreMC";
+		return "demonmodders.crymod.common.core.CrymodModContainer";
 	}
 
 	@Override

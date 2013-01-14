@@ -7,6 +7,7 @@ import net.minecraft.entity.Entity;
 import net.minecraftforge.common.Configuration;
 import net.minecraftforge.common.MinecraftForge;
 import cpw.mods.fml.common.FMLLog;
+import cpw.mods.fml.common.IWorldGenerator;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.Init;
 import cpw.mods.fml.common.Mod.Instance;
@@ -36,7 +37,9 @@ import demonmodders.crymod.common.playerinfo.PlayerInfo;
 import demonmodders.crymod.common.tileentities.TileEntityEnderbook;
 import demonmodders.crymod.common.tileentities.TileEntityMagiciser;
 import demonmodders.crymod.common.tileentities.TileEntityRechargeStation;
-import demonmodders.crymod.common.worldgen.CryWorldGenerator;
+import demonmodders.crymod.common.worldgen.struct.GenDungeonLarge;
+import demonmodders.crymod.common.worldgen.struct.GenPillar;
+import demonmodders.crymod.common.worldgen.struct.GenRuin;
 
 @Mod(modid = "crymod", name = "Angelic Cry Mod [WIP]", version = "0.1")
 @NetworkMod(channels = {CrymodPacket.CHANNEL}, packetHandler = CrymodPacketHandler.class, tinyPacketHandler = CrymodPacketHandler.class, clientSideRequired = true, serverSideRequired = false)
@@ -83,7 +86,7 @@ public class Crymod {
 		PlayerInfo.init();
 		MinecraftForge.EVENT_BUS.register(new EventHandler());
 				
-		GameRegistry.registerWorldGenerator(new CryWorldGenerator());
+//		GameRegistry.registerWorldGenerator(new CryWorldGenerator());
 		
 		registerEntity(EntityHeavenZombie.class, "crymodHeavenZombie", 0xffffff, 0x000000, 80, 3, true);
 		registerEntity(EntityHellZombie.class, "crymodHellZombie", 0x000000, 0xffffff, 80, 3, true);
@@ -105,6 +108,11 @@ public class Crymod {
 		GameRegistry.registerTileEntity(TileEntityRechargeStation.class, "crymodRechargeStation");
 		GameRegistry.registerTileEntity(TileEntityEnderbook.class, "crymodEnderbook");
 		GameRegistry.registerTileEntity(TileEntityMagiciser.class, "crymodMagiciser");
+		
+		//IWorldGenerator gen = new WorldGenSchematic(new SchematicPlacer("/demonmodders/crymod/resource/schematics/pillars.schematic")).addDimension(0).setRotation(Rotation.RANDOM).setStructureType(StructureType.TEST);
+		GameRegistry.registerWorldGenerator(new GenDungeonLarge());
+		GameRegistry.registerWorldGenerator(new GenPillar());
+		GameRegistry.registerWorldGenerator(new GenRuin());
 		
 		proxy.init();
 	}

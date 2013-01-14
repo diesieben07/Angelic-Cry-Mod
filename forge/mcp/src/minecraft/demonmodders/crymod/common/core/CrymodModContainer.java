@@ -1,16 +1,23 @@
 package demonmodders.crymod.common.core;
 
 import java.util.Arrays;
+import java.util.Map;
+
+import net.minecraft.nbt.NBTBase;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.world.storage.SaveHandler;
+import net.minecraft.world.storage.WorldInfo;
 
 import com.google.common.eventbus.EventBus;
 
 import cpw.mods.fml.common.DummyModContainer;
 import cpw.mods.fml.common.LoadController;
 import cpw.mods.fml.common.ModMetadata;
+import cpw.mods.fml.common.WorldAccessContainer;
 
-public class CrymodCoreMC extends DummyModContainer {
+public class CrymodModContainer extends DummyModContainer {
 	
-	public CrymodCoreMC() {
+	public CrymodModContainer() {
 		super(new ModMetadata());
 		
 		ModMetadata meta = getMetadata();
