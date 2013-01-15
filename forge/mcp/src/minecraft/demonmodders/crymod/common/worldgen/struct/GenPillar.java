@@ -6,12 +6,15 @@ import net.minecraft.block.Block;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.world.ChunkPosition;
 import net.minecraft.world.World;
-import demonmodders.crymod.common.worldgen.AbstractWorldGenerator;
+import demonmodders.crymod.common.worldgen.Structure;
 import demonmodders.crymod.common.worldgen.Rotation;
 import demonmodders.crymod.common.worldgen.SchematicPlacer;
-import demonmodders.crymod.common.worldgen.StructureType;
 
-public class GenPillar extends AbstractWorldGenerator {
+public class GenPillar extends Structure {
+
+	public GenPillar(int id) {
+		super(id);
+	}
 
 	private final SchematicPlacer pillar = new SchematicPlacer("pillar/pillarLarge.schematic");
 	
@@ -20,11 +23,6 @@ public class GenPillar extends AbstractWorldGenerator {
 		pillar.place(getRandomRotation(random), world, x, y + 1, z, true);
 	}
 	
-	@Override
-	protected StructureType getStructureType() {
-		return StructureType.PILLAR;
-	}
-
 	private static final int GRASS = Block.grass.blockID;
 	
 	@Override
@@ -36,9 +34,9 @@ public class GenPillar extends AbstractWorldGenerator {
 	}
 
 	@Override
-	public AxisAlignedBB[] getBoundingBoxes(ChunkPosition position, Rotation rotation) {
+	public AxisAlignedBB[] getBoundingBoxes(int x, int y, int z, Rotation rotation) {
 		return new AxisAlignedBB[] {
-			pillar.getBoundingBox(position.x, position.y + 1, position.z, rotation)	
+			pillar.getBoundingBox(x, y + 1, z, rotation)	
 		};
 	}
 }

@@ -1,20 +1,22 @@
 package demonmodders.crymod.common.worldgen.struct;
 
+import static demonmodders.crymod.common.worldgen.Rotation.NONE;
+
 import java.util.Random;
 
 import net.minecraft.block.Block;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.world.ChunkPosition;
 import net.minecraft.world.World;
-import demonmodders.crymod.common.worldgen.AbstractWorldGenerator;
+import demonmodders.crymod.common.worldgen.Structure;
 import demonmodders.crymod.common.worldgen.Rotation;
 import demonmodders.crymod.common.worldgen.SchematicPlacer;
-import demonmodders.crymod.common.worldgen.StructureInformation;
-import demonmodders.crymod.common.worldgen.StructureType;
 
-import static demonmodders.crymod.common.worldgen.Rotation.*;
+public class GenDungeonLarge extends Structure {
 
-public class GenDungeonLarge extends AbstractWorldGenerator {
+	public GenDungeonLarge(int id) {
+		super(id);
+	}
 
 	private final SchematicPlacer smallEntrance = new SchematicPlacer("dungeonLarge/smallEntrance.schematic");
 	private final SchematicPlacer spiralstairs = new SchematicPlacer("dungeonLarge/spiralstairs.schematic");
@@ -38,11 +40,6 @@ public class GenDungeonLarge extends AbstractWorldGenerator {
         lavaHall.place(NONE, world, x + 15, y - 28, z + 22, true);
 	}
 	
-	@Override
-	protected StructureType getStructureType() {
-		return StructureType.DUNGEON_LARGE;
-	}
-
 	private static final int GRASS = Block.grass.blockID;
 	
 	@Override
@@ -54,14 +51,14 @@ public class GenDungeonLarge extends AbstractWorldGenerator {
 	}
 
 	@Override
-	public AxisAlignedBB[] getBoundingBoxes(ChunkPosition position, Rotation rotation) {
+	public AxisAlignedBB[] getBoundingBoxes(int x, int y, int z, Rotation rotation) {
 		return new AxisAlignedBB[] {
-			smallEntrance.getBoundingBox(position, Rotation.NONE),
-			spiralstairs.getBoundingBox(position.x + 2, position.y - 17, position.z + 3, Rotation.NONE),
-			largeHall.getBoundingBox(position.x - 6, position.y - 30, position.z - 27, Rotation.NONE),
-			room9.getBoundingBox(position.x + 15, position.y - 28, position.z - 19, Rotation.NONE),
-			stairs.getBoundingBox(position.x + 15, position.y - 28, position.z + 11, Rotation.NONE),
-			lavaHall.getBoundingBox(position.x + 15, position.y - 28, position.z + 22, Rotation.NONE)
+			smallEntrance.getBoundingBox(x, y, z, Rotation.NONE),
+			spiralstairs.getBoundingBox(x + 2, y - 17, z + 3, Rotation.NONE),
+			largeHall.getBoundingBox(x - 6, y - 30, z - 27, Rotation.NONE),
+			room9.getBoundingBox(x + 15, y - 28, z - 19, Rotation.NONE),
+			stairs.getBoundingBox(x + 15, y - 28, z + 11, Rotation.NONE),
+			lavaHall.getBoundingBox(x + 15, y - 28, z + 22, Rotation.NONE)
 		};
 	}
 }

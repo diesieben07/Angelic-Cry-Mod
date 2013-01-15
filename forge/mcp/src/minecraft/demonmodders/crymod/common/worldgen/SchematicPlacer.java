@@ -1,7 +1,6 @@
 package demonmodders.crymod.common.worldgen;
 
-import static demonmodders.crymod.common.Crymod.logger;
-
+import java.io.IOException;
 import java.io.InputStream;
 
 import net.minecraft.block.Block;
@@ -10,7 +9,6 @@ import net.minecraft.nbt.CompressedStreamTools;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.AxisAlignedBB;
-import net.minecraft.world.ChunkPosition;
 import net.minecraft.world.World;
 
 /**
@@ -19,12 +17,12 @@ import net.minecraft.world.World;
  */
 public class SchematicPlacer {
 
-	private byte[] blockIds;
-	private byte[] blockMeta;
-	private short width;
-	private short length;
-	private short height;
-	private NBTTagList tileEntities;
+	private final byte[] blockIds;
+	private final byte[] blockMeta;
+	private final short width;
+	private final short length;
+	private final short height;
+	private final NBTTagList tileEntities;
 	
 	public SchematicPlacer(InputStream inStream) {
 		try {
@@ -35,13 +33,8 @@ public class SchematicPlacer {
 			length = nbt.getShort("Length");
 			height = nbt.getShort("Height");
 			tileEntities = nbt.getTagList("TileEntities");
-		} catch (Exception e) {
-			logger.warning("Failed to read schematic!");
-			blockIds = null;
-			blockMeta = null;
-			width = -1;
-			length = -1;
-			height = -1;
+		} catch (IOException e) {
+			throw new RuntimeException("Failed to load Schematic!", e);
 		}
 	}
 	
@@ -59,10 +52,6 @@ public class SchematicPlacer {
 	
 	public int getRotatedSizeZ(Rotation rotation) {
 		return rotation == Rotation.NONE || rotation == Rotation.R180 ? length : width;
-	}
-	
-	public AxisAlignedBB getBoundingBox(ChunkPosition position, Rotation rotation) {
-		return getBoundingBox(position.x, position.y, position.z, rotation);
 	}
 	
 	public AxisAlignedBB getBoundingBox(int x, int y, int z, Rotation rotation) {

@@ -37,6 +37,7 @@ import demonmodders.crymod.common.playerinfo.PlayerInfo;
 import demonmodders.crymod.common.tileentities.TileEntityEnderbook;
 import demonmodders.crymod.common.tileentities.TileEntityMagiciser;
 import demonmodders.crymod.common.tileentities.TileEntityRechargeStation;
+import demonmodders.crymod.common.worldgen.Structure;
 import demonmodders.crymod.common.worldgen.struct.GenDungeonLarge;
 import demonmodders.crymod.common.worldgen.struct.GenPillar;
 import demonmodders.crymod.common.worldgen.struct.GenRuin;
@@ -86,8 +87,6 @@ public class Crymod {
 		PlayerInfo.init();
 		MinecraftForge.EVENT_BUS.register(new EventHandler());
 				
-//		GameRegistry.registerWorldGenerator(new CryWorldGenerator());
-		
 		registerEntity(EntityHeavenZombie.class, "crymodHeavenZombie", 0xffffff, 0x000000, 80, 3, true);
 		registerEntity(EntityHellZombie.class, "crymodHellZombie", 0x000000, 0xffffff, 80, 3, true);
 	}
@@ -109,10 +108,7 @@ public class Crymod {
 		GameRegistry.registerTileEntity(TileEntityEnderbook.class, "crymodEnderbook");
 		GameRegistry.registerTileEntity(TileEntityMagiciser.class, "crymodMagiciser");
 		
-		//IWorldGenerator gen = new WorldGenSchematic(new SchematicPlacer("/demonmodders/crymod/resource/schematics/pillars.schematic")).addDimension(0).setRotation(Rotation.RANDOM).setStructureType(StructureType.TEST);
-		GameRegistry.registerWorldGenerator(new GenDungeonLarge());
-		GameRegistry.registerWorldGenerator(new GenPillar());
-		GameRegistry.registerWorldGenerator(new GenRuin());
+		Structure.init();
 		
 		proxy.init();
 	}

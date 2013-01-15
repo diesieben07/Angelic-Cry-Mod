@@ -5,6 +5,7 @@ import java.util.Collections;
 
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
+import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.world.chunk.Chunk;
 
 import com.google.common.collect.ArrayListMultimap;
@@ -14,16 +15,20 @@ import com.google.common.collect.Multimap;
  * Saves information about Structures in the world
  *
  */
-public final class StructureInformation {
+public final class StructurePosition {
 	
 	private final int x;
 	private final int y;
 	private final int z;
-	private final StructureType type;
+	private final Structure structure;
 	private final Rotation rotation;
 	
-	public StructureInformation(StructureType type, int x, int y, int z, Rotation rotation) {
-		this.type = type;
+	public StructurePosition(int structureId, int x, int y, int z, Rotation rotation) {
+		this(Structure.getGeneratorById(structureId), x, y, z, rotation);
+	}
+	
+	public StructurePosition(Structure structure, int x, int y, int z, Rotation rotation) {
+		this.structure = structure;
 		this.x = x;
 		this.y = y;
 		this.z = z;
@@ -34,53 +39,18 @@ public final class StructureInformation {
 		nbt.setInteger("x", x);
 		nbt.setInteger("y", y);
 		nbt.setInteger("z", z);
-		nbt.setByte("type", type.getId());
+		nbt.setByte("type", structure.getId());
 		nbt.setByte("rot", rotation.getId());
 		return nbt;
 	}
-	
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result
-				+ ((rotation == null) ? 0 : rotation.hashCode());
-		result = prime * result + ((type == null) ? 0 : type.hashCode());
-		result = prime * result + x;
-		result = prime * result + y;
-		result = prime * result + z;
-		return result;
-	}
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		StructureInformation other = (StructureInformation) obj;
-		if (rotation != other.rotation)
-			return false;
-		if (type != other.type)
-			return false;
-		if (x != other.x)
-			return false;
-		if (y != other.y)
-			return false;
-		if (z != other.z)
-			return false;
-		return true;
-	}
-
-	public static StructureInformation readFromNbt(NBTTagCompound nbt) {
+	public static StructurePosition readFromNbt(NBTTagCompound nbt) {
 		int x = nbt.getInteger("x");
 		int y = nbt.getInteger("y");
 		int z = nbt.getInteger("z");
-		StructureType type = StructureType.byId(nbt.getByte("type"));
+		int structureId = nbt.getByte("type");
 		Rotation rotation = Rotation.byId(nbt.getByte("rot"));
-		return new StructureInformation(type, x, y, z, rotation);
+		return new StructurePosition(structureId, x, y, z, rotation);
 	}
 	
 	public int getX() {
@@ -95,21 +65,75 @@ public final class StructureInformation {
 		return z;
 	}
 
-	public StructureType getType() {
-		return type;
+	public Structure getStructure() {
+		return structure;
 	}
 
 	public Rotation getRotation() {
 		return rotation;
 	}
+	
+	public AxisAlignedBB[] getBoundingBox() {
+		return structure.getBoundingBoxes(x,  y, z, rotation);
+	}
+	
+	public boolean intersectsWith(StructurePosition other) {
+		for (AxisAlignedBB otherBB : other.getBoundingBox()) {
+			for (AxisAlignedBB thisBB : getBoundingBox()) {
+				if (otherBB.intersectsWith(thisBB)) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
 
-	private static Multimap<Chunk, StructureInformation> loadedStructures = ArrayListMultimap.create();
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result
+				+ ((rotation == null) ? 0 : rotation.hashCode());
+		result = prime * result
+				+ ((structure == null) ? 0 : structure.hashCode());
+		result = prime * result + x;
+		result = prime * result + y;
+		result = prime * result + z;
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		StructurePosition other = (StructurePosition) obj;
+		if (rotation != other.rotation)
+			return false;
+		if (structure == null) {
+			if (other.structure != null)
+				return false;
+		} else if (!structure.equals(other.structure))
+			return false;
+		if (x != other.x)
+			return false;
+		if (y != other.y)
+			return false;
+		if (z != other.z)
+			return false;
+		return true;
+	}
+
+	private static Multimap<Chunk, StructurePosition> loadedStructures = ArrayListMultimap.create();
 	
 	/**
 	 * get all currently loaded structures
 	 * @return all loaded structures
 	 */
-	public static Collection<StructureInformation> getLoadedStructures() {
+	public static Collection<StructurePosition> getLoadedStructures() {
 		return Collections.unmodifiableCollection(loadedStructures.values());
 	}
 	
@@ -118,7 +142,7 @@ public final class StructureInformation {
 	 * @param chunk the chunk to get structures from
 	 * @return the loaded structures in that chunk
 	 */
-	public static Collection<StructureInformation> getLoadedStructures(Chunk chunk) {
+	public static Collection<StructurePosition> getLoadedStructures(Chunk chunk) {
 		return Collections.unmodifiableCollection(loadedStructures.get(chunk));
 	}
 	
@@ -130,7 +154,7 @@ public final class StructureInformation {
 	public static void loadChunkStructures(Chunk chunk, NBTTagCompound chunkData) {
 		NBTTagList structureList = chunkData.getTagList("summoningmodStruct");
 		for (int i = 0; i < structureList.tagCount(); i++) {
-			loadedStructures.put(chunk, StructureInformation.readFromNbt((NBTTagCompound)structureList.tagAt(i)));
+			loadedStructures.put(chunk, StructurePosition.readFromNbt((NBTTagCompound)structureList.tagAt(i)));
 		}
 	}
 	
@@ -141,7 +165,7 @@ public final class StructureInformation {
 	 */
 	public static void saveChunkStructures(Chunk chunk, NBTTagCompound chunkData) {
 		NBTTagList structureList = new NBTTagList();
-		for (StructureInformation structure : loadedStructures.get(chunk)) {
+		for (StructurePosition structure : loadedStructures.get(chunk)) {
 			structureList.appendTag(structure.writeToNbt(new NBTTagCompound()));
 		}
 		if (structureList.tagCount() > 0) {
@@ -162,8 +186,8 @@ public final class StructureInformation {
 	 * @param chunk the chunk the structure should be added to
 	 * @param structure the structure to be loaded
 	 */
-	public static void loadStructureInChunk(Chunk chunk, StructureInformation structure) {
-		System.out.println("Spawned structure " + structure.type + " @ " + structure.x + ", " + structure.y + ", " + structure.z);
+	public static void loadStructureInChunk(Chunk chunk, StructurePosition structure) {
+		System.out.println("Spawned structure " + structure.structure + " @ " + structure.x + ", " + structure.y + ", " + structure.z);
 		loadedStructures.put(chunk, structure);
 	}
 }

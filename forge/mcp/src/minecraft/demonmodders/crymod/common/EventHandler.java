@@ -13,7 +13,7 @@ import net.minecraftforge.event.world.WorldEvent;
 import cpw.mods.fml.relauncher.ReflectionHelper;
 import demonmodders.crymod.common.items.ItemCryMod;
 import demonmodders.crymod.common.playerinfo.PlayerInfo;
-import demonmodders.crymod.common.worldgen.StructureInformation;
+import demonmodders.crymod.common.worldgen.StructurePosition;
 
 public class EventHandler {
 	
@@ -26,18 +26,18 @@ public class EventHandler {
 	
 	@ForgeSubscribe
 	public void onChunkDataLoad(ChunkDataEvent.Load evt) {
-		StructureInformation.loadChunkStructures(evt.getChunk(), evt.getData());
+		StructurePosition.loadChunkStructures(evt.getChunk(), evt.getData());
 	}
 	
 	@ForgeSubscribe
 	public void onChunkDataSave(ChunkDataEvent.Save evt) {
-		StructureInformation.saveChunkStructures(evt.getChunk(), evt.getData());
+		StructurePosition.saveChunkStructures(evt.getChunk(), evt.getData());
 	}
 	
 	@ForgeSubscribe
 	public void onChunkUnload(ChunkEvent.Unload evt) {
 		if (!evt.world.isRemote) {
-			StructureInformation.unloadChunkStructures(evt.getChunk());
+			StructurePosition.unloadChunkStructures(evt.getChunk());
 		}
 	}
 	
@@ -48,7 +48,7 @@ public class EventHandler {
 			int i = 0;
 			for (Chunk chunk : ReflectionHelper.<List<Chunk>,ChunkProviderServer>getPrivateValue(ChunkProviderServer.class, world.theChunkProviderServer, 6)) {
 				i++;
-				StructureInformation.unloadChunkStructures(chunk);
+				StructurePosition.unloadChunkStructures(chunk);
 			}
 		}
 	}
