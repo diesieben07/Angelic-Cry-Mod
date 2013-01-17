@@ -2,6 +2,7 @@ package demonmodders.crymod.common.worldgen;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Arrays;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockStairs;
@@ -57,12 +58,21 @@ public class SchematicPlacer {
 	public AxisAlignedBB getBoundingBox(int x, int y, int z, Rotation rotation) {
 		return AxisAlignedBB.getAABBPool().addOrModifyAABBInPool(x, y, z, getRotatedSizeX(rotation), getSizeY(), getRotatedSizeZ(rotation));
 	}
-
+	
 	public void place(Rotation rotation, World world, int posX, int posY, int posZ, boolean spawnairblocks) {
+		placeBlockType(rotation, world, posX, posY, posZ, spawnairblocks, false);
+		placeBlockType(rotation, world, posX, posY, posZ, spawnairblocks, true);
+	}
+
+	private void placeBlockType(Rotation rotation, World world, int posX, int posY, int posZ, boolean spawnairblocks, boolean spawnFullBlocks) {
 		int xOffset = 0;
 		int yOffset = 0;
 		int zOffset = 0;
 		for (int i = 0; i < blockIds.length; i++) {
+			
+			if (!isBlockType(spawnFullBlocks, blockIds[i])) {
+				return;
+			}
 			
 			int[] rotXz = rotateXZ(xOffset, zOffset, rotation);
 			
@@ -97,6 +107,34 @@ public class SchematicPlacer {
 		}
 	}
 	
+	private static final boolean[] BLOCKS_2ND_PASS = new boolean[256];
+	
+	static {
+		BLOCKS_2ND_PASS[Block.torchRedstoneActive.blockID] = true;
+		BLOCKS_2ND_PASS[Block.torchRedstoneIdle.blockID] = true;
+		BLOCKS_2ND_PASS[Block.torchWood.blockID] = true;
+		BLOCKS_2ND_PASS[Block.ladder.blockID] = true;
+		BLOCKS_2ND_PASS[Block.rail.blockID] = true;
+		BLOCKS_2ND_PASS[Block.railDetector.blockID] = true;
+		BLOCKS_2ND_PASS[Block.railPowered.blockID] = true;
+		BLOCKS_2ND_PASS[Block.lever.blockID] = true;
+		BLOCKS_2ND_PASS[Block.tripWireSource.blockID] = true;
+		BLOCKS_2ND_PASS[Block.redstoneWire.blockID] = true;
+		BLOCKS_2ND_PASS[Block.redstoneRepeaterIdle.blockID] = true;
+		BLOCKS_2ND_PASS[Block.redstoneRepeaterActive.blockID] = true;
+		BLOCKS_2ND_PASS[Block.trapdoor.blockID] = true;
+		BLOCKS_2ND_PASS[Block.plantYellow.blockID] = true;
+		BLOCKS_2ND_PASS[Block.plantRed.blockID] = true;
+		BLOCKS_2ND_PASS[Block.mushroomBrown.blockID] = true;
+		BLOCKS_2ND_PASS[Block.mushroomRed.blockID] = true;
+		BLOCKS_2ND_PASS[Block.tallGrass.blockID] = true;
+		BLOCKS_2ND_PASS[Block.cactus.blockID] = true;
+	}
+	
+	private boolean isBlockType(boolean spawnFullBlocks, byte blockId) {
+		return BLOCKS_2ND_PASS[blockId] == !spawnFullBlocks;
+	}
+
 	private final int[] rotateXZ(int xOffset, int zOffset, Rotation rotation) {
 		int[] xzRot = new int[2];
 		if (rotation == Rotation.R180) {
