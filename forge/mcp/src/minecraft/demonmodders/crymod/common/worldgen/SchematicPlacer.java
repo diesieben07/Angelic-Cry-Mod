@@ -67,7 +67,7 @@ public class SchematicPlacer {
 			int[] rotXz = rotateXZ(xOffset, zOffset, rotation);
 			
 			if (blockIds[i] != 0 && !spawnairblocks || spawnairblocks) {
-				world.setBlockAndMetadataWithNotify(posX + rotXz[0], posY + yOffset, posZ + rotXz[1], blockIds[i], applyRotationToMeta(blockIds[i], blockMeta[i], rotation));
+				world.setBlockAndMetadata(posX + rotXz[0], posY + yOffset, posZ + rotXz[1], blockIds[i], applyRotationToMeta(blockIds[i], blockMeta[i], rotation));
 			}
 			
 			if (xOffset < width - 1) {
