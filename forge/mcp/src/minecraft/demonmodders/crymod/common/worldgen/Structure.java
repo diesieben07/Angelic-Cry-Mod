@@ -8,6 +8,7 @@ import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.chunk.IChunkProvider;
+import net.minecraft.world.gen.ChunkProviderFlat;
 import cpw.mods.fml.common.IWorldGenerator;
 import cpw.mods.fml.common.registry.GameRegistry;
 import demonmodders.crymod.common.worldgen.struct.GenDungeonLarge;
@@ -44,6 +45,9 @@ public abstract class Structure implements IWorldGenerator {
 
 	@Override
 	public void generate(Random random, int chunkX, int chunkZ, World world, IChunkProvider chunkGenerator, IChunkProvider chunkProvider){
+		if (chunkGenerator instanceof ChunkProviderFlat && random.nextInt(50) != 0) {
+			return;
+		}
 		if (random.nextInt(getRarity()) != 0) {
 			return;
 		}
