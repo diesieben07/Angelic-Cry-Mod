@@ -4,6 +4,7 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import cpw.mods.fml.common.registry.GameRegistry;
 import demonmodders.crymod.common.Crymod;
 
 public class ItemCryMod extends Item {
@@ -21,6 +22,7 @@ public class ItemCryMod extends Item {
 	}
 	
 	public static void createItems() {
+		Crymod.logger.info("Creating items");
 		summoner = new ItemSummoner("summoner", 4765);
 		crystal = new ItemCrystal("crystal", 4766);
 		recipePage = new ItemRecipePage("recipePage", 4767);
@@ -33,6 +35,7 @@ public class ItemCryMod extends Item {
 		item.setTextureFile(Crymod.TEXTURE_FILE);
 		item.setCreativeTab(CreativeTabs.tabMisc);
 		item.setItemName("crymod_" + itemName);
+		GameRegistry.registerItem(item, itemName);
 	}
 	
 	public static void createStackCompound(ItemStack stack) {

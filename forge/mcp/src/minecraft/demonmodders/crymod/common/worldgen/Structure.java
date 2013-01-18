@@ -100,6 +100,10 @@ public abstract class Structure implements IWorldGenerator {
 		lastRotation = Rotation.random(r);
 		return lastRotation;
 	}
+	
+	protected SchematicPlacer getSchematicPlacer(String name) {
+		return new SchematicPlacer(getClass().getResourceAsStream("/demonmodders/crymod/resource/schematics/" + name));
+	}
 
 	@Override
 	public int hashCode() {

@@ -37,5 +37,4 @@ public class PacketPlayerInfo extends CrymodPacket {
 	void execute(EntityPlayer player) {
 		Crymod.proxy.setClientPlayerInfo(new PlayerInfo(new PlayerKarma(karma), flyTime));
 	}
-
 }

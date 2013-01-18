@@ -1,23 +1,13 @@
 package demonmodders.crymod.common.blocks;
 
-import java.util.Random;
-
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
-import demonmodders.crymod.client.fx.EntityFXTextureChange;
+import net.minecraft.block.material.Material;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.world.World;
 import demonmodders.crymod.common.Crymod;
 import demonmodders.crymod.common.gui.ContainerEnderBook;
 import demonmodders.crymod.common.gui.GuiType;
-import demonmodders.crymod.common.network.PacketClientEffect;
-import demonmodders.crymod.common.network.PacketClientEffect.Type;
 import demonmodders.crymod.common.tileentities.TileEntityEnderbook;
-import net.minecraft.block.material.Material;
-import net.minecraft.entity.EntityLiving;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.MathHelper;
-import net.minecraft.world.IBlockAccess;
-import net.minecraft.world.World;
 
 public class BlockEnderBook extends BlockCryMod {
 

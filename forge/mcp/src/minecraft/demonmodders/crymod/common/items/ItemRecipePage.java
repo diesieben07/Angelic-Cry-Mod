@@ -26,7 +26,7 @@ public class ItemRecipePage extends ItemCryMod {
 	public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean par4) { 
 		SummoningRecipe recipe = SummoningRecipe.fromDamage(stack);
 		if (recipe != null) {
-			list.add((recipe.isAngel() ? "§5" : "§4") + recipe.getDemonName());
+			list.add((recipe.isAngel() ? "\u00A75" : "\u00A74") + recipe.getDemonName());
 		}
 	}
 

@@ -1,8 +1,6 @@
 package demonmodders.crymod.common.worldgen;
 
-import java.io.IOException;
 import java.io.InputStream;
-import java.util.Arrays;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockStairs;
@@ -11,6 +9,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.world.World;
+import demonmodders.crymod.common.core.CrymodCore;
 
 /**
  * Can place and rotate a .schematic file at a specified position in a minecraft world
@@ -34,15 +33,11 @@ public class SchematicPlacer {
 			length = nbt.getShort("Length");
 			height = nbt.getShort("Height");
 			tileEntities = nbt.getTagList("TileEntities");
-		} catch (IOException e) {
+		} catch (Exception e) {
 			throw new RuntimeException("Failed to load Schematic!", e);
 		}
 	}
 	
-	public SchematicPlacer(String classpathResource) {
-		this(SchematicPlacer.class.getResourceAsStream("/demonmodders/crymod/resource/schematics/" + classpathResource));
-	}
-
 	public int getSizeY() {
 		return height;
 	}

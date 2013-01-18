@@ -1,12 +1,12 @@
 package demonmodders.crymod.common.blocks;
 
-import demonmodders.crymod.common.Crymod;
-import demonmodders.crymod.common.gui.GuiType;
-import demonmodders.crymod.common.tileentities.TileEntityMagiciser;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
+import demonmodders.crymod.common.Crymod;
+import demonmodders.crymod.common.gui.GuiType;
+import demonmodders.crymod.common.tileentities.TileEntityMagiciser;
 
 public class BlockMagiciser extends BlockCryMod {
 

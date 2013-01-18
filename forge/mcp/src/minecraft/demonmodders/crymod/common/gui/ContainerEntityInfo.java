@@ -45,7 +45,8 @@ public class ContainerEntityInfo extends AbstractContainer<InventorySummonable> 
         }
 		
 		for (int i = 0; i < 5; i++) {
-			inventory.setInventorySlotContents(i, entity.getCurrentItemOrArmor(i));
+			ItemStack stack = entity.getCurrentItemOrArmor(i);
+			inventory.setInventorySlotContents(i, stack == null ? null : stack.copy());
 		}
 		newName = entity.getEntityName();
 	}

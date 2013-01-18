@@ -69,7 +69,7 @@ public class ItemCrystal extends ItemCryMod {
 		super.addInformation(stack, player, list, par4);
 		int charge = getCharge(stack);
 		if (charge > 0) {
-			list.add("§5Charged " + charge + "/" + MAX_CHARGE);
+			list.add("\u00A75Charged " + charge + "/" + MAX_CHARGE);
 		}
 	}
 }

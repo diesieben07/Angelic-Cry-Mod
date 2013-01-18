@@ -18,12 +18,12 @@ public class GenDungeonLarge extends Structure {
 		super(id);
 	}
 
-	private final SchematicPlacer smallEntrance = new SchematicPlacer("dungeonLarge/smallEntrance.schematic");
-	private final SchematicPlacer spiralstairs = new SchematicPlacer("dungeonLarge/spiralstairs.schematic");
-	private final SchematicPlacer largeHall = new SchematicPlacer("dungeonLarge/largeHall.schematic");
-	private final SchematicPlacer stairs = new SchematicPlacer("dungeonLarge/stairs.schematic");
-	private final SchematicPlacer room9 = new SchematicPlacer("dungeonLarge/room9.schematic");
-	private final SchematicPlacer lavaHall = new SchematicPlacer("dungeonLarge/lavaHall.schematic");
+	private final SchematicPlacer smallEntrance = getSchematicPlacer("dungeonLarge/smallEntrance.schematic");
+	private final SchematicPlacer spiralstairs = getSchematicPlacer("dungeonLarge/spiralstairs.schematic");
+	private final SchematicPlacer largeHall = getSchematicPlacer("dungeonLarge/largeHall.schematic");
+	private final SchematicPlacer stairs = getSchematicPlacer("dungeonLarge/stairs.schematic");
+	private final SchematicPlacer room9 = getSchematicPlacer("dungeonLarge/room9.schematic");
+	private final SchematicPlacer lavaHall = getSchematicPlacer("dungeonLarge/lavaHall.schematic");
 	
 	@Override
 	protected void generateAt(World world, Random random, int dimension, int x, int y, int z) {

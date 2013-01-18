@@ -196,7 +196,11 @@ public class GuiEntityInfo extends AbstractGuiContainer<ContainerEntityInfo, Inv
 				mc.thePlayer.closeScreen();
 			}
 		} else if (isRenaming && textFieldEntityName.isFocused()) {
-			textFieldEntityName.textboxKeyTyped(keyChar, keyCode);
+			if (keyCode == Keyboard.KEY_RETURN) {
+				actionPerformed(buttonRenameDone);
+			} else {
+				textFieldEntityName.textboxKeyTyped(keyChar, keyCode);
+			}
 		}
 	}
 

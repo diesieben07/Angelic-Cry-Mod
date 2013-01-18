@@ -16,7 +16,7 @@ public class GenPillar extends Structure {
 		super(id);
 	}
 
-	private final SchematicPlacer pillar = new SchematicPlacer("pillar/pillarLarge.schematic");
+	private final SchematicPlacer pillar = getSchematicPlacer("pillar/pillarLarge.schematic");
 	
 	@Override
 	protected void generateAt(World world, Random random, int dimension, int x, int y, int z) {
