@@ -196,7 +196,7 @@ public class KarmaEventHandler {
 			}
 		}
 		if (useBorder != -1) {
-			String messageKey = "chat.prefix." + (karma < 0 ? "bad" : "good") + "." + useBorder;
+			String messageKey = "crymod.chatprefix." + (karma < 0 ? "bad" : "good") + "." + useBorder;
 			String messageColor = karma < 0 ? "\u00A74" : "\u00A71";
 			evt.line = evt.line.replace(evt.username, messageColor + StringTranslate.getInstance().translateKey(messageKey) + "\u00A7f " + evt.username);
 		}

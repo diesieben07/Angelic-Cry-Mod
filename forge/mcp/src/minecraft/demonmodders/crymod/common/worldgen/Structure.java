@@ -101,8 +101,8 @@ public abstract class Structure implements IWorldGenerator {
 		return lastRotation;
 	}
 	
-	protected SchematicPlacer getSchematicPlacer(String name) {
-		return new SchematicPlacer(getClass().getResourceAsStream("/demonmodders/crymod/resource/schematics/" + name));
+	protected static SchematicPlacer getSchematicPlacer(String name) {
+		return new SchematicPlacer(Structure.class.getResourceAsStream("/demonmodders/crymod/resource/schematics/" + name));
 	}
 
 	@Override

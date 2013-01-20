@@ -102,11 +102,11 @@ public class GuiEntityInfo extends AbstractGuiContainer<ContainerEntityInfo, Inv
 		// draw the health
 		drawBar("crymod.ui.health", 13, 35, entity.getHealth(), entity.getMaxHealth());
 		
-		drawBar("crymod.ui.speed", 13, 66, entity.getSpeed(), SummonableBase.MAX_SPEED);
+		drawBar("crymod.ui.speed", 13, 66, entity.getSpeed(), entity.getMaxSpeed());
 		
-		drawBar("crymod.ui.power", 13, 96, entity.getPower(), SummonableBase.MAX_POWER);
+		drawBar("crymod.ui.power", 13, 96, entity.getPower(), entity.getMaxPower());
 		
-		drawBar("crymod.ui.control", 13, 126, entity.getControl(), SummonableBase.MAX_CONTROL);
+		drawBar("crymod.ui.control", 13, 126, entity.getControl(), entity.getMaxControl());
 		
 		// Draw the name
 		fontRenderer.drawString(textFieldEntityName.getText() + (textFieldEntityName.getText().equals(entity.getEntityName()) ? "" : "*"), guiLeft + 132, guiTop + 106, 0x000000);

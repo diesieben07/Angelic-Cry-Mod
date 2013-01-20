@@ -16,19 +16,31 @@ tile.crymod_rechargeStation.name:Recharge Station
 tile.crymod_enderBook.name:Ender Book
 tile.crymod_magiciser.name:Magiciser
 
-chat.prefix.good.10:Minor Priest
-chat.prefix.good.25:High Priest
-chat.prefix.good.40:Great Monk
-chat.prefix.good.50:Holy Overlord
-chat.prefix.bad.10:Crazed
-chat.prefix.bad.25:Consumed
-chat.prefix.bad.40:Demonist
-chat.prefix.bad.50:Dark God
+crymod.chatprefix.good.10:Minor Priest
+crymod.chatprefix.good.25:High Priest
+crymod.chatprefix.good.40:Great Monk
+crymod.chatprefix.good.50:Holy Overlord
+crymod.chatprefix.bad.10:Crazed
+crymod.chatprefix.bad.25:Consumed
+crymod.chatprefix.bad.40:Demonist
+crymod.chatprefix.bad.50:Dark God
 
 crymod.ui.health:Health %d / %d
 crymod.ui.control:Control %d / %d
 crymod.ui.power:Power %d / %d
 crymod.ui.speed:Speed %d / %d
+
+crymod.ui.updates:Update Overview
+crymod.ui.updates.button:Summoningmod Updates
+crymod.ui.updates.retry:Recheck
+crymod.ui.updates.update:Install Update
+crymod.ui.updates.versioninfo:§4Your Version:§f %s | §2New Version:§f %s | Minecraft Version: %s
+
+crymod.ui.updates.loading:Loading updater...
+crymod.ui.updates.checking:Checking for updates...
+crymod.ui.updates.failed:Update check failed. Check your internet connection.
+crymod.ui.updates.uptodate:Your installation is up to date.
+crymod.ui.updates.available:There are updates available.
 
 commands.karma.usage:Usage: /karma <value> [<player>]
 

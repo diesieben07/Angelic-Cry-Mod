@@ -73,7 +73,7 @@ public class ContainerEntityInfo extends AbstractContainer<InventorySummonable> 
 	public void buttonClick(int buttonId, Side side, EntityPlayer player) {
 		switch (buttonId) {
 		case BUTTON_CONFIRM:
-			int levelCost = calculateCurrentXpCost(player);
+			int levelCost = player.capabilities.isCreativeMode ? 0 : calculateCurrentXpCost(player);
 			applyChanges = levelCost <= player.experienceLevel;
 			
 			if (side.isServer()) {
@@ -97,10 +97,6 @@ public class ContainerEntityInfo extends AbstractContainer<InventorySummonable> 
 	}
 	
 	public int calculateCurrentXpCost(EntityPlayer player) {
-		if (player.capabilities.isCreativeMode) {
-			return 0;
-		}
-		
 		int xpLevelCost = 0;
 		
 		for (int i = 0; i < inventory.getSizeInventory(); i++) {

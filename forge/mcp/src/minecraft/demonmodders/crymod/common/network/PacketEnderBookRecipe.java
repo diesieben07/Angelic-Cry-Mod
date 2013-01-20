@@ -1,6 +1,7 @@
 package demonmodders.crymod.common.network;
 
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 
 import com.google.common.io.ByteArrayDataInput;
 import com.google.common.io.ByteArrayDataOutput;
@@ -35,7 +36,7 @@ public class PacketEnderBookRecipe extends CrymodPacket {
 
 	@Override
 	void execute(EntityPlayer player) {
-		if (player.openContainer.windowId == windowId && player.openContainer instanceof ContainerEnderBook) {
+		if (!(player instanceof EntityPlayerMP) && player.openContainer.windowId == windowId && player.openContainer instanceof ContainerEnderBook) {
 			((ContainerEnderBook)player.openContainer).setRecipe(recipeId);
 			Crymod.proxy.handleEnderBookRecipe(this);
 		}

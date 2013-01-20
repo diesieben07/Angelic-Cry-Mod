@@ -22,12 +22,8 @@ public abstract class SummonableBase extends EntityCreature implements IEntityAd
 		"Name 1", "Name 2", "Name 3"
 	};
 	
-	public static final int MAX_SPEED = 50;
-	public static final int MAX_POWER = 50;
-	public static final int MAX_CONTROL = 50;
-	
-	String owner = "";
-	String name = "";
+	protected String owner = "";
+	protected String name = "";
 	private boolean playerUsing = false;
 	private int healthLastTick;
 	private String nameLastTick = null;
@@ -38,9 +34,6 @@ public abstract class SummonableBase extends EntityCreature implements IEntityAd
 	
 	public SummonableBase(World world) {
 		super(world);
-		speed = MAX_SPEED;
-		power = MAX_POWER;
-		control = MAX_CONTROL;
 	}
 	
 	public int getSpeed() {
@@ -69,6 +62,35 @@ public abstract class SummonableBase extends EntityCreature implements IEntityAd
 	}
 	
 	@Override
+	public String getEntityName() {
+		return name;
+	}
+	
+	public int getMinPower() {
+		return 10;
+	}
+	
+	public int getMaxPower() {
+		return 40;
+	}
+	
+	public int getMinSpeed() {
+		return 10;
+	}
+	
+	public int getMaxSpeed() {
+		return 40;
+	}
+	
+	public int getMinControl() {
+		return 10;
+	}
+	
+	public int getMaxControl() {
+		return 40;
+	}
+	
+	@Override
 	public void writeEntityToNBT(NBTTagCompound nbt) {
 		super.writeEntityToNBT(nbt);
 		nbt.setString("owner", owner);
@@ -89,18 +111,20 @@ public abstract class SummonableBase extends EntityCreature implements IEntityAd
 	}
 
 	@Override
-	public String getEntityName() {
-		return name;
-	}
-
-	@Override
 	public void initCreature() {
 		name = RANDOM_NAMES[rand.nextInt(RANDOM_NAMES.length)];
+		power = randomBetween(getMinPower(), getMaxPower());
+		speed = randomBetween(getMinSpeed(), getMaxSpeed());
+		control = randomBetween(getMinControl(), getMaxControl());
+	}
+	
+	private int randomBetween(int lower, int upper) {
+		return lower + rand.nextInt(upper - lower + 1);
 	}
 	
 	@Override
 	public boolean interact(EntityPlayer player) {
-		if (true || player.username.equalsIgnoreCase(owner)) {
+		if (player.username.equalsIgnoreCase(owner)) {
 			playerUsing = true;
 			player.openGui(Crymod.instance, GuiType.SUMMONED_ENTITY.getGuiId(), player.worldObj, entityId, 0, 0);
 		}
@@ -154,11 +178,5 @@ public abstract class SummonableBase extends EntityCreature implements IEntityAd
 				entityDropItem(stack, 0);
 			}
 		}
-	}
-
-	@Override
-	public void setCurrentItemOrArmor(int par1, ItemStack par2ItemStack) {
-		super.setCurrentItemOrArmor(par1, par2ItemStack);
-		System.out.println("setting slot " + par1 + ": " + par2ItemStack + " on " + FMLCommonHandler.instance().getEffectiveSide());
 	}
 }

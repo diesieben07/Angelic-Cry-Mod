@@ -57,9 +57,7 @@ public class GuiSummoner extends AbstractGuiContainer<ContainerSummoner, Invento
 	@Override
 	protected void actionPerformed(GuiButton button) {
 		super.actionPerformed(button);
-		if (button.id == BUTTON_SUMMON) {
-			mc.displayGuiScreen(null);
-		} else {
+		if (button.id != BUTTON_SUMMON) {
 			updateDemonName();
 		}
 	}

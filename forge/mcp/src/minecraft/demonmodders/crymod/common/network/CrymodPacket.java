@@ -24,8 +24,6 @@ import demonmodders.crymod.common.Crymod;
 
 public abstract class CrymodPacket {
 	
-	public static final String CHANNEL = "SummoningMod";
-	
 	private static Map<Integer, Class<? extends CrymodPacket>> idToClassMap = new HashMap<Integer, Class<? extends CrymodPacket>>();
 	private static Map<Class<? extends CrymodPacket>, Integer> classToIdMap = new HashMap<Class<? extends CrymodPacket>, Integer>();
 	
@@ -56,11 +54,7 @@ public abstract class CrymodPacket {
 			output.writeByte(packetId);
 			writeData(output);
 			byte[] bytes = output.toByteArray();
-			if (bytes.length <= Short.MAX_VALUE + 1) {
-				return PacketDispatcher.getTinyPacket(Crymod.instance, bytes[0], Arrays.copyOfRange(bytes, 1, bytes.length));
-			} else {
-				return new Packet250CustomPayload(CHANNEL, bytes);
-			}
+			return PacketDispatcher.getTinyPacket(Crymod.instance, bytes[0], Arrays.copyOfRange(bytes, 1, bytes.length));
 		}
 	}
 	

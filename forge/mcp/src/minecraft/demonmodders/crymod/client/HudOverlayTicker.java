@@ -16,17 +16,18 @@ import cpw.mods.fml.common.TickType;
 import demonmodders.crymod.common.karma.PlayerKarma;
 import demonmodders.crymod.common.playerinfo.PlayerInfo;
 
-public class ClientTickHandler extends Gui implements ITickHandler {
+public class HudOverlayTicker extends Gui implements ITickHandler {
 
-	private ClientTickHandler() {}
+	private HudOverlayTicker() { }
 	
-	private static final ClientTickHandler instance = new ClientTickHandler();
+	private static final HudOverlayTicker instance = new HudOverlayTicker();
 	
-	public static ClientTickHandler instance() {
+	public static HudOverlayTicker instance() {
 		return instance;
 	}
 	
 	private int tickCountdown = 0;
+	private final Object lock = new Object();
 	
 	private final Minecraft mc = FMLClientHandler.instance().getClient();
 	
@@ -46,7 +47,8 @@ public class ClientTickHandler extends Gui implements ITickHandler {
         int height = scaler.getScaledHeight();
 		mc.entityRenderer.setupOverlayRendering();
 		GL11.glColor3f(1, 1, 1);
-        if (type.contains(TickType.RENDER) && mc.theWorld != null && clientPlayerInfo != null && (mc.currentScreen == null || mc.currentScreen instanceof GuiChat)) {
+        
+		if (type.contains(TickType.RENDER) && mc.theWorld != null && clientPlayerInfo != null && (mc.currentScreen == null || mc.currentScreen instanceof GuiChat)) {
 			GL11.glBindTexture(GL11.GL_TEXTURE_2D, mc.renderEngine.getTexture("/demonmodders/crymod/resource/tex/gui.png"));
 			int barXStart = width / 2 - 182 / 2;
 			
@@ -99,7 +101,6 @@ public class ClientTickHandler extends Gui implements ITickHandler {
 
 	@Override
 	public String getLabel() {
-		return "SummoningModClientTicker";
+		return "SummoningModHud";
 	}
-
 }

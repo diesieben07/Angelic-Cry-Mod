@@ -50,7 +50,7 @@ public class ClientProxy extends CommonProxy {
 	
 	@Override
 	public void setClientPlayerInfo(PlayerInfo info) {
-		ClientTickHandler.instance().setClientPlayerInfo(info);
+		HudOverlayTicker.instance().setClientPlayerInfo(info);
 	}
 
 	@Override
@@ -122,7 +122,8 @@ public class ClientProxy extends CommonProxy {
 	@Override
 	public void preInit() {
 		MinecraftForgeClient.preloadTexture(Crymod.TEXTURE_FILE);
-		TickRegistry.registerTickHandler(ClientTickHandler.instance(), Side.CLIENT);
+		TickRegistry.registerTickHandler(HudOverlayTicker.instance(), Side.CLIENT);
+		TickRegistry.registerTickHandler(new GuiTicker(), Side.CLIENT);
 		MinecraftForge.EVENT_BUS.register(new ClientEventHandler());
 		KeyBindingRegistry.registerKeyBinding(new CrymodKeyHandler());
 		
@@ -139,5 +140,4 @@ public class ClientProxy extends CommonProxy {
 	public void postInit() {
 		
 	}
-
 }

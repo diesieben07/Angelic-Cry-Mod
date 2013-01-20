@@ -16,10 +16,11 @@ public class GenRuin extends Structure {
 		super(id);
 	}
 
-	private final SchematicPlacer towerLarge = getSchematicPlacer("ruin/towerLarge.schematic");
+	private final SchematicPlacer towerLarge = getSchematicPlacer("bookPak.schematic");
 	
 	@Override
 	protected void generateAt(World world, Random random, int dimension, int x, int y, int z) {
+		System.out.println("generating ruin");
 		towerLarge.place(getRandomRotation(random), world, x, y, z, true);
 	}
 	

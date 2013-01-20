@@ -37,4 +37,8 @@ public class CommonProxy {
 	public void handleEnderBookRecipe(PacketEnderBookRecipe demonName) {
 		// NO OP on server
 	}
+	
+	public void updateCheckComplete(boolean upToDate) {
+		
+	}
 }

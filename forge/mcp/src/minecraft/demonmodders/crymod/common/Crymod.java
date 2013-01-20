@@ -38,8 +38,8 @@ import demonmodders.crymod.common.tileentities.TileEntityMagiciser;
 import demonmodders.crymod.common.tileentities.TileEntityRechargeStation;
 import demonmodders.crymod.common.worldgen.Structure;
 
-@Mod(modid = "SummoningMod", name = "Summoningmod", version = "0.1")
-@NetworkMod(channels = {CrymodPacket.CHANNEL}, packetHandler = CrymodPacketHandler.class, tinyPacketHandler = CrymodPacketHandler.class, clientSideRequired = true, serverSideRequired = false)
+@Mod(modid = "SummoningMod", name = "Summoningmod", version = UpdateChecker.VERSION)
+@NetworkMod(tinyPacketHandler = CrymodPacketHandler.class, clientSideRequired = true, serverSideRequired = false)
 public class Crymod {
 
 	@SidedProxy(clientSide = "demonmodders.crymod.client.ClientProxy", serverSide = "demonmodders.crymod.common.CommonProxy")
@@ -51,6 +51,8 @@ public class Crymod {
 	public static Logger logger;
 	
 	public static Configuration conf;
+	
+	public static UpdateChecker updater;
 	
 	@PreInit
 	public void preInit(FMLPreInitializationEvent evt) {
@@ -69,6 +71,8 @@ public class Crymod {
 		conf.load();
 		
 		LanguageLoader.loadLanguages();
+		
+		updater = new UpdateChecker(conf);
 		
 		NetworkRegistry.instance().registerGuiHandler(this, new CrymodGuiHandler());
 		
@@ -92,7 +96,6 @@ public class Crymod {
 	
 	@Init
 	public void init(FMLInitializationEvent evt) {		
-		
 		ItemCryMod.createItems();
 		
 		BlockCryMod.createBlocks();
@@ -109,7 +112,9 @@ public class Crymod {
 	@PostInit
 	public void postInit(FMLPostInitializationEvent evt) {
 		proxy.postInit();
-			
+		
+		updater.startIfNotRunning();
+		
 		conf.save();
 	}
 	

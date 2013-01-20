@@ -119,6 +119,7 @@ public class ContainerSummoner extends AbstractContainer<InventorySummoner> {
 				SummoningRecipe recipe = currentMatchingRecipe();
 				if (recipe != null) {
 					try {
+						player.closeScreen();
 						SummonableBase entity = recipe.getDemon().getConstructor(World.class).newInstance(player.worldObj);
 						entity.setOwner(player);
 						
@@ -131,6 +132,7 @@ public class ContainerSummoner extends AbstractContainer<InventorySummoner> {
 						new PacketClientEffect(recipe.isAngel() ? Type.SUMMON_GOOD : Type.SUMMON_BAD, entity.posX, entity.posY, entity.posZ).sendToAllNear(entity, 8);
 					} catch (Exception e) {
 						Crymod.logger.warning("Invalid entity for summoning!");
+						e.printStackTrace();
 					}
 				}
 			}

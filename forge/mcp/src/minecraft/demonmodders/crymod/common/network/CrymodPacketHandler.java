@@ -13,13 +13,7 @@ import cpw.mods.fml.common.network.IPacketHandler;
 import cpw.mods.fml.common.network.ITinyPacketHandler;
 import cpw.mods.fml.common.network.Player;
 
-public class CrymodPacketHandler implements IPacketHandler, ITinyPacketHandler {
-
-	@Override
-	public void onPacketData(INetworkManager manager, Packet250CustomPayload packet, Player player) {
-		ByteArrayDataInput in = ByteStreams.newDataInput(packet.data);
-		CrymodPacket.execute(in, in.readByte(), (EntityPlayer)player);
-	}
+public class CrymodPacketHandler implements ITinyPacketHandler {
 
 	@Override
 	public void handle(NetHandler handler, Packet131MapData mapData) {
