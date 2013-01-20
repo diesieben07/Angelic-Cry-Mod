@@ -1,7 +1,10 @@
 package demonmodders.crymod.common;
 
+import java.io.File;
+
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.World;
 import demonmodders.crymod.common.network.PacketClientEffect;
 import demonmodders.crymod.common.network.PacketEnderBookRecipe;
@@ -40,5 +43,9 @@ public class CommonProxy {
 	
 	public void updateCheckComplete(boolean upToDate) {
 		
+	}
+	
+	public File getMinecraftDir() {
+		return MinecraftServer.getServer().getFile(".");
 	}
 }

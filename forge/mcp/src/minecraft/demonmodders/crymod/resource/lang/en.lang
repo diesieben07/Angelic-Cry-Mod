@@ -41,6 +41,12 @@ crymod.ui.updates.checking:Checking for updates...
 crymod.ui.updates.failed:Update check failed. Check your internet connection.
 crymod.ui.updates.uptodate:Your installation is up to date.
 crymod.ui.updates.available:There are updates available.
+crymod.ui.updates.downloading:Downloading updates...
+crymod.ui.updates.downloadFailed:Failed to download update.
+crymod.ui.updates.copying:Installing update...
+crymod.ui.updates.installFailed:Failed to install update.
+crymod.ui.updates.cantInstall:Your mod installation is corrupt and can't be updated automatically.
+crymod.ui.updates.complete:Update complete. Please restart Minecraft.
 
 commands.karma.usage:Usage: /karma <value> [<player>]
 

@@ -28,6 +28,7 @@ public class GuiUpdates extends GuiScreen implements UpdateStatusHandler {
 	private List<String> currentUpdateInformation;
 	
 	private GuiButton buttonUpdate = null;
+	private GuiButton buttonRecheck = null;
 
 	public GuiUpdates(GuiScreen parent) {
 		this.parent = parent;
@@ -51,6 +52,7 @@ public class GuiUpdates extends GuiScreen implements UpdateStatusHandler {
 			Crymod.updater.startIfNotRunning();
 			break;
 		case BUTTON_UPDATE:
+			Crymod.updater.startDownload();
 			break;
 		}
 	}
@@ -82,15 +84,20 @@ public class GuiUpdates extends GuiScreen implements UpdateStatusHandler {
 		headingWidth = fontRenderer.getStringWidth(headingText);
 		versionInfoPattern = StringTranslate.getInstance().translateKey("crymod.ui.updates.versioninfo");
 		controlList.add(new GuiButton(BUTTON_DONE, width / 2 - 75, height - 38, 150, 20, StringTranslate.getInstance().translateKey("gui.done")));
-		controlList.add(new GuiButton(BUTTON_RETRY, 10, 45 + fontRenderer.FONT_HEIGHT, 150, 20, StringTranslate.getInstance().translateKey("crymod.ui.updates.retry")));
+		buttonRecheck = new GuiButton(BUTTON_RETRY, 10, 45 + fontRenderer.FONT_HEIGHT, 150, 20, StringTranslate.getInstance().translateKey("crymod.ui.updates.retry"));
+		controlList.add(buttonRecheck);
 		buttonUpdate = new GuiButton(BUTTON_UPDATE, 10, 75 + 4 * fontRenderer.FONT_HEIGHT, 150, 20, StringTranslate.getInstance().translateKey("crymod.ui.updates.update"));
-		updateButtons();
 		controlList.add(buttonUpdate);
+		
+		updateButtons();
 	}
 	
 	private void updateButtons() {
 		if (buttonUpdate != null) {
-			buttonUpdate.enabled = currentStatus != null && currentStatus == UpdateStatus.UPDATES_AVAILABLE;
+			buttonUpdate.enabled = currentStatus != null && currentStatus.canInstall();
+		}
+		if (buttonRecheck != null) {
+			buttonRecheck.enabled = currentStatus != null && currentStatus.canRetry();
 		}
 	}
 }

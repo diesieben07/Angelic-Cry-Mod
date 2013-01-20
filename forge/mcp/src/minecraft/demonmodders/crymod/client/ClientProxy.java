@@ -1,5 +1,6 @@
 package demonmodders.crymod.client;
 
+import java.io.File;
 import java.util.Random;
 
 import net.minecraft.client.Minecraft;
@@ -139,5 +140,10 @@ public class ClientProxy extends CommonProxy {
 	@Override
 	public void postInit() {
 		
+	}
+
+	@Override
+	public File getMinecraftDir() {
+		return mc.mcDataDir;
 	}
 }
