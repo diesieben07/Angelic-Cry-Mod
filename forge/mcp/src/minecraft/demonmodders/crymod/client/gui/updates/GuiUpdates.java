@@ -1,4 +1,4 @@
-package demonmodders.crymod.client.gui;
+package demonmodders.crymod.client.gui.updates;
 
 import java.util.List;
 
@@ -13,14 +13,13 @@ import demonmodders.crymod.common.UpdateChecker;
 import demonmodders.crymod.common.UpdateChecker.UpdateStatus;
 import demonmodders.crymod.common.UpdateChecker.UpdateStatusHandler;
 
-public class GuiUpdates extends GuiScreen implements UpdateStatusHandler {
+public abstract class GuiUpdates extends GuiScreen implements UpdateStatusHandler {
 
 	private static final int BUTTON_DONE = 0;
 	private static final int BUTTON_RETRY = 1;
 	private static final int BUTTON_UPDATE = 2;
 	
-	private final GuiScreen parent;
-	private String headingText;
+	protected String headingText;
 	private int headingWidth;
 	private String versionInfoPattern;
 	private String currentDisplayText = "";
@@ -30,32 +29,26 @@ public class GuiUpdates extends GuiScreen implements UpdateStatusHandler {
 	private GuiButton buttonUpdate = null;
 	private GuiButton buttonRecheck = null;
 
-	public GuiUpdates(GuiScreen parent) {
-		this.parent = parent;
-		Crymod.updater.registerHandler(this);
-	}
-
-	@Override
-	protected void keyTyped(char keyChar, int keyCode) {
-		if (keyCode == Keyboard.KEY_ESCAPE) {
-			mc.displayGuiScreen(parent);
-		}
-	}
-
 	@Override
 	protected void actionPerformed(GuiButton button) {
 		switch (button.id) {
 		case BUTTON_DONE:
-			mc.displayGuiScreen(parent);
+			done();
 			break;
 		case BUTTON_RETRY:
-			Crymod.updater.startIfNotRunning();
+			retry();
 			break;
 		case BUTTON_UPDATE:
-			Crymod.updater.startDownload();
+			update();
 			break;
 		}
 	}
+	
+	protected abstract void done();
+	
+	protected abstract void retry();
+	
+	protected abstract void update();
 
 	@Override
 	public void drawScreen(int par1, int par2, float par3) {
@@ -72,7 +65,7 @@ public class GuiUpdates extends GuiScreen implements UpdateStatusHandler {
 
 	@Override
 	public void handleStatus(UpdateStatus newStatus, List<String> updateInfo) {
-		currentDisplayText = newStatus.translate();
+		currentDisplayText = newStatus == null ? "" : newStatus.translate();
 		currentStatus = newStatus;
 		currentUpdateInformation = updateInfo;
 		updateButtons();
@@ -80,7 +73,6 @@ public class GuiUpdates extends GuiScreen implements UpdateStatusHandler {
 
 	@Override
 	public void initGui() {
-		headingText = StringTranslate.getInstance().translateKey("crymod.ui.updates");
 		headingWidth = fontRenderer.getStringWidth(headingText);
 		versionInfoPattern = StringTranslate.getInstance().translateKey("crymod.ui.updates.versioninfo");
 		controlList.add(new GuiButton(BUTTON_DONE, width / 2 - 75, height - 38, 150, 20, StringTranslate.getInstance().translateKey("gui.done")));

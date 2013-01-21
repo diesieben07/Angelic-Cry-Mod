@@ -1,9 +1,13 @@
 package demonmodders.crymod.client;
 
 import java.io.File;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Random;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.ChatLine;
+import net.minecraft.client.gui.GuiNewChat;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.world.World;
@@ -13,6 +17,7 @@ import cpw.mods.fml.client.registry.ClientRegistry;
 import cpw.mods.fml.client.registry.KeyBindingRegistry;
 import cpw.mods.fml.client.registry.RenderingRegistry;
 import cpw.mods.fml.common.registry.TickRegistry;
+import cpw.mods.fml.relauncher.ReflectionHelper;
 import cpw.mods.fml.relauncher.Side;
 import demonmodders.crymod.client.fx.EntityFXTextureChange;
 import demonmodders.crymod.client.gui.GuiCrystalBag;
@@ -22,11 +27,13 @@ import demonmodders.crymod.client.gui.GuiRechargeStation;
 import demonmodders.crymod.client.gui.GuiRecipePage;
 import demonmodders.crymod.client.gui.GuiSummoner;
 import demonmodders.crymod.client.gui.entityinfo.GuiEntityInfo;
+import demonmodders.crymod.client.gui.updates.GuiServerUpdates;
 import demonmodders.crymod.client.render.CrymodItemRenderer;
 import demonmodders.crymod.client.render.RenderEnderBook;
 import demonmodders.crymod.client.render.RenderZombieBase;
-import demonmodders.crymod.common.CommonProxy;
 import demonmodders.crymod.common.Crymod;
+import demonmodders.crymod.common.CrymodProxy;
+import demonmodders.crymod.common.UpdateChecker.UpdateStatus;
 import demonmodders.crymod.common.entities.ZombieBase;
 import demonmodders.crymod.common.gui.ContainerCrystalBag;
 import demonmodders.crymod.common.gui.ContainerEnderBook;
@@ -37,17 +44,21 @@ import demonmodders.crymod.common.gui.ContainerRecipePage;
 import demonmodders.crymod.common.gui.ContainerSummoner;
 import demonmodders.crymod.common.gui.GuiType;
 import demonmodders.crymod.common.items.ItemCryMod;
+import demonmodders.crymod.common.network.PacketClientAction;
 import demonmodders.crymod.common.network.PacketClientEffect;
+import demonmodders.crymod.common.network.PacketUpdateInformation;
 import demonmodders.crymod.common.network.PacketClientEffect.Type;
 import demonmodders.crymod.common.network.PacketEnderBookRecipe;
 import demonmodders.crymod.common.playerinfo.PlayerInfo;
 import demonmodders.crymod.common.recipes.SummoningRecipe;
 import demonmodders.crymod.common.tileentities.TileEntityEnderbook;
 
-public class ClientProxy extends CommonProxy {
+public class ClientProxy implements CrymodProxy {
 	
 	private final Minecraft mc = Minecraft.getMinecraft();
 	private final Random random = new Random();
+	private UpdateStatus lastStatus = null;
+	private List<String> lastUpdateInformation = null;
 	
 	@Override
 	public void setClientPlayerInfo(PlayerInfo info) {
@@ -145,5 +156,25 @@ public class ClientProxy extends CommonProxy {
 	@Override
 	public File getMinecraftDir() {
 		return mc.mcDataDir;
+	}
+
+	@Override
+	public void handleUpdateInformation(PacketUpdateInformation packet) {
+		lastStatus = packet.getStatus();
+		lastUpdateInformation = packet.getUpdateInformation();
+		if (mc.currentScreen != null && mc.currentScreen instanceof GuiServerUpdates) {
+			((GuiServerUpdates)mc.currentScreen).handleStatus(lastStatus, lastUpdateInformation);
+		}
+	}
+	
+	@Override
+	public void handleClientAction(PacketClientAction packet) {
+		switch (packet.getAction()) {
+		case OPEN_UPDATES:
+			GuiServerUpdates screen = new GuiServerUpdates();
+			mc.displayGuiScreen(screen);
+			screen.handleStatus(lastStatus, lastUpdateInformation);
+			break;
+		}
 	}
 }

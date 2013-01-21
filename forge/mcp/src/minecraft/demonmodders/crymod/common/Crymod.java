@@ -24,13 +24,14 @@ import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.registry.EntityRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
 import demonmodders.crymod.common.blocks.BlockCryMod;
+import demonmodders.crymod.common.command.CommandKarma;
+import demonmodders.crymod.common.command.CommandSummonersAdminTools;
 import demonmodders.crymod.common.entities.EntityHeavenZombie;
 import demonmodders.crymod.common.entities.EntityHellZombie;
 import demonmodders.crymod.common.gui.CrymodGuiHandler;
 import demonmodders.crymod.common.items.ItemCryMod;
 import demonmodders.crymod.common.karma.KarmaEventHandler;
 import demonmodders.crymod.common.karma.PlayerPowersHandler;
-import demonmodders.crymod.common.network.CrymodPacket;
 import demonmodders.crymod.common.network.CrymodPacketHandler;
 import demonmodders.crymod.common.playerinfo.PlayerInfo;
 import demonmodders.crymod.common.tileentities.TileEntityEnderbook;
@@ -42,8 +43,8 @@ import demonmodders.crymod.common.worldgen.Structure;
 @NetworkMod(tinyPacketHandler = CrymodPacketHandler.class, clientSideRequired = true, serverSideRequired = false)
 public class Crymod {
 
-	@SidedProxy(clientSide = "demonmodders.crymod.client.ClientProxy", serverSide = "demonmodders.crymod.common.CommonProxy")
-	public static CommonProxy proxy;
+	@SidedProxy(clientSide = "demonmodders.crymod.client.ClientProxy", serverSide = "demonmodders.crymod.common.ServerProxy")
+	public static CrymodProxy proxy;
 	
 	@Instance
 	public static Crymod instance;
@@ -121,6 +122,24 @@ public class Crymod {
 	@ServerStarting
 	public void serverStarting(FMLServerStartingEvent evt) {
 		evt.registerServerCommand(new CommandKarma());
+		if (evt.getSide().isServer()) {
+			evt.registerServerCommand(new CommandSummonersAdminTools());
+		}
+	}
+	
+	public static final String COLOR_CODE = "\u00A7";
+	private static final String CHAT_PREFIX = color("[Summoners] ", "2", "f");
+	
+	public static String getChatMessage(String message) {
+		return CHAT_PREFIX + message;
+	}
+	
+	public static String color(String message, String colorCode) {
+		return COLOR_CODE + colorCode + message;
+	}
+	
+	public static String color(String message, String colorCode, String resetColor) {
+		return COLOR_CODE + colorCode + message + COLOR_CODE + resetColor;
 	}
 	
 	public static final String TEXTURE_FILE = "/demonmodders/crymod/resource/tex/textures.png";

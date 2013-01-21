@@ -2,6 +2,8 @@ package demonmodders.crymod.common.worldgen;
 
 import java.io.InputStream;
 
+import com.google.common.primitives.UnsignedBytes;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockStairs;
 import net.minecraft.nbt.CompressedStreamTools;
@@ -65,14 +67,16 @@ public class SchematicPlacer {
 		int zOffset = 0;
 		for (int i = 0; i < blockIds.length; i++) {
 			
+			int blockId = UnsignedBytes.toInt(blockIds[i]);
+			
 			if (!isBlockType(spawnFullBlocks, blockIds[i])) {
 				return;
 			}
 			
 			int[] rotXz = rotateXZ(xOffset, zOffset, rotation);
 			
-			if (blockIds[i] != 0 && !spawnairblocks || spawnairblocks) {
-				world.setBlockAndMetadata(posX + rotXz[0], posY + yOffset, posZ + rotXz[1], blockIds[i], applyRotationToMeta(blockIds[i], blockMeta[i], rotation));
+			if (blockId != 0 && !spawnairblocks || spawnairblocks) {
+				world.setBlockAndMetadata(posX + rotXz[0], posY + yOffset, posZ + rotXz[1], blockId, applyRotationToMeta(blockId, blockMeta[i], rotation));
 			}
 			
 			if (xOffset < width - 1) {

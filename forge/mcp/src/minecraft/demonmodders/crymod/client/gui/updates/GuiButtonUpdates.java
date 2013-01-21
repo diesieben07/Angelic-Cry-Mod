@@ -1,15 +1,11 @@
-package demonmodders.crymod.client.gui;
-
-import java.util.Arrays;
-import java.util.List;
-
-import org.lwjgl.opengl.GL11;
-import org.lwjgl.opengl.GL12;
+package demonmodders.crymod.client.gui.updates;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
-import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.renderer.RenderHelper;
+
+import org.lwjgl.opengl.GL11;
+import org.lwjgl.opengl.GL12;
 
 public class GuiButtonUpdates extends GuiButton {
 
@@ -34,7 +30,7 @@ public class GuiButtonUpdates extends GuiButton {
 	public boolean mousePressed(Minecraft mc, int mouseX, int mouseY) {
 		if (super.mousePressed(mc, mouseX, mouseY)) {
 			mc.sndManager.playSoundFX("random.click", 1, 1);
-			mc.displayGuiScreen(new GuiUpdates(mc.currentScreen));
+			mc.displayGuiScreen(new GuiClientUpdates(mc.currentScreen));
 		}
 		return false;
 	}

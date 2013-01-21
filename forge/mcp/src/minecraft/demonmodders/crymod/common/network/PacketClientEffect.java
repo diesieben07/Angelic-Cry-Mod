@@ -7,6 +7,10 @@ import com.google.common.io.ByteArrayDataOutput;
 
 import demonmodders.crymod.common.Crymod;
 
+/**
+ * Sent by the server to trigger a client side effect such as particles
+ *
+ */
 public class PacketClientEffect extends CrymodPacket {
 
 	public Type type;

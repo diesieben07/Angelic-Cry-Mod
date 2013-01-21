@@ -4,13 +4,16 @@ import static demonmodders.crymod.common.Crymod.logger;
 
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.network.packet.Packet;
 import net.minecraft.network.packet.Packet250CustomPayload;
 import net.minecraft.server.MinecraftServer;
+import net.minecraft.server.management.ServerConfigurationManager;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.WorldServer;
 
@@ -41,21 +44,21 @@ public abstract class CrymodPacket {
 		addMapping(5, PacketHealthUpdate.class);
 		addMapping(6, PacketRenameEntity.class);
 		addMapping(7, PacketNameUpdate.class);
+		addMapping(8, PacketUpdateInformation.class);
+		addMapping(9, PacketClientAction.class);
 	}
 	
 	public final Packet generatePacket() {
 		ByteArrayDataOutput output = ByteStreams.newDataOutput();
-		Integer packetId = classToIdMap.get(getClass());
-		
-		if (packetId == null) {
+		if (!classToIdMap.containsKey(getClass())) {
 			logger.warning("Packet " + getClass() + " is missing a Mapping!");
 			return null;
-		} else {
-			output.writeByte(packetId);
-			writeData(output);
-			byte[] bytes = output.toByteArray();
-			return PacketDispatcher.getTinyPacket(Crymod.instance, bytes[0], Arrays.copyOfRange(bytes, 1, bytes.length));
 		}
+		
+		int packetId = classToIdMap.get(getClass());
+		
+		writeData(output);
+		return PacketDispatcher.getTinyPacket(Crymod.instance, (short)packetId, output.toByteArray());
 	}
 	
 	public final void sendToServer() {
@@ -81,6 +84,28 @@ public abstract class CrymodPacket {
 	public final void sendToAllTracking(Entity entity) {
 		if (entity.worldObj instanceof WorldServer) {
 			((WorldServer)entity.worldObj).getEntityTracker().sendPacketToAllPlayersTrackingEntity(entity, generatePacket());
+		}
+	}
+	
+	public final void sendToAll() {
+		MinecraftServer.getServer().getConfigurationManager().sendPacketToAllPlayers(generatePacket());
+	}
+	
+	public final void sendToOps() {
+		MinecraftServer server = MinecraftServer.getServer();
+		if (server == null) {
+			return;
+		}
+		ServerConfigurationManager manager = server.getConfigurationManager();
+		if (manager == null) {
+			return;
+		}
+		Packet packet = generatePacket();
+		Set<String> ops = manager.getOps();
+		for (EntityPlayer player : (List<EntityPlayer>)manager.playerEntityList) {
+			if (ops.contains(player.username.toLowerCase())) {
+				PacketDispatcher.sendPacketToPlayer(packet, (Player)player);
+			}
 		}
 	}
 	

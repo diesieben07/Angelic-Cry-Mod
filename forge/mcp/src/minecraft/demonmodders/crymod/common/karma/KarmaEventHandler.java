@@ -1,6 +1,7 @@
 package demonmodders.crymod.common.karma;
 
 import static demonmodders.crymod.common.playerinfo.PlayerInfo.playerKarma;
+import static demonmodders.crymod.common.Crymod.color;
 
 import java.util.Arrays;
 import java.util.List;
@@ -43,6 +44,7 @@ import net.minecraftforge.event.entity.player.PlayerDestroyItemEvent;
 import cpw.mods.fml.common.registry.TickRegistry;
 import cpw.mods.fml.relauncher.ReflectionHelper;
 import cpw.mods.fml.relauncher.Side;
+import demonmodders.crymod.common.Crymod;
 import demonmodders.crymod.common.karma.PlayerKarma.CountableKarmaEvent;
 import demonmodders.crymod.common.playerinfo.PlayerInfo;
 
@@ -197,8 +199,8 @@ public class KarmaEventHandler {
 		}
 		if (useBorder != -1) {
 			String messageKey = "crymod.chatprefix." + (karma < 0 ? "bad" : "good") + "." + useBorder;
-			String messageColor = karma < 0 ? "\u00A74" : "\u00A71";
-			evt.line = evt.line.replace(evt.username, messageColor + StringTranslate.getInstance().translateKey(messageKey) + "\u00A7f " + evt.username);
+			String messageColor = karma < 0 ? "4" : "1";
+			evt.line = evt.line.replace(evt.username, color(StringTranslate.getInstance().translateKey(messageKey), messageColor, "f") +  " " + evt.username);
 		}
 	}
 }

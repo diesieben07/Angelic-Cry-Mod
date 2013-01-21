@@ -31,6 +31,7 @@ crymod.ui.power:Power %d / %d
 crymod.ui.speed:Speed %d / %d
 
 crymod.ui.updates:Update Overview
+crymod.ui.updates.server:Update Overview for %s
 crymod.ui.updates.button:Summoningmod Updates
 crymod.ui.updates.retry:Recheck
 crymod.ui.updates.update:Install Update
@@ -48,6 +49,7 @@ crymod.ui.updates.installFailed:Failed to install update.
 crymod.ui.updates.cantInstall:Your mod installation is corrupt and can't be updated automatically.
 crymod.ui.updates.complete:Update complete. Please restart Minecraft.
 
-commands.karma.usage:Usage: /karma <value> [<player>]
+commands.crymod_karma.usage:/karma <value> [<player>]
+commands.crymod_summoners.usage:/summoners update
 
 entity.crymodHeavenZombie.name:Heaven Zombie

@@ -24,6 +24,8 @@ import net.minecraft.crash.CallableMinecraftVersion;
 import net.minecraft.util.StringTranslate;
 import net.minecraftforge.common.Configuration;
 
+import com.google.common.io.ByteArrayDataInput;
+import com.google.common.io.ByteArrayDataOutput;
 import com.google.common.io.ByteStreams;
 
 public class UpdateChecker implements Runnable {
@@ -169,6 +171,15 @@ public class UpdateChecker implements Runnable {
 
 		public boolean canRetry() {
 			return canRetry;
+		}
+		
+		public void writeTo(ByteArrayDataOutput out) {
+			out.writeByte(ordinal());
+		}
+		
+		public static UpdateStatus readFrom(ByteArrayDataInput in) {
+			int id = in.readUnsignedByte();
+			return id < 0 || id >= values().length ? FAILED : values()[id];
 		}
 	}
 	

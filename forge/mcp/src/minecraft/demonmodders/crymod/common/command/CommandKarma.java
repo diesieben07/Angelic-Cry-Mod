@@ -1,4 +1,4 @@
-package demonmodders.crymod.common;
+package demonmodders.crymod.common.command;
 
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.ICommandSender;
@@ -8,11 +8,6 @@ import demonmodders.crymod.common.karma.PlayerKarma;
 import demonmodders.crymod.common.playerinfo.PlayerInfo;
 
 public class CommandKarma extends CommandBase {
-
-	@Override
-	public boolean canCommandSenderUseCommand(ICommandSender sender) {
-		return sender instanceof EntityPlayerMP ? ((EntityPlayerMP)sender).mcServer.getConfigurationManager().areCommandsAllowed(sender.getCommandSenderName()) : false;
-	}
 
 	@Override
 	public String getCommandName() {
@@ -26,8 +21,9 @@ public class CommandKarma extends CommandBase {
 			EntityPlayerMP player = args.length >= 2 ? func_82359_c(sender, args[1]) : getCommandSenderAsPlayer(sender);
 			PlayerInfo.playerKarma(player).setKarma(karma);
 		} else {
-			throw new WrongUsageException("commands.karma.usage", new Object[0]);
+			throw new WrongUsageException("commands.crymod_karma.usage", new Object[0]);
 		}
 	}
-
+	
+	
 }
