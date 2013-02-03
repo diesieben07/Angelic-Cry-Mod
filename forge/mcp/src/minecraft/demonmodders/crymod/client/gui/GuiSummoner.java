@@ -52,7 +52,7 @@ public class GuiSummoner extends AbstractGuiContainer<ContainerSummoner, Invento
 	protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
 		int demonNameWidth = fontRenderer.getStringWidth(recipeName);
 		fontRenderer.drawString(recipeName, HEADING_TEXT_FIELD_X_POSITION, HEADING_TEXT_FIELD_Y_POSITION, 0xffffff);
-		fontRenderer.drawString(String.valueOf(container.page()), width / 2 - BOOK_WIDTH / 2, height / 2 + 3, 0x000050);
+		fontRenderer.drawString(String.valueOf(container.page()), EFFECTIVE_WIDTH - 40, EFFECTIVE_HEIGHT / 2 + 27, 0x000050);
 	}
 	
 	@Override
