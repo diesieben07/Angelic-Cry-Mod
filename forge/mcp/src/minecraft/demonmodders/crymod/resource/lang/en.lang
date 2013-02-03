@@ -1,12 +1,14 @@
 item.crymod_summoningBook.name:Holy Summoning Book
 item.crymod_evilTablet.name:Evil Tablet
+
 item.crymod_crystal.yellow.name:Gold Crystal
 item.crymod_crystal.red.name:Core Crystal
 item.crymod_crystal.lightBlue.name:Sky Crystal
 item.crymod_crystal.purple.name:Magic Crystal
 item.crymod_crystal.green.name:Green Crystal (Need Name)
 item.crymod_crystal.orange.name:Fiery Crystal
-item.crymod_crystal.blue.name:Icy Crystal
+item.crymod_crystal.blue.name:Ocean Crystal
+
 item.crymod_recipeBook.name:Recipe Book
 item.crymod_crystalBag.name:Crystal Bag
 item.crymod_swordOfDarkness.name:Sword of Darkness
@@ -15,6 +17,7 @@ item.crymod_recipePage.name:Recipe Page
 tile.crymod_rechargeStation.name:Recharge Station
 tile.crymod_enderBook.name:Ender Book
 tile.crymod_magiciser.name:Magiciser
+tile.crymod_plants.magiculusFlower.name:Magiculus Flower
 
 crymod.chatprefix.good.10:Minor Priest
 crymod.chatprefix.good.25:High Priest

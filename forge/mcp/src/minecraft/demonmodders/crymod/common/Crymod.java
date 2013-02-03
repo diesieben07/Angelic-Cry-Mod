@@ -35,10 +35,12 @@ import demonmodders.crymod.common.items.ItemCryMod;
 import demonmodders.crymod.common.karma.KarmaEventHandler;
 import demonmodders.crymod.common.karma.PlayerPowersHandler;
 import demonmodders.crymod.common.network.CrymodPacketHandler;
+import demonmodders.crymod.common.recipes.CraftingRecipes;
 import demonmodders.crymod.common.tileentities.TileEntityEnderbook;
 import demonmodders.crymod.common.tileentities.TileEntityMagiciser;
 import demonmodders.crymod.common.tileentities.TileEntityRechargeStation;
 import demonmodders.crymod.common.worldgen.Structure;
+import demonmodders.crymod.common.worldgen.WorldgenEventHandler;
 
 @Mod(modid = "SummoningMod", name = "Summoningmod", version = UpdateChecker.VERSION)
 @NetworkMod(tinyPacketHandler = CrymodPacketHandler.class, clientSideRequired = true, serverSideRequired = false)
@@ -109,7 +111,10 @@ public class Crymod {
 		GameRegistry.registerTileEntity(TileEntityEnderbook.class, "crymodEnderbook");
 		GameRegistry.registerTileEntity(TileEntityMagiciser.class, "crymodMagiciser");
 		
+		CraftingRecipes.registerRecipes();
+		
 		Structure.init();
+		MinecraftForge.TERRAIN_GEN_BUS.register(new WorldgenEventHandler());
 		
 		proxy.init();
 	}

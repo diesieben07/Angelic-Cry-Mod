@@ -6,6 +6,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.item.EntityItem;
+import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
@@ -19,21 +20,31 @@ public class BlockCryMod extends Block {
 	public static Block rechargeStation;
 	public static Block enderBook;
 	public static Block magiciser;
+	public static Block plants;
 	
 	public static void createBlocks() {
 		rechargeStation = new BlockRechargeStation("rechargeStation", 3956).setRequiresSelfNotify();
 		enderBook = new BlockEnderBook("enderBook", 3957);
 		magiciser = new BlockMagiciser("magiciser", 3958);
+		plants = new BlockCrymodPlants("plants", 3959);
 	}
 	
 	private final Random rand = new Random();
 
 	public BlockCryMod(String blockName, int defaultId, int texture, Material material) {
-		super(Crymod.conf.getBlock(blockName + "Id", defaultId).getInt(), texture, material);
-		setBlockName("crymod_" + blockName);
-		setTextureFile(CrymodUtils.TEXTURE_FILE);
-		setCreativeTab(CreativeTabs.tabMisc);
-		GameRegistry.registerBlock(this, blockName);
+		super(getBlockId(blockName, defaultId), texture, material);
+		initCrymodBlock(this, blockName, ItemBlock.class);
+	}
+	
+	public static void initCrymodBlock(Block block, String blockName, Class<? extends ItemBlock> itemClass) {
+		block.setBlockName("crymod_" + blockName);
+		block.setTextureFile(CrymodUtils.TEXTURE_FILE);
+		block.setCreativeTab(CreativeTabs.tabMisc);
+		GameRegistry.registerBlock(block, itemClass, blockName);
+	}
+	
+	public static int getBlockId(String blockName, int defaultId) {
+		return Crymod.conf.getBlock(blockName + "Id", defaultId).getInt();
 	}
 	
 	@Override

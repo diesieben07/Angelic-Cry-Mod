@@ -22,12 +22,6 @@ public class ItemSummoner extends ItemCryMod {
 	}
 
 	@Override
-	public boolean getShareTag() {
-		// true because we need the tag to store the inventory
-		return true;
-	}
-
-	@Override
 	public ItemStack onItemRightClick(ItemStack itemStack, World world, EntityPlayer player) {
 		if (!world.isRemote) {
 			GuiType guiType = Type.fromItemDamage(itemStack).guiType;
@@ -50,8 +44,9 @@ public class ItemSummoner extends ItemCryMod {
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void getSubItems(int itemId, CreativeTabs creativeTab, List itemList) {
-		itemList.add(new ItemStack(this, 1, 0));
-		itemList.add(new ItemStack(this, 1, 1));
+		for (Type type : Type.values()) {
+			itemList.add(new ItemStack(this, 1, type.getItemDamage()));
+		}
 	}
 	
 	public static enum Type {
@@ -68,11 +63,15 @@ public class ItemSummoner extends ItemCryMod {
 		}
 		
 		public static Type fromItemDamage(int damage) {
-			return damage == 0 ? SUMMONING_BOOK : EVIL_TABLET;
+			return damage == 0 || damage >= values().length ? SUMMONING_BOOK : values()[damage];
 		}
 		
 		public static Type fromItemDamage(ItemStack stack) {
 			return fromItemDamage(stack.getItemDamage());
+		}
+		
+		public int getItemDamage() {
+			return ordinal();
 		}
 		
 		public PacketClientEffect.Type getEffectType() {
