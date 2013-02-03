@@ -5,10 +5,6 @@ import java.util.List;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.util.StringTranslate;
-
-import org.lwjgl.input.Keyboard;
-
-import demonmodders.crymod.common.Crymod;
 import demonmodders.crymod.common.UpdateChecker;
 import demonmodders.crymod.common.UpdateChecker.UpdateStatus;
 import demonmodders.crymod.common.UpdateChecker.UpdateStatusHandler;
@@ -28,7 +24,7 @@ public abstract class GuiUpdates extends GuiScreen implements UpdateStatusHandle
 	
 	private GuiButton buttonUpdate = null;
 	private GuiButton buttonRecheck = null;
-
+	
 	@Override
 	protected void actionPerformed(GuiButton button) {
 		switch (button.id) {
@@ -70,6 +66,7 @@ public abstract class GuiUpdates extends GuiScreen implements UpdateStatusHandle
 		currentUpdateInformation = updateInfo;
 		updateButtons();
 	}
+
 
 	@Override
 	public void initGui() {

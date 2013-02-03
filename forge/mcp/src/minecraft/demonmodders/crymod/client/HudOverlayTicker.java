@@ -13,8 +13,7 @@ import org.lwjgl.opengl.GL11;
 import cpw.mods.fml.client.FMLClientHandler;
 import cpw.mods.fml.common.ITickHandler;
 import cpw.mods.fml.common.TickType;
-import demonmodders.crymod.common.karma.PlayerKarma;
-import demonmodders.crymod.common.playerinfo.PlayerInfo;
+import demonmodders.crymod.common.playerinfo.PlayerInformation;
 
 public class HudOverlayTicker extends Gui implements ITickHandler {
 
@@ -26,16 +25,7 @@ public class HudOverlayTicker extends Gui implements ITickHandler {
 		return instance;
 	}
 	
-	private int tickCountdown = 0;
-	private final Object lock = new Object();
-	
 	private final Minecraft mc = FMLClientHandler.instance().getClient();
-	
-	private PlayerInfo clientPlayerInfo = null;
-	
-	public void setClientPlayerInfo(PlayerInfo info) {
-		clientPlayerInfo = info;
-	}
 	
 	@Override
 	public void tickStart(EnumSet<TickType> type, Object... tickData) {	}
@@ -48,18 +38,19 @@ public class HudOverlayTicker extends Gui implements ITickHandler {
 		mc.entityRenderer.setupOverlayRendering();
 		GL11.glColor3f(1, 1, 1);
         
-		if (type.contains(TickType.RENDER) && mc.theWorld != null && clientPlayerInfo != null && (mc.currentScreen == null || mc.currentScreen instanceof GuiChat)) {
+		if (type.contains(TickType.RENDER) && mc.thePlayer != null && (mc.currentScreen == null || mc.currentScreen instanceof GuiChat)) {
+			PlayerInformation clientPlayerInfo = PlayerInformation.forPlayer(mc.thePlayer);
 			GL11.glBindTexture(GL11.GL_TEXTURE_2D, mc.renderEngine.getTexture("/demonmodders/crymod/resource/tex/gui.png"));
 			int barXStart = width / 2 - 182 / 2;
 			
 			// background of the bar
 			drawTexturedModalRect(barXStart, 10, 0, 0, 182, 5);
 
-			float karma = clientPlayerInfo.getKarma().getKarma();
+			float karma = clientPlayerInfo.getKarma();
 			
 			// the bar itself render
 			if (karma != 0) {
-				int rescaledKarmaWidth = (int)(Math.abs(karma) / (float)PlayerKarma.MAX_KARMA_VALUE * (float)91);
+				int rescaledKarmaWidth = (int)(Math.abs(karma) / (float)PlayerInformation.MAX_KARMA_VALUE * 91F);
 				if (rescaledKarmaWidth > 91) {
 					rescaledKarmaWidth = 91;
 				}
@@ -71,10 +62,10 @@ public class HudOverlayTicker extends Gui implements ITickHandler {
 			
 			String karmaString = String.valueOf((int)karma);
 			
-			int xPos = width / 2 - mc.fontRenderer.getStringWidth(karmaString) / 2;
+			FontRenderer fr = mc.fontRenderer;
+			int xPos = width / 2 - fr.getStringWidth(karmaString) / 2;
 			int yPos = 2;
 			
-			FontRenderer fr = mc.fontRenderer;
 			fr.drawString(karmaString, xPos + 1, yPos, 0x000000);
 			fr.drawString(karmaString, xPos - 1, yPos, 0x000000);
 			fr.drawString(karmaString, xPos, yPos + 1, 0x000000);
@@ -87,10 +78,6 @@ public class HudOverlayTicker extends Gui implements ITickHandler {
 			}
 			
 			fr.drawString(String.valueOf(clientPlayerInfo.getFlyTime()), 10, 10, 0xffffff);
-			
-			if (mc.getIntegratedServer() != null && mc.getIntegratedServer().serverIsInRunLoop() && tickCountdown-- <= 0) {
-				
-			}
 		}
 	}
 

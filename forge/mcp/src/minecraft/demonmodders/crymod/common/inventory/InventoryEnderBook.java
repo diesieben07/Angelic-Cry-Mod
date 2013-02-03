@@ -3,7 +3,7 @@ package demonmodders.crymod.common.inventory;
 import java.util.ArrayList;
 import java.util.List;
 
-import demonmodders.crymod.common.playerinfo.PlayerInfo;
+import demonmodders.crymod.common.CrymodUtils;
 import demonmodders.crymod.common.recipes.SummoningRecipe;
 
 import net.minecraft.entity.player.EntityPlayer;
@@ -17,6 +17,7 @@ import net.minecraft.nbt.NBTTagList;
 public class InventoryEnderBook extends AbstractInventory {
 
 	private final EntityPlayer player;
+	private byte[] knownRecipes = new byte[0];
 	
 	public InventoryEnderBook(EntityPlayer player) {
 		super(true);
@@ -40,21 +41,5 @@ public class InventoryEnderBook extends AbstractInventory {
 	@Override
 	public boolean isUseableByPlayer(EntityPlayer player) {
 		return player == this.player;
-	}
-	
-	public static byte[] getKnownRecipes(EntityPlayer player) {
-		return PlayerInfo.getModEntityData(player).getByteArray("enderBook");
-	}
-	
-	public static void setKnownRecipes(EntityPlayer player, byte[] recipes) {
-		PlayerInfo.getModEntityData(player).setByteArray("enderBook", recipes);
-	}
-	
-	public byte[] getKnownRecipes() {
-		return getKnownRecipes(player);
-	}
-	
-	public void setKnownRecipes(byte[] recipes) {
-		setKnownRecipes(player, recipes);
 	}
 }

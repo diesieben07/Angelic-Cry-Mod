@@ -11,6 +11,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
 import cpw.mods.fml.common.registry.GameRegistry;
 import demonmodders.crymod.common.Crymod;
+import demonmodders.crymod.common.CrymodUtils;
 import demonmodders.crymod.common.tileentities.TileEntityInventory;
 
 public class BlockCryMod extends Block {
@@ -30,7 +31,7 @@ public class BlockCryMod extends Block {
 	public BlockCryMod(String blockName, int defaultId, int texture, Material material) {
 		super(Crymod.conf.getBlock(blockName + "Id", defaultId).getInt(), texture, material);
 		setBlockName("crymod_" + blockName);
-		setTextureFile(Crymod.TEXTURE_FILE);
+		setTextureFile(CrymodUtils.TEXTURE_FILE);
 		setCreativeTab(CreativeTabs.tabMisc);
 		GameRegistry.registerBlock(this, blockName);
 	}

@@ -40,7 +40,6 @@ public class BlockEnderBook extends BlockCryMod {
 	public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float par7, float par8, float par9) {
 		if (!world.isRemote) {
 			player.openGui(Crymod.instance, GuiType.ENDER_BOOK.getGuiId(), world, x, y, z);
-			((ContainerEnderBook)player.openContainer).setActivePage(0);
 		}
 		return true;
 	}

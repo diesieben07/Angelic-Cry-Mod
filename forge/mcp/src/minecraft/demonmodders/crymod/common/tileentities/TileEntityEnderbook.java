@@ -1,6 +1,5 @@
 package demonmodders.crymod.common.tileentities;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
@@ -8,11 +7,11 @@ import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.AxisAlignedBB;
-import demonmodders.crymod.common.inventory.InventoryEnderBook;
+import demonmodders.crymod.common.CrymodUtils;
 import demonmodders.crymod.common.items.ItemCryMod;
 import demonmodders.crymod.common.network.PacketClientEffect;
 import demonmodders.crymod.common.network.PacketClientEffect.Type;
-import demonmodders.crymod.common.playerinfo.PlayerInfo;
+import demonmodders.crymod.common.playerinfo.PlayerInformation;
 import demonmodders.crymod.common.recipes.SummoningRecipe;
 
 public class TileEntityEnderbook extends TileEntity {
@@ -44,23 +43,17 @@ public class TileEntityEnderbook extends TileEntity {
 		List<EntityItem> itemsNearby = worldObj.getEntitiesWithinAABB(EntityItem.class, checkBB);
 		for (EntityItem item : itemsNearby) {
 			if (item.func_92014_d().itemID == ItemCryMod.recipePage.itemID) {
-				String ownerName = PlayerInfo.getModEntityData(item).getString("tossedBy");
+				String ownerName = CrymodUtils.getEntityData(item).getString("tossedBy");
 				EntityPlayer owner = worldObj.getPlayerEntityByName(ownerName);
 				SummoningRecipe recipe = SummoningRecipe.fromDamage(item.func_92014_d());
 				if (owner != null && recipe != null) {
-					byte[] knownRecipes = InventoryEnderBook.getKnownRecipes(owner);
-					for (byte recipeId : knownRecipes) {
-						if (recipeId == recipe.id()) {
-							return;
-						}
+					PlayerInformation info = PlayerInformation.forPlayer(owner);
+					if (!info.hasEnderBookRecipe(recipe.id())) {
+						new PacketClientEffect(Type.ENDERBOOK, xCoord, yCoord, zCoord).sendToAllNear(this, 8);
+						
+						info.addEnderBookRecipe(recipe.id());
 					}
 					item.setDead();
-					
-					new PacketClientEffect(Type.ENDERBOOK, xCoord, yCoord, zCoord).sendToAllNear(this, 8);
-					
-					byte[] newRecipeList = Arrays.copyOf(knownRecipes, knownRecipes.length + 1);
-					newRecipeList[knownRecipes.length] = recipe.id();
-					InventoryEnderBook.setKnownRecipes(owner, newRecipeList);
 				}
 			}
 		}

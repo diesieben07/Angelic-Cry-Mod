@@ -1,27 +1,32 @@
 package demonmodders.crymod.common.recipes;
 
+import static demonmodders.crymod.common.items.CrystalType.*;
+
 import java.util.List;
 
+import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.passive.EntitySheep;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import demonmodders.crymod.common.entities.EntityHeavenZombie;
 import demonmodders.crymod.common.entities.EntityHellZombie;
-import demonmodders.crymod.common.entities.SummonableBase;
+import demonmodders.crymod.common.gui.ContainerSummoner;
 import demonmodders.crymod.common.inventory.AbstractInventory;
 import demonmodders.crymod.common.items.CrystalType;
-import demonmodders.crymod.common.items.ItemCryMod;
+import demonmodders.crymod.common.items.ItemCrystal;
+import demonmodders.crymod.common.items.ItemSummoner;
+import demonmodders.crymod.common.items.ItemSummoner.Type;
+import demonmodders.crymod.common.playerinfo.PlayerInformation;
 
-import static demonmodders.crymod.common.items.CrystalType.*;
-
-public class SummoningRecipe extends AbstractInventory {
+public abstract class SummoningRecipe extends AbstractInventory {
 	
-	private final Class<? extends SummonableBase> demon;
-	private final String demonName;
 	private final int id;
 	
-	private boolean isAngel = false;
+	private float minKarma = 0;
+	private float maxKarma = 0;
+	protected ItemSummoner.Type summonerType = Type.SUMMONING_BOOK;
 	
-	public SummoningRecipe(int id, Class<? extends SummonableBase> demon, String demonName, CrystalType... crystals) {
+	public SummoningRecipe(int id, CrystalType... crystals) {
 		super(true);
 		this.id = id;
 		
@@ -33,18 +38,20 @@ public class SummoningRecipe extends AbstractInventory {
 			stacks[i] = crystals[i].generateItemStack();
 		}
 		
-		this.demon = demon;
-		this.demonName = demonName;
 		recipes[id] = this;
 	}
 	
-	public boolean matches(List<ItemStack> checkStacks) {
-		if (checkStacks.size() != getSizeInventory()) {
+	public boolean matches(List<ItemStack> checkStacks, ContainerSummoner container) {
+		if (checkStacks.size() != getSizeInventory() || container.getInventoryInstance().getType() != summonerType) {
 			return false;
 		} else {
-			
 			for (int i = 0; i < getSizeInventory(); i++) {
-				if (!ItemStack.areItemStacksEqual(stacks[i], checkStacks.get(i))) {
+				ItemStack given = checkStacks.get(i);
+				if (given == null && stacks[i] == null) {
+					return true;
+				}
+				
+				if (given == null || given.itemID != stacks[i].itemID || given.getItemDamage() != stacks[i].getItemDamage() || ItemCrystal.getCharge(given) == 0) {
 					return false;
 				}
 			}
@@ -52,26 +59,49 @@ public class SummoningRecipe extends AbstractInventory {
 		}
 	}
 	
-	final SummoningRecipe setAngel() {
-		isAngel = true;
+	public boolean canSummon(EntityPlayer player) {
+		if (maxKarma == 0 && minKarma == 0) {
+			return true;
+		} else {
+			float karma = PlayerInformation.forPlayer(player).getKarma();
+			return maxKarma != 0 ? karma < maxKarma : karma > minKarma;
+		}
+	}
+	
+	final SummoningRecipe setMinKarma(float minKarma) {
+		this.minKarma = minKarma;
 		return this;
 	}
 	
-	public Class<? extends SummonableBase> getDemon() {
-		return demon;
+	final SummoningRecipe setMaxKarma(float maxKarma) {
+		this.maxKarma = maxKarma;
+		return this;
 	}
 	
-	public final boolean isAngel() {
-		return isAngel;
+	public final ItemSummoner.Type getSummonerType() {
+		return summonerType;
 	}
 	
-	public String getDemonName() {
-		return demonName;
+	final SummoningRecipe setSummonerType(ItemSummoner.Type type) {
+		summonerType = type;
+		return this;
+	}
+	
+	public int getColor() {
+		return 0xffffff;
+	}
+	
+	public String getChatColorCode() {
+		return "f";
 	}
 	
 	public final byte id() {
 		return (byte)id;
 	}
+	
+	public abstract EntityLiving summon(EntityPlayer player, ContainerSummoner container);
+	
+	public abstract String getRecipeName();
 	
 	@Override
 	public int getSizeInventory() {
@@ -90,12 +120,18 @@ public class SummoningRecipe extends AbstractInventory {
 	
 	public static SummoningRecipe[] recipes = new SummoningRecipe[16];
 	
-	public static final SummoningRecipe HEAVEN_ZOMBIE = new SummoningRecipe(0, EntityHeavenZombie.class, "Heaven Zombie", 
-			BLUE, BLUE, BLUE, BLUE, BLUE, BLUE, BLUE, BLUE, BLUE 
-			).setAngel();
-	public static final SummoningRecipe HELL_ZOMBIE = new SummoningRecipe(1, EntityHellZombie.class, "Hell Zombie",
-			RED, RED, RED, RED, RED, RED, RED, RED, RED			
-			);
+	public static final SummoningRecipe HEAVEN_ZOMBIE = new SummoningRecipeDemonAngel(
+			0, EntityHeavenZombie.class, "Heaven Zombie", BLUE, BLUE, BLUE,
+			BLUE, BLUE, BLUE, BLUE, BLUE, BLUE).setSummonerType(
+			Type.SUMMONING_BOOK).setMinKarma(5);
+	public static final SummoningRecipe HELL_ZOMBIE = new SummoningRecipeDemonAngel(
+			1, EntityHellZombie.class, "Hell Zombie", RED, RED, RED, RED, RED,
+			RED, RED, RED, RED).setMaxKarma(-5).setSummonerType(
+			Type.EVIL_TABLET);
+
+	public static final SummoningRecipe SHEEP = new SummoningRecipeAnimals(2,
+			EntitySheep.class, GREEN, GREEN, GREEN, GREEN, GREEN, GREEN, GREEN,
+			GREEN, GREEN).setSummonerType(Type.SUMMONING_BOOK);
 
 	public static SummoningRecipe fromDamage(ItemStack stack) {
 		return byId(stack.getItemDamage());
@@ -105,9 +141,9 @@ public class SummoningRecipe extends AbstractInventory {
 		return id < recipes.length && id >= 0 ? recipes[id] : null;
 	}
 	
-	public static SummoningRecipe findMatchingRecipe(List<ItemStack> pattern) {
+	public static SummoningRecipe findMatchingRecipe(List<ItemStack> pattern, ContainerSummoner container) {
 		for (SummoningRecipe recipe : recipes) {
-			if (recipe != null && recipe.matches(pattern)) {
+			if (recipe != null && recipe.matches(pattern, container)) {
 				return recipe;
 			}
 		}

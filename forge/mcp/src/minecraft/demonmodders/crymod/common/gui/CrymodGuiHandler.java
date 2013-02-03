@@ -6,7 +6,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.world.World;
 import cpw.mods.fml.common.network.IGuiHandler;
-import demonmodders.crymod.common.entities.SummonableBase;
+import demonmodders.crymod.common.entities.EntitySummonable;
 import demonmodders.crymod.common.inventory.InventoryCrystalBag;
 import demonmodders.crymod.common.inventory.InventoryEnderBook;
 import demonmodders.crymod.common.inventory.InventorySummoner;
@@ -32,8 +32,8 @@ public class CrymodGuiHandler implements IGuiHandler {
 			return new ContainerRecipePage(SummoningRecipe.fromDamage(player.getCurrentEquippedItem()));
 		case SUMMONED_ENTITY:
 			Entity entity = world.getEntityByID(x);
-			if (entity != null && entity instanceof SummonableBase) {
-				return new ContainerEntityInfo((SummonableBase)entity, player);
+			if (entity != null && entity instanceof EntitySummonable) {
+				return new ContainerEntityInfo((EntitySummonable)entity, player);
 			} else {
 				return null;
 			}

@@ -1,16 +1,11 @@
 package demonmodders.crymod.common;
 
-import static demonmodders.crymod.common.Crymod.color;
-import static demonmodders.crymod.common.Crymod.getChatMessage;
-
 import java.io.File;
 import java.util.List;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
-import net.minecraft.network.packet.Packet;
 import net.minecraft.server.MinecraftServer;
-import net.minecraft.server.management.ServerConfigurationManager;
 import net.minecraft.world.World;
 import cpw.mods.fml.common.IPlayerTracker;
 import cpw.mods.fml.common.registry.GameRegistry;
@@ -18,9 +13,7 @@ import demonmodders.crymod.common.UpdateChecker.UpdateStatus;
 import demonmodders.crymod.common.UpdateChecker.UpdateStatusHandler;
 import demonmodders.crymod.common.network.PacketClientAction;
 import demonmodders.crymod.common.network.PacketClientEffect;
-import demonmodders.crymod.common.network.PacketEnderBookRecipe;
 import demonmodders.crymod.common.network.PacketUpdateInformation;
-import demonmodders.crymod.common.playerinfo.PlayerInfo;
 
 public class ServerProxy implements CrymodProxy, IPlayerTracker, UpdateStatusHandler {
 	
@@ -52,17 +45,7 @@ public class ServerProxy implements CrymodProxy, IPlayerTracker, UpdateStatusHan
 	}
 	
 	@Override
-	public void setClientPlayerInfo(PlayerInfo info) {
-		// NO OP on server
-	}
-
-	@Override
 	public void handleClientEffect(PacketClientEffect clientEffect) {
-		// NO OP on server
-	}
-	
-	@Override
-	public void handleEnderBookRecipe(PacketEnderBookRecipe demonName) {
 		// NO OP on server
 	}
 	
@@ -75,7 +58,7 @@ public class ServerProxy implements CrymodProxy, IPlayerTracker, UpdateStatusHan
 	public void onPlayerLogin(EntityPlayer player) {
 		if (MinecraftServer.getServer().getConfigurationManager().getOps().contains(player.username.toLowerCase())) {
 			Crymod.updater.startIfNotRunning();
-			player.sendChatToPlayer(getChatMessage("Use " + color("/summoners update", "6", "f") +  " to check for updates."));
+			player.sendChatToPlayer(CrymodUtils.getChatMessage("Use " + CrymodUtils.color("/summoners update", "6", "f") +  " to check for updates."));
 		}
 	}
 	

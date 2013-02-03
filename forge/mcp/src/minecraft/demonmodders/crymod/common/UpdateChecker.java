@@ -12,7 +12,6 @@ import java.net.JarURLConnection;
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.net.URL;
-import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -203,7 +202,6 @@ public class UpdateChecker implements Runnable {
 			File target;
 			try {
 				target = File.createTempFile("summoningmod", ".jar");
-				target.deleteOnExit();
 				InputStream in = source.openStream();
 				OutputStream out = new FileOutputStream(target);
 				
@@ -211,7 +209,6 @@ public class UpdateChecker implements Runnable {
 				
 				out.close();
 				in.close();
-				
 			} catch (IOException e) {
 				postStatus(UpdateStatus.DOWNLOAD_FAILED);
 				return;
@@ -233,6 +230,7 @@ public class UpdateChecker implements Runnable {
 					
 					out.close();
 					in.close();
+					target.delete();
 					postStatus(UpdateStatus.COMPLETE);
 				} else {
 					postStatus(UpdateStatus.CANT_INSTALL);

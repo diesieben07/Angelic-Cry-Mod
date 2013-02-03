@@ -6,6 +6,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import cpw.mods.fml.common.registry.GameRegistry;
 import demonmodders.crymod.common.Crymod;
+import demonmodders.crymod.common.CrymodUtils;
 
 public class ItemCryMod extends Item {
 
@@ -32,7 +33,7 @@ public class ItemCryMod extends Item {
 	}
 
 	public static void initCrymodItem(Item item, String itemName) {
-		item.setTextureFile(Crymod.TEXTURE_FILE);
+		item.setTextureFile(CrymodUtils.TEXTURE_FILE);
 		item.setCreativeTab(CreativeTabs.tabMisc);
 		item.setItemName("crymod_" + itemName);
 		GameRegistry.registerItem(item, itemName);

@@ -1,7 +1,5 @@
 package demonmodders.crymod.common.karma;
 
-import java.util.EnumSet;
-
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.player.EntityPlayer;
@@ -16,13 +14,9 @@ import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.living.LivingFallEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.living.LivingSetAttackTargetEvent;
-import cpw.mods.fml.common.IScheduledTickHandler;
-import cpw.mods.fml.common.TickType;
-import cpw.mods.fml.common.registry.TickRegistry;
-import cpw.mods.fml.relauncher.Side;
-import demonmodders.crymod.common.playerinfo.PlayerInfo;
+import demonmodders.crymod.common.playerinfo.PlayerInformation;
 
-public class PlayerPowersHandler implements IScheduledTickHandler {
+public class PlayerPowersHandler {
 	
 	private static final PlayerPowersHandler instance = new PlayerPowersHandler();
 	
@@ -32,9 +26,15 @@ public class PlayerPowersHandler implements IScheduledTickHandler {
 	
 	private PlayerPowersHandler() {}
 	
+	public static final int TICKS_PER_SECOND = 20;
+	public static final int FLYING_TIME = 30 * TICKS_PER_SECOND;
+	public static final int FLYING_COOLDOWN = 100 * TICKS_PER_SECOND;
+	
+	public static final int INVISIBILITY_TIME = 30 * TICKS_PER_SECOND;
+	public static final int INVISIBILITY_COOLDOWN = 130 * TICKS_PER_SECOND;
+	
 	public static void init() {
 		MinecraftForge.EVENT_BUS.register(instance);
-		TickRegistry.registerScheduledTickHandler(instance, Side.SERVER);
 	}
 	
 	@ForgeSubscribe
@@ -71,95 +71,19 @@ public class PlayerPowersHandler implements IScheduledTickHandler {
 	}
 	
 	private boolean ensureMinKarma(Entity ent, int minKarma) {
-		return PlayerInfo.forPlayer((EntityPlayer)ent).getKarma().getKarma() >= minKarma;
+		return PlayerInformation.forPlayer((EntityPlayer)ent).getKarma() >= minKarma;
 	}
 	
 	private boolean ensureMaxKarma(Entity ent, int maxKarma) {
-		return PlayerInfo.forPlayer((EntityPlayer)ent).getKarma().getKarma() <= maxKarma;
+		return PlayerInformation.forPlayer((EntityPlayer)ent).getKarma() <= maxKarma;
 	}
 	
 	public void onPlayerInvisibilityRequest(EntityPlayer player) {
-		PlayerInfo info = PlayerInfo.forPlayer(player);
+		PlayerInformation info = PlayerInformation.forPlayer(player);
 		int cooldown = info.getInvisibilityCooldown();
-		if (cooldown == 0 && info.getKarma().getKarma() <= -50) {
+		if (cooldown == 0 && info.getKarma() <= -50) {
 			info.setInvisibilityCooldown(INVISIBILITY_COOLDOWN);
 			player.addPotionEffect(new PotionEffect(Potion.invisibility.id, INVISIBILITY_TIME));
 		}
-	}
-	
-	private static final int TICKS_PER_SECOND = 20;
-	private static final int FLYING_TIME = 30;
-	private static final int FLYING_COOLDOWN = 100;
-	
-	private static final int INVISIBILITY_TIME = 30 * TICKS_PER_SECOND;
-	private static final int INVISIBILITY_COOLDOWN = 130;
-	
-	@Override
-	public void tickStart(EnumSet<TickType> type, Object... tickData) {		
-		EntityPlayer player = (EntityPlayer)tickData[0];
-		PlayerInfo info = PlayerInfo.forPlayer(player);
-		
-		int invisCooldown = info.getInvisibilityCooldown();
-		if (invisCooldown > 0) {
-			invisCooldown--;
-		}
-		
-		info.setInvisibilityCooldown(invisCooldown);
-		
-		int flyTime = info.getFlyTime();
-		
-		if (player.capabilities.isCreativeMode) {
-			info.setFlyTime(0);
-			return;
-		} else if (info.getKarma().getKarma() < 50) {
-			info.setFlyTime(-1);
-			if (player.capabilities.allowFlying) {
-				player.capabilities.isFlying = player.capabilities.allowFlying = false;
-				player.sendPlayerAbilities();
-			}
-			return;
-		}
-		
-		boolean mayFlyPrev = player.capabilities.allowFlying;
-		boolean isFlyingPrev = player.capabilities.isFlying;		
-		
-		if (!player.capabilities.allowFlying) {
-			player.capabilities.isFlying = false;
-		}
-		
-		if (player.capabilities.isFlying || flyTime != 0) {
-			flyTime++;
-		}
-		
-		if (flyTime >= FLYING_TIME) {
-			flyTime = -FLYING_COOLDOWN;
-		}
-		
-		player.capabilities.allowFlying = flyTime >= 0;
-		
-		if (player.capabilities.allowFlying != mayFlyPrev || player.capabilities.isFlying != isFlyingPrev) {
-			player.sendPlayerAbilities();
-		}
-		info.setFlyTime(flyTime);
-	}
-
-	@Override
-	public void tickEnd(EnumSet<TickType> type, Object... tickData) {
-		PlayerInfo.forPlayer((EntityPlayer) tickData[0]).onUpdate();
-	}
-
-	@Override
-	public EnumSet<TickType> ticks() {
-		return EnumSet.of(TickType.PLAYER);
-	}
-
-	@Override
-	public String getLabel() {
-		return "SummoningmodPlayerPowers";
-	}
-
-	@Override
-	public int nextTickSpacing() {
-		return TICKS_PER_SECOND;
 	}
 }

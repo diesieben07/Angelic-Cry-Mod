@@ -40,12 +40,11 @@ public abstract class CrymodPacket {
 		addMapping(1, PacketPlayerInfo.class);
 		addMapping(2, PacketClientRequest.class);
 		addMapping(3, PacketClientEffect.class);
-		addMapping(4, PacketEnderBookRecipe.class);
-		addMapping(5, PacketHealthUpdate.class);
-		addMapping(6, PacketRenameEntity.class);
-		addMapping(7, PacketNameUpdate.class);
-		addMapping(8, PacketUpdateInformation.class);
-		addMapping(9, PacketClientAction.class);
+		addMapping(4, PacketHealthUpdate.class);
+		addMapping(5, PacketRenameEntity.class);
+		addMapping(6, PacketNameUpdate.class);
+		addMapping(7, PacketUpdateInformation.class);
+		addMapping(8, PacketClientAction.class);
 	}
 	
 	public final Packet generatePacket() {

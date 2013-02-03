@@ -5,11 +5,11 @@ import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
-import demonmodders.crymod.common.inventory.SlotForItem;
-import demonmodders.crymod.common.inventory.SlotMagiciser;
-import demonmodders.crymod.common.inventory.SlotMagiciserResult;
 import demonmodders.crymod.common.items.CrystalType;
 import demonmodders.crymod.common.items.ItemCryMod;
+import demonmodders.crymod.common.slots.SlotForItem;
+import demonmodders.crymod.common.slots.SlotMagiciser;
+import demonmodders.crymod.common.slots.SlotMagiciserResult;
 import demonmodders.crymod.common.tileentities.TileEntityMagiciser;
 
 public class ContainerMagiciser extends AbstractContainer<TileEntityMagiciser> {

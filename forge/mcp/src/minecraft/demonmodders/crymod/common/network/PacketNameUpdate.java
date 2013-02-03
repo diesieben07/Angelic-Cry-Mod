@@ -7,7 +7,7 @@ import net.minecraft.entity.player.EntityPlayerMP;
 import com.google.common.io.ByteArrayDataInput;
 import com.google.common.io.ByteArrayDataOutput;
 
-import demonmodders.crymod.common.entities.SummonableBase;
+import demonmodders.crymod.common.entities.EntitySummonable;
 
 public class PacketNameUpdate extends CrymodPacket {
 
@@ -39,8 +39,8 @@ public class PacketNameUpdate extends CrymodPacket {
 			return;
 		}
 		Entity target = player.worldObj.getEntityByID(entityId);
-		if (target != null && target instanceof SummonableBase) {
-			((SummonableBase)target).setName(newName);
+		if (target != null && target instanceof EntitySummonable) {
+			((EntitySummonable)target).setName(newName);
 		}
 	}
 }

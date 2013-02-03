@@ -12,7 +12,6 @@ import net.minecraftforge.event.world.ChunkEvent;
 import net.minecraftforge.event.world.WorldEvent;
 import cpw.mods.fml.relauncher.ReflectionHelper;
 import demonmodders.crymod.common.items.ItemCryMod;
-import demonmodders.crymod.common.playerinfo.PlayerInfo;
 import demonmodders.crymod.common.worldgen.StructurePosition;
 
 public class EventHandler {
@@ -20,7 +19,7 @@ public class EventHandler {
 	@ForgeSubscribe
 	public void onItemToss(ItemTossEvent evt) {
 		if (evt.entityItem.func_92014_d().itemID == ItemCryMod.recipePage.itemID) {
-			PlayerInfo.getModEntityData(evt.entityItem).setString("tossedBy", evt.player.username);
+			CrymodUtils.getEntityData(evt.entityItem).setString("tossedBy", evt.player.username);
 		}
 	}
 	
@@ -45,9 +44,7 @@ public class EventHandler {
 	public void onWorldUnload(WorldEvent.Unload evt) {
 		if (evt.world instanceof WorldServer) {
 			WorldServer world = (WorldServer)evt.world;
-			int i = 0;
 			for (Chunk chunk : ReflectionHelper.<List<Chunk>,ChunkProviderServer>getPrivateValue(ChunkProviderServer.class, world.theChunkProviderServer, 6)) {
-				i++;
 				StructurePosition.unloadChunkStructures(chunk);
 			}
 		}

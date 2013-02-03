@@ -7,16 +7,16 @@ import demonmodders.crymod.common.items.ItemSummoner;
 
 public class InventorySummoner extends InventoryItemStack {
 
-	private final boolean showAngels;
+	private final ItemSummoner.Type type;
 	
 	public InventorySummoner(ItemStack theStack, EntityPlayer player) {
 		super(theStack, player);
-		showAngels = ItemSummoner.Type.fromItemDamage(theStack).showsAngels();
+		type = ItemSummoner.Type.fromItemDamage(theStack);
 		initStorage();
 	}
 
-	public boolean getShowAngels() {
-		return showAngels;
+	public ItemSummoner.Type getType() {
+		return type;
 	}
 	
 	@Override

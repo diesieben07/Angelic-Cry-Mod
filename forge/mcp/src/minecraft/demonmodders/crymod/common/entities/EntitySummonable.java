@@ -16,7 +16,7 @@ import demonmodders.crymod.common.gui.GuiType;
 import demonmodders.crymod.common.network.PacketHealthUpdate;
 import demonmodders.crymod.common.network.PacketNameUpdate;
 
-public abstract class SummonableBase extends EntityCreature implements IEntityAdditionalSpawnData {
+public abstract class EntitySummonable extends EntityCreature implements IEntityAdditionalSpawnData {
 
 	private static final String[]  RANDOM_NAMES = new String[] {
 		"Name 1", "Name 2", "Name 3"
@@ -32,7 +32,7 @@ public abstract class SummonableBase extends EntityCreature implements IEntityAd
 	private int power;
 	private int control;
 	
-	public SummonableBase(World world) {
+	public EntitySummonable(World world) {
 		super(world);
 	}
 	
@@ -52,7 +52,7 @@ public abstract class SummonableBase extends EntityCreature implements IEntityAd
 		return worldObj.getPlayerEntityByName(owner);
 	}
 	
-	public SummonableBase setOwner(EntityPlayer owner) {
+	public EntitySummonable setOwner(EntityPlayer owner) {
 		this.owner = owner.username;
 		return this;
 	}
@@ -179,4 +179,6 @@ public abstract class SummonableBase extends EntityCreature implements IEntityAd
 			}
 		}
 	}
+	
+	public abstract int getRank();
 }

@@ -3,6 +3,7 @@ package demonmodders.crymod.common.gui;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Slot;
@@ -10,16 +11,14 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Direction;
 import net.minecraft.util.MathHelper;
-import net.minecraft.world.World;
 import cpw.mods.fml.relauncher.Side;
 import demonmodders.crymod.common.Crymod;
-import demonmodders.crymod.common.entities.SummonableBase;
 import demonmodders.crymod.common.inventory.InventorySummoner;
-import demonmodders.crymod.common.inventory.SlotForItem;
-import demonmodders.crymod.common.items.ItemCryMod;
+import demonmodders.crymod.common.items.ItemCrystal;
+import demonmodders.crymod.common.items.ItemSummoner.Type;
 import demonmodders.crymod.common.network.PacketClientEffect;
-import demonmodders.crymod.common.network.PacketClientEffect.Type;
 import demonmodders.crymod.common.recipes.SummoningRecipe;
+import demonmodders.crymod.common.slots.SlotChargedCrystal;
 
 public class ContainerSummoner extends AbstractContainer<InventorySummoner> {
 
@@ -40,7 +39,9 @@ public class ContainerSummoner extends AbstractContainer<InventorySummoner> {
 			addSlotsForPage(i);
 		}		
 		
-		addPlayerInventoryToContainer(inventoryPlayer, 7 + (inventory.getShowAngels() ? 1 : 0), 172 + (inventory.getShowAngels() ? 2 : 0), true);
+		final boolean summoningBook = inventory.getType() == Type.SUMMONING_BOOK;
+		
+		addPlayerInventoryToContainer(inventoryPlayer, 7 + (summoningBook ? 1 : 0), 172 + (summoningBook ? 2 : 0), true);
 		
 		setCurrentPage(0);
 	}
@@ -50,16 +51,15 @@ public class ContainerSummoner extends AbstractContainer<InventorySummoner> {
 		
 		addSlotToContainer(new Slot(inventory, slotNumStart + 0, 80, 33));
 		
-		
-		addSlotToContainer(new SlotForItem(inventory, slotNumStart + 1, 80, 70, ItemCryMod.crystal.itemID));
-		addSlotToContainer(new SlotForItem(inventory, slotNumStart + 2, 58, 79, ItemCryMod.crystal.itemID));
-		addSlotToContainer(new SlotForItem(inventory, slotNumStart + 3, 103, 79, ItemCryMod.crystal.itemID));
-		addSlotToContainer(new SlotForItem(inventory, slotNumStart + 4, 80, 100, ItemCryMod.crystal.itemID));
-		addSlotToContainer(new SlotForItem(inventory, slotNumStart + 5, 38, 100, ItemCryMod.crystal.itemID));
-		addSlotToContainer(new SlotForItem(inventory, slotNumStart + 6, 121, 100, ItemCryMod.crystal.itemID));
-		addSlotToContainer(new SlotForItem(inventory, slotNumStart + 7, 80, 130, ItemCryMod.crystal.itemID));
-		addSlotToContainer(new SlotForItem(inventory, slotNumStart + 8, 58, 121, ItemCryMod.crystal.itemID));
-		addSlotToContainer(new SlotForItem(inventory, slotNumStart + 9, 103, 121, ItemCryMod.crystal.itemID));
+		addSlotToContainer(new SlotChargedCrystal(inventory, slotNumStart + 1, 80, 70));
+		addSlotToContainer(new SlotChargedCrystal(inventory, slotNumStart + 2, 58, 79));
+		addSlotToContainer(new SlotChargedCrystal(inventory, slotNumStart + 3, 103, 79));
+		addSlotToContainer(new SlotChargedCrystal(inventory, slotNumStart + 4, 80, 100));
+		addSlotToContainer(new SlotChargedCrystal(inventory, slotNumStart + 5, 38, 100));
+		addSlotToContainer(new SlotChargedCrystal(inventory, slotNumStart + 6, 121, 100));
+		addSlotToContainer(new SlotChargedCrystal(inventory, slotNumStart + 7, 80, 130));
+		addSlotToContainer(new SlotChargedCrystal(inventory, slotNumStart + 8, 58, 121));
+		addSlotToContainer(new SlotChargedCrystal(inventory, slotNumStart + 9, 103, 121));
 	}
 	
 	public int page() {
@@ -97,8 +97,8 @@ public class ContainerSummoner extends AbstractContainer<InventorySummoner> {
 	}
 	
 	public SummoningRecipe currentMatchingRecipe() {
-		SummoningRecipe recipe = SummoningRecipe.findMatchingRecipe(getRecipeOnPage(currentPage));
-		if (recipe == null || recipe.isAngel() != inventory.getShowAngels()) {
+		SummoningRecipe recipe = SummoningRecipe.findMatchingRecipe(getRecipeOnPage(currentPage), this);
+		if (recipe == null) {
 			return null;
 		} else {
 			return recipe;
@@ -117,21 +117,22 @@ public class ContainerSummoner extends AbstractContainer<InventorySummoner> {
 		case BUTTON_SUMMON:
 			if (side.isServer()) {
 				SummoningRecipe recipe = currentMatchingRecipe();
-				if (recipe != null) {
+				if (recipe != null && recipe.canSummon(player)) {
 					try {
 						player.closeScreen();
-						SummonableBase entity = recipe.getDemon().getConstructor(World.class).newInstance(player.worldObj);
-						entity.setOwner(player);
+						EntityLiving entity = recipe.summon(player, this);
 						
 						int playerFacing = MathHelper.floor_double((player.rotationYaw * 4.0F / 360.0F) + 0.5D) & 3;
 						
 						entity.setPosition(player.posX + Direction.offsetX[playerFacing] * 2, player.posY, player.posZ + Direction.offsetZ[playerFacing] * 2);
 						
+						new PacketClientEffect(recipe.getSummonerType().getEffectType(), entity.posX, entity.posY, entity.posZ).sendToAllNear(entity, 8);
+						
 						entity.initCreature();
 						player.worldObj.spawnEntityInWorld(entity);
-						new PacketClientEffect(recipe.isAngel() ? Type.SUMMON_GOOD : Type.SUMMON_BAD, entity.posX, entity.posY, entity.posZ).sendToAllNear(entity, 8);
+
 					} catch (Exception e) {
-						Crymod.logger.warning("Invalid entity for summoning!");
+						Crymod.logger.warning("Exception during summoning!");
 						e.printStackTrace();
 					}
 				}
@@ -140,6 +141,16 @@ public class ContainerSummoner extends AbstractContainer<InventorySummoner> {
 		}
 	}
 	
+	public void decreaseChargeOnPage(int charge) {
+		int pageStart = currentPage * 10;
+		for (int x = pageStart + 1; x < pageStart + 10; x++) {
+			Slot slot = (Slot)inventorySlots.get(x);
+			if (slot.getHasStack()) {
+				ItemCrystal.decreaseCharge(slot.getStack(), charge);
+			}
+		}
+	}
+
 	@Override
 	public ItemStack transferStackInSlot(EntityPlayer player, int slotId) {
 		Slot slotToTransfer = getSlot(slotId);
@@ -155,7 +166,7 @@ public class ContainerSummoner extends AbstractContainer<InventorySummoner> {
 				return null;
 			}
 		} else { // transfer from inventory
-			if (stackToTransfer.itemID == ItemCryMod.crystal.itemID) { // merge it with one of the crystal slots
+			if (ItemCrystal.getCharge(stackToTransfer) != 0) { // merge it with one of the crystal slots
 				if (!mergeItemStack(stackToTransfer, currentPage * 10 + 1, currentPage * 10 + 10, false)) {
 					return null;
 				}

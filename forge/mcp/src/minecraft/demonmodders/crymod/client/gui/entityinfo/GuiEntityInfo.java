@@ -16,7 +16,7 @@ import org.lwjgl.opengl.GL12;
 import demonmodders.crymod.client.gui.AbstractGuiContainer;
 import demonmodders.crymod.client.gui.GuiButtonImage;
 import demonmodders.crymod.client.render.RenderZombieBase;
-import demonmodders.crymod.common.entities.SummonableBase;
+import demonmodders.crymod.common.entities.EntitySummonable;
 import demonmodders.crymod.common.gui.ContainerEntityInfo;
 import demonmodders.crymod.common.inventory.InventorySummonable;
 import demonmodders.crymod.common.network.PacketRenameEntity;
@@ -59,7 +59,7 @@ public class GuiEntityInfo extends AbstractGuiContainer<ContainerEntityInfo, Inv
 	protected void drawGuiContainerBackgroundLayer(float var1, int var2, int var3) {
 		super.drawGuiContainerBackgroundLayer(var1, var2, var3);
 			
-		SummonableBase entity = container.getEntity();
+		EntitySummonable entity = container.getEntity();
 	
 		// Draw the Entity Model
 		int par1 = guiLeft + 195;

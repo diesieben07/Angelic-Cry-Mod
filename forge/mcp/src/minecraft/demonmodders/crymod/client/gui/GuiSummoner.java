@@ -25,7 +25,7 @@ public class GuiSummoner extends AbstractGuiContainer<ContainerSummoner, Invento
 	private static final int HEADING_TEXT_FIELD_Y_POSITION = 17;
 	
 	private final String texture;
-	private String demonName = "";
+	private String recipeName = "";
 	
 	public GuiSummoner(String texture, ContainerSummoner container) {
 		super(container);
@@ -50,15 +50,16 @@ public class GuiSummoner extends AbstractGuiContainer<ContainerSummoner, Invento
 
 	@Override
 	protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
-		int demonNameWidth = fontRenderer.getStringWidth(demonName);
-		fontRenderer.drawString(demonName, HEADING_TEXT_FIELD_X_POSITION, HEADING_TEXT_FIELD_Y_POSITION, 0xffffff);
+		int demonNameWidth = fontRenderer.getStringWidth(recipeName);
+		fontRenderer.drawString(recipeName, HEADING_TEXT_FIELD_X_POSITION, HEADING_TEXT_FIELD_Y_POSITION, 0xffffff);
+		fontRenderer.drawString(String.valueOf(container.page()), width / 2 - BOOK_WIDTH / 2, height / 2 + 3, 0x000050);
 	}
 	
 	@Override
 	protected void actionPerformed(GuiButton button) {
 		super.actionPerformed(button);
 		if (button.id != BUTTON_SUMMON) {
-			updateDemonName();
+			updateRecipeName();
 		}
 	}
 
@@ -69,15 +70,15 @@ public class GuiSummoner extends AbstractGuiContainer<ContainerSummoner, Invento
 
 	@Override
 	public void onInventoryChange() {
-		updateDemonName();
+		updateRecipeName();
 	}
 	
-	private void updateDemonName() {
+	private void updateRecipeName() {
 		SummoningRecipe recipe = container.currentMatchingRecipe();
 		if (recipe != null) {
-			demonName = recipe.getDemonName();
+			recipeName = recipe.getRecipeName();
 		} else {
-			demonName = "";
+			recipeName = "";
 		}
 	}
 }

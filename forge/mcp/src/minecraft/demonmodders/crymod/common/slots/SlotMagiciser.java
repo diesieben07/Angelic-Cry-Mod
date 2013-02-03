@@ -1,4 +1,4 @@
-package demonmodders.crymod.common.inventory;
+package demonmodders.crymod.common.slots;
 
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;

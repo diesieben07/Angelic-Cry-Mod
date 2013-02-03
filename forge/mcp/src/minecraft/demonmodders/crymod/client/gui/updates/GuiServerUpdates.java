@@ -2,7 +2,7 @@ package demonmodders.crymod.client.gui.updates;
 
 import net.minecraft.client.multiplayer.ServerData;
 import net.minecraft.util.StringTranslate;
-import demonmodders.crymod.common.Crymod;
+import demonmodders.crymod.common.CrymodUtils;
 import demonmodders.crymod.common.network.PacketClientRequest;
 import demonmodders.crymod.common.network.PacketClientRequest.Action;
 
@@ -31,7 +31,7 @@ public class GuiServerUpdates extends GuiUpdates {
 	@Override
 	public void initGui() {
 		ServerData server = mc.getServerData();
-		String ip = Crymod.color(server == null ? "Missingno" : server.serverName + " [" + server.serverIP + "]", "2", "f");
+		String ip = CrymodUtils.color(server == null ? "Missingno" : server.serverName + " [" + server.serverIP + "]", "2", "f");
 		headingText = StringTranslate.getInstance().translateKeyFormat("crymod.ui.updates.server", ip);
 		super.initGui();
 	}

@@ -13,7 +13,13 @@ public class CrymodCore implements IFMLLoadingPlugin {
 
 	@Override
 	public String[] getASMTransformerClass() {
-		return new String[] {"demonmodders.crymod.common.core.CrymodTransformer"};
+		return new String[] {
+				"demonmodders.crymod.common.core.transformers.ZombieTransformer",
+				"demonmodders.crymod.common.core.transformers.PlayerTransformer",
+				"demonmodders.crymod.common.core.transformers.EntityAITransformer",
+				"demonmodders.crymod.common.core.transformers.BlockTransformer",
+				"demonmodders.crymod.common.core.transformers.ItemStackTransformer"
+		};
 	}
 
 	@Override

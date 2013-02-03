@@ -5,7 +5,7 @@ import net.minecraft.client.renderer.RenderEngine;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
-import demonmodders.crymod.common.Crymod;
+import demonmodders.crymod.common.CrymodUtils;
 
 public abstract class CrymodEntityFX extends EntityFX {
 
@@ -21,7 +21,7 @@ public abstract class CrymodEntityFX extends EntityFX {
 	
 	@Override
 	public void renderParticle(Tessellator tesselator, float par2, float par3, float par4, float par5, float par6, float par7) {
-		engine.bindTexture(engine.getTexture(Crymod.PARTICLE_TEXTURE_FILE));
+		engine.bindTexture(engine.getTexture(CrymodUtils.PARTICLE_TEXTURE_FILE));
 		super.renderParticle(tesselator, par2, par3, par4, par5, par6, par7);
 	}
 	

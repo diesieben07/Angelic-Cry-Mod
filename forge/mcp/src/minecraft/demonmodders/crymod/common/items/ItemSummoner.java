@@ -10,6 +10,8 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import demonmodders.crymod.common.Crymod;
 import demonmodders.crymod.common.gui.GuiType;
+import demonmodders.crymod.common.network.PacketClientAction;
+import demonmodders.crymod.common.network.PacketClientEffect;
 
 public class ItemSummoner extends ItemCryMod {
 	
@@ -53,14 +55,16 @@ public class ItemSummoner extends ItemCryMod {
 	}
 	
 	public static enum Type {
-		SUMMONING_BOOK(GuiType.SUMMONING_BOOK, 0), EVIL_TABLET(GuiType.EVIL_TABLET, 1);
+		SUMMONING_BOOK(GuiType.SUMMONING_BOOK, 0, PacketClientEffect.Type.SUMMON_GOOD), EVIL_TABLET(GuiType.EVIL_TABLET, 1, PacketClientEffect.Type.SUMMON_BAD);
 		
-		public final GuiType guiType;
-		public final int icon;
+		private final GuiType guiType;
+		private final int icon;
+		private final PacketClientEffect.Type effect;
 		
-		private Type(GuiType guiType, int icon) {
+		private Type(GuiType guiType, int icon, PacketClientEffect.Type effect) {
 			this.guiType = guiType;
 			this.icon = icon;
+			this.effect = effect;
 		}
 		
 		public static Type fromItemDamage(int damage) {
@@ -71,8 +75,8 @@ public class ItemSummoner extends ItemCryMod {
 			return fromItemDamage(stack.getItemDamage());
 		}
 		
-		public boolean showsAngels() {
-			return this == SUMMONING_BOOK;
+		public PacketClientEffect.Type getEffectType() {
+			return effect;
 		}
 	}
 }

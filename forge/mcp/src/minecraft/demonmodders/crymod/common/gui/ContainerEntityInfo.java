@@ -9,11 +9,11 @@ import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
-import demonmodders.crymod.common.entities.SummonableBase;
+import demonmodders.crymod.common.entities.EntitySummonable;
 import demonmodders.crymod.common.inventory.InventorySummonable;
-import demonmodders.crymod.common.inventory.SlotArmor;
-import demonmodders.crymod.common.inventory.SlotNoPickup;
 import demonmodders.crymod.common.items.ItemCryMod;
+import demonmodders.crymod.common.slots.SlotArmor;
+import demonmodders.crymod.common.slots.SlotNoPickup;
 
 public class ContainerEntityInfo extends AbstractContainer<InventorySummonable> {
 
@@ -21,13 +21,13 @@ public class ContainerEntityInfo extends AbstractContainer<InventorySummonable> 
 	public static final int BUTTON_RENAME = 1;
 	public static final int BUTTON_RENAME_DONE = 2;
 	
-	private final SummonableBase entity;
+	private final EntitySummonable entity;
 	private final InventoryPlayer playerInventoryCopy;
 	private final EntityPlayer player;
 	private boolean applyChanges = false;
 	private String newName;
 		
-	public ContainerEntityInfo(SummonableBase entity, EntityPlayer player) {
+	public ContainerEntityInfo(EntitySummonable entity, EntityPlayer player) {
 		super(new InventorySummonable(entity));
 		this.entity = entity;
 		this.player = player;
@@ -51,7 +51,7 @@ public class ContainerEntityInfo extends AbstractContainer<InventorySummonable> 
 		newName = entity.getEntityName();
 	}
 	
-	public SummonableBase getEntity() {
+	public EntitySummonable getEntity() {
 		return entity;
 	}
 	

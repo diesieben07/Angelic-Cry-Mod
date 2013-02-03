@@ -5,8 +5,8 @@ import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import demonmodders.crymod.common.inventory.InventoryCrystalBag;
-import demonmodders.crymod.common.inventory.SlotForItem;
 import demonmodders.crymod.common.items.ItemCryMod;
+import demonmodders.crymod.common.slots.SlotForItem;
 
 public class ContainerCrystalBag extends AbstractContainer<InventoryCrystalBag> {
 

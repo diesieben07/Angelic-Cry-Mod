@@ -1,7 +1,6 @@
 package demonmodders.crymod.common.karma;
 
-import static demonmodders.crymod.common.playerinfo.PlayerInfo.playerKarma;
-import static demonmodders.crymod.common.Crymod.color;
+import static demonmodders.crymod.common.playerinfo.PlayerInformation.forPlayer;
 
 import java.util.Arrays;
 import java.util.List;
@@ -9,7 +8,6 @@ import java.util.List;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockCrops;
 import net.minecraft.entity.EntityAgeable;
-import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.ai.EntityAIMate;
 import net.minecraft.entity.boss.EntityDragon;
 import net.minecraft.entity.monster.EntityCreeper;
@@ -41,12 +39,10 @@ import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.player.BonemealEvent;
 import net.minecraftforge.event.entity.player.EntityInteractEvent;
 import net.minecraftforge.event.entity.player.PlayerDestroyItemEvent;
-import cpw.mods.fml.common.registry.TickRegistry;
 import cpw.mods.fml.relauncher.ReflectionHelper;
-import cpw.mods.fml.relauncher.Side;
-import demonmodders.crymod.common.Crymod;
-import demonmodders.crymod.common.karma.PlayerKarma.CountableKarmaEvent;
-import demonmodders.crymod.common.playerinfo.PlayerInfo;
+import demonmodders.crymod.common.CrymodUtils;
+import demonmodders.crymod.common.playerinfo.PlayerInformation;
+import demonmodders.crymod.common.playerinfo.PlayerInformation.CountableKarmaEvent;
 
 public class KarmaEventHandler {
 	
@@ -64,15 +60,15 @@ public class KarmaEventHandler {
 			EntityPlayer player = (EntityPlayer)((EntityDamageSource)evt.source).getEntity();
 			
 			if (evt.entity instanceof EntityCreeper) {
-				playerKarma(player).modifyKarmaWithMax(0.1F, 20);
+				forPlayer(player).modifyKarmaWithMax(0.1F, 20);
 			} else if (evt.entity instanceof EntityVillager) {
-				playerKarma(player).modifyKarmaWithMin(-0.1F, -20);
+				forPlayer(player).modifyKarmaWithMin(-0.1F, -20);
 			} else if (evt.entity instanceof EntityWitch) {
-				playerKarma(player).modifyKarmaWithMax(0.5F, 49);
+				forPlayer(player).modifyKarmaWithMax(0.5F, 49);
 			} else if (evt.entity instanceof EntityIronGolem || evt.entity instanceof EntitySnowman) {
-				playerKarma(player).modifyKarmaWithMin(-0.5F, -20);
+				forPlayer(player).modifyKarmaWithMin(-0.5F, -20);
 			} else if (evt.entity instanceof EntityDragon) {
-				playerKarma(player).modifyKarma(6);
+				forPlayer(player).modifyKarma(6);
 			}
 		}
 	}
@@ -80,21 +76,21 @@ public class KarmaEventHandler {
 	@ForgeSubscribe
 	public void onEntityAttack(LivingAttackEvent evt) {
 		if (evt.source instanceof EntityDamageSource && ((EntityDamageSource)evt.source).getEntity() instanceof EntityPlayerMP && evt.entity instanceof EntityPigZombie) {
-			PlayerKarma karma = playerKarma((EntityPlayer)((EntityDamageSource)evt.source).getEntity());
-			if (karma.getEventAmount(CountableKarmaEvent.PIGMEN_ATTACK) == 0) {
-				karma.increaseEventAmount(CountableKarmaEvent.PIGMEN_ATTACK);
-				karma.modifyKarma(-1);
+			PlayerInformation info = forPlayer((EntityPlayer)((EntityDamageSource)evt.source).getEntity());
+			if (info.getEventAmount(PlayerInformation.CountableKarmaEvent.PIGMEN_ATTACK) == 0) {
+				info.increaseEventAmount(PlayerInformation.CountableKarmaEvent.PIGMEN_ATTACK);
+				info.modifyKarma(-1);
 			}
 		}
 	}
 	
 	@ForgeSubscribe
 	public void onItemDestroy(PlayerDestroyItemEvent evt) {
-		if (evt.entityPlayer instanceof EntityPlayerMP && evt.original.getItem().itemID == Item.potion.itemID && ItemPotion.isSplash(evt.original.getItemDamage())) {
+		if (evt.entityPlayer instanceof EntityPlayerMP && evt.original.itemID == Item.potion.itemID && ItemPotion.isSplash(evt.original.getItemDamage())) {
 			List<PotionEffect> effects = Item.potion.getEffects(evt.original);
 			for (PotionEffect effect : effects) {
 				if (Potion.heal.id == effect.getPotionID()) {
-					playerKarma(evt.entityPlayer).modifyKarmaWithMax(1, 30);
+					forPlayer(evt.entityPlayer).modifyKarmaWithMax(1, 30);
 					return;
 				}
 			}
@@ -115,7 +111,7 @@ public class KarmaEventHandler {
 	@ForgeSubscribe(priority = EventPriority.LOWEST)
 	public void onBonemealUse(BonemealEvent evt) {
 		if (evt.getResult() == Result.ALLOW || bonemealHandleIds.contains(evt.ID) || (evt.ID > 0 && Block.blocksList[evt.ID] instanceof BlockCrops)) { 
-			playerKarma(evt.entityPlayer).modifyKarmaWithMax(0.1F, 10);
+			forPlayer(evt.entityPlayer).modifyKarmaWithMax(0.1F, 10);
 		}
 	}
 	
@@ -125,13 +121,13 @@ public class KarmaEventHandler {
 			if (evt.target instanceof EntityAnimal) {
 				EntityAnimal animal = (EntityAnimal)evt.target;
 				if (animal.isBreedingItem(evt.entityPlayer.getCurrentEquippedItem()) && animal.getGrowingAge() == 0) {
-					PlayerInfo.getModEntityData(animal).setString("breedingOwner", evt.entityPlayer.username);
+					CrymodUtils.getEntityData(animal).setString("breedingOwner", evt.entityPlayer.username);
 				}
 			} else if (evt.target instanceof EntityZombie) {
 				EntityZombie zombie = (EntityZombie)evt.target;
 				ItemStack currentItem = evt.entityPlayer.getCurrentEquippedItem();
 				if (currentItem != null && currentItem.getItem() == Item.appleGold && currentItem.getItemDamage() == 0 && zombie.isVillager() && zombie.isPotionActive(Potion.weakness)) {
-					PlayerInfo.getModEntityData(zombie).setString("cureOwner", evt.entityPlayer.username);
+					CrymodUtils.getEntityData(zombie).setString("cureOwner", evt.entityPlayer.username);
 				}
 			}
 		}
@@ -141,30 +137,70 @@ public class KarmaEventHandler {
 	public static void onBreedingSpawnChild(EntityAgeable baby, EntityAIMate aiInstance) {
 		EntityAnimal animal = ReflectionHelper.getPrivateValue(EntityAIMate.class, aiInstance, 0);
 		EntityAnimal mate = ReflectionHelper.getPrivateValue(EntityAIMate.class, aiInstance, 2);
-		String animalBreeder = PlayerInfo.getModEntityData(animal).getString("breedingOwner");
-		String mateBreeder = PlayerInfo.getModEntityData(mate).getString("breedingOwner");
+		String animalBreeder = CrymodUtils.getEntityData(animal).getString("breedingOwner");
+		String mateBreeder = CrymodUtils.getEntityData(mate).getString("breedingOwner");
 		
 		if (animalBreeder.equals(mateBreeder)) {
 			EntityPlayer player = animal.worldObj.getPlayerEntityByName(animalBreeder);
 			if (player != null) {
-				playerKarma(player).modifyKarmaWithMax(0.1F, 20);
+				forPlayer(player).modifyKarmaWithMax(0.1F, 20);
 			}
 		}
 	}
 	
 	// called by the hook inserted into EntityZombie by the CrymodTransformer
 	public static void onZombieConvert(EntityZombie zombie) {
-		String curer = PlayerInfo.getModEntityData(zombie).getString("cureOwner");
+		String curer = CrymodUtils.getEntityData(zombie).getString("cureOwner");
 		EntityPlayer player = zombie.worldObj.getPlayerEntityByName(curer);
 		if (player != null) {
-			playerKarma(player).modifyKarmaWithMax(3, 30);
+			forPlayer(player).modifyKarmaWithMax(3, 30);
 		}
 	}
 	
 	// called by the hook inserted into Block/onBlockHarvested by the CrymodTransformer
-	public static void onPlayerBlockHarvest(Block block, World world, int x, int y, int z, int meta, EntityPlayer player) {
+	public static void onPlayerBlockHarvest(Block block, World world, EntityPlayer player) {
 		if (!world.isRemote && block.blockID == Block.mobSpawner.blockID) {
-			playerKarma(player).modifyKarmaWithMax(1, 30);
+			forPlayer(player).modifyKarmaWithMax(1, 30);
+		}
+	}
+	
+	// called by the hook inserted into ItemStack/tryPlaceItemIntoWorld
+	public static void onTryPlaceItem(ItemStack item, EntityPlayer player, int x, int y, int z, int side, boolean success) {
+		if (!player.worldObj.isRemote && item.itemID == Block.pumpkin.blockID && success) {
+			int blockId = player.worldObj.getBlockId(x, y, z);
+			if (blockId == Block.snow.blockID) {
+				side = 1;
+			} else if (blockId != Block.vine.blockID && blockId != Block.tallGrass.blockID && blockId != Block.deadBush.blockID && (Block.blocksList[blockId] == null || !Block.blocksList[blockId].isBlockReplaceable(player.worldObj, x, y, z))) {
+				switch (side) {
+				case 0:
+					y--;
+					break;
+				case 1:
+					y++;
+					break;
+				case 2:
+					z--;
+					break;
+				case 3:
+					z++;
+					break;
+				case 4:
+					x--;
+					break;
+				case 5:
+					x++;
+					break;
+				}
+			}
+			System.out.println(player.worldObj.getBlockId(x, y - 1, z));
+			
+			if (player.worldObj.getBlockId(x, y - 1, z) == Block.blockSnow.blockID && player.worldObj.getBlockId(x, y - 2, z) == Block.blockSnow.blockID) {
+				PlayerInformation info = forPlayer(player);
+				if (info.getEventAmount(CountableKarmaEvent.CREATE_SNOWGOLEM) < 2) {
+					info.increaseEventAmount(CountableKarmaEvent.CREATE_SNOWGOLEM);
+					info.modifyKarma(1);
+				}
+			}
 		}
 	}
 	
@@ -174,10 +210,10 @@ public class KarmaEventHandler {
 			System.out.println("place pumpkin on server");
 			// first check for snow golem
 			if (world.getBlockId(x, y - 1, z) == Block.blockSnow.blockID && world.getBlockId(x, y - 2, z) == Block.blockSnow.blockID) {
-				PlayerKarma karma = playerKarma(player);
-				if (karma.getEventAmount(CountableKarmaEvent.CREATE_SNOWGOLEM) < 2) {
-					karma.increaseEventAmount(CountableKarmaEvent.CREATE_SNOWGOLEM);
-					karma.modifyKarma(1);
+				PlayerInformation info = forPlayer(player);
+				if (info.getEventAmount(PlayerInformation.CountableKarmaEvent.CREATE_SNOWGOLEM) < 2) {
+					info.increaseEventAmount(PlayerInformation.CountableKarmaEvent.CREATE_SNOWGOLEM);
+					info.modifyKarma(1);
 				}
 			}
 		}
@@ -187,7 +223,7 @@ public class KarmaEventHandler {
 	
 	@ForgeSubscribe
 	public void onServerChat(ServerChatEvent evt) {
-		float karma = playerKarma(evt.player).getKarma();
+		float karma = forPlayer(evt.player).getKarma();
 		if (karma == 0) {
 			return;
 		}
@@ -200,7 +236,7 @@ public class KarmaEventHandler {
 		if (useBorder != -1) {
 			String messageKey = "crymod.chatprefix." + (karma < 0 ? "bad" : "good") + "." + useBorder;
 			String messageColor = karma < 0 ? "4" : "1";
-			evt.line = evt.line.replace(evt.username, color(StringTranslate.getInstance().translateKey(messageKey), messageColor, "f") +  " " + evt.username);
+			evt.line = evt.line.replace(evt.username, CrymodUtils.color(StringTranslate.getInstance().translateKey(messageKey), messageColor, "f") +  " " + evt.username);
 		}
 	}
 }

@@ -10,8 +10,13 @@ import net.minecraft.entity.ai.EntityAIWander;
 import net.minecraft.world.World;
 import demonmodders.crymod.common.entities.ai.EntityAIFollowOwner;
 
-public abstract class ZombieBase extends SummonableBase {
+public abstract class ZombieBase extends EntitySummonable {
 	
+	@Override
+	public int getRank() {
+		return 5;
+	}
+
 	public ZombieBase(World world) {
 		super(world);
 		moveSpeed = 0.23F;

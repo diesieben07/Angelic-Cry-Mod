@@ -10,7 +10,7 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import cpw.mods.fml.relauncher.Side;
-import demonmodders.crymod.common.inventory.SlotNoPickup;
+import demonmodders.crymod.common.slots.SlotNoPickup;
 
 public abstract class AbstractContainer<T extends IInventory> extends Container {
 

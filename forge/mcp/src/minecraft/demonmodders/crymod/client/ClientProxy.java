@@ -1,13 +1,10 @@
 package demonmodders.crymod.client;
 
 import java.io.File;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.ChatLine;
-import net.minecraft.client.gui.GuiNewChat;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.world.World;
@@ -17,7 +14,6 @@ import cpw.mods.fml.client.registry.ClientRegistry;
 import cpw.mods.fml.client.registry.KeyBindingRegistry;
 import cpw.mods.fml.client.registry.RenderingRegistry;
 import cpw.mods.fml.common.registry.TickRegistry;
-import cpw.mods.fml.relauncher.ReflectionHelper;
 import cpw.mods.fml.relauncher.Side;
 import demonmodders.crymod.client.fx.EntityFXTextureChange;
 import demonmodders.crymod.client.gui.GuiCrystalBag;
@@ -31,8 +27,8 @@ import demonmodders.crymod.client.gui.updates.GuiServerUpdates;
 import demonmodders.crymod.client.render.CrymodItemRenderer;
 import demonmodders.crymod.client.render.RenderEnderBook;
 import demonmodders.crymod.client.render.RenderZombieBase;
-import demonmodders.crymod.common.Crymod;
 import demonmodders.crymod.common.CrymodProxy;
+import demonmodders.crymod.common.CrymodUtils;
 import demonmodders.crymod.common.UpdateChecker.UpdateStatus;
 import demonmodders.crymod.common.entities.ZombieBase;
 import demonmodders.crymod.common.gui.ContainerCrystalBag;
@@ -46,10 +42,8 @@ import demonmodders.crymod.common.gui.GuiType;
 import demonmodders.crymod.common.items.ItemCryMod;
 import demonmodders.crymod.common.network.PacketClientAction;
 import demonmodders.crymod.common.network.PacketClientEffect;
-import demonmodders.crymod.common.network.PacketUpdateInformation;
 import demonmodders.crymod.common.network.PacketClientEffect.Type;
-import demonmodders.crymod.common.network.PacketEnderBookRecipe;
-import demonmodders.crymod.common.playerinfo.PlayerInfo;
+import demonmodders.crymod.common.network.PacketUpdateInformation;
 import demonmodders.crymod.common.recipes.SummoningRecipe;
 import demonmodders.crymod.common.tileentities.TileEntityEnderbook;
 
@@ -60,11 +54,6 @@ public class ClientProxy implements CrymodProxy {
 	private UpdateStatus lastStatus = null;
 	private List<String> lastUpdateInformation = null;
 	
-	@Override
-	public void setClientPlayerInfo(PlayerInfo info) {
-		HudOverlayTicker.instance().setClientPlayerInfo(info);
-	}
-
 	@Override
 	public void handleClientEffect(PacketClientEffect effect) {
 		switch (effect.type) {
@@ -98,16 +87,6 @@ public class ClientProxy implements CrymodProxy {
 	}
 
 	@Override
-	public void handleEnderBookRecipe(PacketEnderBookRecipe packet) {
-		if (mc.currentScreen instanceof GuiEnderBook && mc.thePlayer.openContainer instanceof ContainerEnderBook && mc.thePlayer.openContainer.windowId == packet.windowId) {
-			SummoningRecipe recipe = SummoningRecipe.byId(packet.recipeId);
-			if (recipe != null) {
-				((GuiEnderBook)mc.currentScreen).setCurrentRecipe(recipe);
-			}
-		}
-	}
-
-	@Override
 	public Object getClientGuiElement(Container container, int id, EntityPlayer player, World world, int x, int y, int z) {
 		switch (GuiType.fromGuiId(id)) {
 		case SUMMONING_BOOK:
@@ -133,7 +112,7 @@ public class ClientProxy implements CrymodProxy {
 
 	@Override
 	public void preInit() {
-		MinecraftForgeClient.preloadTexture(Crymod.TEXTURE_FILE);
+		MinecraftForgeClient.preloadTexture(CrymodUtils.TEXTURE_FILE);
 		TickRegistry.registerTickHandler(HudOverlayTicker.instance(), Side.CLIENT);
 		TickRegistry.registerTickHandler(new GuiTicker(), Side.CLIENT);
 		MinecraftForge.EVENT_BUS.register(new ClientEventHandler());

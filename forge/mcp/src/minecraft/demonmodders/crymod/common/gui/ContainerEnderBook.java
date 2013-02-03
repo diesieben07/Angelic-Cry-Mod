@@ -1,26 +1,22 @@
 package demonmodders.crymod.common.gui;
 
-import cpw.mods.fml.relauncher.Side;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.entity.player.InventoryPlayer;
 import demonmodders.crymod.common.inventory.InventoryEnderBook;
-import demonmodders.crymod.common.inventory.SlotNoPickup;
-import demonmodders.crymod.common.network.PacketEnderBookRecipe;
-import demonmodders.crymod.common.playerinfo.PlayerInfo;
+import demonmodders.crymod.common.playerinfo.PlayerInformation;
 import demonmodders.crymod.common.recipes.SummoningRecipe;
+import demonmodders.crymod.common.slots.SlotNoPickup;
 
 public class ContainerEnderBook extends AbstractContainer<InventoryEnderBook> {
 
-	public static final int NEXT_PAGE = 0;
-	public static final int PREV_PAGE = 1;
-	
-	private int currentPage;
+	public int currentPage;
 	private final EntityPlayer player;
+	private final PlayerInformation playerInfo;
 	
 	public ContainerEnderBook(InventoryEnderBook inventory) {
 		super(inventory);
 		player = inventory.getPlayer();
+		playerInfo = PlayerInformation.forPlayer(player);
 		
 		addSlotToContainer(new SlotNoPickup(inventory, 0, 65, 44));
 		addSlotToContainer(new SlotNoPickup(inventory, 1, 39, 56));
@@ -31,16 +27,17 @@ public class ContainerEnderBook extends AbstractContainer<InventoryEnderBook> {
 		addSlotToContainer(new SlotNoPickup(inventory, 6, 40, 99));
 		addSlotToContainer(new SlotNoPickup(inventory, 7, 89, 99));
 		addSlotToContainer(new SlotNoPickup(inventory, 8, 65, 113));
+		
+		setActivePage(0);
 	}
 	
 	public void setActivePage(int page) {
-		byte[] knownRecipes = inventory.getKnownRecipes();
+		byte[] knownRecipes = playerInfo.getEnderBookRecipesRaw();
 		
 		if (page >= 0 && page < knownRecipes.length) {
 			if (setRecipe(knownRecipes[page])) {
 				currentPage = page;
 				if (player instanceof EntityPlayerMP) {
-					new PacketEnderBookRecipe(knownRecipes[page], windowId).sendToPlayer(player);
 				}
 			}
 		}
@@ -59,16 +56,7 @@ public class ContainerEnderBook extends AbstractContainer<InventoryEnderBook> {
 	}
 
 	@Override
-	public void buttonClick(int buttonId, Side side, EntityPlayer player) {
-		if (side.isServer()) {
-			switch (buttonId) {
-			case NEXT_PAGE:
-				setActivePage(currentPage + 1);
-				break;
-			case PREV_PAGE:
-				setActivePage(currentPage - 1);
-				break;
-			}
-		}
+	public boolean handleButtonClick(int buttonId) {
+		return false;
 	}
 }

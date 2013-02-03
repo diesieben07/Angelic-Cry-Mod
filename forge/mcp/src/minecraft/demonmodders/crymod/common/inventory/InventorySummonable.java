@@ -1,13 +1,13 @@
 package demonmodders.crymod.common.inventory;
 
-import demonmodders.crymod.common.entities.SummonableBase;
+import demonmodders.crymod.common.entities.EntitySummonable;
 import net.minecraft.entity.player.EntityPlayer;
 
 public class InventorySummonable extends AbstractInventory {
 
-	private final SummonableBase entity;
+	private final EntitySummonable entity;
 	
-	public InventorySummonable(SummonableBase entity) {
+	public InventorySummonable(EntitySummonable entity) {
 		super(true);
 		this.entity = entity;
 	}

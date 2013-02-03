@@ -24,6 +24,6 @@ public class GuiRecipePage extends AbstractGuiContainer<ContainerRecipePage, Sum
 	@Override
 	protected void drawGuiContainerForegroundLayer(int par1, int par2) {
 		SummoningRecipe recipe = container.getInventoryInstance();
-		fontRenderer.drawString(recipe.getDemonName(), 17, 10, recipe.isAngel() ? 0x400040 : 0x660000);
+		fontRenderer.drawString(recipe.getRecipeName(), 17, 10, recipe.getColor());
 	}
 }
