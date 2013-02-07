@@ -3,6 +3,7 @@ package demonmodders.crymod.common;
 import java.util.Arrays;
 import java.util.logging.Logger;
 
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraftforge.common.Configuration;
 import net.minecraftforge.common.MinecraftForge;
@@ -28,6 +29,9 @@ import cpw.mods.fml.relauncher.Side;
 import demonmodders.crymod.common.blocks.BlockCryMod;
 import demonmodders.crymod.common.command.CommandKarma;
 import demonmodders.crymod.common.command.CommandSummonersAdminTools;
+import demonmodders.crymod.common.creativetab.CreativeTabCrymod;
+import demonmodders.crymod.common.creativetab.CreativeTabCrystals;
+import demonmodders.crymod.common.creativetab.CreativeTabRecipePages;
 import demonmodders.crymod.common.entities.EntityHeavenZombie;
 import demonmodders.crymod.common.entities.EntityHellZombie;
 import demonmodders.crymod.common.gui.CrymodGuiHandler;
@@ -63,6 +67,10 @@ public class Crymod {
 	
 	public static UpdateChecker updater;
 	
+	public static CreativeTabs mainTab;
+	public static CreativeTabs crystalTab;
+	public static CreativeTabs recipePagesTab;
+	
 	@PreInit
 	public void preInit(FMLPreInitializationEvent evt) {
 		ModMetadata meta = evt.getModMetadata();
@@ -92,6 +100,10 @@ public class Crymod {
 				
 		registerEntity(EntityHeavenZombie.class, "crymodHeavenZombie", 0xffffff, 0x000000, 80, 3, true);
 		registerEntity(EntityHellZombie.class, "crymodHellZombie", 0x000000, 0xffffff, 80, 3, true);
+		
+		mainTab = new CreativeTabCrymod();
+		crystalTab = new CreativeTabCrystals();
+		recipePagesTab = new CreativeTabRecipePages();
 	}
 	
 	private void registerEntity(Class<? extends Entity> entity, String name, int foreground, int background, int range, int updateFrequency, boolean velocityUpdates) {

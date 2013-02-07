@@ -77,5 +77,9 @@ public class ItemSummoner extends ItemCryMod {
 		public PacketClientEffect.Type getEffectType() {
 			return effect;
 		}
+
+		public ItemStack generateItemStack() {
+			return new ItemStack(ItemCryMod.summoner, 1, getItemDamage());
+		}
 	}
 }

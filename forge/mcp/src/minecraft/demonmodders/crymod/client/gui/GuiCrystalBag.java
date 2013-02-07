@@ -15,7 +15,7 @@ public class GuiCrystalBag extends AbstractGuiContainer<ContainerCrystalBag, Inv
 
 	@Override
 	protected void drawGuiContainerForegroundLayer(int par1, int par2) {
-		fontRenderer.drawString(StringTranslate.getInstance().translateKey("item.crystalBag.name"), 60, 6, 0x404040);
+		fontRenderer.drawString(StringTranslate.getInstance().translateKey("item.crymod_crystalBag.name"), 60, 6, 0x404040);
 		fontRenderer.drawString(StringTranslate.getInstance().translateKey("container.inventory"), 8, ySize - 94, 0x404040);
 	}
 

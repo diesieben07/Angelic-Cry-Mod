@@ -5,8 +5,10 @@ import java.util.List;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.StringTranslate;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import demonmodders.crymod.common.Crymod;
 
 public class ItemCrystal extends ItemCryMod {
 
@@ -16,6 +18,7 @@ public class ItemCrystal extends ItemCryMod {
 		super(itemName, defaultId);
 		setHasSubtypes(true);
 		setMaxStackSize(1);
+		setCreativeTab(Crymod.crystalTab);
 	}
 
 	@Override
@@ -35,6 +38,7 @@ public class ItemCrystal extends ItemCryMod {
 		for (CrystalType type : CrystalType.crystalTypes) {
 			if (type != null) {
 				itemList.add(type.generateItemStack());
+				itemList.add(type.generateChargedItemStack());
 			}
 		}
 	}
@@ -76,9 +80,11 @@ public class ItemCrystal extends ItemCryMod {
 	@SideOnly(Side.CLIENT)
 	public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean par4) {
 		super.addInformation(stack, player, list, par4);
+		StringTranslate translate = StringTranslate.getInstance();
+		list.add(translate.translateKeyFormat("crymod.crystal.tier", CrystalType.fromItemDamage(stack).getTier()));
 		int charge = getCharge(stack);
 		if (charge > 0) {
-			list.add("\u00A75Charged " + charge + "/" + MAX_CHARGE);
+			list.add("\u00A75" + translate.translateKeyFormat("crymod.crystal.charge", charge, MAX_CHARGE));
 		}
 	}
 }

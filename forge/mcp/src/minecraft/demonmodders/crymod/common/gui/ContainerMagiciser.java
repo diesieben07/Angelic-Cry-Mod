@@ -21,7 +21,7 @@ public class ContainerMagiciser extends AbstractContainer<TileEntityMagiciser> {
 			addSlotToContainer(new SlotMagiciser(inventory, i, 47 + 18 * i, 13));
 		}
 		
-		addSlotToContainer(new SlotForItem(inventory, 5, 8, 60, CrystalType.PURPLE.generateItemStack()));
+		addSlotToContainer(new SlotForItem(inventory, 5, 8, 60, CrystalType.MAGIC.generateItemStack()));
 		
 		addSlotToContainer(new SlotMagiciserResult(inventory, 6, 84, 49));
 		
@@ -45,7 +45,7 @@ public class ContainerMagiciser extends AbstractContainer<TileEntityMagiciser> {
 				return null;
 			}
 		} else { // transfer from inventory
-			if (CrystalType.PURPLE.containsThis(stackToTransfer)) { // place it in the crystal slot
+			if (CrystalType.MAGIC.containsThis(stackToTransfer)) { // place it in the crystal slot
 				if (!mergeItemStack(stackToTransfer, 5, 6, false)) {
 					return null;
 				}

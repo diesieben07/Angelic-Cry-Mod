@@ -1,13 +1,28 @@
 item.crymod_summoningBook.name:Holy Summoning Book
 item.crymod_evilTablet.name:Evil Tablet
 
-item.crymod_crystal.yellow.name:Gold Crystal
-item.crymod_crystal.red.name:Core Crystal
-item.crymod_crystal.lightBlue.name:Sky Crystal
-item.crymod_crystal.purple.name:Magic Crystal
-item.crymod_crystal.green.name:Green Crystal (Need Name)
-item.crymod_crystal.orange.name:Fiery Crystal
-item.crymod_crystal.blue.name:Ocean Crystal
+item.crymod_crystal.gold.name:Gold Crystal
+item.crymod_crystal.core.name:Core Crystal
+item.crymod_crystal.sky.name:Sky Crystal
+item.crymod_crystal.magic.name:Magic Crystal
+item.crymod_crystal.leaf.name:Leaf Crystal
+item.crymod_crystal.fiery.name:Fiery Crystal
+item.crymod_crystal.ocean.name:Ocean Crystal
+item.crymod_crystal.power.name:Power Crystal
+item.crymod_crystal.water.name:Water Crystal
+item.crymod_crystal.cloud.name:Cloud Crystal
+item.crymod_crystal.forest.name:Forest Crystal
+item.crymod_crystal.greed.name:Greed Crystal
+item.crymod_crystal.air.name:Air Crystal
+item.crymod_crystal.earth.name:Earth Crystal
+item.crymod_crystal.strength.name:Strength Crystal
+item.crymod_crystal.evil.name:Evil Crystal
+item.crymod_crystal.insanity.name:Insanity Crystal
+item.crymod_crystal.corruption.name:Corruption Crystal
+item.crymod_crystal.love.name:Love Crystal
+
+crymod.crystal.charge:Charged %d / %d
+crymod.crystal.tier:Tier %d
 
 item.crymod_recipeBook.name:Recipe Book
 item.crymod_crystalBag.name:Crystal Bag
@@ -18,6 +33,10 @@ tile.crymod_rechargeStation.name:Recharge Station
 tile.crymod_enderBook.name:Ender Book
 tile.crymod_magiciser.name:Magiciser
 tile.crymod_plants.magiculusFlower.name:Magiculus Flower
+
+itemGroup.crymod_crystals:Summoners Crystals
+itemGroup.crymod_recipePages:Summoners Recipe Pages
+itemGroup.crymod_main:Summoners Mod
 
 crymod.chatprefix.good.10:Minor Priest
 crymod.chatprefix.good.25:High Priest

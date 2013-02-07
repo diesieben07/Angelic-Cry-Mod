@@ -19,6 +19,7 @@ public class ItemRecipePage extends ItemCryMod {
 		setHasSubtypes(true);
 		setMaxStackSize(1);
 		setIconIndex(17);
+		setCreativeTab(Crymod.recipePagesTab);
 	}
 
 	@Override

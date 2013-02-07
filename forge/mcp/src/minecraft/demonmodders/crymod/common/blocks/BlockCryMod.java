@@ -4,7 +4,6 @@ import java.util.Random;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
-import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
@@ -39,7 +38,7 @@ public class BlockCryMod extends Block {
 	public static void initCrymodBlock(Block block, String blockName, Class<? extends ItemBlock> itemClass) {
 		block.setBlockName("crymod_" + blockName);
 		block.setTextureFile(CrymodUtils.TEXTURE_FILE);
-		block.setCreativeTab(CreativeTabs.tabMisc);
+		block.setCreativeTab(Crymod.mainTab);
 		GameRegistry.registerBlock(block, itemClass, blockName);
 	}
 	

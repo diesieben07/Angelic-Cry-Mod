@@ -44,21 +44,21 @@ public final class CraftingRecipes {
 				Block.stoneSingleSlab);
 		
 		// gold crystal
-		GameRegistry.addRecipe(CrystalType.YELLOW.generateItemStack(),
+		GameRegistry.addRecipe(CrystalType.GOLD.generateItemStack(),
 				"GG", "GG",
 				'G', Item.goldNugget
 				);
 		
 		// green crystal
-		GameRegistry.addRecipe(CrystalType.GREEN.generateItemStack(),
+		GameRegistry.addRecipe(CrystalType.LEAF.generateItemStack(),
 				"SC", "CS",
 				'S', new ItemStack(Block.sapling, 1, 0),
-				'C', CrystalType.YELLOW.generateItemStack());
+				'C', CrystalType.GOLD.generateItemStack());
 		
 		// fiery crystal
-		GameRegistry.addRecipe(CrystalType.ORANGE.generateItemStack(),
+		GameRegistry.addRecipe(CrystalType.FIERY.generateItemStack(),
 				"CF", "FC",
-				'C', CrystalType.PURPLE.generateItemStack(),
+				'C', CrystalType.MAGIC.generateItemStack(),
 				'F', Item.flintAndSteel);
 	}
 }

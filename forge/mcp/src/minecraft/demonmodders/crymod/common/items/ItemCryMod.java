@@ -1,6 +1,5 @@
 package demonmodders.crymod.common.items;
 
-import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -29,12 +28,11 @@ public class ItemCryMod extends Item {
 		recipePage = new ItemRecipePage("recipePage", 4767);
 		crystalBag = new ItemCrystalBag("crystalBag", 4768);
 		
-		swordOfDarkness = new ItemSwordOfDarkness("swordOfDarkness", 4769);
 	}
 
 	public static void initCrymodItem(Item item, String itemName) {
 		item.setTextureFile(CrymodUtils.TEXTURE_FILE);
-		item.setCreativeTab(CreativeTabs.tabMisc);
+		item.setCreativeTab(Crymod.mainTab);
 		item.setItemName("crymod_" + itemName);
 		GameRegistry.registerItem(item, itemName);
 	}

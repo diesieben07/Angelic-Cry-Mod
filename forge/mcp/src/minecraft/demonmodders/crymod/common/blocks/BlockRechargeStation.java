@@ -15,10 +15,10 @@ import demonmodders.crymod.common.tileentities.TileEntityRechargeStation;
 
 public class BlockRechargeStation extends BlockCryMod {
 
-	private static final int TOP_BOTTOM_TEXTURE = 14 * 16 + 13;
-	private static final int FRONT_TEXTURE = 14 * 16 + 15;
-	private static final int FRONT_TEXTURE_ACTIVE = 14 * 16 + 14;
-	private static final int SIDES_TEXTURE = 15 * 16 + 15;
+	private static final int TOP_BOTTOM_TEXTURE = 14 * 16 + 15;
+	private static final int FRONT_TEXTURE = 14 * 16 + 13;
+	private static final int FRONT_TEXTURE_ACTIVE = 15 * 16 + 15;
+	private static final int SIDES_TEXTURE = 14 * 16 + 14;
 	
 	public BlockRechargeStation(String blockName, int defaultId) {
 		super(blockName, defaultId, 0, Material.iron);

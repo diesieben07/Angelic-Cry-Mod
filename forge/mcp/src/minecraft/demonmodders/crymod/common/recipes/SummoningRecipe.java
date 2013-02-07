@@ -118,20 +118,76 @@ public abstract class SummoningRecipe extends AbstractInventory {
 		return true;
 	}
 	
-	public static SummoningRecipe[] recipes = new SummoningRecipe[16];
+	public static SummoningRecipe[] recipes = new SummoningRecipe[32];
 	
 	public static final SummoningRecipe HEAVEN_ZOMBIE = new SummoningRecipeDemonAngel(
-			0, EntityHeavenZombie.class, "Heaven Zombie", BLUE, BLUE, BLUE,
-			BLUE, BLUE, BLUE, BLUE, BLUE, BLUE).setSummonerType(
+			0, EntityHeavenZombie.class, "Heaven Zombie", OCEAN, OCEAN, OCEAN,
+			OCEAN, OCEAN, OCEAN, OCEAN, OCEAN, OCEAN).setSummonerType(
 			Type.SUMMONING_BOOK).setMinKarma(5);
 	public static final SummoningRecipe HELL_ZOMBIE = new SummoningRecipeDemonAngel(
-			1, EntityHellZombie.class, "Hell Zombie", RED, RED, RED, RED, RED,
-			RED, RED, RED, RED).setMaxKarma(-5).setSummonerType(
+			1, EntityHellZombie.class, "Hell Zombie", CORE, CORE, CORE, CORE, CORE,
+			CORE, CORE, CORE, CORE).setMaxKarma(-5).setSummonerType(
 			Type.EVIL_TABLET);
 
 	public static final SummoningRecipe SHEEP = new SummoningRecipeAnimals(2,
-			EntitySheep.class, GREEN, GREEN, GREEN, GREEN, GREEN, GREEN, GREEN,
-			GREEN, GREEN).setSummonerType(Type.SUMMONING_BOOK);
+			EntitySheep.class, LEAF, LEAF, LEAF, LEAF, LEAF, LEAF, LEAF,
+			LEAF, LEAF).setSummonerType(Type.SUMMONING_BOOK);
+	
+	public static final SummoningRecipe COW = new SummoningRecipeAnimals(3,
+			EntitySheep.class, LEAF, LEAF, LEAF, LEAF, LEAF, LEAF, LEAF,
+			LEAF, LEAF).setSummonerType(Type.SUMMONING_BOOK);
+	
+	public static final SummoningRecipe COW2 = new SummoningRecipeAnimals(4,
+			EntitySheep.class, LEAF, LEAF, LEAF, LEAF, LEAF, LEAF, LEAF,
+			LEAF, LEAF).setSummonerType(Type.SUMMONING_BOOK);
+	
+	public static final SummoningRecipe COW4 = new SummoningRecipeAnimals(5,
+			EntitySheep.class, LEAF, LEAF, LEAF, LEAF, LEAF, LEAF, LEAF,
+			LEAF, LEAF).setSummonerType(Type.SUMMONING_BOOK);
+	
+	public static final SummoningRecipe COW5 = new SummoningRecipeAnimals(6,
+			EntitySheep.class, LEAF, LEAF, LEAF, LEAF, LEAF, LEAF, LEAF,
+			LEAF, LEAF).setSummonerType(Type.SUMMONING_BOOK);
+	
+	public static final SummoningRecipe COW3 = new SummoningRecipeAnimals(7,
+			EntitySheep.class, LEAF, LEAF, LEAF, LEAF, LEAF, LEAF, LEAF,
+			LEAF, LEAF).setSummonerType(Type.SUMMONING_BOOK);
+	
+	public static final SummoningRecipe COW6 = new SummoningRecipeAnimals(8,
+			EntitySheep.class, LEAF, LEAF, LEAF, LEAF, LEAF, LEAF, LEAF,
+			LEAF, LEAF).setSummonerType(Type.SUMMONING_BOOK);
+	
+	public static final SummoningRecipe A = new SummoningRecipeAnimals(9,
+			EntitySheep.class, LEAF, LEAF, LEAF, LEAF, LEAF, LEAF, LEAF,
+			LEAF, LEAF).setSummonerType(Type.SUMMONING_BOOK);
+	
+	public static final SummoningRecipe B = new SummoningRecipeAnimals(10,
+			EntitySheep.class, LEAF, LEAF, LEAF, LEAF, LEAF, LEAF, LEAF,
+			LEAF, LEAF).setSummonerType(Type.SUMMONING_BOOK);
+	
+	public static final SummoningRecipe Q = new SummoningRecipeAnimals(11,
+			EntitySheep.class, LEAF, LEAF, LEAF, LEAF, LEAF, LEAF, LEAF,
+			LEAF, LEAF).setSummonerType(Type.SUMMONING_BOOK);
+	
+	public static final SummoningRecipe R = new SummoningRecipeAnimals(12,
+			EntitySheep.class, LEAF, LEAF, LEAF, LEAF, LEAF, LEAF, LEAF,
+			LEAF, LEAF).setSummonerType(Type.SUMMONING_BOOK);
+	
+	public static final SummoningRecipe T = new SummoningRecipeAnimals(13,
+			EntitySheep.class, LEAF, LEAF, LEAF, LEAF, LEAF, LEAF, LEAF,
+			LEAF, LEAF).setSummonerType(Type.SUMMONING_BOOK);
+	
+	public static final SummoningRecipe Z = new SummoningRecipeAnimals(14,
+			EntitySheep.class, LEAF, LEAF, LEAF, LEAF, LEAF, LEAF, LEAF,
+			LEAF, LEAF).setSummonerType(Type.SUMMONING_BOOK);
+	
+	public static final SummoningRecipe U = new SummoningRecipeAnimals(15,
+			EntitySheep.class, LEAF, LEAF, LEAF, LEAF, LEAF, LEAF, LEAF,
+			LEAF, LEAF).setSummonerType(Type.SUMMONING_BOOK);
+	
+	public static final SummoningRecipe QW = new SummoningRecipeAnimals(16,
+			EntitySheep.class, LEAF, LEAF, LEAF, LEAF, LEAF, LEAF, LEAF,
+			LEAF, LEAF).setSummonerType(Type.SUMMONING_BOOK);
 
 	public static SummoningRecipe fromDamage(ItemStack stack) {
 		return byId(stack.getItemDamage());
