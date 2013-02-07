@@ -35,7 +35,7 @@ public class ItemCrystal extends ItemCryMod {
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void getSubItems(int itemId, CreativeTabs creativeTab, List itemList) {
-		for (CrystalType type : CrystalType.crystalTypes) {
+		for (CrystalType type : CrystalType.orderedByTier) {
 			if (type != null) {
 				itemList.add(type.generateItemStack());
 				itemList.add(type.generateChargedItemStack());

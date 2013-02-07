@@ -32,13 +32,13 @@ public class HudOverlayTicker extends Gui implements ITickHandler {
 
 	@Override
 	public void tickEnd(EnumSet<TickType> type, Object... tickData) {
-		ScaledResolution scaler = new ScaledResolution(mc.gameSettings, mc.displayWidth, mc.displayHeight);
-        int width = scaler.getScaledWidth();
-        int height = scaler.getScaledHeight();
-		mc.entityRenderer.setupOverlayRendering();
-		GL11.glColor3f(1, 1, 1);
-        
-		if (type.contains(TickType.RENDER) && mc.thePlayer != null && (mc.currentScreen == null || mc.currentScreen instanceof GuiChat)) {
+		if (mc.thePlayer != null && !mc.gameSettings.showDebugInfo && (mc.currentScreen == null || mc.currentScreen instanceof GuiChat)) {
+			ScaledResolution scaler = new ScaledResolution(mc.gameSettings, mc.displayWidth, mc.displayHeight);
+	        int width = scaler.getScaledWidth();
+	        int height = scaler.getScaledHeight();
+			mc.entityRenderer.setupOverlayRendering();
+			GL11.glColor3f(1, 1, 1);
+			
 			PlayerInformation clientPlayerInfo = PlayerInformation.forPlayer(mc.thePlayer);
 			GL11.glBindTexture(GL11.GL_TEXTURE_2D, mc.renderEngine.getTexture("/demonmodders/crymod/resource/tex/gui.png"));
 			int barXStart = width / 2 - 182 / 2;
