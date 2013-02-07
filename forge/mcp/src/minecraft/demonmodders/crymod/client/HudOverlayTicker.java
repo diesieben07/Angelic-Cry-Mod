@@ -32,7 +32,7 @@ public class HudOverlayTicker extends Gui implements ITickHandler {
 
 	@Override
 	public void tickEnd(EnumSet<TickType> type, Object... tickData) {
-		if (mc.thePlayer != null && !mc.gameSettings.showDebugInfo && (mc.currentScreen == null || mc.currentScreen instanceof GuiChat)) {
+		if (mc.thePlayer != null && !mc.gameSettings.hideGUI && !mc.gameSettings.showDebugInfo && (mc.currentScreen == null || mc.currentScreen instanceof GuiChat)) {
 			ScaledResolution scaler = new ScaledResolution(mc.gameSettings, mc.displayWidth, mc.displayHeight);
 	        int width = scaler.getScaledWidth();
 	        int height = scaler.getScaledHeight();
