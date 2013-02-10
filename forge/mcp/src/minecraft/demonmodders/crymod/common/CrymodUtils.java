@@ -1,7 +1,10 @@
 package demonmodders.crymod.common;
 
+import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 
 public final class CrymodUtils {
@@ -45,5 +48,25 @@ public final class CrymodUtils {
 			parent.setCompoundTag(key, new NBTTagCompound());
 		}
 		return parent.getCompoundTag(key);
+	}
+	
+	public static ItemStack getItemStack(Object item) {
+		if (item instanceof Item) {
+			return new ItemStack((Item)item);
+		} else if (item instanceof Block) {
+			return new ItemStack((Block)item);
+		} else if (item instanceof ItemStack) {
+			return (ItemStack)item;
+		} else {
+			return new ItemStack(Block.stone);
+		}
+	}
+	
+	public static ItemStack[] getItemStacks(Object... items) {
+		ItemStack[] stacks = new ItemStack[items.length];
+		for (int i = 0; i < stacks.length; i++) {
+			stacks[i] = getItemStack(items[i]);
+		}
+		return stacks;
 	}
 }

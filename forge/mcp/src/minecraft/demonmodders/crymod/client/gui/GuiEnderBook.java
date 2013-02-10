@@ -35,6 +35,8 @@ public class GuiEnderBook extends AbstractGuiContainer<ContainerEnderBook, Inven
 	private int mouseScrollbarDelta = 0;
 	private boolean draggingScrollbar = false;
 	
+	int tickCounter = 0;
+	
 	public GuiEnderBook(ContainerEnderBook container) {
 		super(container);
 		xSize = 146;
@@ -81,7 +83,6 @@ public class GuiEnderBook extends AbstractGuiContainer<ContainerEnderBook, Inven
 			length = 0;
 		}
 		int listOffset = (int) ((float)movedScrollbarPosition / (float)(ySize - SCROLLBAR_HEIGHT - 6)) * length;
-		System.out.println(((float)movedScrollbarPosition / (float)(ySize - SCROLLBAR_HEIGHT - 6)) * length);
 		int y = 4;
 		for (int i = listOffset; (i < knownRecipes.length && i < listOffset + 13); i++) {
 			String recipeName = knownRecipes[i].getRecipeName();
@@ -129,6 +130,16 @@ public class GuiEnderBook extends AbstractGuiContainer<ContainerEnderBook, Inven
 		super.mouseMovedOrUp(x, y, which);
 		if (which == 0) {
 			draggingScrollbar = false;
+		}
+	}
+
+	@Override
+	public void updateScreen() {
+		super.updateScreen();
+		tickCounter++;
+		if (tickCounter == 20) {
+			tickCounter = 0;
+			container.updateScrollingSlot();
 		}
 	}
 }

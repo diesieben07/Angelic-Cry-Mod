@@ -3,30 +3,35 @@ package demonmodders.crymod.common.gui;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import demonmodders.crymod.common.inventory.InventoryEnderBook;
+import demonmodders.crymod.common.inventory.slots.ScrollingSlot;
+import demonmodders.crymod.common.inventory.slots.SlotNoPickup;
 import demonmodders.crymod.common.playerinfo.PlayerInformation;
 import demonmodders.crymod.common.recipes.SummoningRecipe;
-import demonmodders.crymod.common.slots.SlotNoPickup;
 
 public class ContainerEnderBook extends AbstractContainer<InventoryEnderBook> {
 
 	public int currentPage;
 	private final EntityPlayer player;
 	private final PlayerInformation playerInfo;
+	private int slotScrollIndex = 0;
+	private SummoningRecipe currentRecipe;
 	
 	public ContainerEnderBook(InventoryEnderBook inventory) {
 		super(inventory);
 		player = inventory.getPlayer();
 		playerInfo = PlayerInformation.forPlayer(player);
 		
-		addSlotToContainer(new SlotNoPickup(inventory, 0, 65, 44));
-		addSlotToContainer(new SlotNoPickup(inventory, 1, 39, 56));
-		addSlotToContainer(new SlotNoPickup(inventory, 2, 89, 56));
-		addSlotToContainer(new SlotNoPickup(inventory, 3, 28, 79));
-		addSlotToContainer(new SlotNoPickup(inventory, 4, 65, 80));
-		addSlotToContainer(new SlotNoPickup(inventory, 5, 100, 79));
-		addSlotToContainer(new SlotNoPickup(inventory, 6, 40, 99));
-		addSlotToContainer(new SlotNoPickup(inventory, 7, 89, 99));
-		addSlotToContainer(new SlotNoPickup(inventory, 8, 65, 113));
+		addSlotToContainer(new SlotNoPickup(inventory, 0, 120, 9));
+		
+		addSlotToContainer(new SlotNoPickup(inventory, 1, 65, 44));
+		addSlotToContainer(new SlotNoPickup(inventory, 2, 39, 56));
+		addSlotToContainer(new SlotNoPickup(inventory, 3, 89, 56));
+		addSlotToContainer(new SlotNoPickup(inventory, 4, 28, 79));
+		addSlotToContainer(new SlotNoPickup(inventory, 5, 65, 80));
+		addSlotToContainer(new SlotNoPickup(inventory, 6, 100, 79));
+		addSlotToContainer(new SlotNoPickup(inventory, 7, 40, 99));
+		addSlotToContainer(new SlotNoPickup(inventory, 8, 89, 99));
+		addSlotToContainer(new SlotNoPickup(inventory, 9, 65, 113));
 		
 		setActivePage(0);
 	}
@@ -37,18 +42,19 @@ public class ContainerEnderBook extends AbstractContainer<InventoryEnderBook> {
 		if (page >= 0 && page < knownRecipes.length) {
 			if (setRecipe(knownRecipes[page])) {
 				currentPage = page;
-				if (player instanceof EntityPlayerMP) {
-				}
 			}
 		}
 	}
 	
 	public boolean setRecipe(int recipeId) {
-		SummoningRecipe recipe = SummoningRecipe.byId(recipeId);
-		if (recipe != null) {
-			for (int i = 0; i < recipe.getSizeInventory(); i++) {
-				inventory.setInventorySlotContents(i, recipe.getStackInSlot(i));
+		currentRecipe = SummoningRecipe.byId(recipeId);
+		if (currentRecipe != null) {
+			int internalIndex = 1;
+			for (int i = currentRecipe.getSizeInventory() - 9; i < currentRecipe.getSizeInventory(); i++) {
+				inventory.setInventorySlotContents(internalIndex, currentRecipe.getStackInSlot(i));
+				internalIndex++;
 			}
+			inventory.setInventorySlotContents(0, currentRecipe.getStackInSlot(0));
 			return true;
 		} else {
 			return false;
@@ -58,5 +64,13 @@ public class ContainerEnderBook extends AbstractContainer<InventoryEnderBook> {
 	@Override
 	public boolean handleButtonClick(int buttonId) {
 		return false;
+	}
+	
+	public void updateScrollingSlot() {
+		slotScrollIndex++;
+		if (slotScrollIndex == currentRecipe.getSizeInventory() - 9) {
+			slotScrollIndex = 0;
+		}
+		inventory.setInventorySlotContents(0, currentRecipe.getStackInSlot(slotScrollIndex));
 	}
 }

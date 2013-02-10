@@ -17,7 +17,6 @@ import net.minecraft.nbt.NBTTagList;
 public class InventoryEnderBook extends AbstractInventory {
 
 	private final EntityPlayer player;
-	private byte[] knownRecipes = new byte[0];
 	
 	public InventoryEnderBook(EntityPlayer player) {
 		super(true);
@@ -30,7 +29,7 @@ public class InventoryEnderBook extends AbstractInventory {
 
 	@Override
 	public int getSizeInventory() {
-		return 9;
+		return 10;
 	}
 
 	@Override

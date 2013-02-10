@@ -14,11 +14,11 @@ import net.minecraft.util.MathHelper;
 import cpw.mods.fml.relauncher.Side;
 import demonmodders.crymod.common.Crymod;
 import demonmodders.crymod.common.inventory.InventorySummoner;
+import demonmodders.crymod.common.inventory.slots.SlotChargedCrystal;
 import demonmodders.crymod.common.items.ItemCrystal;
 import demonmodders.crymod.common.items.ItemSummoner.Type;
 import demonmodders.crymod.common.network.PacketClientEffect;
 import demonmodders.crymod.common.recipes.SummoningRecipe;
-import demonmodders.crymod.common.slots.SlotChargedCrystal;
 
 public class ContainerSummoner extends AbstractContainer<InventorySummoner> {
 
@@ -89,8 +89,8 @@ public class ContainerSummoner extends AbstractContainer<InventorySummoner> {
 	
 	private List<ItemStack> getRecipeOnPage(int page) {
 		List<ItemStack> stacks = new ArrayList<ItemStack>();
-		int slotNumStart = page * 10 + 1;
-		for (int i = slotNumStart; i < slotNumStart + 9; i++) {
+		int slotNumStart = page * 10;
+		for (int i = slotNumStart; i < slotNumStart + 10; i++) {
 			stacks.add(((Slot)inventorySlots.get(i)).getStack());
 		}
 		return stacks;

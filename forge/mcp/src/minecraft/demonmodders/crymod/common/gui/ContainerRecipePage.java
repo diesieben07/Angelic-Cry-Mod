@@ -1,8 +1,8 @@
 package demonmodders.crymod.common.gui;
 
 import net.minecraft.entity.player.InventoryPlayer;
+import demonmodders.crymod.common.inventory.slots.SlotNoPickup;
 import demonmodders.crymod.common.recipes.SummoningRecipe;
-import demonmodders.crymod.common.slots.SlotNoPickup;
 
 public class ContainerRecipePage extends AbstractContainer<SummoningRecipe> {
 

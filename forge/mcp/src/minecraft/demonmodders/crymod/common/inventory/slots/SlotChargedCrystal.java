@@ -1,4 +1,4 @@
-package demonmodders.crymod.common.slots;
+package demonmodders.crymod.common.inventory.slots;
 
 import demonmodders.crymod.common.items.ItemCryMod;
 import demonmodders.crymod.common.items.ItemCrystal;

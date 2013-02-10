@@ -11,9 +11,9 @@ import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
 import demonmodders.crymod.common.entities.EntitySummonable;
 import demonmodders.crymod.common.inventory.InventorySummonable;
+import demonmodders.crymod.common.inventory.slots.SlotArmor;
+import demonmodders.crymod.common.inventory.slots.SlotNoPickup;
 import demonmodders.crymod.common.items.ItemCryMod;
-import demonmodders.crymod.common.slots.SlotArmor;
-import demonmodders.crymod.common.slots.SlotNoPickup;
 
 public class ContainerEntityInfo extends AbstractContainer<InventorySummonable> {
 

@@ -1,4 +1,4 @@
-package demonmodders.crymod.common.slots;
+package demonmodders.crymod.common.inventory.slots;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;

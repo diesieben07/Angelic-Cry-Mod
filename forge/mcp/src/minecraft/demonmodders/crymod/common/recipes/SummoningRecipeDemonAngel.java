@@ -3,6 +3,7 @@ package demonmodders.crymod.common.recipes;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
+import demonmodders.crymod.common.CrymodUtils;
 import demonmodders.crymod.common.entities.EntitySummonable;
 import demonmodders.crymod.common.gui.ContainerSummoner;
 import demonmodders.crymod.common.items.CrystalType;
@@ -14,8 +15,8 @@ public class SummoningRecipeDemonAngel extends SummoningRecipe {
 	private final Class<? extends EntitySummonable> demon;
 	private final String demonName;
 		
-	public SummoningRecipeDemonAngel(int id, Class<? extends EntitySummonable> demon, String demonName, CrystalType... crystals) {
-		super(id, crystals);
+	public SummoningRecipeDemonAngel(int id, Class<? extends EntitySummonable> demon, String demonName, Object specialItem, CrystalType... crystals) {
+		super(id, CrymodUtils.getItemStack(specialItem), crystals);
 		
 		this.demon = demon;
 		this.demonName = demonName;

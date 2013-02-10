@@ -2,11 +2,16 @@ package demonmodders.crymod.common.recipes;
 
 import static demonmodders.crymod.common.items.CrystalType.*;
 
+import java.util.Arrays;
 import java.util.List;
 
+import com.google.common.collect.ObjectArrays;
+
+import net.minecraft.block.Block;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.passive.EntitySheep;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import demonmodders.crymod.common.entities.EntityHeavenZombie;
 import demonmodders.crymod.common.entities.EntityHellZombie;
@@ -26,27 +31,42 @@ public abstract class SummoningRecipe extends AbstractInventory {
 	private float maxKarma = 0;
 	protected ItemSummoner.Type summonerType = Type.SUMMONING_BOOK;
 	
-	public SummoningRecipe(int id, CrystalType... crystals) {
-		super(true);
+	public SummoningRecipe(int id, ItemStack specialItem, CrystalType... crystals) {
+		this(id, new ItemStack[] { specialItem }, crystals);
+	}
+	
+	public SummoningRecipe(int id, ItemStack[] specialItems, CrystalType... crystals) {
+		super(false);
+		if (crystals.length != 9) {
+			throw new IllegalArgumentException();
+		}
+		
 		this.id = id;
+		
+		stacks = new ItemStack[specialItems.length + 9];
+		System.out.println(stacks.length);
 		
 		if (crystals.length != 9) {
 			throw new IllegalArgumentException("Invalid Summoning Recipe!");
 		}
 		
-		for (int i = 0; i < 9; i++) {
-			stacks[i] = crystals[i].generateItemStack();
+		System.arraycopy(specialItems, 0, stacks, 0, specialItems.length);
+		
+		for (int i = specialItems.length; i < specialItems.length + 9; i++) {
+			stacks[i] = crystals[i - specialItems.length].generateItemStack();
 		}
 		
 		recipes[id] = this;
 	}
 	
 	public boolean matches(List<ItemStack> checkStacks, ContainerSummoner container) {
-		if (checkStacks.size() != getSizeInventory() || container.getInventoryInstance().getType() != summonerType) {
+		if (checkStacks.size() != 10 || container.getInventoryInstance().getType() != summonerType) {
 			return false;
 		} else {
-			for (int i = 0; i < getSizeInventory(); i++) {
-				ItemStack given = checkStacks.get(i);
+			int checkOffset = 1;
+			for (int i = stacks.length - 9; i < stacks.length; i++) {
+				ItemStack given = checkStacks.get(checkOffset);
+				checkOffset++;
 				if (given == null && stacks[i] == null) {
 					return true;
 				}
@@ -55,7 +75,14 @@ public abstract class SummoningRecipe extends AbstractInventory {
 					return false;
 				}
 			}
-			return true;
+			ItemStack givenSpecialItem = checkStacks.get(0);
+			
+			for (int i = 0; i < stacks.length - 9; i++) {
+				if (givenSpecialItem.itemID == stacks[i].itemID && givenSpecialItem.getItemDamage() == stacks[i].getItemDamage()) {
+					return true;
+				}
+			}
+			return false;
 		}
 	}
 	
@@ -105,7 +132,7 @@ public abstract class SummoningRecipe extends AbstractInventory {
 	
 	@Override
 	public int getSizeInventory() {
-		return 9;
+		return stacks.length;
 	}
 
 	@Override
@@ -120,81 +147,23 @@ public abstract class SummoningRecipe extends AbstractInventory {
 	
 	public static SummoningRecipe[] recipes = new SummoningRecipe[32];
 	
-	public static final SummoningRecipe HEAVEN_ZOMBIE = new SummoningRecipeDemonAngel(
+	/*public static final SummoningRecipe HEAVEN_ZOMBIE = new SummoningRecipeDemonAngel(
 			0, EntityHeavenZombie.class, "Heaven Zombie", OCEAN, OCEAN, OCEAN,
 			OCEAN, OCEAN, OCEAN, OCEAN, OCEAN, OCEAN).setSummonerType(
-			Type.SUMMONING_BOOK).setMinKarma(5);
-	public static final SummoningRecipe HELL_ZOMBIE = new SummoningRecipeDemonAngel(
-			1, EntityHellZombie.class, "Hell Zombie", CORE, CORE, CORE, CORE, CORE,
+			Type.SUMMONING_BOOK).setMinKarma(5);*/
+	
+	/*public static final SummoningRecipe HELL_ZOMBIE = new SummoningRecipeDemonAngel(1, EntityHellZombie.class, "Hell Zombie", CORE, CORE, CORE, CORE, CORE,
 			CORE, CORE, CORE, CORE).setMaxKarma(-5).setSummonerType(
-			Type.EVIL_TABLET);
-
-	public static final SummoningRecipe SHEEP = new SummoningRecipeAnimals(2,
-			EntitySheep.class, LEAF, LEAF, LEAF, LEAF, LEAF, LEAF, LEAF,
-			LEAF, LEAF).setSummonerType(Type.SUMMONING_BOOK);
+			Type.EVIL_TABLET);*/
 	
-	public static final SummoningRecipe COW = new SummoningRecipeAnimals(3,
-			EntitySheep.class, LEAF, LEAF, LEAF, LEAF, LEAF, LEAF, LEAF,
-			LEAF, LEAF).setSummonerType(Type.SUMMONING_BOOK);
-	
-	public static final SummoningRecipe COW2 = new SummoningRecipeAnimals(4,
-			EntitySheep.class, LEAF, LEAF, LEAF, LEAF, LEAF, LEAF, LEAF,
-			LEAF, LEAF).setSummonerType(Type.SUMMONING_BOOK);
-	
-	public static final SummoningRecipe COW4 = new SummoningRecipeAnimals(5,
-			EntitySheep.class, LEAF, LEAF, LEAF, LEAF, LEAF, LEAF, LEAF,
-			LEAF, LEAF).setSummonerType(Type.SUMMONING_BOOK);
-	
-	public static final SummoningRecipe COW5 = new SummoningRecipeAnimals(6,
-			EntitySheep.class, LEAF, LEAF, LEAF, LEAF, LEAF, LEAF, LEAF,
-			LEAF, LEAF).setSummonerType(Type.SUMMONING_BOOK);
-	
-	public static final SummoningRecipe COW3 = new SummoningRecipeAnimals(7,
-			EntitySheep.class, LEAF, LEAF, LEAF, LEAF, LEAF, LEAF, LEAF,
-			LEAF, LEAF).setSummonerType(Type.SUMMONING_BOOK);
-	
-	public static final SummoningRecipe COW6 = new SummoningRecipeAnimals(8,
-			EntitySheep.class, LEAF, LEAF, LEAF, LEAF, LEAF, LEAF, LEAF,
-			LEAF, LEAF).setSummonerType(Type.SUMMONING_BOOK);
-	
-	public static final SummoningRecipe A = new SummoningRecipeAnimals(9,
-			EntitySheep.class, LEAF, LEAF, LEAF, LEAF, LEAF, LEAF, LEAF,
-			LEAF, LEAF).setSummonerType(Type.SUMMONING_BOOK);
-	
-	public static final SummoningRecipe B = new SummoningRecipeAnimals(10,
-			EntitySheep.class, LEAF, LEAF, LEAF, LEAF, LEAF, LEAF, LEAF,
-			LEAF, LEAF).setSummonerType(Type.SUMMONING_BOOK);
-	
-	public static final SummoningRecipe Q = new SummoningRecipeAnimals(11,
-			EntitySheep.class, LEAF, LEAF, LEAF, LEAF, LEAF, LEAF, LEAF,
-			LEAF, LEAF).setSummonerType(Type.SUMMONING_BOOK);
-	
-	public static final SummoningRecipe R = new SummoningRecipeAnimals(12,
-			EntitySheep.class, LEAF, LEAF, LEAF, LEAF, LEAF, LEAF, LEAF,
-			LEAF, LEAF).setSummonerType(Type.SUMMONING_BOOK);
-	
-	public static final SummoningRecipe T = new SummoningRecipeAnimals(13,
-			EntitySheep.class, LEAF, LEAF, LEAF, LEAF, LEAF, LEAF, LEAF,
-			LEAF, LEAF).setSummonerType(Type.SUMMONING_BOOK);
-	
-	public static final SummoningRecipe Z = new SummoningRecipeAnimals(14,
-			EntitySheep.class, LEAF, LEAF, LEAF, LEAF, LEAF, LEAF, LEAF,
-			LEAF, LEAF).setSummonerType(Type.SUMMONING_BOOK);
-	
-	public static final SummoningRecipe U = new SummoningRecipeAnimals(15,
-			EntitySheep.class, LEAF, LEAF, LEAF, LEAF, LEAF, LEAF, LEAF,
-			LEAF, LEAF).setSummonerType(Type.SUMMONING_BOOK);
-	
-	public static final SummoningRecipe QW = new SummoningRecipeAnimals(16,
-			EntitySheep.class, LEAF, LEAF, LEAF, LEAF, LEAF, LEAF, LEAF,
-			LEAF, LEAF).setSummonerType(Type.SUMMONING_BOOK);
+	public static final SummoningRecipe SHEEP = new SummoningRecipeAnimals(2, EntitySheep.class, Block.cloth, Block.stone, Block.snow).setSummonerType(Type.SUMMONING_BOOK);
 
 	public static SummoningRecipe fromDamage(ItemStack stack) {
 		return byId(stack.getItemDamage());
 	}
 
 	public static SummoningRecipe byId(int id) {
-		return id < recipes.length && id >= 0 ? recipes[id] : null;
+		return id < recipes.length && id >= 0 ? recipes[id] : SHEEP;
 	}
 	
 	public static SummoningRecipe findMatchingRecipe(List<ItemStack> pattern, ContainerSummoner container) {

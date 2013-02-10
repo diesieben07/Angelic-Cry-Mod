@@ -59,10 +59,14 @@ public class CrystalType {
 		return new ItemStack(ItemCryMod.crystal, 1, damage);
 	}
 	
-	public ItemStack generateChargedItemStack() {
+	public ItemStack generateChargedItemStack(int charge) {
 		ItemStack stack = generateItemStack();
-		ItemCrystal.setCharge(stack, ItemCrystal.MAX_CHARGE);
+		ItemCrystal.setCharge(stack, charge);
 		return stack;
+	}
+	
+	public ItemStack generateChargedItemStack() {
+		return generateChargedItemStack(ItemCrystal.MAX_CHARGE);
 	}
 	
 	public boolean containsThis(ItemStack stack) {
