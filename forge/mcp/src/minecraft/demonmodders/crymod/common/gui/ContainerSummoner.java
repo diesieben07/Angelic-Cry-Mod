@@ -23,7 +23,7 @@ import demonmodders.crymod.common.recipes.SummoningRecipe;
 public class ContainerSummoner extends AbstractContainer<InventorySummoner> {
 
 	private static final int[] SLOT_X_POSTITIONS = new int[] {
-		80, 80, 58, 103, 80, 38, 121, 80, 58, 103
+		80, 80, 58, 103, 38, 80, 121, 58, 103, 80
 	};
 	
 	public static final int BUTTON_NEXT_PAGE = 0;
@@ -54,12 +54,12 @@ public class ContainerSummoner extends AbstractContainer<InventorySummoner> {
 		addSlotToContainer(new SlotChargedCrystal(inventory, slotNumStart + 1, 80, 70));
 		addSlotToContainer(new SlotChargedCrystal(inventory, slotNumStart + 2, 58, 79));
 		addSlotToContainer(new SlotChargedCrystal(inventory, slotNumStart + 3, 103, 79));
-		addSlotToContainer(new SlotChargedCrystal(inventory, slotNumStart + 4, 80, 100));
-		addSlotToContainer(new SlotChargedCrystal(inventory, slotNumStart + 5, 38, 100));
+		addSlotToContainer(new SlotChargedCrystal(inventory, slotNumStart + 4, 38, 100));
+		addSlotToContainer(new SlotChargedCrystal(inventory, slotNumStart + 5, 80, 100));
 		addSlotToContainer(new SlotChargedCrystal(inventory, slotNumStart + 6, 121, 100));
-		addSlotToContainer(new SlotChargedCrystal(inventory, slotNumStart + 7, 80, 130));
-		addSlotToContainer(new SlotChargedCrystal(inventory, slotNumStart + 8, 58, 121));
-		addSlotToContainer(new SlotChargedCrystal(inventory, slotNumStart + 9, 103, 121));
+		addSlotToContainer(new SlotChargedCrystal(inventory, slotNumStart + 7, 58, 121));
+		addSlotToContainer(new SlotChargedCrystal(inventory, slotNumStart + 8, 103, 121));
+		addSlotToContainer(new SlotChargedCrystal(inventory, slotNumStart + 9, 80, 130));
 	}
 	
 	public int page() {

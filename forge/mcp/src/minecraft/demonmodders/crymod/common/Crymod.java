@@ -47,7 +47,7 @@ import demonmodders.crymod.common.worldgen.Structure;
 import demonmodders.crymod.common.worldgen.WorldgenEventHandler;
 
 @Mod(modid = "SummoningMod", name = "Summoningmod", version = UpdateChecker.VERSION)
-@NetworkMod(tinyPacketHandler = CrymodPacketHandler.class, clientSideRequired = true, serverSideRequired = false)
+@NetworkMod(tinyPacketHandler = CrymodPacketHandler.class, clientSideRequired = true, serverSideRequired = true)
 public class Crymod {
 
 	@SidedProxy(clientSide = "demonmodders.crymod.client.ClientProxy", serverSide = "demonmodders.crymod.common.ServerProxy")

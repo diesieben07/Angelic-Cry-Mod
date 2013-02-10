@@ -1,26 +1,19 @@
 package demonmodders.crymod.client.gui;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.inventory.IInventory;
-import net.minecraft.inventory.Slot;
 
 import org.lwjgl.opengl.GL11;
 
 import cpw.mods.fml.relauncher.Side;
 import demonmodders.crymod.common.gui.AbstractContainer;
-import demonmodders.crymod.common.inventory.slots.ScrollingSlot;
 import demonmodders.crymod.common.network.PacketGuiButton;
 
 public abstract class AbstractGuiContainer<T extends AbstractContainer<R>, R extends IInventory> extends GuiContainer {
 
 	protected final T container;
-	private final Collection<ScrollingSlot> scrollingSlots = new ArrayList<ScrollingSlot>();
-	private int slotTickCount = 0;
+	private int tickCount = 0;
 	
 	public AbstractGuiContainer(T container) {
 		super(container);
@@ -48,24 +41,12 @@ public abstract class AbstractGuiContainer<T extends AbstractContainer<R>, R ext
 	protected abstract String getTextureFile();
 
 	@Override
-	public void initGui() {
-		super.initGui();
-		for (Slot slot : (List<Slot>)container.inventorySlots) {
-			if (slot instanceof ScrollingSlot) {
-				scrollingSlots.add((ScrollingSlot)slot);
-			}
-		}
-	}
-
-	@Override
 	public void updateScreen() {
 		super.updateScreen();
-		slotTickCount++;
-		if (slotTickCount == 40) {
-			for (ScrollingSlot slot : scrollingSlots) {
-				slot.tick();
-			}
-			slotTickCount = 0;
+		tickCount++;
+		if (tickCount == 20) {
+			container.clientTick();
+			tickCount = 0;
 		}
 	}
 }

@@ -14,5 +14,4 @@ public class SlotNoPickup extends Slot {
 	public boolean canTakeStack(EntityPlayer par1EntityPlayer) {
 		return false;
 	}
-
 }

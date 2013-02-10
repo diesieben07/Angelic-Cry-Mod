@@ -2,10 +2,9 @@ package demonmodders.crymod.common.recipes;
 
 import static demonmodders.crymod.common.items.CrystalType.*;
 
-import java.util.Arrays;
 import java.util.List;
 
-import com.google.common.collect.ObjectArrays;
+import cpw.mods.fml.common.FMLCommonHandler;
 
 import net.minecraft.block.Block;
 import net.minecraft.entity.EntityLiving;
@@ -44,7 +43,6 @@ public abstract class SummoningRecipe extends AbstractInventory {
 		this.id = id;
 		
 		stacks = new ItemStack[specialItems.length + 9];
-		System.out.println(stacks.length);
 		
 		if (crystals.length != 9) {
 			throw new IllegalArgumentException("Invalid Summoning Recipe!");
@@ -76,6 +74,9 @@ public abstract class SummoningRecipe extends AbstractInventory {
 				}
 			}
 			ItemStack givenSpecialItem = checkStacks.get(0);
+			if (givenSpecialItem == null) {
+				return false;
+			}
 			
 			for (int i = 0; i < stacks.length - 9; i++) {
 				if (givenSpecialItem.itemID == stacks[i].itemID && givenSpecialItem.getItemDamage() == stacks[i].getItemDamage()) {
@@ -147,14 +148,25 @@ public abstract class SummoningRecipe extends AbstractInventory {
 	
 	public static SummoningRecipe[] recipes = new SummoningRecipe[32];
 	
-	/*public static final SummoningRecipe HEAVEN_ZOMBIE = new SummoningRecipeDemonAngel(
-			0, EntityHeavenZombie.class, "Heaven Zombie", OCEAN, OCEAN, OCEAN,
-			OCEAN, OCEAN, OCEAN, OCEAN, OCEAN, OCEAN).setSummonerType(
-			Type.SUMMONING_BOOK).setMinKarma(5);*/
+	public static final SummoningRecipe HEAVEN_ZOMBIE = new SummoningRecipeDemonAngel(
+			0, EntityHeavenZombie.class, "Heaven Zombie", Item.redstone, 
+			CORE, 
+			FIERY, FIERY,
+			CORE, MAGIC, CORE,
+			FIERY, FIERY,
+			CORE
+			).setSummonerType(
+			Type.SUMMONING_BOOK).setMinKarma(5);
 	
-	/*public static final SummoningRecipe HELL_ZOMBIE = new SummoningRecipeDemonAngel(1, EntityHellZombie.class, "Hell Zombie", CORE, CORE, CORE, CORE, CORE,
-			CORE, CORE, CORE, CORE).setMaxKarma(-5).setSummonerType(
-			Type.EVIL_TABLET);*/
+	public static final SummoningRecipe HELL_ZOMBIE = new SummoningRecipeDemonAngel(
+			1, EntityHellZombie.class, "Hell Zombie", Item.redstone, 
+			FOREST, 
+			LEAF, LEAF,
+			FOREST, MAGIC, FOREST,
+			LEAF, LEAF,
+			FOREST
+			).setMaxKarma(-5).setSummonerType(
+			Type.EVIL_TABLET);
 	
 	public static final SummoningRecipe SHEEP = new SummoningRecipeAnimals(2, EntitySheep.class, Block.cloth, Block.stone, Block.snow).setSummonerType(Type.SUMMONING_BOOK);
 

@@ -1,9 +1,7 @@
 package demonmodders.crymod.common.gui;
 
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
 import demonmodders.crymod.common.inventory.InventoryEnderBook;
-import demonmodders.crymod.common.inventory.slots.ScrollingSlot;
 import demonmodders.crymod.common.inventory.slots.SlotNoPickup;
 import demonmodders.crymod.common.playerinfo.PlayerInformation;
 import demonmodders.crymod.common.recipes.SummoningRecipe;
@@ -13,8 +11,8 @@ public class ContainerEnderBook extends AbstractContainer<InventoryEnderBook> {
 	public int currentPage;
 	private final EntityPlayer player;
 	private final PlayerInformation playerInfo;
-	private int slotScrollIndex = 0;
-	private SummoningRecipe currentRecipe;
+	private int scrollingSlotIndex = 0;
+	public SummoningRecipe currentRecipe;
 	
 	public ContainerEnderBook(InventoryEnderBook inventory) {
 		super(inventory);
@@ -67,10 +65,17 @@ public class ContainerEnderBook extends AbstractContainer<InventoryEnderBook> {
 	}
 	
 	public void updateScrollingSlot() {
-		slotScrollIndex++;
-		if (slotScrollIndex == currentRecipe.getSizeInventory() - 9) {
-			slotScrollIndex = 0;
+		if (currentRecipe != null) {
+			scrollingSlotIndex++;
+			if (scrollingSlotIndex == currentRecipe.getSizeInventory() - 9) {
+				scrollingSlotIndex = 0;
+			}
+			inventory.setInventorySlotContents(0, currentRecipe.getStackInSlot(scrollingSlotIndex));
 		}
-		inventory.setInventorySlotContents(0, currentRecipe.getStackInSlot(slotScrollIndex));
+	}
+
+	@Override
+	public void clientTick() {
+		updateScrollingSlot();
 	}
 }

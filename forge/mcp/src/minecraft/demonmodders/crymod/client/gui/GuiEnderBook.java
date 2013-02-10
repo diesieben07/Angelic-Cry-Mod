@@ -28,7 +28,6 @@ public class GuiEnderBook extends AbstractGuiContainer<ContainerEnderBook, Inven
 	
 	public static final int SCROLLBAR_HEIGHT = 40;
 	
-	private SummoningRecipe currentRecipe = null;
 	private SummoningRecipe[] knownRecipes;
 	
 	private int scrollbarPosition = 0;
@@ -52,10 +51,6 @@ public class GuiEnderBook extends AbstractGuiContainer<ContainerEnderBook, Inven
 		controlList.add(new GuiButtonImage(GuiEnderBook.PREV_PAGE, (width - xSize) / 2 + 20, buttonYPos, ARROW_WIDTH, ARROW_HEIGHT, 256 - (ARROW_WIDTH * 2), 0, "/demonmodders/crymod/resource/tex/enderBook.png"));
 	}
 	
-	public void setCurrentRecipe(SummoningRecipe recipe) {
-		currentRecipe = recipe;
-	}
-
 	@Override
 	protected void drawGuiContainerForegroundLayer(int scaledMouseX, int scaledMouseY) {
 		// scrollbar handling
@@ -73,8 +68,8 @@ public class GuiEnderBook extends AbstractGuiContainer<ContainerEnderBook, Inven
 			}
 		}
 		
-		if (currentRecipe != null) {
-			fontRenderer.drawString(currentRecipe.getRecipeName(), 26, 20, 0x000000);
+		if (container.currentRecipe != null) {
+			fontRenderer.drawString(container.currentRecipe.getRecipeName(), 26, 20, 0x000000);
 		}
 		
 		int movedScrollbarPosition = scrollbarPosition - 3;

@@ -76,4 +76,6 @@ public abstract class AbstractContainer<T extends IInventory> extends Container 
 	public boolean handleButtonClick(int buttonId) {
 		return true;
 	}
+	
+	public void clientTick() { }
 }
