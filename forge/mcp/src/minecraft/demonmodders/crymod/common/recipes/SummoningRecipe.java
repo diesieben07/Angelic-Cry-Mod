@@ -1,17 +1,28 @@
 package demonmodders.crymod.common.recipes;
 
-import static demonmodders.crymod.common.items.CrystalType.*;
+import static demonmodders.crymod.common.items.CrystalType.CORE;
+import static demonmodders.crymod.common.items.CrystalType.FIERY;
+import static demonmodders.crymod.common.items.CrystalType.FOREST;
+import static demonmodders.crymod.common.items.CrystalType.LEAF;
+import static demonmodders.crymod.common.items.CrystalType.MAGIC;
 
 import java.util.List;
 
-import cpw.mods.fml.common.FMLCommonHandler;
-
 import net.minecraft.block.Block;
 import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.monster.EntityCreeper;
+import net.minecraft.entity.monster.EntityEnderman;
+import net.minecraft.entity.monster.EntitySkeleton;
+import net.minecraft.entity.monster.EntityZombie;
+import net.minecraft.entity.passive.EntityChicken;
+import net.minecraft.entity.passive.EntityCow;
+import net.minecraft.entity.passive.EntityPig;
 import net.minecraft.entity.passive.EntitySheep;
+import net.minecraft.entity.passive.EntitySquid;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import demonmodders.crymod.common.CrymodUtils;
 import demonmodders.crymod.common.entities.EntityHeavenZombie;
 import demonmodders.crymod.common.entities.EntityHellZombie;
 import demonmodders.crymod.common.gui.ContainerSummoner;
@@ -30,11 +41,11 @@ public abstract class SummoningRecipe extends AbstractInventory {
 	private float maxKarma = 0;
 	protected ItemSummoner.Type summonerType = Type.SUMMONING_BOOK;
 	
-	public SummoningRecipe(int id, ItemStack specialItem, CrystalType... crystals) {
-		this(id, new ItemStack[] { specialItem }, crystals);
+	public SummoningRecipe(int id, Object specialItem, CrystalType... crystals) {
+		this(id, new Object[] { specialItem }, crystals);
 	}
 	
-	public SummoningRecipe(int id, ItemStack[] specialItems, CrystalType... crystals) {
+	public SummoningRecipe(int id, Object[] specialItems, CrystalType... crystals) {
 		super(false);
 		if (crystals.length != 9) {
 			throw new IllegalArgumentException();
@@ -47,6 +58,8 @@ public abstract class SummoningRecipe extends AbstractInventory {
 		if (crystals.length != 9) {
 			throw new IllegalArgumentException("Invalid Summoning Recipe!");
 		}
+		
+		specialItems = CrymodUtils.getItemStacks(specialItems);
 		
 		System.arraycopy(specialItems, 0, stacks, 0, specialItems.length);
 		
@@ -155,8 +168,7 @@ public abstract class SummoningRecipe extends AbstractInventory {
 			CORE, MAGIC, CORE,
 			FIERY, FIERY,
 			CORE
-			).setSummonerType(
-			Type.SUMMONING_BOOK).setMinKarma(5);
+			).setSummonerType(Type.SUMMONING_BOOK).setMinKarma(5);
 	
 	public static final SummoningRecipe HELL_ZOMBIE = new SummoningRecipeDemonAngel(
 			1, EntityHellZombie.class, "Hell Zombie", Item.redstone, 
@@ -165,11 +177,21 @@ public abstract class SummoningRecipe extends AbstractInventory {
 			FOREST, MAGIC, FOREST,
 			LEAF, LEAF,
 			FOREST
-			).setMaxKarma(-5).setSummonerType(
-			Type.EVIL_TABLET);
+			).setMaxKarma(-5).setSummonerType(Type.EVIL_TABLET);
 	
-	public static final SummoningRecipe SHEEP = new SummoningRecipeAnimals(2, EntitySheep.class, Block.cloth, Block.stone, Block.snow).setSummonerType(Type.SUMMONING_BOOK);
-
+	public static final SummoningRecipe SHEEP = new SummoningRecipeAnimals(2, EntitySheep.class, Block.cloth).setSummonerType(Type.SUMMONING_BOOK);
+	public static final SummoningRecipe COW = new SummoningRecipeAnimals(3, EntityCow.class, Item.leather).setSummonerType(Type.SUMMONING_BOOK);
+	public static final SummoningRecipe PIG = new SummoningRecipeAnimals(4, EntityPig.class, Item.porkRaw).setSummonerType(Type.SUMMONING_BOOK);
+	public static final SummoningRecipe CHICKEN = new SummoningRecipeAnimals(5, EntityChicken.class, Item.egg).setSummonerType(Type.SUMMONING_BOOK);
+	public static final SummoningRecipe SQUID = new SummoningRecipeAnimals(6, EntitySquid.class, new ItemStack(Item.dyePowder, 1, 0)).setSummonerType(Type.SUMMONING_BOOK);
+	
+	public static final SummoningRecipe ZOMBIE = new SummoningRecipeMobs(7, EntityZombie.class, Item.rottenFlesh).setSummonerType(Type.EVIL_TABLET);
+	public static final SummoningRecipe SKELETON = new SummoningRecipeMobs(8, EntitySkeleton.class, Item.bone).setSummonerType(Type.EVIL_TABLET);
+	public static final SummoningRecipe ENDERMAN = new SummoningRecipeMobs(9, EntityEnderman.class, Item.enderPearl).setSummonerType(Type.EVIL_TABLET);
+	public static final SummoningRecipe CREEPER = new SummoningRecipeMobs(10, EntityCreeper.class, Item.gunpowder).setSummonerType(Type.EVIL_TABLET);
+	
+	
+	
 	public static SummoningRecipe fromDamage(ItemStack stack) {
 		return byId(stack.getItemDamage());
 	}

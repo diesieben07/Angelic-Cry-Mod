@@ -14,7 +14,7 @@ public class ContainerRecipePage extends AbstractContainer<SummoningRecipe> {
 		
 		int specialItemCount = inventory.getSizeInventory() - 9;
 		
-		addSlotToContainer(scrollingSlot = new ScrollingSlot(inventory, 0, specialItemCount, 10, 10));
+		addSlotToContainer(scrollingSlot = new ScrollingSlot(inventory, 0, specialItemCount, 102, 3));
 		
 		addSlotToContainer(new SlotNoPickup(inventory, specialItemCount + 0, 54, 34));
 		addSlotToContainer(new SlotNoPickup(inventory, specialItemCount + 1, 28, 46));

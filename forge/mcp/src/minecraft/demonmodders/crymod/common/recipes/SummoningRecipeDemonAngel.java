@@ -16,7 +16,7 @@ public class SummoningRecipeDemonAngel extends SummoningRecipe {
 	private final String demonName;
 		
 	public SummoningRecipeDemonAngel(int id, Class<? extends EntitySummonable> demon, String demonName, Object specialItem, CrystalType... crystals) {
-		super(id, CrymodUtils.getItemStack(specialItem), crystals);
+		super(id, specialItem, crystals);
 		
 		this.demon = demon;
 		this.demonName = demonName;

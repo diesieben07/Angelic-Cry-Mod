@@ -16,11 +16,6 @@ public class GuiRecipePage extends AbstractGuiContainer<ContainerRecipePage, Sum
 		return "/demonmodders/crymod/resource/tex/recipePage.png";
 	}
 
-	/*@Override
-	protected boolean isPointInRegion(int par1, int par2, int par3, int par4, int par5, int par6) {
-		return super.;
-	}*/
-
 	@Override
 	protected void drawGuiContainerForegroundLayer(int par1, int par2) {
 		SummoningRecipe recipe = container.getInventoryInstance();
