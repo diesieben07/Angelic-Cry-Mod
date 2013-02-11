@@ -12,7 +12,9 @@ public class ClientEventHandler {
 		// http://www.freesound.org/people/BristolStories/sounds/51713/
 		"karmaup",
 		// http://www.freesound.org/people/HerbertBoland/sounds/33637/
-		"karmadown"
+		"karmadown",
+		//http://www.freesound.org/people/ryansnook/sounds/108012/
+		"karmaerror"
 	};
 	
 	@ForgeSubscribe

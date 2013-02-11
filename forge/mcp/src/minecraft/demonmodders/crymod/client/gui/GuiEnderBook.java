@@ -1,18 +1,11 @@
 
 package demonmodders.crymod.client.gui;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Random;
-
-import org.lwjgl.input.Mouse;
-import org.lwjgl.opengl.GL11;
-
-import com.google.common.collect.Lists;
-
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.renderer.RenderHelper;
-import net.minecraft.client.renderer.Tessellator;
+
+import org.lwjgl.opengl.GL11;
+
 import demonmodders.crymod.common.gui.ContainerEnderBook;
 import demonmodders.crymod.common.inventory.InventoryEnderBook;
 import demonmodders.crymod.common.playerinfo.PlayerInformation;
@@ -72,12 +65,7 @@ public class GuiEnderBook extends AbstractGuiContainer<ContainerEnderBook, Inven
 			fontRenderer.drawString(container.currentRecipe.getRecipeName(), 26, 20, 0x000000);
 		}
 		
-		int movedScrollbarPosition = scrollbarPosition - 3;
-		int length = knownRecipes.length - 12;
-		if (length < 0) {
-			length = 0;
-		}
-		int listOffset = (int) ((float)movedScrollbarPosition / (float)(ySize - SCROLLBAR_HEIGHT - 6)) * length;
+		int listOffset = getScrollListOffset();
 		int y = 4;
 		for (int i = listOffset; (i < knownRecipes.length && i < listOffset + 13); i++) {
 			String recipeName = knownRecipes[i].getRecipeName();
@@ -85,12 +73,21 @@ public class GuiEnderBook extends AbstractGuiContainer<ContainerEnderBook, Inven
 			if (y == ySize - 11) {
 				break;
 			}
-			y += 15;
+			y += fontRenderer.FONT_HEIGHT + 6;
 		}
 		
 		// scrollbar
 		drawRect(-8, scrollbarPosition + 2, -1, scrollbarPosition + SCROLLBAR_HEIGHT + 1, 0xff212121);
 		drawRect(-7, scrollbarPosition + 3, -2, scrollbarPosition + SCROLLBAR_HEIGHT, 0xff414141);
+	}
+	
+	private int getScrollListOffset() {
+		int movedScrollbarPosition = scrollbarPosition - 3;
+		int length = knownRecipes.length - 12;
+		if (length < 0) {
+			length = 0;
+		}
+		return (int) ((float)movedScrollbarPosition / (float)(ySize - SCROLLBAR_HEIGHT - 6)) * length;
 	}
 
 	@Override
@@ -111,12 +108,24 @@ public class GuiEnderBook extends AbstractGuiContainer<ContainerEnderBook, Inven
 	}
 
 	@Override
-	protected void mouseClicked(int x, int y, int button) {
-		super.mouseClicked(x, y, button);
-		if (button == 0 && isPointInRegion(-7, scrollbarPosition + 3, 5, SCROLLBAR_HEIGHT - 2, x, y)) {
-			int modifiedMouseY = y - (height - ySize) / 2 - 4;
-			mouseScrollbarDelta = modifiedMouseY - scrollbarPosition;
-			draggingScrollbar = true;
+	protected void mouseClicked(int x, int y, int mouseButton) {
+		super.mouseClicked(x, y, mouseButton);
+		
+		if (mouseButton == 0) {
+			if (isPointInRegion(-7, scrollbarPosition + 3, 5, SCROLLBAR_HEIGHT - 2, x, y)) {
+				int modifiedMouseY = y - (height - ySize) / 2 - 4;
+				mouseScrollbarDelta = modifiedMouseY - scrollbarPosition;
+				draggingScrollbar = true;
+			}
+			
+			int listOffset = getScrollListOffset();
+			int nameY = 4;
+			for (int i = listOffset; (i < knownRecipes.length && i < listOffset + 13); i++) {
+				if (isPointInRegion(- (width - xSize) / 2 + 5, nameY, fontRenderer.getStringWidth(knownRecipes[i].getRecipeName()), fontRenderer.FONT_HEIGHT, x, y)) {
+					container.setActivePage(i);					
+				}
+				nameY += fontRenderer.FONT_HEIGHT + 6;
+			}
 		}
 	}
 
@@ -125,16 +134,6 @@ public class GuiEnderBook extends AbstractGuiContainer<ContainerEnderBook, Inven
 		super.mouseMovedOrUp(x, y, which);
 		if (which == 0) {
 			draggingScrollbar = false;
-		}
-	}
-
-	@Override
-	public void updateScreen() {
-		super.updateScreen();
-		tickCounter++;
-		if (tickCounter == 20) {
-			tickCounter = 0;
-			container.updateScrollingSlot();
 		}
 	}
 }

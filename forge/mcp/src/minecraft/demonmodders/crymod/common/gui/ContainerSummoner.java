@@ -117,7 +117,11 @@ public class ContainerSummoner extends AbstractContainer<InventorySummoner> {
 		case BUTTON_SUMMON:
 			if (side.isServer()) {
 				SummoningRecipe recipe = currentMatchingRecipe();
-				if (recipe != null && recipe.canSummon(player)) {
+				if (recipe != null) {
+					if (!recipe.canSummon(player)) {
+						player.worldObj.playSoundAtEntity(player, "summoningmod.karmaerror", 1, 1);
+						return;
+					}
 					try {
 						player.closeScreen();
 						EntityLiving entity = recipe.summon(player, this);
