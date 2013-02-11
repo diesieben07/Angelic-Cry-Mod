@@ -10,8 +10,12 @@ import java.util.List;
 
 import net.minecraft.block.Block;
 import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.monster.EntityBlaze;
 import net.minecraft.entity.monster.EntityCreeper;
 import net.minecraft.entity.monster.EntityEnderman;
+import net.minecraft.entity.monster.EntityGhast;
+import net.minecraft.entity.monster.EntityMagmaCube;
+import net.minecraft.entity.monster.EntityPigZombie;
 import net.minecraft.entity.monster.EntitySkeleton;
 import net.minecraft.entity.monster.EntityZombie;
 import net.minecraft.entity.passive.EntityChicken;
@@ -185,12 +189,15 @@ public abstract class SummoningRecipe extends AbstractInventory {
 	public static final SummoningRecipe CHICKEN = new SummoningRecipeAnimals(5, EntityChicken.class, Item.egg).setSummonerType(Type.SUMMONING_BOOK);
 	public static final SummoningRecipe SQUID = new SummoningRecipeAnimals(6, EntitySquid.class, new ItemStack(Item.dyePowder, 1, 0)).setSummonerType(Type.SUMMONING_BOOK);
 	
-	public static final SummoningRecipe ZOMBIE = new SummoningRecipeMobs(7, EntityZombie.class, Item.rottenFlesh).setSummonerType(Type.EVIL_TABLET);
-	public static final SummoningRecipe SKELETON = new SummoningRecipeMobs(8, EntitySkeleton.class, Item.bone).setSummonerType(Type.EVIL_TABLET);
-	public static final SummoningRecipe ENDERMAN = new SummoningRecipeMobs(9, EntityEnderman.class, Item.enderPearl).setSummonerType(Type.EVIL_TABLET);
-	public static final SummoningRecipe CREEPER = new SummoningRecipeMobs(10, EntityCreeper.class, Item.gunpowder).setSummonerType(Type.EVIL_TABLET);
+	public static final SummoningRecipe ZOMBIE = new SummoningRecipeMobs(7, EntityZombie.class, Item.rottenFlesh);
+	public static final SummoningRecipe SKELETON = new SummoningRecipeMobs(8, EntitySkeleton.class, Item.bone);
+	public static final SummoningRecipe ENDERMAN = new SummoningRecipeMobs(9, EntityEnderman.class, Item.enderPearl);
+	public static final SummoningRecipe CREEPER = new SummoningRecipeMobs(10, EntityCreeper.class, Item.gunpowder);
 	
-	
+	public static final SummoningRecipe GHAST = new SummoningRecipeNetherMobs(11, EntityGhast.class, Item.ghastTear);
+	public static final SummoningRecipe BLAZE = new SummoningRecipeNetherMobs(12, EntityBlaze.class, Item.blazeRod);
+	public static final SummoningRecipe ZOMBIE_PIGMAN = new SummoningRecipeNetherMobs(13, EntityPigZombie.class, Item.ingotGold);
+	public static final SummoningRecipe MAGMA_CUBE = new SummoningRecipeNetherMobs(14, EntityMagmaCube.class, Item.magmaCream);
 	
 	public static SummoningRecipe fromDamage(ItemStack stack) {
 		return byId(stack.getItemDamage());
