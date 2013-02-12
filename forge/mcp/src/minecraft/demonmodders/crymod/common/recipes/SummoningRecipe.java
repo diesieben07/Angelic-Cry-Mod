@@ -199,6 +199,8 @@ public abstract class SummoningRecipe extends AbstractInventory {
 	public static final SummoningRecipe ZOMBIE_PIGMAN = new SummoningRecipeNetherMobs(13, EntityPigZombie.class, Item.ingotGold);
 	public static final SummoningRecipe MAGMA_CUBE = new SummoningRecipeNetherMobs(14, EntityMagmaCube.class, Item.magmaCream);
 	
+	
+	
 	public static SummoningRecipe fromDamage(ItemStack stack) {
 		return byId(stack.getItemDamage());
 	}

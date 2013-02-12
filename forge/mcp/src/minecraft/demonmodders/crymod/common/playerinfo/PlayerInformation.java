@@ -226,7 +226,7 @@ public final class PlayerInformation {
 	
 	public void tick() {
 		if (dirty) {
-			updateClient();
+			updateClient();System.out.println("resending packet");
 			dirty = false;
 		}
 	}
@@ -238,7 +238,7 @@ public final class PlayerInformation {
 	/**
 	 * marks that this needs to be resend to the client
 	 */
-	private void setDirty() {
+	public void setDirty() {
 		dirty = true;
 	}
 }

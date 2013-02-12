@@ -1,0 +1,11 @@
+[06.02.2013 00:02:43] Resinresin: Zombie: rotten flesh
+[06.02.2013 00:02:55] Resinresin: Spider: string
+[06.02.2013 00:03:05] Resinresin: Ender man: ender pearl
+[07.02.2013 21:55:12] Resinresin: ah
+[07.02.2013 21:55:14] Resinresin: ok more
+[07.02.2013 21:55:21] Resinresin: sheep : wool
+[07.02.2013 21:55:26] Resinresin: cow : leather
+[07.02.2013 21:55:39] Resinresin: pig : porkRaw
+[07.02.2013 21:55:51] Resinresin: chicken: egg
+
+blaze, magmacube, pigmen, ghast

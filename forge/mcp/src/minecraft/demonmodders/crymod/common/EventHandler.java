@@ -2,6 +2,7 @@ package demonmodders.crymod.common;
 
 import java.util.List;
 
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.WorldServer;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.gen.ChunkProviderServer;
@@ -10,11 +11,13 @@ import net.minecraftforge.event.entity.item.ItemTossEvent;
 import net.minecraftforge.event.world.ChunkDataEvent;
 import net.minecraftforge.event.world.ChunkEvent;
 import net.minecraftforge.event.world.WorldEvent;
+import cpw.mods.fml.common.IPlayerTracker;
 import cpw.mods.fml.relauncher.ReflectionHelper;
 import demonmodders.crymod.common.items.ItemCryMod;
+import demonmodders.crymod.common.playerinfo.PlayerInformation;
 import demonmodders.crymod.common.worldgen.StructurePosition;
 
-public class EventHandler {
+public class EventHandler implements IPlayerTracker {
 	
 	@ForgeSubscribe
 	public void onItemToss(ItemTossEvent evt) {
@@ -49,4 +52,20 @@ public class EventHandler {
 			}
 		}
 	}
+	
+	@Override
+	public void onPlayerChangedDimension(EntityPlayer player) {
+		PlayerInformation.forPlayer(player).setDirty();System.out.println("changed dimension: " + player);
+	}
+
+	@Override
+	public void onPlayerRespawn(EntityPlayer player) {
+		PlayerInformation.forPlayer(player).setDirty();System.out.println("respawn: " + player);
+	}
+
+	@Override
+	public void onPlayerLogin(EntityPlayer player) { }
+
+	@Override
+	public void onPlayerLogout(EntityPlayer player) { }
 }

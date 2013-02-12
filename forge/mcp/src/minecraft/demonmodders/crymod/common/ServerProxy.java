@@ -14,6 +14,7 @@ import demonmodders.crymod.common.UpdateChecker.UpdateStatusHandler;
 import demonmodders.crymod.common.network.PacketClientAction;
 import demonmodders.crymod.common.network.PacketClientEffect;
 import demonmodders.crymod.common.network.PacketUpdateInformation;
+import demonmodders.crymod.common.playerinfo.PlayerInformation;
 
 public class ServerProxy implements CrymodProxy, IPlayerTracker, UpdateStatusHandler {
 	

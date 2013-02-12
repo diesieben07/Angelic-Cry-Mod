@@ -96,7 +96,10 @@ public class Crymod {
 		
 		TickRegistry.registerScheduledTickHandler(new PlayerTickHandler(), Side.SERVER);
 		
-		MinecraftForge.EVENT_BUS.register(new EventHandler());
+		EventHandler handler = new EventHandler();
+		
+		MinecraftForge.EVENT_BUS.register(handler);
+		GameRegistry.registerPlayerTracker(handler);
 				
 		registerEntity(EntityHeavenZombie.class, "crymodHeavenZombie", 0xffffff, 0x000000, 80, 3, true);
 		registerEntity(EntityHellZombie.class, "crymodHellZombie", 0x000000, 0xffffff, 80, 3, true);
