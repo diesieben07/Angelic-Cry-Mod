@@ -1,4 +1,4 @@
-package demonmodders.crymod.common.karma;
+package demonmodders.crymod.common.handlers.event;
 
 import static demonmodders.crymod.common.playerinfo.PlayerInformation.forPlayer;
 

@@ -6,7 +6,8 @@ import net.minecraft.client.renderer.RenderHelper;
 
 import org.lwjgl.opengl.GL11;
 
-import demonmodders.crymod.common.gui.ContainerEnderBook;
+import demonmodders.crymod.client.gui.button.GuiButtonImage;
+import demonmodders.crymod.common.container.ContainerEnderBook;
 import demonmodders.crymod.common.inventory.InventoryEnderBook;
 import demonmodders.crymod.common.playerinfo.PlayerInformation;
 import demonmodders.crymod.common.recipes.SummoningRecipe;

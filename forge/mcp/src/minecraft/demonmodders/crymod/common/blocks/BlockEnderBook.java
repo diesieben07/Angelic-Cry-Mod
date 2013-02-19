@@ -5,8 +5,8 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import demonmodders.crymod.common.Crymod;
-import demonmodders.crymod.common.gui.ContainerEnderBook;
-import demonmodders.crymod.common.gui.GuiType;
+import demonmodders.crymod.common.container.ContainerEnderBook;
+import demonmodders.crymod.common.container.GuiType;
 import demonmodders.crymod.common.tileentities.TileEntityEnderbook;
 
 public class BlockEnderBook extends BlockCryMod {

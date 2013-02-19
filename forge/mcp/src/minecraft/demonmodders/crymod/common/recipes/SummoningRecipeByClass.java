@@ -10,7 +10,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.StringTranslate;
 import net.minecraft.world.World;
-import demonmodders.crymod.common.gui.ContainerSummoner;
+import demonmodders.crymod.common.container.ContainerSummoner;
 import demonmodders.crymod.common.items.CrystalType;
 
 public abstract class SummoningRecipeByClass extends SummoningRecipe {

@@ -1,13 +1,14 @@
 package demonmodders.crymod.client.gui;
 
-import static demonmodders.crymod.common.gui.ContainerSummoner.BUTTON_NEXT_PAGE;
-import static demonmodders.crymod.common.gui.ContainerSummoner.BUTTON_PREV_PAGE;
-import static demonmodders.crymod.common.gui.ContainerSummoner.BUTTON_SUMMON;
+import static demonmodders.crymod.common.container.ContainerSummoner.BUTTON_NEXT_PAGE;
+import static demonmodders.crymod.common.container.ContainerSummoner.BUTTON_PREV_PAGE;
+import static demonmodders.crymod.common.container.ContainerSummoner.BUTTON_SUMMON;
 import net.minecraft.client.gui.GuiButton;
 
 import org.lwjgl.opengl.GL11;
 
-import demonmodders.crymod.common.gui.ContainerSummoner;
+import demonmodders.crymod.client.gui.button.GuiButtonImage;
+import demonmodders.crymod.common.container.ContainerSummoner;
 import demonmodders.crymod.common.inventory.InventorySummoner;
 import demonmodders.crymod.common.inventory.AbstractInventory.InventoryChangeListener;
 import demonmodders.crymod.common.recipes.SummoningRecipe;

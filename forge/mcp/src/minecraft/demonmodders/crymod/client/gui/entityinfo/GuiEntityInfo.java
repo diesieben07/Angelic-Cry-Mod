@@ -14,10 +14,11 @@ import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
 
 import demonmodders.crymod.client.gui.AbstractGuiContainer;
-import demonmodders.crymod.client.gui.GuiButtonImage;
+import demonmodders.crymod.client.gui.button.GuiButtonImage;
+import demonmodders.crymod.client.gui.button.GuiButtonSmall;
 import demonmodders.crymod.client.render.RenderZombieBase;
+import demonmodders.crymod.common.container.ContainerEntityInfo;
 import demonmodders.crymod.common.entities.EntitySummonable;
-import demonmodders.crymod.common.gui.ContainerEntityInfo;
 import demonmodders.crymod.common.inventory.InventorySummonable;
 import demonmodders.crymod.common.network.PacketRenameEntity;
 
@@ -142,7 +143,8 @@ public class GuiEntityInfo extends AbstractGuiContainer<ContainerEntityInfo, Inv
 	@Override
 	public void initGui() {
 		super.initGui();
-		controlList.add((buttonConfirm = new GuiButtonImage(ContainerEntityInfo.BUTTON_CONFIRM, width / 2 - SMALL_BUTTON_WIDTH / 2, guiTop + ySize - 50, SMALL_BUTTON_WIDTH, SMALL_BUTTON_HEIGHT, 0, 256 - SMALL_BUTTON_HEIGHT * 2, getTextureFile()).setDisplayString("Confirm")));
+//		controlList.add((buttonConfirm = new GuiButtonImage(ContainerEntityInfo.BUTTON_CONFIRM, width / 2 - SMALL_BUTTON_WIDTH / 2, guiTop + ySize - 50, SMALL_BUTTON_WIDTH, SMALL_BUTTON_HEIGHT, 0, 256 - SMALL_BUTTON_HEIGHT * 2, getTextureFile()).setDisplayString("Confirm")));
+		controlList.add((buttonConfirm = new GuiButtonSmall(ContainerEntityInfo.BUTTON_CONFIRM, width / 2 - SMALL_BUTTON_WIDTH / 2, guiTop + ySize - 50, SMALL_BUTTON_WIDTH, "Confirm")));
 		controlList.add((buttonRename = new GuiButtonEntityInfoRename(ContainerEntityInfo.BUTTON_RENAME, guiLeft + 217, guiTop + 98)));
 		controlList.add((buttonRenameDone = new GuiButton(ContainerEntityInfo.BUTTON_RENAME_DONE, width / 2 - 100, height - 60, "Done")));
 		

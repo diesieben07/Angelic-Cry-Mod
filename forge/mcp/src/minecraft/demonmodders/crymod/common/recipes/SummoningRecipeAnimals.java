@@ -12,7 +12,7 @@ import net.minecraft.util.StringTranslate;
 import net.minecraft.world.World;
 import cpw.mods.fml.relauncher.ReflectionHelper;
 import demonmodders.crymod.common.CrymodUtils;
-import demonmodders.crymod.common.gui.ContainerSummoner;
+import demonmodders.crymod.common.container.ContainerSummoner;
 
 public class SummoningRecipeAnimals extends SummoningRecipeByClass {
 

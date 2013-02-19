@@ -5,6 +5,8 @@ import java.util.logging.Logger;
 
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EnumCreatureType;
+import net.minecraft.world.WorldType;
 import net.minecraftforge.common.Configuration;
 import net.minecraftforge.common.MinecraftForge;
 import cpw.mods.fml.common.FMLLog;
@@ -34,17 +36,21 @@ import demonmodders.crymod.common.creativetab.CreativeTabCrystals;
 import demonmodders.crymod.common.creativetab.CreativeTabRecipePages;
 import demonmodders.crymod.common.entities.EntityHeavenZombie;
 import demonmodders.crymod.common.entities.EntityHellZombie;
-import demonmodders.crymod.common.gui.CrymodGuiHandler;
+import demonmodders.crymod.common.entities.EntityQuester;
+import demonmodders.crymod.common.handlers.CrymodGuiHandler;
+import demonmodders.crymod.common.handlers.CrymodPacketHandler;
+import demonmodders.crymod.common.handlers.PlayerTickHandler;
+import demonmodders.crymod.common.handlers.event.GenericEventHandler;
+import demonmodders.crymod.common.handlers.event.KarmaEventHandler;
+import demonmodders.crymod.common.handlers.event.PlayerPowersHandler;
+import demonmodders.crymod.common.handlers.event.QuestEventHandler;
+import demonmodders.crymod.common.handlers.event.WorldgenEventHandler;
 import demonmodders.crymod.common.items.ItemCryMod;
-import demonmodders.crymod.common.karma.KarmaEventHandler;
-import demonmodders.crymod.common.karma.PlayerPowersHandler;
-import demonmodders.crymod.common.network.CrymodPacketHandler;
 import demonmodders.crymod.common.recipes.CraftingRecipes;
 import demonmodders.crymod.common.tileentities.TileEntityEnderbook;
 import demonmodders.crymod.common.tileentities.TileEntityMagiciser;
 import demonmodders.crymod.common.tileentities.TileEntityRechargeStation;
 import demonmodders.crymod.common.worldgen.Structure;
-import demonmodders.crymod.common.worldgen.WorldgenEventHandler;
 
 @Mod(modid = "SummoningMod", name = "Summoningmod", version = UpdateChecker.VERSION)
 @NetworkMod(tinyPacketHandler = CrymodPacketHandler.class, clientSideRequired = true, serverSideRequired = true)
@@ -93,16 +99,17 @@ public class Crymod {
 
 		KarmaEventHandler.init();
 		PlayerPowersHandler.init();
+		QuestEventHandler.init();
 		
 		TickRegistry.registerScheduledTickHandler(new PlayerTickHandler(), Side.SERVER);
 		
-		EventHandler handler = new EventHandler();
-		
-		MinecraftForge.EVENT_BUS.register(handler);
-		GameRegistry.registerPlayerTracker(handler);
+		GenericEventHandler.init();
 				
 		registerEntity(EntityHeavenZombie.class, "crymodHeavenZombie", 0xffffff, 0x000000, 80, 3, true);
 		registerEntity(EntityHellZombie.class, "crymodHellZombie", 0x000000, 0xffffff, 80, 3, true);
+		registerEntity(EntityQuester.class, "crymodQuester", 0x059076, 0x000000, 80, 3, true);
+		
+		EntityRegistry.addSpawn(EntityQuester.class, 200, 10, 20, EnumCreatureType.creature, WorldType.base12Biomes); // temporary
 		
 		mainTab = new CreativeTabCrymod();
 		crystalTab = new CreativeTabCrystals();

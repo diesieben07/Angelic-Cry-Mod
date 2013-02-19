@@ -1,4 +1,4 @@
-package demonmodders.crymod.common.worldgen;
+package demonmodders.crymod.common.handlers.event;
 
 import demonmodders.crymod.common.blocks.BlockCryMod;
 import net.minecraft.world.gen.feature.WorldGenFlowers;

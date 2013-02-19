@@ -6,7 +6,7 @@ import org.objectweb.asm.tree.InsnList;
 import org.objectweb.asm.tree.MethodNode;
 import org.objectweb.asm.tree.VarInsnNode;
 
-import demonmodders.crymod.common.karma.KarmaEventHandler;
+import demonmodders.crymod.common.handlers.event.KarmaEventHandler;
 
 public class BlockTransformer extends AbstractClassTransformer {
 

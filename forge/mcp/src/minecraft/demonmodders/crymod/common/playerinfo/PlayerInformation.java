@@ -2,8 +2,13 @@ package demonmodders.crymod.common.playerinfo;
 
 import java.lang.reflect.Field;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+
+import com.google.common.collect.Lists;
+import com.google.common.primitives.Bytes;
 
 import cpw.mods.fml.common.FMLCommonHandler;
 
@@ -12,6 +17,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import demonmodders.crymod.common.CrymodUtils;
 import demonmodders.crymod.common.network.PacketPlayerInfo;
+import demonmodders.crymod.common.quest.Quest;
 import demonmodders.crymod.common.recipes.SummoningRecipe;
 
 public final class PlayerInformation {
@@ -75,6 +81,8 @@ public final class PlayerInformation {
 	
 	private byte[] enderbookRecipes = new byte[0];
 	
+	private List<Quest> activeQuests = Lists.newArrayList();
+	
 	public PlayerInformation(EntityPlayer player) {
 		this.player = player;
 	}
@@ -94,6 +102,8 @@ public final class PlayerInformation {
 		nbt.setTag("events", eventList);
 		
 		nbt.setByteArray("enderBook", enderbookRecipes);
+		
+		nbt.setTag("quests", Quest.writeQuests(activeQuests));
 	}
 	
 	public void readFromNbt(NBTTagCompound nbt) {
@@ -111,6 +121,7 @@ public final class PlayerInformation {
 		}
 		
 		enderbookRecipes = nbt.getByteArray("enderBook");
+		Quest.readQuests(nbt.getTagList("quests"), activeQuests, player);
 	}
 	
 	public float getKarma() {
@@ -166,6 +177,14 @@ public final class PlayerInformation {
 		setEventAmount(event, eventAmounts[event.ordinal()] + 1);
 	}
 	
+	public Collection<Quest> getActiveQuests() {
+		return activeQuests;
+	}
+	
+	public void addQuest(Quest quest) {
+		activeQuests.add(quest);
+	}
+	
 	public static enum CountableKarmaEvent {
 		PIGMEN_ATTACK, CREATE_SNOWGOLEM, CREATE_IRONGOLEM;
 	}
@@ -216,17 +235,12 @@ public final class PlayerInformation {
 	}
 	
 	public boolean hasEnderBookRecipe(byte recipe) {
-		for (byte _recipe : enderbookRecipes) {
-			if (recipe == _recipe) {
-				return true;
-			}
-		}
-		return false;
+		return Bytes.contains(enderbookRecipes, recipe);
 	}
 	
 	public void tick() {
 		if (dirty) {
-			updateClient();System.out.println("resending packet");
+			updateClient();
 			dirty = false;
 		}
 	}

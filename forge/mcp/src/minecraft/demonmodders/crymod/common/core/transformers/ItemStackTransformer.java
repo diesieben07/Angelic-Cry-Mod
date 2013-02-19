@@ -8,7 +8,7 @@ import org.objectweb.asm.tree.InsnNode;
 import org.objectweb.asm.tree.MethodNode;
 import org.objectweb.asm.tree.VarInsnNode;
 
-import demonmodders.crymod.common.karma.KarmaEventHandler;
+import demonmodders.crymod.common.handlers.event.KarmaEventHandler;
 
 public class ItemStackTransformer extends AbstractClassTransformer {
 

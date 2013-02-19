@@ -1,8 +1,8 @@
-package demonmodders.crymod.common;
+package demonmodders.crymod.common.handlers;
 
-import static demonmodders.crymod.common.karma.PlayerPowersHandler.FLYING_COOLDOWN;
-import static demonmodders.crymod.common.karma.PlayerPowersHandler.FLYING_TIME;
-import static demonmodders.crymod.common.karma.PlayerPowersHandler.TICKS_PER_SECOND;
+import static demonmodders.crymod.common.handlers.event.PlayerPowersHandler.FLYING_COOLDOWN;
+import static demonmodders.crymod.common.handlers.event.PlayerPowersHandler.FLYING_TIME;
+import static demonmodders.crymod.common.handlers.event.PlayerPowersHandler.TICKS_PER_SECOND;
 
 import java.util.EnumSet;
 

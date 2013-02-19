@@ -33,7 +33,7 @@ public abstract class Structure implements IWorldGenerator {
 	
 	private final int id;
 	
-	public Structure(int id) {
+	protected Structure(int id) {
 		GameRegistry.registerWorldGenerator(this);
 		generators.put(id, this);
 		this.id = id;

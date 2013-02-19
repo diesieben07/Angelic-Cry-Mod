@@ -4,7 +4,7 @@ import net.minecraft.util.StringTranslate;
 
 import org.lwjgl.opengl.GL11;
 
-import demonmodders.crymod.common.gui.ContainerCrystalBag;
+import demonmodders.crymod.common.container.ContainerCrystalBag;
 import demonmodders.crymod.common.inventory.InventoryCrystalBag;
 
 public class GuiCrystalBag extends AbstractGuiContainer<ContainerCrystalBag, InventoryCrystalBag> {

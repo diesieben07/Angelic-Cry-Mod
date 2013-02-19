@@ -27,7 +27,7 @@ import com.google.common.io.ByteArrayDataInput;
 import com.google.common.io.ByteArrayDataOutput;
 import com.google.common.io.ByteStreams;
 
-public class UpdateChecker implements Runnable {
+public final class UpdateChecker implements Runnable {
 
 	public static final String VERSION = "0.1";
 	

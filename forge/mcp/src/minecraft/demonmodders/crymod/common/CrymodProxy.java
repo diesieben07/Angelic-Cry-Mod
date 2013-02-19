@@ -5,6 +5,7 @@ import java.io.File;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.world.World;
+import demonmodders.crymod.common.entities.EntityQuester;
 import demonmodders.crymod.common.network.PacketClientAction;
 import demonmodders.crymod.common.network.PacketClientEffect;
 import demonmodders.crymod.common.network.PacketUpdateInformation;

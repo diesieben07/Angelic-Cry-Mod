@@ -19,6 +19,7 @@ import demonmodders.crymod.client.fx.EntityFXTextureChange;
 import demonmodders.crymod.client.gui.GuiCrystalBag;
 import demonmodders.crymod.client.gui.GuiEnderBook;
 import demonmodders.crymod.client.gui.GuiMagiciser;
+import demonmodders.crymod.client.gui.GuiQuests;
 import demonmodders.crymod.client.gui.GuiRechargeStation;
 import demonmodders.crymod.client.gui.GuiRecipePage;
 import demonmodders.crymod.client.gui.GuiSummoner;
@@ -30,15 +31,17 @@ import demonmodders.crymod.client.render.RenderZombieBase;
 import demonmodders.crymod.common.CrymodProxy;
 import demonmodders.crymod.common.CrymodUtils;
 import demonmodders.crymod.common.UpdateChecker.UpdateStatus;
+import demonmodders.crymod.common.container.ContainerCrystalBag;
+import demonmodders.crymod.common.container.ContainerEnderBook;
+import demonmodders.crymod.common.container.ContainerEntityInfo;
+import demonmodders.crymod.common.container.ContainerMagiciser;
+import demonmodders.crymod.common.container.ContainerQuests;
+import demonmodders.crymod.common.container.ContainerRechargeStation;
+import demonmodders.crymod.common.container.ContainerRecipePage;
+import demonmodders.crymod.common.container.ContainerSummoner;
+import demonmodders.crymod.common.container.GuiType;
+import demonmodders.crymod.common.entities.EntityQuester;
 import demonmodders.crymod.common.entities.ZombieBase;
-import demonmodders.crymod.common.gui.ContainerCrystalBag;
-import demonmodders.crymod.common.gui.ContainerEnderBook;
-import demonmodders.crymod.common.gui.ContainerEntityInfo;
-import demonmodders.crymod.common.gui.ContainerMagiciser;
-import demonmodders.crymod.common.gui.ContainerRechargeStation;
-import demonmodders.crymod.common.gui.ContainerRecipePage;
-import demonmodders.crymod.common.gui.ContainerSummoner;
-import demonmodders.crymod.common.gui.GuiType;
 import demonmodders.crymod.common.items.ItemCryMod;
 import demonmodders.crymod.common.network.PacketClientAction;
 import demonmodders.crymod.common.network.PacketClientEffect;
@@ -105,6 +108,8 @@ public class ClientProxy implements CrymodProxy {
 			return new GuiEntityInfo((ContainerEntityInfo)container);
 		case MAGICISER:
 			return new GuiMagiciser((ContainerMagiciser)container);
+		case QUESTS:
+			return new GuiQuests((ContainerQuests)container);
 		default:
 			return null;
 		}

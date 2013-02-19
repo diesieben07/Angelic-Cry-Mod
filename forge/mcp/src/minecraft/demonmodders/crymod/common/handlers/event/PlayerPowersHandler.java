@@ -1,4 +1,4 @@
-package demonmodders.crymod.common.karma;
+package demonmodders.crymod.common.handlers.event;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.monster.EntityMob;

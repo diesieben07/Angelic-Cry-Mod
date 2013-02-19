@@ -1,6 +1,6 @@
 package demonmodders.crymod.client.gui;
 
-import demonmodders.crymod.common.gui.ContainerRecipePage;
+import demonmodders.crymod.common.container.ContainerRecipePage;
 import demonmodders.crymod.common.recipes.SummoningRecipe;
 
 public class GuiRecipePage extends AbstractGuiContainer<ContainerRecipePage, SummoningRecipe> {

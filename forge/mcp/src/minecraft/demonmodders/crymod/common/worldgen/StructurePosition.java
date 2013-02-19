@@ -74,7 +74,7 @@ public final class StructurePosition {
 	}
 	
 	public AxisAlignedBB[] getBoundingBox() {
-		return structure.getBoundingBoxes(x,  y, z, rotation);
+		return structure.getBoundingBoxes(x, y, z, rotation);
 	}
 	
 	public boolean intersectsWith(StructurePosition other) {

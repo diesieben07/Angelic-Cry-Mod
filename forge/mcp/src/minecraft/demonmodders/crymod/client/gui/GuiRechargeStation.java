@@ -5,7 +5,7 @@ import net.minecraft.util.StringTranslate;
 import org.lwjgl.opengl.GL11;
 
 import demonmodders.crymod.common.blocks.BlockCryMod;
-import demonmodders.crymod.common.gui.ContainerRechargeStation;
+import demonmodders.crymod.common.container.ContainerRechargeStation;
 import demonmodders.crymod.common.tileentities.TileEntityRechargeStation;
 
 public class GuiRechargeStation extends AbstractGuiContainer<ContainerRechargeStation, TileEntityRechargeStation> {

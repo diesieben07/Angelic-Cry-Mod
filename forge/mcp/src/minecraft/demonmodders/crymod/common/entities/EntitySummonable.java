@@ -12,7 +12,7 @@ import com.google.common.io.ByteArrayDataOutput;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.registry.IEntityAdditionalSpawnData;
 import demonmodders.crymod.common.Crymod;
-import demonmodders.crymod.common.gui.GuiType;
+import demonmodders.crymod.common.container.GuiType;
 import demonmodders.crymod.common.network.PacketHealthUpdate;
 import demonmodders.crymod.common.network.PacketNameUpdate;
 

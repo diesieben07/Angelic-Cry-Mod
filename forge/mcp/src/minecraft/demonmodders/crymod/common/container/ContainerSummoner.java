@@ -1,4 +1,4 @@
-package demonmodders.crymod.common.gui;
+package demonmodders.crymod.common.container;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -45,6 +45,7 @@ public abstract class CrymodPacket {
 		addMapping(6, PacketNameUpdate.class);
 		addMapping(7, PacketUpdateInformation.class);
 		addMapping(8, PacketClientAction.class);
+		addMapping(9, PacketQuestList.class);
 	}
 	
 	public final Packet generatePacket() {

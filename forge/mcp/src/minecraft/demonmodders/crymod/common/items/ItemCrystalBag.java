@@ -8,7 +8,7 @@ import net.minecraft.world.World;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import demonmodders.crymod.common.Crymod;
-import demonmodders.crymod.common.gui.GuiType;
+import demonmodders.crymod.common.container.GuiType;
 
 public class ItemCrystalBag extends ItemCryMod {
 

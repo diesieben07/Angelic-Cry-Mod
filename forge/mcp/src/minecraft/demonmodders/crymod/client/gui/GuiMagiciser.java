@@ -1,6 +1,6 @@
 package demonmodders.crymod.client.gui;
 
-import demonmodders.crymod.common.gui.ContainerMagiciser;
+import demonmodders.crymod.common.container.ContainerMagiciser;
 import demonmodders.crymod.common.tileentities.TileEntityMagiciser;
 
 public class GuiMagiciser extends AbstractGuiContainer<ContainerMagiciser, TileEntityMagiciser> {

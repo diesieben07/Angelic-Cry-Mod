@@ -5,7 +5,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import com.google.common.io.ByteArrayDataInput;
 import com.google.common.io.ByteArrayDataOutput;
 
-import demonmodders.crymod.common.gui.ContainerEntityInfo;
+import demonmodders.crymod.common.container.ContainerEntityInfo;
 
 public class PacketRenameEntity extends CrymodPacket {
 

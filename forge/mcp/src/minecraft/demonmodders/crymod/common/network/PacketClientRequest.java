@@ -7,7 +7,7 @@ import com.google.common.io.ByteArrayDataInput;
 import com.google.common.io.ByteArrayDataOutput;
 
 import demonmodders.crymod.common.Crymod;
-import demonmodders.crymod.common.karma.PlayerPowersHandler;
+import demonmodders.crymod.common.handlers.event.PlayerPowersHandler;
 
 /**
  * sent by the client to request something, e.g. being invisible

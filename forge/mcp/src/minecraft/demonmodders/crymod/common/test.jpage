@@ -1,1 +1,1 @@
-System.out.println(Long.toHexString(1 << 22));
+System.out.println(com.google.common.primitives.UnsignedInts.toLong(-6250336));

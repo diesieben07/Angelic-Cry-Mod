@@ -1,4 +1,4 @@
-package demonmodders.crymod.client.gui;
+package demonmodders.crymod.client.gui.button;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;

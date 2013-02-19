@@ -1,11 +1,22 @@
-package demonmodders.crymod.common.gui;
+package demonmodders.crymod.common.handlers;
 
 import static demonmodders.crymod.common.Crymod.proxy;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.world.World;
+import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.network.IGuiHandler;
+import demonmodders.crymod.common.container.ContainerCrystalBag;
+import demonmodders.crymod.common.container.ContainerEnderBook;
+import demonmodders.crymod.common.container.ContainerEntityInfo;
+import demonmodders.crymod.common.container.ContainerMagiciser;
+import demonmodders.crymod.common.container.ContainerQuests;
+import demonmodders.crymod.common.container.ContainerRechargeStation;
+import demonmodders.crymod.common.container.ContainerRecipePage;
+import demonmodders.crymod.common.container.ContainerSummoner;
+import demonmodders.crymod.common.container.GuiType;
+import demonmodders.crymod.common.entities.EntityQuester;
 import demonmodders.crymod.common.entities.EntitySummonable;
 import demonmodders.crymod.common.inventory.InventoryCrystalBag;
 import demonmodders.crymod.common.inventory.InventoryEnderBook;
@@ -39,6 +50,13 @@ public class CrymodGuiHandler implements IGuiHandler {
 			}
 		case MAGICISER:
 			return new ContainerMagiciser((TileEntityMagiciser)world.getBlockTileEntity(x, y, z), player.inventory);
+		case QUESTS:
+			entity = world.getEntityByID(x);
+			if (entity != null && entity instanceof EntityQuester) {
+				return new ContainerQuests((EntityQuester)entity);
+			} else {
+				return null;
+			}
 		default:
 			return null;
 		}

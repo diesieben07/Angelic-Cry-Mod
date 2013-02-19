@@ -1,7 +1,7 @@
-package demonmodders.crymod.common.gui;
+package demonmodders.crymod.common.container;
 
 public enum GuiType {
-	SUMMONING_BOOK, EVIL_TABLET, RECHARGE_STATION, CRYSTAL_BAG, ENDER_BOOK, RECIPE_PAGE, SUMMONED_ENTITY, MAGICISER;
+	SUMMONING_BOOK, EVIL_TABLET, RECHARGE_STATION, CRYSTAL_BAG, ENDER_BOOK, RECIPE_PAGE, SUMMONED_ENTITY, MAGICISER, QUESTS;
 	
 	public int getGuiId() {
 		return ordinal();

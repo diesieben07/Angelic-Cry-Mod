@@ -11,6 +11,7 @@ import cpw.mods.fml.common.IPlayerTracker;
 import cpw.mods.fml.common.registry.GameRegistry;
 import demonmodders.crymod.common.UpdateChecker.UpdateStatus;
 import demonmodders.crymod.common.UpdateChecker.UpdateStatusHandler;
+import demonmodders.crymod.common.entities.EntityQuester;
 import demonmodders.crymod.common.network.PacketClientAction;
 import demonmodders.crymod.common.network.PacketClientEffect;
 import demonmodders.crymod.common.network.PacketUpdateInformation;

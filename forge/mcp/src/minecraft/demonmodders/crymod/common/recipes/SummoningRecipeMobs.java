@@ -6,7 +6,7 @@ import static demonmodders.crymod.common.items.CrystalType.MAGIC;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
-import demonmodders.crymod.common.gui.ContainerSummoner;
+import demonmodders.crymod.common.container.ContainerSummoner;
 import demonmodders.crymod.common.items.ItemSummoner.Type;
 
 public class SummoningRecipeMobs extends SummoningRecipeByClass {

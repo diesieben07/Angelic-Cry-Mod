@@ -1,4 +1,4 @@
-package demonmodders.crymod.common.gui;
+package demonmodders.crymod.common.container;
 
 import net.minecraft.entity.player.InventoryPlayer;
 import demonmodders.crymod.common.inventory.slots.ScrollingSlot;

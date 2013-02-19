@@ -6,7 +6,7 @@ import org.objectweb.asm.tree.VarInsnNode;
 
 import static demonmodders.crymod.common.core.ObfuscationHelper.mappings;
 import cpw.mods.fml.relauncher.IFMLLoadingPlugin.TransformerExclusions;
-import demonmodders.crymod.common.karma.KarmaEventHandler;
+import demonmodders.crymod.common.handlers.event.KarmaEventHandler;
 
 @TransformerExclusions({ "demonmodders.", "fml.", "net.minecraftforge." })
 public class ZombieTransformer extends AbstractClassTransformer {
