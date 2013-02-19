@@ -35,9 +35,7 @@ public class PacketGuiButton extends CrymodPacket {
 
 	@Override
 	void execute(EntityPlayer player) {
-		System.out.println(player.openContainer.windowId + " " + windowId);
 		if (player.openContainer instanceof AbstractContainer && player.openContainer.windowId == windowId) {
-			System.out.println(player.openContainer);
 			((AbstractContainer)player.openContainer).buttonClick(buttonId, Side.SERVER, player);
 		}
 	}

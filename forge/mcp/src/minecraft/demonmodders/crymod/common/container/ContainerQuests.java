@@ -29,7 +29,6 @@ public class ContainerQuests extends AbstractContainer<IInventory> {
 
 	@Override
 	public void buttonClick(int buttonId, Side side, EntityPlayer player) {
-		System.out.println("click " + buttonId + " on" + side);
 		if (side.isServer()) {
 			buttonId = -buttonId;
 			List<Quest> quests = quester.getQuests();
