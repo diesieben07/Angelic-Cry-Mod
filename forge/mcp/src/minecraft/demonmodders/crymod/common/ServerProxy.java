@@ -19,8 +19,6 @@ import demonmodders.crymod.common.playerinfo.PlayerInformation;
 
 public class ServerProxy implements CrymodProxy, IPlayerTracker, UpdateStatusHandler {
 	
-	private static final int SECS_IN_24H = 60 * 60 * 24;
-	
 	public UpdateStatus lastStatus = UpdateStatus.LOADING;
 	public List<String> lastUpdateInformation = null;
 
@@ -86,4 +84,7 @@ public class ServerProxy implements CrymodProxy, IPlayerTracker, UpdateStatusHan
 
 	@Override
 	public void handleClientAction(PacketClientAction packet) { }
+
+	@Override
+	public void openQuestBook() { }
 }

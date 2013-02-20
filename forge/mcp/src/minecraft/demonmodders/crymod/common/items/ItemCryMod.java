@@ -13,8 +13,7 @@ public class ItemCryMod extends Item {
 	public static Item crystal;
 	public static Item recipePage;
 	public static Item crystalBag;
-	
-	public static Item swordOfDarkness;
+	public static Item questBook;
 	
 	public ItemCryMod(String itemName, int defaultId) {
 		super(Crymod.conf.getItem(itemName + "Id", defaultId).getInt());
@@ -27,7 +26,7 @@ public class ItemCryMod extends Item {
 		crystal = new ItemCrystal("crystal", 4766);
 		recipePage = new ItemRecipePage("recipePage", 4767);
 		crystalBag = new ItemCrystalBag("crystalBag", 4768);
-		
+		questBook = new ItemQuestBook("questBook", 4769);
 	}
 
 	public static void initCrymodItem(Item item, String itemName) {

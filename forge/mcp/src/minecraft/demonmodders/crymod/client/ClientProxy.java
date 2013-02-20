@@ -19,6 +19,7 @@ import demonmodders.crymod.client.fx.EntityFXTextureChange;
 import demonmodders.crymod.client.gui.GuiCrystalBag;
 import demonmodders.crymod.client.gui.GuiEnderBook;
 import demonmodders.crymod.client.gui.GuiMagiciser;
+import demonmodders.crymod.client.gui.GuiQuestBook;
 import demonmodders.crymod.client.gui.GuiQuests;
 import demonmodders.crymod.client.gui.GuiRechargeStation;
 import demonmodders.crymod.client.gui.GuiRecipePage;
@@ -160,5 +161,10 @@ public class ClientProxy implements CrymodProxy {
 			screen.handleStatus(lastStatus, lastUpdateInformation);
 			break;
 		}
+	}
+
+	@Override
+	public void openQuestBook() {
+		mc.displayGuiScreen(new GuiQuestBook());
 	}
 }

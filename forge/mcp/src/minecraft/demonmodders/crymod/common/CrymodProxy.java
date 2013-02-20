@@ -26,4 +26,6 @@ public interface CrymodProxy {
 	public void handleUpdateInformation(PacketUpdateInformation packet);
 	
 	public void handleClientAction(PacketClientAction packet);
+	
+	public void openQuestBook();
 }

@@ -24,4 +24,9 @@ public class GuiQuests extends AbstractGuiContainer<ContainerQuests, IInventory>
 	protected String getTextureFile() {
 		return "/demonmodders/crymod/resource/tex/questingInterface.png";
 	}
+
+	@Override
+	public boolean doesGuiPauseGame() {
+		return false;
+	}
 }

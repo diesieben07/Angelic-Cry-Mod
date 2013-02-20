@@ -185,6 +185,10 @@ public final class PlayerInformation {
 		activeQuests.add(quest);
 	}
 	
+	public void setQuests(Collection<Quest> quests) {
+		activeQuests = Lists.newArrayList(quests);
+	}
+	
 	public static enum CountableKarmaEvent {
 		PIGMEN_ATTACK, CREATE_SNOWGOLEM, CREATE_IRONGOLEM;
 	}

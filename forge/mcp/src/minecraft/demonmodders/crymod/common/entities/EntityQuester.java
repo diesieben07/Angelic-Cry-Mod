@@ -1,5 +1,6 @@
 package demonmodders.crymod.common.entities;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Random;
 
@@ -40,7 +41,7 @@ public class EntityQuester extends EntityLiving implements IEntityAdditionalSpaw
 		return quests;
 	}
 	
-	public void setQuests(List<Quest> quests) {
+	public void setQuests(Collection<Quest> quests) {
 		this.quests = Lists.newArrayList(quests);
 	}
 

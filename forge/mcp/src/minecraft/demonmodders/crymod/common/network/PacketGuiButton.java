@@ -39,5 +39,4 @@ public class PacketGuiButton extends CrymodPacket {
 			((AbstractContainer)player.openContainer).buttonClick(buttonId, Side.SERVER, player);
 		}
 	}
-
 }
