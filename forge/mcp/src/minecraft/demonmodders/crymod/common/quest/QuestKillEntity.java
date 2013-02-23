@@ -22,11 +22,29 @@ import demonmodders.crymod.common.entities.EntityQuester;
 import demonmodders.crymod.common.playerinfo.PlayerInformation;
 
 public class QuestKillEntity extends Quest {
+	
+	private static final String[] DESCRIBING = new String[] {
+		"Amazing",
+		"Massive",
+		"Crazy",
+		"Terrible",
+		"Disasterous",
+		"Unfortunate",
+		"Nasty",
+		"Bad"
+	};
+	
+	private static final String[] FINISH = new String[] {
+		"Infestation",
+		"Outbreak"
+	};
 
 	private Class<? extends EntityLiving> toKill;
 	private int neededKillCount;
 	
 	private int killed = 0;
+	private int describingWord = 0;
+	private int finalWord = 0;
 	
 	public QuestKillEntity(UUID questerUid) {
 		super(questerUid);
@@ -43,6 +61,8 @@ public class QuestKillEntity extends Quest {
 		toKill = (Class<? extends EntityLiving>) EntityList.stringToClassMapping.get(nbt.getString("targetType"));
 		neededKillCount = nbt.getInteger("killCount");
 		killed = nbt.getInteger("killed");
+		describingWord = nbt.getByte("descr");
+		finalWord = nbt.getByte("final");
 	}
 
 	@Override
@@ -50,18 +70,24 @@ public class QuestKillEntity extends Quest {
 		nbt.setString("targetType", (String)EntityList.classToStringMapping.get(toKill));
 		nbt.setInteger("killCount", neededKillCount);
 		nbt.setInteger("killed", killed);
+		nbt.setByte("descr", (byte) describingWord);
+		nbt.setByte("final", (byte) finalWord);
 	}
 	
 	@Override
 	protected void writeData(ByteArrayDataOutput out) {
 		out.writeUTF((String)EntityList.classToStringMapping.get(toKill));
 		out.writeInt(neededKillCount);
+		out.writeByte(describingWord);
+		out.writeByte(finalWord);
 	}
 
 	@Override
 	protected void readData(ByteArrayDataInput in) {
 		toKill = (Class<? extends EntityLiving>) EntityList.stringToClassMapping.get(in.readUTF());
 		neededKillCount = in.readInt();
+		describingWord = in.readUnsignedByte();
+		finalWord = in.readUnsignedByte();
 	}
 
 	@Override
@@ -81,7 +107,7 @@ public class QuestKillEntity extends Quest {
 			recheck();
 		}
 	}
-
+	
 	@Override
 	public void makeRandom(Random random) {
 		switch (random.nextInt(4)) {
@@ -99,16 +125,29 @@ public class QuestKillEntity extends Quest {
 			break;
 		}
 		neededKillCount = 3 + random.nextInt(5);
+		describingWord = random.nextInt(DESCRIBING.length);
+		finalWord = random.nextInt(FINISH.length);
 	}
 
 	@Override
 	public String getTitle() {
 		String entityName = (String) EntityList.classToStringMapping.get(toKill);
 		return new StringBuilder()
-		.append("Kill ")
-		.append(neededKillCount)
-		.append(" of ")
+		.append(DESCRIBING[describingWord])
+		.append(" ")
 		.append(StringTranslate.getInstance().translateKey("entity." + Strings.nullToEmpty(entityName) + ".name"))
+		.append(" ")
+		.append(FINISH[finalWord])
 		.toString();
+	}
+
+	@Override
+	public QuestType getQuestType() {
+		return QuestType.EVIL;
+	}
+
+	@Override
+	public String getQuestDescription() {
+		return "Some Random Text jiiiihahaaaa foobarus maximus " + new Random().nextFloat() + " " + new Random().nextFloat() + " " + new Random().nextFloat();
 	}
 }

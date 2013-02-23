@@ -8,10 +8,10 @@ import net.minecraft.client.gui.GuiButton;
 
 public class GuiButtonTextOnly extends GuiButton {
 
-	public GuiButtonTextOnly(int id, int x, int y, String text, FontRenderer fontRenderer) {
-		super(id, x, y, fontRenderer.getStringWidth(text), fontRenderer.FONT_HEIGHT, text);
+	public GuiButtonTextOnly(int id, int x, int y, int width, int height, String text) {
+		super(id, x, y, width, height, text);
 	}
-
+	
 	@Override
 	public void drawButton(Minecraft mc, int mouseX, int mouseY) {
 		if (drawButton) {
@@ -23,8 +23,8 @@ public class GuiButtonTextOnly extends GuiButton {
 			} else if (this.field_82253_i) {
 				color = 16777120;
 			}
-
-			drawCenteredString(mc.fontRenderer, displayString, xPosition + width / 2, yPosition, color);
+			
+			drawString(mc.fontRenderer, displayString, xPosition, yPosition, color);
 		}
 	}
 

@@ -156,6 +156,10 @@ public abstract class Quest {
 		return quest;
 	}
 	
+	public abstract QuestType getQuestType();
+	
+	public abstract String getQuestDescription();
+	
 	protected abstract void writeData(ByteArrayDataOutput out);
 	
 	protected abstract void readData(ByteArrayDataInput in);
@@ -211,6 +215,10 @@ public abstract class Quest {
 			quests.add(quest);
 			quest.setPlayer(player); // that method can deal with null
 		}
+	}
+	
+	public static enum QuestType {
+		EVIL, NEUTRAL, GOOD
 	}
 	
 	private static final BiMap<Integer, Class<? extends Quest>> questTypes = HashBiMap.create();

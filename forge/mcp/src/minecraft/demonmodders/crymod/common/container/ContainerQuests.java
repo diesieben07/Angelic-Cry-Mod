@@ -24,7 +24,7 @@ public class ContainerQuests extends AbstractContainer<IInventory> {
 
 	@Override
 	public boolean handleButtonClick(int buttonId) {
-		return buttonId <= 0;
+		return false;//buttonId <= 0;
 	}
 
 	@Override
@@ -41,5 +41,10 @@ public class ContainerQuests extends AbstractContainer<IInventory> {
 				}
 			}
 		}
+	}
+
+	@Override
+	public boolean canInteractWith(EntityPlayer player) {
+		return quester.isEntityAlive() && player.getDistanceSqToEntity(quester) <= 64;
 	}
 }
